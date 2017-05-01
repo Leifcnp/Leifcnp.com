@@ -12,17 +12,15 @@
             font-family: monospace;
         }
 
-        .odd {
-            background-color: gray;
-        }
 
-        .even {
-            background-color: lightgray;
+
+        #even {
+            background-color: gold;
         }
 
         #heading1 {
-            color: blue;
-            font-family: san-serif
+            color: black;
+            font-family: "Rage Italic"
         }
 
         div {
@@ -40,34 +38,23 @@
 </head>
 
 
-<body>
+<body id = "even">
 
-<h1 id="heading1" class="heading">Hello World</h1>
+<h1 id="heading1" class="heading">Website under construction</h1>
 <h1> heading 2</h1>
 <h1 class="heading"> heading 3</h1>
-<input type="file" name=" fileUpload" id="fileID"/>
-<button id="upload">Upload</button>
 
 
 
 <div>
 
-    <button id="buttonSubmit">Submit</button>
-    <br/>
-    <textarea id="txtQuery">
+    <button id="buttonSubmit">Click</button>
 
-    </textarea>
 </div>
-<table id="tableID">
-
-</table>
 
 <script>
-    $("#upload").click(function () {
-       alert("button Pressed AND NOW THE SHOW!");
-
-
-
+    $("#buttonSubmit").click(function () {
+       alert("no effect... yet");
     });
 
 </script>
