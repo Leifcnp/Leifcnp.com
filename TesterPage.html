@@ -45,12 +45,12 @@
         var ROOM_FIELDS = ["fullname", "shortname", "number", "name", "address", "lat", "lon", "seats", "type", "furniture", "href"];
         var TYPE_OF_ROOM_FIELD = ["string", "string", "string", "string", "string", "number", "number", "number", "string", "string", "string"];
 
-        function goToScheduler() {
-            window.location.pathname = '/scheduler';
+        function getGitHub() {
+            window.location.href = 'https://github.com/Leifcnp';
         }
 
-        function goToExplorers() {
-            window.location.pathname = '/';
+        function getResume() {
+            window.location.href = 'https://github.com/Leifcnp/Leifcnp.com/raw/master/WebsiteResumeMay5th2017.pdf';
         }
 
         function setup() {
@@ -183,14 +183,14 @@
         <input id="btnScheduler"
                type="button"
                class="navigatorBtn"
-               value="Scheduler"
-               onclick="goToScheduler()">
+               value="Resume"
+               onclick="getResume()">
 
         <input id="btnExplorers"
                type="button"
                class="navigatorBtn"
-               value="Explorers"
-               onclick="goToExplorers()">
+               value="Github"
+               onclick="getGitHub()">
     </div>
     <br><br>
 
