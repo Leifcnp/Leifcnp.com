@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<head>
+    <title>Team 94 Homepage</title>
+    <meta charset="UTF-8">
+    <script>
+        var datasetSelected;
+        var shouldRemoveAttributes;
+        var currentGroupAttributes = [];
+        var currentApplyAttributes = [];
+        var currentApplyTypes = [];
+        var currentColumnsAttributes = [];
+        var currentSortAttributes = [];
+        var currentRestrictionAttributes = [];
+        var currentRestrictionTypes = [];
+        var currentRestrictionTexts = [];
+        var listOfGroupAttributes;
+        var listOfApplyAttributes;
+        var listOfColumnsAttributes;
+        var listOfSortAttributes;
+        var listOfRestrictionAttributes;
+        var listOfSortingModes;
+        var output;
+        var recordsList = [];
+        var mListOfAttributes;
+        var sectionOptionsList = [];
+        var roomOptionsList = [];
+        var listOfBooleanOperators;
+        var distanceContainer;
+        var textDistance;
+        var textBuilding;
+        var referenceBuildingLat;
+        var referenceBuildingLon;
+        var testing;
+        var APPLY_TYPES = ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT'];
+        var RESTRICTION_TYPES = ['IS', 'Greater than', 'Lower than'];
+        var RESTRICTION_TYPES_VALUES = ['IS', 'GT', 'LT'];
+        var APPLY_BASE_ID = 'chooseApplyType';
+        var RESTRICTION_BASE_ID = 'chooseRestrictionType';
+        var RESTRICTION_TEXT_BASE_ID = 'chooseRestrictionValue';
+        var LI_APPLY_BASE_ID = 'listItemApplyType';
+        var LI_RESTRICTION_BASE_ID = 'listItemRestrictionType';
+        var SECTION_FIELDS = ['dept', 'id', 'avg', 'instructor', 'title', 'pass', 'fail', 'audit', 'uuid', 'year', 'size'];
+        var TYPE_OF_SECTION_FIELD = ["string", "string", "number", "string", "string", "number", "number", "number", "string", "number", "number"];
+        var ROOM_FIELDS = ["fullname", "shortname", "number", "name", "address", "lat", "lon", "seats", "type", "furniture", "href"];
+        var TYPE_OF_ROOM_FIELD = ["string", "string", "string", "string", "string", "number", "number", "number", "string", "string", "string"];
+
+        function goToScheduler() {
+            window.location.pathname = '/scheduler';
+        }
+
+        function goToExplorers() {
+            window.location.pathname = '/';
+        }
+
+        function setup() {
+            "use strict";
+            datasetSelected = document.getElementById("chooseDataset");
+            testing = document.getElementById("testing");
+            listOfGroupAttributes = document.getElementById("currentGroupAttributes");
+            listOfApplyAttributes = document.getElementById("currentApplyAttributes");
+            listOfColumnsAttributes = document.getElementById("currentColumnsAttributes");
+            listOfSortAttributes = document.getElementById("currentSortAttributes");
+            listOfRestrictionAttributes = document.getElementById("currentRestrictionAttributes");
+            listOfSortingModes = document.getElementById("chooseSorting");
+            listOfBooleanOperators = document.getElementById("chooseOperator");
+            output = document.getElementById("output");
+            mListOfAttributes = document.getElementById("chooseAttributes");
+            distanceContainer = document.getElementById("distanceContainer");
+            textDistance = document.getElementById("textDistance");
+            textBuilding = document.getElementById("textBuilding");
+            referenceBuildingLat = undefined;
+            referenceBuildingLon = undefined;
+            shouldRemoveAttributes = false;
+            testing.hidden = true;
+            createListsOfAttributes();
+            populateSelectWithAttributes();
+        }
+
+
+
+
+
+    </script>
+    <style>
+        table {
+            font-size: medium;
+        }
+
+        td, th {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        h1 {
+            font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        select, input[type='text'], input[type='number'] {
+            border: 2px solid darkgray;
+            border-radius: 12px;
+            background-color: transparent;
+            font-size: x-large;
+            color: #2caed5;
+            margin-left: 15px;
+            text-decoration-style: solid;
+        }
+
+        td.odd {
+            color: #2caed5;
+        }
+
+        td.even {
+            color: darkgray;
+        }
+
+        input.style94 {
+            border: 2px solid #2caed5;
+            border-radius: 12px;
+            background-color: transparent;
+            font-size: xx-large;
+            color: gray;
+            margin-left: 45px;
+            text-decoration-style: solid;
+        }
+
+        body {
+            margin: 0;
+            padding: 10px;
+            font-size: x-large;
+            font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-align: center;
+            align-items: center;
+            background-color: #2caed5;
+        }
+
+        div.roundBorder {
+            border: 2px solid lightgray;
+            border-radius: 12px;
+            display: inline-block;
+            padding: 10px;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        div.transparentBorder {
+            border: 2px solid transparent;
+            border-radius: 12px;
+            display: inline-block;
+            padding: 10px;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        input.navigatorBtn {
+            border: 2px solid #2caed5;
+            border-radius: 12px;
+            background-color: #2caed5;
+            font-size: xx-large;
+            color: white;
+            margin-left: 45px;
+            text-decoration-style: solid;
+            padding-bottom: 25px;
+            padding-top: 25px;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        div.main {
+            border: 2px solid lightgray;
+            border-radius: 12px;
+            display: inline-block;
+            padding: 110px;
+            padding-top: 5px;
+            margin: 0 auto;
+            background-color: white;
+        }
+    </style>
+</head>
+<body onload="setup()">
+<div id="container" class="main">
+    <div id="navigator" class=transparentBorder>
+        <input id="btnScheduler"
+               type="button"
+               class="navigatorBtn"
+               value="Scheduler"
+               onclick="goToScheduler()">
+
+        <input id="btnExplorers"
+               type="button"
+               class="navigatorBtn"
+               value="Explorers"
+               onclick="goToExplorers()">
+    </div>
+    <br><br>
+
+    <h1 id="title">Course & Room Explorers</h1>
+    <label>Choose Dataset</label>
+    <select id="chooseDataset" onchange="populateSelectWithAttributes()">
+        <option value="rooms">rooms</option>
+        <option value="courses">courses</option>
+    </select>
+
+    <label>&nbspAttributes</label>
+    <select id="chooseAttributes">
+    </select>
+    <br><br>
+
+    <div class="roundBorder" align="left">
+        <input type="radio" name="radioAttr" value="Group" onchange="removeSortOptions()"> Summarize by<br>
+        <input type="radio" name="radioAttr" value="Apply" onchange="removeSortOptions()"> Apply<br>
+        <input type="radio" name="radioAttr" value="Columns" onchange="removeSortOptions()"> Columns<br>
+        <input type="radio" name="radioAttr" value="Sort" onchange="addSortOptions()"> Sort<br>
+        <input type="radio" name="radioAttr" value="Restrictions" onchange="removeSortOptions()"> Restrictions<br>
+    </div>
+    <br><br>
+
+    <input id="btnAddAttribute"
+           type="button"
+           class="style94"
+           value="Add Attribute">
+
+    <input id="btnAddAll"
+           type="button"
+           class="style94"
+           value="Add All">
+
+    <input id="btnRemoveAttribute"
+           type="button"
+           class="style94"
+           value="Remove Attribute"><br><br>
+
+    <div id="distanceContainer">
+        <div class="roundBorder" id="distanceQuery">
+            <label>Distance&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+            <input id="textDistance" type="number" placeholder="in meters"><br><br>
+            <label>From building</label>
+            <input id="textBuilding" type="text" placeholder="building shortname"><br>
+        </div>
+        <br><br>
+    </div>
+    <div class="roundBorder" id="currentGroupAttributes">Current Summarizations</div>
+    <br><br>
+    <div class="roundBorder" id="currentApplyAttributes">Current Apply Attributes</div>
+    <br><br>
+    <div class="roundBorder" id="currentColumnsAttributes">Current Columns Attributes</div>
+    <br><br>
+
+    <div class="roundBorder" id="sortingContainer">
+        <div id="currentSortAttributes">Current Sort Attributes</div>
+        <br>
+        <label>Sorting Mode</label>
+        <select id="chooseSorting">
+            <option value="none" selected>None</option>
+            <option value="UP">Ascending</option>
+            <option value="DOWN">Descending</option>
+        </select>
+    </div>
+
+    <br><br>
+
+    <div class="roundBorder" id="restrictionsContainer">
+        <div id="currentRestrictionAttributes">Current Restriction Attributes</div>
+        <br>
+        <label>Boolean Operator</label>
+        <select id="chooseOperator">
+            <option value="none" selected>None</option>
+            <option value="AND">And</option>
+            <option value="OR">Or</option>
+        </select>
+    </div>
+
+    <br><br>
+
+    <input id="submitQuery"
+           type="button"
+           class="style94"
+           value="Submit Query"
+           onclick="submitQuery()">
+
+    <input id="reset"
+           type="button"
+           class="style94"
+           value="Reset"
+           onclick="alert()">
+    <br>
+
+    <div class="roundBorder" hidden id="testing"></div>
+
+    <h2>Results</h2>
+
+    <div class="roundBorder" id="output">
+
+    </div>
+</div>
+</body>
