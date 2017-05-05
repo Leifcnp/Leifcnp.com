@@ -4,46 +4,8 @@
     <title>Team 94 Homepage</title>
     <meta charset="UTF-8">
     <script>
-        var datasetSelected;
-        var shouldRemoveAttributes;
-        var currentGroupAttributes = [];
-        var currentApplyAttributes = [];
-        var currentApplyTypes = [];
-        var currentColumnsAttributes = [];
-        var currentSortAttributes = [];
-        var currentRestrictionAttributes = [];
-        var currentRestrictionTypes = [];
-        var currentRestrictionTexts = [];
-        var listOfGroupAttributes;
-        var listOfApplyAttributes;
-        var listOfColumnsAttributes;
-        var listOfSortAttributes;
-        var listOfRestrictionAttributes;
-        var listOfSortingModes;
-        var output;
-        var recordsList = [];
-        var mListOfAttributes;
-        var sectionOptionsList = [];
-        var roomOptionsList = [];
-        var listOfBooleanOperators;
-        var distanceContainer;
-        var textDistance;
-        var textBuilding;
-        var referenceBuildingLat;
-        var referenceBuildingLon;
-        var testing;
-        var APPLY_TYPES = ['MAX', 'MIN', 'AVG', 'SUM', 'COUNT'];
-        var RESTRICTION_TYPES = ['IS', 'Greater than', 'Lower than'];
-        var RESTRICTION_TYPES_VALUES = ['IS', 'GT', 'LT'];
-        var APPLY_BASE_ID = 'chooseApplyType';
-        var RESTRICTION_BASE_ID = 'chooseRestrictionType';
-        var RESTRICTION_TEXT_BASE_ID = 'chooseRestrictionValue';
-        var LI_APPLY_BASE_ID = 'listItemApplyType';
-        var LI_RESTRICTION_BASE_ID = 'listItemRestrictionType';
-        var SECTION_FIELDS = ['dept', 'id', 'avg', 'instructor', 'title', 'pass', 'fail', 'audit', 'uuid', 'year', 'size'];
-        var TYPE_OF_SECTION_FIELD = ["string", "string", "number", "string", "string", "number", "number", "number", "string", "number", "number"];
-        var ROOM_FIELDS = ["fullname", "shortname", "number", "name", "address", "lat", "lon", "seats", "type", "furniture", "href"];
-        var TYPE_OF_ROOM_FIELD = ["string", "string", "string", "string", "string", "number", "number", "number", "string", "string", "string"];
+        var w ;
+        var h ;
 
         function getGitHub() {
             window.location.href = 'https://github.com/Leifcnp';
@@ -54,7 +16,8 @@
         }
 
         function setup() {
-           //nothing yet
+            var w = window.innerWidth;
+            var h = window.innerHeight;
         }
 
 
@@ -158,6 +121,8 @@
     </style>
 </head>
 <body onload="setup()">
+
+
 <div id="container" class="main">
     <div id="navigator" class=transparentBorder>
         <input id="btnScheduler"
@@ -172,17 +137,19 @@
                value="Github"
                onclick="getGitHub()">
     </div>
+
 </div>
-    <br>
-    <p>
+<p>
     I am a second-year computer science student at the University of British Columbia. I keep myself busy with school, design teams, personal projects and sailing.
-        <br>
+    <br>
     I am currently in the job searching phase of my Co-op program. In my first work terms, I am looking to explore and learn from the industry and challenge myself with 12 months of nonacademic experience.
-        <br>
+    <br>
     Thanks for checking out my work!
 
-    </p>
 
-    </div>
-</div>
+
+</p>
+<a href = "https://github.com/Leifcnp/OverEarly">
+<img src="https://raw.githubusercontent.com/Leifcnp/OverEarly/master/Logo/overearlyLARGE.png" alt="OverEarly"  width="300px"/>
+</a>
 </body>
