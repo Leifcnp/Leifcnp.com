@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <head>
     <title>Team 94 Homepage</title>
-    <meta charset="UTF-8">
+
     <script>
-        var w ;
-        var h ;
+        var w;
+        var h;
 
         function getGitHub() {
             window.location.href = 'https://github.com/Leifcnp';
@@ -21,51 +20,9 @@
         }
 
 
-
-
-
     </script>
     <style>
-        table {
-            font-size: medium;
-        }
 
-        td, th {
-            margin: 10px;
-            padding: 10px;
-        }
-
-        h1 {
-            font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-
-        select, input[type='text'], input[type='number'] {
-            border: 2px solid darkgray;
-            border-radius: 12px;
-            background-color: transparent;
-            font-size: x-large;
-            color: #2caed5;
-            margin-left: 15px;
-            text-decoration-style: solid;
-        }
-
-        td.odd {
-            color: #2caed5;
-        }
-
-        td.even {
-            color: darkgray;
-        }
-
-        input.style94 {
-            border: 2px solid #2caed5;
-            border-radius: 12px;
-            background-color: transparent;
-            font-size: xx-large;
-            color: gray;
-            margin-left: 45px;
-            text-decoration-style: solid;
-        }
 
         body {
             margin: 0;
@@ -77,12 +34,13 @@
             background-color: lightcyan;
         }
 
-        div.roundBorder {
-            border: 2px solid lightgray;
-            border-radius: 12px;
-            display: inline-block;
+        #Seller {
+            margin: 0;
             padding: 10px;
-            margin: 0 auto;
+            font-size: x-large;
+            font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-align: left;
+            align-items: left;
             background-color: white;
         }
 
@@ -101,23 +59,35 @@
             background-color: #2caed5;
             font-size: xx-large;
             color: white;
-            margin-left: 45px;
+
             text-decoration-style: solid;
             padding-bottom: 25px;
             padding-top: 25px;
-            padding-left: 50px;
-            padding-right: 50px;
+            padding-left: 25px;
+            padding-right: 25px;
         }
 
         div.main {
-            border: 2px solid lightblue;
+             border: 2px solid lightblue;
+             border-radius: 12px;
+             display: inline-block;
+             padding: 20px;
+             padding-top: 25px;
+             margin: 0 auto;
+             background-color: white;
+         }
+        div.seller {
+            border: 2px solid white;
             border-radius: 12px;
             display: inline-block;
-            padding: 100px;
+            padding: 5px;
             padding-top: 5px;
             margin: 0 auto;
             background-color: white;
+
         }
+
+
     </style>
 </head>
 <body onload="setup()">
@@ -139,17 +109,24 @@
     </div>
 
 </div>
-<p>
-    I am a second-year computer science student at the University of British Columbia. I keep myself busy with school, design teams, personal projects and sailing.
-    <br>
-    I am currently in the job searching phase of my Co-op program. In my first work terms, I am looking to explore and learn from the industry and challenge myself with 12 months of nonacademic experience.
-    <br>
-    Thanks for checking out my work!
+<br><br>
+<div id="holdMe" class="seller">
 
 
+    <p id="Seller" class="seller" width = "100px">
 
-</p>
-<a href = "https://github.com/Leifcnp/OverEarly">
-<img src="https://raw.githubusercontent.com/Leifcnp/OverEarly/master/Logo/overearlyLARGE.png" alt="OverEarly"  width="300px"/>
+        I am a second-year computer science student at the University of British Columbia.
+        I keep myself busy with school, design teams, personal projects and sailing.
+        I am currently in the job searching phase of my Co-op program. In my first work terms,
+        I am looking to explore and learn from the industry and challenge myself with 12 months of nonacademic experience
+        Thanks for checking out my work!
+
+
+    </p>
+</div>
+<br><br>
+<a href="https://github.com/Leifcnp/OverEarly">
+    <img src="https://raw.githubusercontent.com/Leifcnp/OverEarly/master/Logo/overearlyLARGE.png" alt="OverEarly"
+         width="300px"/>
 </a>
 </body>
