@@ -1,0 +1,1 @@
+ 	HEX	RGB	CMYK		HEX: #ed8065	R: 237	G: 128	B: 101	C: 0	M: 46	Y: 57	K: 7		HEX: #647deb	R: 100	G: 125	B: 235	C: 57	M: 47	Y: 0	K: 8		HEX: #72eb64	R: 114	G: 235	B: 100	C: 51	M: 0	Y: 57	K: 8
