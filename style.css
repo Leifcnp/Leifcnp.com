@@ -1,0 +1,194 @@
+:root {
+    --brownBackDark: #191112;
+    --brownBack: #2D1F21;
+    --brownBackLight: #403335;
+
+    --orangeMainDark: #C17C37;
+    --orangeMain: #EB9742;
+    --orangeMainLight: #F2BC86;
+
+    --yellowMainDark: #C19836;
+    --yellowMain: #EBB941;
+    --yellowMainLight: #F2D286;
+
+    --blueMainDark: #427D82;
+    --blueMain: #50989E;
+    --blueMainLight: #8FBDC1;
+
+    --highlightGreenDark: #5EC152;
+    --highlightGreen: #72EB64;
+    --highlightGreenLight: #A5F29C;
+
+    --highlightBlueDark: #5267C1;
+    --highlightBlue: #647deb;
+    --highlightBlueLight: #9CACF2;
+
+
+}
+
+
+
+
+body {
+    margin: 0;
+    padding: 10px;
+    font-size: x-large;
+    font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    align-items: center;
+    background-color: lightcyan;
+}
+
+#Seller {
+    margin: 0;
+    padding: 10px;
+    font-size: x-large;
+    font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: left;
+    align-items: left;
+
+}
+
+div.transparentBorder {
+    border: 2px solid transparent;
+    border-radius: 12px;
+    display: inline-block;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+input.navigatorBtn {
+    border: 2px solid ;
+    border-radius: 12px;
+    background-color: #2caed5;
+    font-size: xx-large;
+    color: white;
+
+    text-decoration-style: solid;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+div.main {
+    border: 2px solid lightblue;
+    border-radius: 12px;
+    display: inline-block;
+    padding: 20px;
+    padding-top: 25px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+div.seller {
+    border: 2px solid white;
+    border-radius: 12px;
+    display: inline-block;
+    padding: 5px;
+    padding-top: 5px;
+    margin: 0 auto;
+    background-color: white;
+
+}
+
+img {
+    border-radius: 100%;
+}
+
+.colorPallet_base {
+
+    width: 250px;
+    height: 120px;
+}
+
+.colorPallet_small {
+    width: 20px;
+    height: 20px;
+}
+
+.colorPallet_pack {
+    float: left;
+    width: 35px;
+    height: 85px;
+
+}
+
+
+
+.brownBackDark {
+    background: var(--brownBackDark);
+}
+.brownBack {
+    background: var(--brownBack);
+}
+.brownBackLight {
+    background: var(--brownBackLight);
+}
+
+
+.orangeMainDark  {
+    background: var(--orangeMainDark);
+}
+
+.orangeMain {
+    background: var(--orangeMain);
+}
+.orangeMainLight{
+    background: var(--orangeMainLight);
+}
+
+
+
+.yellowMainDark  {
+    background: var(--yellowMainDark);
+}
+.yellowMain {
+    background: var(--yellowMain);
+}
+.yellowMainLight {
+    background: var(--yellowMainLight);
+}
+
+
+.blueMainDark {
+    background: var(--blueMainDark);
+}
+
+.blueMain {
+    background: var(--blueMain);
+}
+.blueMainLight {
+    background: var(--blueMainLight);;
+}
+
+
+
+
+
+.highlightGreenDark  {
+    background: var(--highlightGreenDark);
+}
+
+.highlightGreen  {
+    background: var(--highlightGreen);
+}
+
+.highlightGreenLight  {
+    background: var(--highlightGreenLight);
+}
+
+
+
+
+.highlightBlueDark {
+    background: var(--highlightBlueDark);
+}
+.highlightBlue {
+    background: var(--highlightBlue);
+}
+.highlightBlueLight {
+    background: var(--highlightBlueLight);
+}
+
