@@ -1,0 +1,9 @@
+#2d1f21 dark background
+#eb9742 main orange
+#ebb941 main yellow
+#50989e main blue	
+
+highlight green #72eb64	
+HIGHLIGHT BLUE  #647deb	
+
+https://coolors.co/2d1f21-eb9742-ebb941-50989e-72eb64
