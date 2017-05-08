@@ -11,42 +11,61 @@
         }
 
         function getResume() {
-            window.location.href = 'https://github.com/Leifcnp/Leifcnp.com/raw/master/WebsiteResumeMay5th2017.pdf';
+            window.location.href = '../WebsiteResumeMay5th2017.pdf';
         }
 
         function setup() {
+            //nothing much yet
             var w = window.innerWidth;
             var h = window.innerHeight;
         }
 
 
     </script>
+
+
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto">
+
     <link href="style.css" type="text/css" rel="stylesheet"/>
+
+
+
 </head>
 <body onload="setup()">
 
 
-<div id="container" class="main ">
-    <div id="navigator" class=transparentBorder>
-        <input id="btnScheduler"
+<div id="container" class="main shadow">
+    <div  class="seller main">
+
+
+        <p   width = "200px">
+
+           Leif Pedersen
+
+
+        </p>
+    </div>
+    <div id="navigator" class="transparentBorder ">
+        <input id="btnresume"
                type="button"
-               class="navigatorBtn shadow"
+               class="navigatorBtn "
                value="Resume"
                onclick="getResume()">
 
-        <input id="btnExplorers"
+        <input id="btnGit"
                type="button"
-               class="navigatorBtn shadow"
+               class="navigatorBtn"
                value="Github"
                onclick="getGitHub()">
     </div>
 
 </div>
 <br><br>
-<div id="holdMe" class="seller">
+<div id="holdMe" class="seller shadow">
 
 
-    <p id="Seller" class="seller" width = "100px">
+    <p id="Seller"  width = "100px">
 
         I am a second-year computer science student at the University of British Columbia.
         I keep myself busy with school, design teams, personal projects and sailing.
