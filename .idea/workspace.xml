@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ed53f6f-e82e-4c2b-869d-4e751df462de" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNAME" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Colors/compTo1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Colors/hex colors.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Colors/palette (1).scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Colors/palette (2).scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Colors/palette.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TesterPages/PlayPen.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TesterPages/TesterPage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TesterPages/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UBCInsight.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UBCinsight.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TesterPages/NEW/index.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/smallMe.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ucbcrocketSmall.png" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -36,30 +19,31 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="3" />
+          <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="53" />
+          <entry key="html" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="53" />
+          <entry key="HTML" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="1" />
+          <entry key="html" value="2" />
           <entry key="md" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="1" />
+          <entry key="HTML" value="2" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -70,16 +54,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+            <state relative-caret-position="256">
+              <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TesterPages/NEW/newIndex.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Downloads/startbootstrap-freelancer-gh-pages/startbootstrap-freelancer-gh-pages/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16">
+            <state relative-caret-position="176">
               <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
@@ -89,8 +78,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="640">
-                <caret line="40" column="61" lean-forward="true" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+              <first_editor relative-caret-position="112">
+                <caret line="7" selection-start-line="7" selection-end-line="7" />
               </first_editor>
               <second_editor />
             </state>
@@ -144,22 +133,21 @@
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
-      <path value="$PROJECT_DIR$/package.json" />
-      <path value="$PROJECT_DIR$/vendor/fontawesome-free/package.json" />
+      <path value="$PROJECT_DIR$/TesterPages/NEW/package.json" />
+      <path value="$PROJECT_DIR$/TesterPages/NEW/vendor/fontawesome-free/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="13" />
-    <option name="y" value="184" />
-    <option name="width" value="1562" />
-    <option name="height" value="1014" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="293" />
+    <option name="y" value="23" />
+    <option name="width" value="1563" />
+    <option name="height" value="1015" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -167,10 +155,22 @@
               <item name="Leifcnp.com" type="b2602c69:ProjectViewProjectNode" />
               <item name="Leifcnp.com" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Leifcnp.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Leifcnp.com" type="462c0819:PsiDirectoryNode" />
+              <item name="TesterPages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Leifcnp.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Leifcnp.com" type="462c0819:PsiDirectoryNode" />
+              <item name="TesterPages" type="462c0819:PsiDirectoryNode" />
+              <item name="NEW" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -244,6 +244,7 @@
       <workItem from="1539041109763" duration="647000" />
       <workItem from="1539041986581" duration="41000" />
       <workItem from="1539042069497" duration="68000" />
+      <workItem from="1539042283447" duration="120000" />
     </task>
     <task id="LOCAL-00001" summary="Update text of seller">
       <created>1515865777487</created>
@@ -256,12 +257,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54280000" />
+    <option name="totallyTimeSpent" value="54400000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1753" height="930" extended-state="6" />
+    <frame x="266" y="21" width="1415" height="919" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20908561" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26033357" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -315,30 +317,33 @@
     <entry file="file://$PROJECT_DIR$/ucbcrocketSmall.png" />
     <entry file="file://$USER_HOME$/Downloads/startbootstrap-freelancer-gh-pages/startbootstrap-freelancer-gh-pages/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
+        <state relative-caret-position="176">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="112">
+            <caret line="7" selection-start-line="7" selection-end-line="7" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
       <provider editor-type-id="text-editor">
         <state>
           <caret selection-end-line="74" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="640">
-            <caret line="40" column="61" lean-forward="true" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TesterPages/NEW/newIndex.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+        <state relative-caret-position="256">
+          <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
         </state>
       </provider>
     </entry>
