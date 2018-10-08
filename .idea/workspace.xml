@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ed53f6f-e82e-4c2b-869d-4e751df462de" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/TesterPages/NEW/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TesterPages/NEW/smallMe.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TesterPages/NEW/newIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/TesterPages/NEW/newIndex.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,51 +27,61 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="59" />
+          <entry key="html" value="165" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="59" />
+          <entry key="HTML" value="165" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="2" />
+          <entry key="jpeg" value="1" />
+          <entry key="jpg" value="1" />
           <entry key="md" value="1" />
+          <entry key="yml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="2" />
+          <entry key="Image" value="2" />
           <entry key="PLAIN_TEXT" value="1" />
+          <entry key="YAML" value="1" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
+            <state relative-caret-position="320">
+              <caret line="53" column="30" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TesterPages/NEW/newIndex.html">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="643">
+              <caret line="57" column="13" lean-forward="true" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/startbootstrap-freelancer-gh-pages/startbootstrap-freelancer-gh-pages/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/TesterPages/NEW/img/profile.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TesterPages/NEW/.travis.yml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -103,6 +113,9 @@
       <find>style</find>
       <find>font</find>
       <find>setup</find>
+      <find>clare</find>
+      <find>cla</find>
+      <find>small</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -122,6 +135,7 @@
         <option value="$PROJECT_DIR$/UBCinsight.md" />
         <option value="$PROJECT_DIR$/UBCInsightRedirect.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/TesterPages/NEW/newIndex.html" />
       </list>
     </option>
   </component>
@@ -166,6 +180,13 @@
               <item name="TesterPages" type="462c0819:PsiDirectoryNode" />
               <item name="NEW" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Leifcnp.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Leifcnp.com" type="462c0819:PsiDirectoryNode" />
+              <item name="TesterPages" type="462c0819:PsiDirectoryNode" />
+              <item name="NEW" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -183,11 +204,12 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\leifc\Leifcnp.com" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\leifc\Leifcnp.com\TesterPages" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\leifc\website\Leifcnp.com\TesterPages\NEW" />
+      <recent name="C:\Users\leifc\Leifcnp.com" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -244,7 +266,7 @@
       <workItem from="1539041109763" duration="647000" />
       <workItem from="1539041986581" duration="41000" />
       <workItem from="1539042069497" duration="68000" />
-      <workItem from="1539042283447" duration="120000" />
+      <workItem from="1539042283447" duration="552000" />
     </task>
     <task id="LOCAL-00001" summary="Update text of seller">
       <created>1515865777487</created>
@@ -257,7 +279,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54400000" />
+    <option name="totallyTimeSpent" value="54832000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="266" y="21" width="1415" height="919" extended-state="0" />
@@ -300,7 +322,6 @@
     <entry file="file://$PROJECT_DIR$/Colors/compTo1.txt" />
     <entry file="file://$PROJECT_DIR$/Colors/hex colors.txt" />
     <entry file="file://$PROJECT_DIR$/Colors/palette.scss" />
-    <entry file="file://$PROJECT_DIR$/smallMe.jpeg" />
     <entry file="file://$PROJECT_DIR$/style.css" />
     <entry file="file://$PROJECT_DIR$/TesterPages/style.css" />
     <entry file="file://$PROJECT_DIR$/TesterPages/TesterPage.html" />
@@ -315,13 +336,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/UBCinsight.md" />
     <entry file="file://$PROJECT_DIR$/ucbcrocketSmall.png" />
-    <entry file="file://$USER_HOME$/Downloads/startbootstrap-freelancer-gh-pages/startbootstrap-freelancer-gh-pages/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -337,13 +351,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TesterPages/NEW/newIndex.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="91" column="20" selection-start-line="91" selection-start-column="20" selection-end-line="91" selection-end-column="20" />
+        <state relative-caret-position="320">
+          <caret line="53" column="30" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/startbootstrap-freelancer-gh-pages/startbootstrap-freelancer-gh-pages/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="212" column="22" selection-start-line="212" selection-start-column="22" selection-end-line="212" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TesterPages/NEW/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/smallMe.jpeg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TesterPages/NEW/img/profile.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TesterPages/NEW/newIndex.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="643">
+          <caret line="57" column="13" lean-forward="true" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
         </state>
       </provider>
     </entry>
