@@ -1,1 +1,0 @@
-# UBC Insight REST endpoint is available at leifpedersen.ca/query
