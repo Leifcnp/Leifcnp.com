@@ -1,23 +1,28 @@
-:: source https://gohugo.io/hosting-and-deployment/hosting-on-github/
+:: modified from https://gohugo.io/hosting-and-deployment/hosting-on-github/
 :: usage "./deploy.sh "Your optional commit message"
 :: This script builds the current huge content and pushs changes to github
 
 
-printf "[0;32mDeploying updates to GitHub...[0m
-"
+printf "Deploying updates to GitHub..."
+
 :: Build the project.
-
 hugo -t aafu
-:: Go To Public folder
+git add ./docs
 
-cd public
-:: Add changes to git.
 
-git add .
+if [%1]==[] GOTO NO_P
+
 :: Commit changes.
 
-git commit -m "%msg%"
-
-:: Push source and build repos.
-
+git commit -m "%~1"
 git push origin master
+
+goto END
+
+:NO_P
+:: Commit changes.
+git commit -m "Deployed website changes on %DATE:/=-%@%TIME::=-%"
+git push origin master
+
+
+:END
