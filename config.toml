@@ -1,6 +1,7 @@
 baseURL = "https://www.leifcnp.com/"
 languageCode = "en-us"
 theme = "aafu"
+publishDir = "docs"
 
 [params]
     title = "Leif's Blog"
