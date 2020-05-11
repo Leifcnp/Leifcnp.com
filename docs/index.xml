@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title></title>
-    <link>https://www.leifcnp.com/</link>
+    <link>http://leifcnp.com/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 10 May 2020 17:56:27 -0700</lastBuildDate>
     
-	<atom:link href="https://www.leifcnp.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://leifcnp.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Test post do not read</title>
-      <link>https://www.leifcnp.com/blog/my-first-post/</link>
+      <link>http://leifcnp.com/blog/my-first-post/</link>
       <pubDate>Sun, 10 May 2020 17:56:27 -0700</pubDate>
       
-      <guid>https://www.leifcnp.com/blog/my-first-post/</guid>
+      <guid>http://leifcnp.com/blog/my-first-post/</guid>
       <description>This is a test of the blog generation stack</description>
     </item>
     
