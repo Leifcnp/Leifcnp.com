@@ -44,7 +44,7 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user confirmed the published site and authorized proceeding; Phase 2 continues the external-testing workflow. Future phases still require review.
 
-Phase 1 was published and verified on 2026-09-24 at [http://leifcnp.com/](http://leifcnp.com/). The [deployment verification](artifacts/phase1-deployment/VERIFICATION.md) records the successful Pages run, public asset comparisons, and public desktop/mobile browser checks. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
+Phase 2 is published at [http://leifcnp.com/](http://leifcnp.com/). The [Phase 2 verification](artifacts/phase2/VERIFICATION.md) records the successful Pages run, public asset comparisons, and public desktop/mobile browser checks. The earlier [Phase 1 deployment record](artifacts/phase1-deployment/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 

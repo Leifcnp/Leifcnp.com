@@ -30,4 +30,8 @@ The larger water footprint uses the same 76 segments and 11,552 triangles as Pha
 
 These checks cover browser behavior and mobile viewport layout, not physical phone GPU performance. The embedded VM browser's graphics limitation and the outstanding HTTPS hostname mismatch remain recorded in WEB-001 and the Phase 1 verification. Test using the explicit HTTP URL; no DNS, registrar, or certificate settings changed.
 
-Public Pages verification is pending the release push. The application and generated output are ready for the existing `master` / `docs/` publishing path.
+Application commit `fa2e9ecb8cd46418b0277cbfe6456ac6a8abc5ed` was pushed to `origin/master`. [Pages run 36062066091](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36062066091) completed successfully for that exact SHA. The existing `master` / `docs/` publishing path and custom domain are unchanged.
+
+The public [HTTP site](http://leifcnp.com/) returned HTTP 200. Its HTML, JavaScript, CSS, and favicon match the reviewed local build byte for byte, with expected MIME types; see [public asset evidence](public-assets.json).
+
+The same six-viewport browser suite also passed against the public URL, including motion, keyboard resume, reduced motion, and unavailable-WebGL behavior. See [public browser results](public-checks.json). WEB-005 is complete; Phase 3 awaits user review.

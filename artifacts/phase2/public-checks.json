@@ -1,0 +1,17 @@
+{
+  "url": "http://leifcnp.com/",
+  "browser": "151.0.7922.34",
+  "renderer": "SwiftShader",
+  "checks": [
+    "Wave animation, pause, and keyboard resume pass with islands present.",
+    "desktop 1440×900: four visible labels, no label/header/footer overlap, viewport fits, 44px motion control.",
+    "mobile 390×844: four visible labels, no label/header/footer overlap, viewport fits, 44px motion control.",
+    "small 320×568: four visible labels, no label/header/footer overlap, viewport fits, 44px motion control.",
+    "tall 360×915: four visible labels, no label/header/footer overlap, viewport fits, 44px motion control.",
+    "landscape 844×390: four visible labels, no label/header/footer overlap, viewport fits, 44px motion control.",
+    "wide 2560×1080: four visible labels, no label/header/footer overlap, viewport fits, 44px motion control.",
+    "Reduced motion starts still and explicit Resume works.",
+    "No console or uncaught page errors with WebGL.",
+    "WebGL fallback presents all four island names and hides projected labels."
+  ]
+}

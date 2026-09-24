@@ -56,7 +56,7 @@ Pause after visual and data-contract review. Do not add vessel controls or trigg
 
 ## Implementation status
 
-Implemented on 2026-09-24; release verification is in progress. The user authorized next steps after confirming the live Phase 1 site. Three Luna agents implemented data/validation, world geometry/framing, and DOM labels/shell, with root integration and release verification.
+Completed and published on 2026-09-24. The user authorized next steps after confirming the live Phase 1 site. Three Luna agents implemented data/validation, world geometry/framing, and DOM labels/shell, with root integration and release verification. Application commit `fa2e9ec` passed [Pages deployment](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36062066091); public HTML/assets match the build, and all browser checks pass. Evidence is in [the Phase 2 record](../../artifacts/phase2/VERIFICATION.md). Await review before WEB-006.
 
 ## Integration decisions
 

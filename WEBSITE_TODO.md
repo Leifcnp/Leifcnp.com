@@ -35,18 +35,21 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-005 — Phase 2: add mock island data, primitive landmasses, and visible docking zones.
-  - Acceptance criteria: Separate typed data defines unique names, coordinates, radius, category, and mock portfolio content. Low-poly island geometry and visible zone rings agree with those coordinates/radii. All landmarks are distinct, readable, and compatible with water sampling. No vessel or Phase 4 interface yet.
-  - Authorization (2026-09-24): User confirmed the published site is up and authorized proceeding with next steps. Implement and verify Phase 2, publish it to the existing external testing site, then stop at the next phase review gate.
-  - Progress: Integrated four typed landmarks, exact-radius docking rings, static labels, per-island camera framing, and readable fallback. Eight data/geometry tests and the production build pass. Browser checks cover six viewport sizes, motion, reduced motion, and fallback; visual review corrected label placement and water clipping on phones.
-  - Next step: Publish the verified Phase 2 build, verify the exact Pages deployment and public assets, and record completion before returning for island-layout review.
-  - Plan: [plans/WEB-005/plan.md](plans/WEB-005/plan.md).
+No tasks in progress. Phase 2 awaits user review.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-005 — Phase 2: add mock island data, primitive landmasses, and visible docking zones.
+  - Acceptance criteria: Separate typed data defines unique names, coordinates, radius, category, and mock portfolio content. Low-poly island geometry and visible zone rings agree with those coordinates/radii. All landmarks are distinct, readable, and compatible with water sampling. No vessel or Phase 4 interface yet.
+  - Authorization (2026-09-24): User confirmed the published site is up and authorized proceeding with next steps. Implement and verify Phase 2, publish it to the existing external testing site, then stop at the next phase review gate.
+  - Completed: 2026-09-24. Three Luna agents implemented the island data, primitive world, and static labels; root integrated responsive framing and completed release review. Application commit `fa2e9ec` is published on `origin/master`; [Pages run 36062066091](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36062066091) completed successfully for that SHA.
+  - Verification: Eight data/geometry tests and strict production build pass. Local and public Chromium checks cover six viewport sizes, motion/keyboard/reduced-motion behavior, and WebGL fallback. Public HTML, JS, CSS, and favicon match the generated output byte for byte. See [verification](artifacts/phase2/VERIFICATION.md), [public browser checks](artifacts/phase2/public-checks.json), and [public asset evidence](artifacts/phase2/public-assets.json).
+  - Review gate: Phase 2 is live at `http://leifcnp.com/`. Await island-layout feedback before WEB-006 vessel mechanics. Physical phone GPU performance and the existing WEB-001 HTTPS issue remain outside this verification.
+  - Plan: [plans/WEB-005/plan.md](plans/WEB-005/plan.md).
 
 - [x] WEB-009 — Remove obsolete Hugo files and publish Phase 1 for external testing.
   - Authorization: On 2026-09-24 the user explicitly requested pushing Phase 1 to `leifcnp.com` for mobile/web testing and removing obsolete Hugo files.

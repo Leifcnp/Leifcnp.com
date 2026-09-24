@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-Deliver **Phase 2 only**: four mock, data-driven island landmasses, visible docking boundaries, and readable static labels on the existing water field. The user confirmed the live Phase 1 site and authorized proceeding on 2026-09-24. Continue the existing external-testing workflow by publishing the verified Phase 2 slice, then stop for review before boat mechanics.
+**Phase 2 is complete and published**: four mock, data-driven island landmasses, visible docking boundaries, and readable static labels on the existing water field. The user confirmed the live Phase 1 site and authorized proceeding on 2026-09-24. The [verification record](artifacts/phase2/VERIFICATION.md) covers the successful Pages deployment, matching public assets, eight unit tests, and six-viewport browser checks. Stop for review before boat mechanics.
 
 The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has a detailed `plan.md` below. Future phases are designed now and implemented only after review of their predecessor.
 
