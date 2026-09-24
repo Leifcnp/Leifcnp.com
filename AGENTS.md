@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is in final verification: bounded wave forces, hull response, and contact effects. WEB-011 offshore storm water stays in Backlog until this release is reviewed. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. WEB-011 offshore storm water stays in Backlog until this release is reviewed. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -49,6 +49,8 @@
 - Phase 4 public verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Exact-SHA Pages, byte-identical public assets, and the public interaction suite passed.
 
 - Phase 5 public verification: [artifacts/phase5/VERIFICATION.md](artifacts/phase5/VERIFICATION.md), including custom-geometry provenance, hull/landmark bounds, pooled wake lifecycle, and measured VM rendering counts/timings. Exact-SHA Pages, byte-identical public assets, and public interaction checks passed.
+
+- WEB-010 / Phase 6 verification: [artifacts/phase6/VERIFICATION.md](artifacts/phase6/VERIFICATION.md), including shared wave timing/forces, real hull pose, contact effects, scanner mooring/manual release, and exact-SHA public deployment checks.
 
 ### Implementation discipline
 

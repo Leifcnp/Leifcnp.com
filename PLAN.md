@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 6 / WEB-010 is in final verification**: shared wave forces, hull-sized water support, speed pitch/turn heel, and wave/turn-sensitive contact foam. The user accepted Phase 5 and requested the next level on 2026-09-24. The original custom sailboat and scanner/content interface remain intact. WEB-011 offshore storm water follows review of this release.
+**Phase 6 / WEB-010 is complete and published**: shared wave forces, hull-sized water support, speed pitch/turn heel, and wave/turn-sensitive contact foam. The user accepted Phase 5 and requested the next level on 2026-09-24. The original custom sailboat and scanner/content interface remain intact. The local/public verification passed; see [Phase 6 evidence](artifacts/phase6/VERIFICATION.md). WEB-011 offshore storm water follows review of this release.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -36,7 +36,12 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-007 | 4 | Proximity, persistent HUD, drawer, scanner autopilot | User review of Phase 3 | [plan](plans/WEB-007/plan.md) |
 | WEB-008 | 5 | Sailboat, landmarks, wake and visual polish | Approved after Phase 4 | [plan](plans/WEB-008/plan.md) |
 | WEB-010 | Follow-up | Stronger boat/wave coupling and contact | Phase 5 visual review | [plan](plans/WEB-010/plan.md) |
-| WEB-011 | Follow-up | Offshore storm and inward recovery | WEB-010 review | [plan](plans/WEB-011/plan.md) |
+| WEB-011 | Next review-gated phase | Offshore storm and inward recovery | WEB-010 review | [plan](plans/WEB-011/plan.md) |
+| WEB-012 | Future brainstorm | Wind propulsion, mainsail trim, tacking | Existing queue and controls design review | [plan](plans/WEB-012/plan.md) |
+| WEB-013 | Future brainstorm | More interactive water/wake and stronger boat feedback | WEB-011 and baseline comparison | [plan](plans/WEB-013/plan.md) |
+| WEB-014 | Future brainstorm | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
+| WEB-015 | Future brainstorm | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
+| WEB-016 | Future brainstorm | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 
 ## Team and integration ownership
 
@@ -58,3 +63,8 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 ## Change discipline
 
 Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-010 strengthens boat/water coupling while preserving established controls, content, scanner routes, and custom artwork. Offshore storm water stays in WEB-011 for the next review gate. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+
+
+## Brainstorming intake — 2026-09-24
+
+The user explicitly requested saving WEB-012–WEB-016 for future work without jumping the current queue. WEB-011 remains next after WEB-010 sailing-feel review. These entries are planning records, not authorization to implement them immediately. Continue using Luna sub-agents for bounded implementation/planning tasks with explicit file ownership; retain root integration and one-phase review gates.

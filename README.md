@@ -44,7 +44,7 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user approved WEB-010 after reviewing the custom sailboat phase; this continues the external-testing workflow. Future phases still require review.
 
-Phase 5 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase5/VERIFICATION.md). That reviewed release is the baseline for WEB-010, now in final verification. The earlier [Phase 3 verification](artifacts/phase3/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
+Phase 6 / WEB-010 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase6/VERIFICATION.md). Stronger water interaction is ready for sailing-feel review. The earlier [Phase 5 evidence](artifacts/phase5/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 
@@ -70,7 +70,7 @@ See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per
 
 ## Verification and VM graphics
 
-Phase 5 passes 41 native tests plus source-browser fixtures for custom boat pose/geometry, landmark bounds, wake pooling/disposal, and scanner lifecycle. The production and public browser suites cover six viewport sizes, scanner travel and cancellation, content/focus, real multi-touch, pause/reset/reduced motion, and WebGL fallback. Measured renderer counts and software-VM frame timings are recorded in [artifacts/phase5/VERIFICATION.md](artifacts/phase5/VERIFICATION.md). Earlier phase evidence is retained as history.
+Phase 6 passes 52 native tests plus source-browser checks for wave-force timing, scanner mooring and handoff, actual hull pose/geometry, contact response, wake lifecycle, and disposal. Production and public browser suites cover six viewport sizes, scanner travel and cancellation, content/focus, real multi-touch, pause/reset/reduced motion, and WebGL fallback. Renderer counts and software-VM frame timings are recorded in [artifacts/phase6/VERIFICATION.md](artifacts/phase6/VERIFICATION.md). Earlier phase evidence is retained as history.
 
 See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mobile screenshots. The production scene passed browser checks in Chromium 151 using SwiftShader software rendering. The Codex embedded browser in this VirtualBox guest failed WebGL context creation through Mesa; it correctly displays the fallback instead of the scene. Open the preview in a browser with working WebGL2 to review live motion. No browser or VM graphics settings were changed.
 

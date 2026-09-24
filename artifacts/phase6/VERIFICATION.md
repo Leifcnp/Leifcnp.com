@@ -2,7 +2,7 @@
 
 ## Release scope
 
-Stronger boat–water interaction is implemented and locally verified. Publication is the final pending step. Three Luna agents supplied the bounded wave force, hull response, and contact effects; root integrated, reviewed, corrected wave-time contact sampling and simulation-clock rounding, and verified the release.
+Stronger boat–water interaction is implemented, published, and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). Application commit `8544bb8f141d2f836654b3b9d763d5829bddd0e5` passed [Pages run 36072041419](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36072041419). Three Luna agents supplied the bounded wave force, hull response, and contact effects; root integrated, reviewed, corrected wave-time contact sampling and simulation-clock rounding, and verified the release.
 
 The custom boat geometry remains unchanged. No imported models, textures, or art were added; see [provenance](../../ASSETS.md). The offshore storm stays in WEB-011 for review after this release.
 
@@ -35,6 +35,8 @@ Observed desktop rendering: 50 calls, 14,005 triangles; mobile viewport: 41 call
 - [Wake lifecycle](wake-lifecycle.json) and [wave/turn contact](contact-checks.json)
 - [Integrated effects and rendering measurements](effects-checks.json)
 - [Build asset hashes](build-assets.json)
+- [Exact-SHA deployment and public asset hashes](public-assets.json)
+- [Public interface checks](public-checks.json)
 - [Desktop sailing](sailing-desktop.png), [mobile sailing](sailing-mobile.png), [small-screen drawer](small-drawer.png)
 
-Publication will use the established `master` / tracked `docs/` Pages path. No DNS/domain changes, Hugo files, dependencies, or third-party artwork are involved. Complete exact-SHA Pages/public-asset/browser verification before marking WEB-010 Done; stop before WEB-011.
+Publication used the established `master` / tracked `docs/` Pages path. The exact-SHA deployment succeeded; public HTML, JS, CSS, and favicon match local output byte for byte, and the full public browser suite passes. No DNS/domain changes, Hugo files, dependencies, or third-party artwork are involved. WEB-010 is Done. Stop for sailing-feel review before WEB-011.

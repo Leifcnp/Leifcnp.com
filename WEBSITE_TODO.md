@@ -18,20 +18,48 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 - [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
   - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
   - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
-  - Progress: Backlog after WEB-010 so storm visuals and boat forces share one wave model. No storm implementation in Phase 5.
+  - Progress: Backlog after WEB-010 so storm visuals and boat forces share one wave model. No storm implementation in Phase 5 or WEB-010.
   - Next step: After the stronger boat/water coupling is reviewed, choose storm bounds from the camera footprint and playable world, prototype a gradual storm band, and verify inward recovery across headings and speeds.
   - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
 
+- [ ] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
+  - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.
+  - Acceptance criteria: Wind direction and sail trim are visible and controllable on keyboard/touch. Propulsion depends coherently on wind, heading, and mainsail angle; direct upwind sailing loses drive and a sequence of tacks makes progress. Preserve safe scanner navigation, accessible content, pause/reset/reduced motion, and the original custom boat/sail geometry. Explain the new helm with concise visitor-facing cues.
+  - Progress: Backlog only. Keep WEB-011 storm next; scope/tuning is reviewed before replacing the approved controls. Coordinate turn authority with WEB-014.
+  - Next step: After the current queue/review gates, prototype a deterministic wind/sail force model and approachable tacking controls, then compare feel on desktop/touch before integration.
+  - Plan: [plans/WEB-012/plan.md](plans/WEB-012/plan.md).
+
+- [ ] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.
+  - Requested (2026-09-24): Brainstorming feedback: the water background feels too static, does not affect the boat enough, and wake/waves should feel interactive.
+  - Acceptance criteria: Increase readable surface movement and boat response together using the shared field, with local wake/contact/displacement reacting to vessel motion. Demonstrate a noticeable improvement over WEB-010's deliberately modest baseline while keeping steering usable, hull contact coherent, shoreline safety, bounded resources, pause/reset, and reduced-motion access. Coordinate calm water and the WEB-011 storm rather than introducing disconnected wave phases.
+  - Progress: Future follow-up to completed WEB-010, not a reopening or interruption of its release. Keep storm work ahead in the queue; align with wind-driven sailing if WEB-012 has landed.
+  - Next step: Review a few bounded amplitude/response/contact prototypes after WEB-011, measure visual and physical differences from WEB-010, and select the simplest satisfying model.
+  - Plan: [plans/WEB-013/plan.md](plans/WEB-013/plan.md).
+
+- [ ] WEB-014 — Give the boat tighter, more responsive turns.
+  - Requested (2026-09-24): Brainstorming note: “We need to be able to make tighter turns.”
+  - Acceptance criteria: Reduce the practical turning radius and improve low-speed harbour manoeuvring without instant spins, uncontrolled lateral sliding, land penetration, or loss of keyboard/touch consistency. Verify speed-dependent rudder response and safe scanner/manual handoff; tune tacking alongside WEB-012 when wind propulsion is introduced.
+  - Progress: Backlog only; no steering changes in the current release. Keep WEB-011 next and coordinate later tuning with WEB-012/WEB-013.
+  - Next step: Measure current turn radius and response at several speeds, prototype bounded rudder/yaw/drag adjustments, and review tighter turns on desktop and touch.
+  - Plan: [plans/WEB-014/plan.md](plans/WEB-014/plan.md).
+
+- [ ] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
+  - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
+  - Acceptance criteria: The scene and boat remain visible through the open content drawer while text, links, focus, and controls retain readable contrast. Preserve persistent scanner access, independent scrolling, close/focus behavior, touch targets, reduced motion, and WebGL fallback. Check every category at desktop/mobile sizes and against bright/dark water; avoid costly effects by default.
+  - Progress: Backlog only; no opacity or interface changes in the current release. Keep the current storm queue ahead of this future polish.
+  - Next step: Compare a small range of translucent surface treatments against sailing footage and long content, then choose a readable version for review.
+  - Plan: [plans/WEB-015/plan.md](plans/WEB-015/plan.md).
+
+- [ ] WEB-016 — Zoom into manually reached islands and reveal dockable submenu harbours.
+  - Requested (2026-09-24): Brainstorming note: when a visitor manually navigates to an island, zoom in and show each section submenu as a smaller dockable harbour.
+  - Acceptance criteria: Manual island arrival transitions smoothly to a useful local view, with data-driven smaller harbours for content subsections. Each harbour has legible identity, a safe reachable docking area, and the appropriate submenu content. Define entering/leaving, zoom-out/reset, and switching islands without camera thrashing; preserve scanner/direct-content access, collision safety, mobile framing, and instant reduced-motion alternatives.
+  - Progress: Backlog exploration only. This extends island data, camera/proximity, shoreline geometry, and content navigation; it does not belong in the current wave release or displace WEB-011.
+  - Next step: Design one island/subsection prototype after the queued phases, resolve camera/trigger and safe harbour-route contracts, and review it before applying the pattern to all islands.
+  - Plan: [plans/WEB-016/plan.md](plans/WEB-016/plan.md).
+
 ## In progress
 
-- [ ] WEB-010 — Deepen the boat’s physical and visible interaction with waves.
-  - Requested (2026-09-24): “more wave/water interaction between the boat and the water.” This is a follow-up to Phase 5’s baseline wake/foam, not a prerequisite for that release.
-  - Acceptance criteria: The hull visibly meets the sampled water and responds coherently to swell, speed, and turns. Add bounded wave-driven movement/response and contact effects without unpredictable steering, land penetration, or mismatch between visual water and the boat. Tune keyboard/touch feel, scanner handoff, pause/reset, reduced motion, and mobile cost together; preserve deterministic finite state.
-  - Authorization (2026-09-24): User accepted the published Phase 5 and requested “lets go to the next level”; proceed with WEB-010 and the established external-testing release workflow.
-  - Progress: Luna agents are implementing shared wave forces, bounded hull response, and pooled contact effects; root owns simulation integration, regression verification, and publishing.
-  - Next step: Integrate fixed-step wave forcing and lifecycle behavior, verify steering/collisions/scanner/reduced motion, review desktop/mobile visuals, and publish for review before WEB-011.
-  - Plan: [plans/WEB-010/plan.md](plans/WEB-010/plan.md).
-
+No tasks in progress. WEB-010 / Phase 6 awaits sailing-feel review.
 
 ## Blocked
 
@@ -39,12 +67,21 @@ No blocked tasks.
 
 ## Done
 
+- [x] WEB-010 — Deepen the boat’s physical and visible interaction with waves.
+  - Requested (2026-09-24): “more wave/water interaction between the boat and the water.” This is a follow-up to Phase 5’s baseline wake/foam, not a prerequisite for that release.
+  - Acceptance criteria: The hull visibly meets the sampled water and responds coherently to swell, speed, and turns. Add bounded wave-driven movement/response and contact effects without unpredictable steering, land penetration, or mismatch between visual water and the boat. Tune keyboard/touch feel, scanner handoff, pause/reset, reduced motion, and mobile cost together; preserve deterministic finite state.
+  - Authorization (2026-09-24): User accepted the published Phase 5 and requested “lets go to the next level”; proceed with WEB-010 and the established external-testing release workflow.
+  - Completed: 2026-09-24. Three Luna agents and root integration delivered bounded wave-driven drift, hull support sampling, speed pitch/turn heel, and wave/turn-sensitive contact foam. The original custom model and 96-instance effect budget are preserved. Application commit `8544bb8` is published on `origin/master`; [Pages run 36072041419](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36072041419) succeeded for the exact SHA.
+  - Verification: 52 native tests, strict production build, identical 30/60/120 Hz world trajectories, 5,784 collision-safe samples, actual hull/controller checks, pooled-effect lifecycle, and local/public six-layout browser checks passed. Public assets match the build byte for byte. See [verification](artifacts/phase6/VERIFICATION.md), [public checks](artifacts/phase6/public-checks.json), and [deployment evidence](artifacts/phase6/public-assets.json).
+  - Review gate: Live for sailing-feel review. Scanner arrivals stay alongside islands until helm input; reduced motion suppresses added forces/pose cues/foam. WEB-011 storm water remains in Backlog.
+  - Plan: [plans/WEB-010/plan.md](plans/WEB-010/plan.md).
+
 - [x] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
   - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
   - Authorization (2026-09-24): User approved “go with next phase” while Phase 4 publication was being verified. Continue the established external-testing workflow.
   - Completed: 2026-09-24. Three Luna agents and root integration delivered a custom procedural sailboat, grounded docks/beacons, and a fixed 96-instance wake/foam pool. No downloaded models, textures, or third-party art assets were used; see [provenance](ASSETS.md). Application commit `57e891f` is published on `origin/master`; [Pages run 36070256359](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36070256359) succeeded for the exact SHA.
   - Verification: Forty-one native tests, strict production build, boat/landmark bounds and pose checks, pooled-effect lifecycle/disposal checks, and local/public interaction checks across six viewports passed. Observed rendering stayed within the documented geometry/draw-call budget; software-VM frame timings and physical-phone limitations are recorded. Public HTML/assets match byte for byte. See [verification](artifacts/phase5/VERIFICATION.md), [public checks](artifacts/phase5/public-checks.json), and [asset evidence](artifacts/phase5/public-assets.json).
-  - Review gate: Phase 5 is live for visual/interaction review. WEB-010 stronger boat/wave coupling and WEB-011 storm water are planned follow-ups; neither was implemented in this release.
+  - Review gate: User accepted Phase 5 and authorized WEB-010 on 2026-09-24. Wave coupling is now recorded separately below; storm water remains WEB-011. Neither was implemented in the original Phase 5 release.
   - Plan: [plans/WEB-008/plan.md](plans/WEB-008/plan.md).
 
 - [x] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.

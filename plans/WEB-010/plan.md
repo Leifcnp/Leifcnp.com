@@ -51,8 +51,8 @@ Review improved sailing feel and the motion/performance record before WEB-011 in
 - [x] Verify wave-force signs/bounds, temporal sampling and frame-rate behavior, collision handling, hull contact, and resource lifecycle.
 - [x] Verify all six desktop/mobile layouts, keyboard/multitouch, scanner arrival/cancellation, pause/reset, hidden tabs, reduced motion, and WebGL fallback.
 - [x] Inspect desktop/mobile sailing visuals and record renderer cost with VM limitations.
-- [ ] Build, inspect generated output/domain metadata, commit and push the focused release, verify exact-SHA Pages and public assets/interactions.
-- [ ] Record verification, update canonical task status, and stop before the storm phase.
+- [x] Build, inspect generated output/domain metadata, commit and push the focused release, verify exact-SHA Pages and public assets/interactions.
+- [x] Record verification, update canonical task status, and stop before the storm phase.
 
 ## Integration contract
 
@@ -67,3 +67,7 @@ Review improved sailing feel and the motion/performance record before WEB-011 in
 - Root integrated a shared fixed clock, corrected the floating-point accumulator threshold, and added horizontal mooring for completed scans. Manual input releases mooring; added drift/pose effects/foam are suppressed by reduced motion.
 - 52 native tests and strict production build pass. Actual controller/source-world tests cover 5,784 finite, collision-safe states, identical 30/60/120 Hz trajectories, manual handoff, mooring, pause/visibility, reduced motion, reset, and disposal.
 - Six-layout production browser checks pass, including real two-finger touch and fallback content. Original art/resource budget remains unchanged at 38 geometries, zero textures, and up to 50 observed draw calls. Full evidence: [Phase 6 verification](../../artifacts/phase6/VERIFICATION.md).
+
+## Publication evidence
+
+Application commit `8544bb8f141d2f836654b3b9d763d5829bddd0e5` passed [exact-SHA Pages run 36072041419](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36072041419). Public HTML, JavaScript, CSS, and favicon match local output byte for byte; the full public six-layout interaction suite passes. See [public assets](../../artifacts/phase6/public-assets.json) and [public checks](../../artifacts/phase6/public-checks.json). WEB-010 is Done; stop for sailing-feel review before WEB-011.
