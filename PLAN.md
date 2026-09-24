@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 4 is authorized and in progress**: proximity prompts, an always-accessible scanner navigation bar, a non-modal content drawer, and safe interruptible autopilot. The user confirmed that basic controls work on 2026-09-24 and requested this next phase. Preserve the verified Phase 3 controls and publish the reviewed Phase 4 result for desktop/mobile testing. Stop before Phase 5 art and wake effects.
+**Phase 5 is authorized and in progress**: a bespoke low-poly sailboat, primitive docks/beacons, and bounded wake/foam. The user approved proceeding on 2026-09-24 and requested stronger water interaction plus an offshore storm area as later tasks. Complete the visual phase, publish it, and stop for review. WEB-010 deepens boat/wave coupling after that review; WEB-011 then adds the storm boundary.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -20,7 +20,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 4 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 5 remains gated on review of the interactions.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 5 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Further wave/storm implementation remains gated on review of the visual phase.
 
 ## Work packages and review gates
 
@@ -34,14 +34,16 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-005 | 2 | Mock islands, landmasses, docking zones | User review of Phase 1 | [plan](plans/WEB-005/plan.md) |
 | WEB-006 | 3 | Primitive vessel, steering, buoyancy, tracking | User review of Phase 2 | [plan](plans/WEB-006/plan.md) |
 | WEB-007 | 4 | Proximity, persistent HUD, drawer, scanner autopilot | User review of Phase 3 | [plan](plans/WEB-007/plan.md) |
-| WEB-008 | 5 | Sailboat, landmarks, wake and visual polish | User review of Phase 4 | [plan](plans/WEB-008/plan.md) |
+| WEB-008 | 5 | Sailboat, landmarks, wake and visual polish | Approved after Phase 4 | [plan](plans/WEB-008/plan.md) |
+| WEB-010 | Follow-up | Stronger boat/wave coupling and contact | Phase 5 visual review | [plan](plans/WEB-010/plan.md) |
+| WEB-011 | Follow-up | Offshore storm and inward recovery | WEB-010 review | [plan](plans/WEB-011/plan.md) |
 
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna navigation agent: pure route planner, scanner advancement, proximity hysteresis, and behavioral tests.
-- Luna world agent: scene command adapter, scanner/physics transitions, camera following, and motion/lifecycle semantics.
-- Luna UI agent: persistent HUD, typed content rendering, drawer focus, proximity prompt, responsive layout, and input isolation.
+- Luna sailboat agent: owned low-poly hull/deck/mast/sails, preserving the vessel pose and collision contract.
+- Luna landmark agent: primitive docks and beacons within existing collision envelopes, plus geometry/disposal checks.
+- Luna wake agent: bounded pooled/instanced foam with shared-water placement and lifecycle controls.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -55,4 +57,4 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 4 adds HUD category links, proximity actions, content drawers, and scanner travel. Existing vessel mechanics stay intact; final artwork and wake remain in Phase 5. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 5 refines boat/island geometry and adds visual wake while preserving the established interaction contracts. Stronger wave forces and offshore storm water remain in their separate follow-up plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.

@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 3 is published and verified. On 2026-09-24 the user confirmed controls work and approved Phase 4 proximity/scanner/content interaction; implement and publish that phase. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 4 is published and publicly verified. On 2026-09-24 the user approved Phase 5 sailboat/island/wake refinement. Implement and publish that phase; stronger boat/wave interaction and an offshore storm boundary are scheduled separately as WEB-010 and WEB-011. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -46,15 +46,15 @@
 - Phase 2 verification: [artifacts/phase2/VERIFICATION.md](artifacts/phase2/VERIFICATION.md), including six viewport sizes, readable projected labels, data/geometry tests, and unchanged custom-domain metadata.
 - Phase 3 verification: [artifacts/phase3/VERIFICATION.md](artifacts/phase3/VERIFICATION.md), including keyboard/multitouch, wave pose, pause/reset, camera following/coverage, and six viewport sizes.
 
-- Phase 4 local verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Publication verification is pending.
+- Phase 4 public verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Exact-SHA Pages, byte-identical public assets, and the public interaction suite passed.
 
 ### Implementation discipline
 
 - Build mechanics intentionally from the ground up; do not introduce an all-in-one game template.
-- Use primitive geometry through Phase 4. Phase 4 adds proximity, scanner navigation, and content drawers around the established vessel/physics/camera. Final sailboat art, island details, and wake remain in Phase 5.
+- Phase 5 replaces the proxy vessel and adds island details and wake using owned low-poly geometry. Preserve approved physics/navigation/UI contracts. Stronger wave forces and the storm region stay in WEB-010/WEB-011 until the visual phase is reviewed.
 - Do not edit generated files under `docs/` by hand; regenerate them with the package build command.
 - Install dependencies using the checked-in package-manager lockfile; consult README.md for setup and commands.
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- The instruction to proceed continued the published external-testing workflow: Phase 4 is authorized through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for interaction review before Phase 5. A routine local build alone is not blanket authorization for unrelated future publication.
+- The instruction to proceed continued the published external-testing workflow: Phase 5 is authorized through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for visual review before the subsequent wave/storm tasks. A routine local build alone is not blanket authorization for unrelated future publication.

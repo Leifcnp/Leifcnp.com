@@ -1,0 +1,20 @@
+{
+  "url": "http://leifcnp.com/",
+  "browser": "151.0.7922.34",
+  "renderer": "SwiftShader",
+  "checks": [
+    "Every category opens its referenced mock content; drawer is non-modal, manages initial/return focus, and excludes placeholder links.",
+    "desktop 1440×900: drawer and HUD fit, every navigation target remains clickable and keyboard reachable, visible buttons ≥44px.",
+    "mobile 390×844: drawer and HUD fit, every navigation target remains clickable and keyboard reachable, visible buttons ≥44px.",
+    "small 320×568: drawer and HUD fit, every navigation target remains clickable and keyboard reachable, visible buttons ≥44px.",
+    "tall 360×915: drawer and HUD fit, every navigation target remains clickable and keyboard reachable, visible buttons ≥44px.",
+    "landscape 844×390: drawer and HUD fit, every navigation target remains clickable and keyboard reachable, visible buttons ≥44px.",
+    "wide 2560×1080: drawer and HUD fit, every navigation target remains clickable and keyboard reachable, visible buttons ≥44px.",
+    "Content opens during travel; drawer reading keys do not steer; a new selection replaces travel and direct steering cancels it.",
+    "Autopilot arrival exposes docking prompt; E and Explore both open content; reset clears proximity.",
+    "Real simultaneous touch still steers; touch scanner selection immediately opens content.",
+    "Reduced motion places scanner destination immediately, keeps content usable, and leaves water/boat/camera paused.",
+    "With WebGL unavailable, all four scanner categories and their content remain usable.",
+    "No script or console errors with WebGL."
+  ]
+}

@@ -44,7 +44,7 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user approved Phase 4 after confirming the vessel controls work; this continues the external-testing workflow. Future phases still require review.
 
-Phase 4 release verification is in progress for [http://leifcnp.com/](http://leifcnp.com/). The earlier [Phase 3 verification](artifacts/phase3/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
+Phase 4 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase4/VERIFICATION.md). Phase 5 geometry/wake refinement has now been approved. The earlier [Phase 3 verification](artifacts/phase3/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 
@@ -65,12 +65,12 @@ The content drawer is non-modal: top navigation stays accessible while reading. 
 
 Pause cancels scanner travel at the current position. Category navigation while paused or with reduced motion places the boat/camera at the safe destination immediately without resuming animation. If WebGL is unavailable, the same category navigation and content remain usable. All entries remain clearly marked placeholders in the separate content file. The vessel remains a primitive block until the next art phase.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop for Phase 4 interaction review before implementing the sailboat, island details, and wake.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Phase 5 sailboat, island details, and wake are now in progress. Stronger boat–wave coupling is planned as WEB-010, followed by the offshore storm boundary as WEB-011.
 
 
 ## Verification and VM graphics
 
-Phase 4 adds pure route-safety, scanner-state, and proximity tests to the existing data, geometry, steering, input, and camera checks. Browser verification covers six viewport sizes, scanner travel and cancellation, content and focus behavior, keyboard and real multi-touch input, pause/reset/reduced motion, and WebGL fallback. The release evidence will be recorded in `artifacts/phase4/`. [Phase 2 evidence](artifacts/phase2/VERIFICATION.md) is retained as history.
+Phase 4 adds pure route-safety, scanner-state, and proximity tests to the existing data, geometry, steering, input, and camera checks. Browser verification covers six viewport sizes, scanner travel and cancellation, content and focus behavior, keyboard and real multi-touch input, pause/reset/reduced motion, and WebGL fallback. The release evidence is recorded in [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md). [Phase 2 evidence](artifacts/phase2/VERIFICATION.md) is retained as history.
 
 See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mobile screenshots. The production scene passed browser checks in Chromium 151 using SwiftShader software rendering. The Codex embedded browser in this VirtualBox guest failed WebGL context creation through Mesa; it correctly displays the fallback instead of the scene. Open the preview in a browser with working WebGL2 to review live motion. No browser or VM graphics settings were changed.
 

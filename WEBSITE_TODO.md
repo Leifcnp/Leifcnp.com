@@ -15,26 +15,43 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
-  - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
-  - Progress: Planning only; implementation awaits Phase 4 review.
-  - Next step: After approved interactions, refine geometry and palette, add pooled effects, and verify the complete journey before user review.
-  - Plan: [plans/WEB-008/plan.md](plans/WEB-008/plan.md).
+- [ ] WEB-010 — Deepen the boat’s physical and visible interaction with waves.
+  - Requested (2026-09-24): “more wave/water interaction between the boat and the water.” This is a follow-up to Phase 5’s baseline wake/foam, not a prerequisite for that release.
+  - Acceptance criteria: The hull visibly meets the sampled water and responds coherently to swell, speed, and turns. Add bounded wave-driven movement/response and contact effects without unpredictable steering, land penetration, or mismatch between visual water and the boat. Tune keyboard/touch feel, scanner handoff, pause/reset, reduced motion, and mobile cost together; preserve deterministic finite state.
+  - Progress: Planned after Phase 5 visual review; current shared-wave heave/pitch/roll and new wake remain the baseline.
+  - Next step: Review Phase 5 feedback, choose a small shared wave-force/contact model, implement and test it before the storm boundary depends on it.
+  - Plan: [plans/WEB-010/plan.md](plans/WEB-010/plan.md).
+
+- [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
+  - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
+  - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
+  - Progress: Backlog after WEB-010 so storm visuals and boat forces share one wave model. No storm implementation in Phase 5.
+  - Next step: After the stronger boat/water coupling is reviewed, choose storm bounds from the camera footprint and playable world, prototype a gradual storm band, and verify inward recovery across headings and speeds.
+  - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
 
 ## In progress
 
-- [ ] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.
-  - Acceptance criteria: Entering an island zone reveals an interaction prompt. A persistent top DOM navigation reaches every category. Clicking a category immediately opens its mock content and smoothly directs the boat/camera to the destination. Drawer keyboard/focus/close behavior, repeated navigation, travel interruption, and reduced-motion behavior are verified. HUD remains accessible to scanners without boat controls.
-  - Authorization (2026-09-24): User confirmed basic controls work and explicitly requested the next phase. Continue the established publish-and-review workflow.
-  - Progress: Three Luna implementations are integrated and reviewed. Forty tests, strict build, six production viewports, touch/scanner/content/fallback checks, and source world/HUD fixtures pass. Evidence is in `artifacts/phase4/VERIFICATION.md`.
-  - Next step: Commit and push the verified build, confirm exact-SHA Pages success and public assets/browser behavior, then stop before Phase 5.
-  - Plan: [plans/WEB-007/plan.md](plans/WEB-007/plan.md).
+- [ ] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
+  - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
+  - Authorization (2026-09-24): User approved “go with next phase” while Phase 4 publication was being verified. Continue the established external-testing workflow.
+  - Progress: Luna agents are implementing the sailboat, island details, and bounded wake/foam; root integrates and verifies.
+  - Next step: Integrate the three visual components, verify hull/collision/route consistency and motion cleanup, inspect desktop/mobile performance and interactions, then publish Phase 5 for review.
+  - Plan: [plans/WEB-008/plan.md](plans/WEB-008/plan.md).
+
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.
+  - Acceptance criteria: Entering an island zone reveals an interaction prompt. A persistent top DOM navigation reaches every category. Clicking a category immediately opens its mock content and smoothly directs the boat/camera to the destination. Drawer keyboard/focus/close behavior, repeated navigation, travel interruption, and reduced-motion behavior are verified. HUD remains accessible to scanners without boat controls.
+  - Authorization (2026-09-24): User confirmed basic controls work and explicitly requested the next phase. Continue the established publish-and-review workflow.
+  - Completed: 2026-09-24. Three Luna agents and root integration delivered safe scanner routes, hysteretic docking prompts, persistent category navigation, and accessible mock-content drawers. Application commit `f67cc34` is published on `origin/master`; [Pages run 36068454972](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36068454972) succeeded for that exact SHA.
+  - Verification: Forty tests, strict production build, source world/HUD fixtures, and local/public interaction checks across six viewports passed. Touch, focus/scrolling, manual cancellation, reduced motion, fallback content, and safe docking are verified. Public HTML/assets match the build byte for byte. See [verification](artifacts/phase4/VERIFICATION.md), [public checks](artifacts/phase4/public-checks.json), and [asset evidence](artifacts/phase4/public-assets.json).
+  - Review gate: User approved Phase 5 during publication verification. Physical phone performance remains for external testing; stronger wave interaction and storm are separately scheduled in WEB-010/WEB-011.
+  - Plan: [plans/WEB-007/plan.md](plans/WEB-007/plan.md).
 
 - [x] WEB-006 — Phase 3: add the primitive vessel, steering, wave response, and camera tracking.
   - Acceptance criteria: A simple block has an unmistakable bow; forward thrust, reverse/braking, rudder yaw, and drag respond consistently to elapsed time. Shared wave sampling drives smooth heave/pitch. The isometric camera follows smoothly. Keyboard/mobile controls, input focus, and world boundaries have defined behavior.

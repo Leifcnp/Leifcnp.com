@@ -2,7 +2,7 @@
 
 ## Result and scope
 
-Phase 4 is implemented and locally verified. Publication is the remaining release step. Three Luna agents supplied pure navigation/proximity, the scene adapter, and the accessible content interface. Root reviewed the contracts, consolidated the scene onto the tested navigation modules, corrected responsive layering and proximity/focus edge cases, and verified the integrated result.
+Phase 4 is implemented, published, and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). Application commit `f67cc34f0891a76ef62de1e1ada54327b6c1093c` deployed successfully in [Pages run 36068454972](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36068454972). Three Luna agents supplied pure navigation/proximity, the scene adapter, and the accessible content interface. Root reviewed the contracts, consolidated the scene onto the tested navigation modules, corrected responsive layering and proximity/focus edge cases, and verified the integrated result.
 
 The published candidate adds four persistent category buttons, immediate mock content in a non-modal drawer, docking prompts with E/Explore, and safe interruptible scanner travel. The existing primitive vessel, islands, wave sampling, physics, and isometric camera remain. Final sailboat geometry, island details, and wake are still Phase 5.
 
@@ -22,10 +22,12 @@ The published candidate adds four persistent category buttons, immediate mock co
 - [Scene lifecycle checks](world-checks.json)
 - [Long-content and focus checks](hud-checks.json)
 - [Build asset hashes](build-assets.json)
+- [Public browser checks](public-checks.json)
+- [Exact deployment and public asset comparisons](public-assets.json)
 - [Desktop drawer](desktop-drawer.png), [small mobile drawer](small-drawer.png), [landscape drawer](landscape-drawer.png), [WebGL fallback](fallback.png)
 
 ## Release and limits
 
-The existing GitHub Pages path remains `master` → tracked `docs/`. Vite regenerated output; `public/CNAME`, `docs/CNAME` (`leifcnp.com`) and `.nojekyll` remain intact. No Hugo files, domain settings, or DNS changes are part of this phase. Exact-SHA Pages status and public asset comparisons will be recorded after the push.
+The existing GitHub Pages path remains `master` → tracked `docs/`. Vite regenerated output; `public/CNAME`, `docs/CNAME` (`leifcnp.com`) and `.nojekyll` remain intact. No Hugo files, domain settings, or DNS changes are part of this phase. The exact-SHA Pages deployment succeeded, public HTML/JS/CSS/favicon matched the build byte for byte, and the complete six-viewport browser interaction suite passed against the public URL.
 
-Browser verification used Chromium 151 with SwiftShader in the Ubuntu VM. Mobile viewport and touch checks do not establish physical phone GPU performance. The pre-existing HTTPS certificate mismatch remains WEB-001; external testing uses the explicit HTTP URL. Mock content and primitive geometry are intentional. Stop for Phase 4 interaction review before Phase 5.
+Browser verification used Chromium 151 with SwiftShader in the Ubuntu VM. Mobile viewport and touch checks do not establish physical phone GPU performance. The pre-existing HTTPS certificate mismatch remains WEB-001; external testing uses the explicit HTTP URL. Mock content and primitive geometry are intentional. The user approved Phase 5 during the release verification; its implementation and review are tracked separately in WEB-008.
