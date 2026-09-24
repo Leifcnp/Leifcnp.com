@@ -2,7 +2,7 @@
 
 ## Scope and provenance
 
-Phase 5 is implemented and locally verified; release verification is pending. Three Luna agents supplied the custom sailboat, island details, and pooled wake. Root integrated the effect lifecycle, corrected visual readability and dock details, and verified the complete experience.
+Phase 5 is implemented, published, and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). Application commit `57e891f8d8b6529ba08b50e463e077f0f4d61fc8` deployed successfully in [Pages run 36070256359](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36070256359). Three Luna agents supplied the custom sailboat, island details, and pooled wake. Root integrated the effect lifecycle, corrected visual readability and dock details, and verified the complete experience.
 
 The boat is custom-built from original hull/deck vertices, sail triangles, and mast/boom/cockpit primitives. No downloaded models, textures, mesh snippets, or third-party art were used. [ASSETS.md](../../ASSETS.md) records provenance and the user's requirement. The established Three.js dependency is the renderer, not a source of boat artwork.
 
@@ -32,8 +32,10 @@ Chromium 151 used SwiftShader software rendering in this VM. Sampled desktop med
 - [Wake lifecycle](wake-lifecycle.json)
 - [Integrated effects and rendering measurements](effects-checks.json)
 - [Build hashes](build-assets.json)
+- [Exact deployment and public asset comparisons](public-assets.json)
+- [Public interaction checks](public-checks.json)
 - [Desktop sailing/wake](wake-desktop.png), [mobile sailing/wake](wake-mobile.png), [desktop interface](desktop.png), [small-screen drawer](small-drawer.png)
 
-Vite regenerated the tracked `docs/` output; CNAME and `.nojekyll` remain intact. The authorized release uses the existing `master` → `docs/` Pages path. Public exact-SHA deployment, byte comparison, and browser checks remain the final release step. No DNS/domain settings or Hugo files changed. The pre-existing HTTPS certificate mismatch stays in WEB-001; use the explicit HTTP test URL.
+Vite regenerated the tracked `docs/` output; CNAME and `.nojekyll` remain intact. The authorized release uses the existing `master` → `docs/` Pages path. The exact-SHA Pages run succeeded. Public HTML/JS/CSS/favicon match the build byte for byte, and the complete six-viewport interaction suite passed on the public HTTP URL. No DNS/domain settings or Hugo files changed. The pre-existing HTTPS certificate mismatch stays in WEB-001; use the explicit HTTP test URL.
 
 Stop after publishing Phase 5 for visual/interaction review. The new water and storm requests remain recorded in their own plans and backlog entries.

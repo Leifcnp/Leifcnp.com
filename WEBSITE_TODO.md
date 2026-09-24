@@ -31,12 +31,7 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
-  - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
-  - Authorization (2026-09-24): User approved “go with next phase” while Phase 4 publication was being verified. Continue the established external-testing workflow.
-  - Progress: Custom procedural boat, grounded island details, and a 96-instance wake are integrated. Forty-one tests, strict build, pose/bounds/wake lifecycle fixtures, and rendering-budget checks pass. No external model or texture assets were used; provenance is in `ASSETS.md`.
-  - Next step: Finish production interaction checks, commit/push the verified build, confirm exact-SHA Pages and public bytes/browser behavior, then stop for Phase 5 review.
-  - Plan: [plans/WEB-008/plan.md](plans/WEB-008/plan.md).
+No tasks in progress. Phase 5 awaits visual/interaction review.
 
 
 ## Blocked
@@ -44,6 +39,14 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
+  - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
+  - Authorization (2026-09-24): User approved “go with next phase” while Phase 4 publication was being verified. Continue the established external-testing workflow.
+  - Completed: 2026-09-24. Three Luna agents and root integration delivered a custom procedural sailboat, grounded docks/beacons, and a fixed 96-instance wake/foam pool. No downloaded models, textures, or third-party art assets were used; see [provenance](ASSETS.md). Application commit `57e891f` is published on `origin/master`; [Pages run 36070256359](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36070256359) succeeded for the exact SHA.
+  - Verification: Forty-one native tests, strict production build, boat/landmark bounds and pose checks, pooled-effect lifecycle/disposal checks, and local/public interaction checks across six viewports passed. Observed rendering stayed within the documented geometry/draw-call budget; software-VM frame timings and physical-phone limitations are recorded. Public HTML/assets match byte for byte. See [verification](artifacts/phase5/VERIFICATION.md), [public checks](artifacts/phase5/public-checks.json), and [asset evidence](artifacts/phase5/public-assets.json).
+  - Review gate: Phase 5 is live for visual/interaction review. WEB-010 stronger boat/wave coupling and WEB-011 storm water are planned follow-ups; neither was implemented in this release.
+  - Plan: [plans/WEB-008/plan.md](plans/WEB-008/plan.md).
 
 - [x] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.
   - Acceptance criteria: Entering an island zone reveals an interaction prompt. A persistent top DOM navigation reaches every category. Clicking a category immediately opens its mock content and smoothly directs the boat/camera to the destination. Drawer keyboard/focus/close behavior, repeated navigation, travel interruption, and reduced-motion behavior are verified. HUD remains accessible to scanners without boat controls.

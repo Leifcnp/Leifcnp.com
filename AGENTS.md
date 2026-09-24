@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 4 is published and publicly verified. On 2026-09-24 the user approved Phase 5 sailboat/island/wake refinement. Implement and publish that phase; stronger boat/wave interaction and an offshore storm boundary are scheduled separately as WEB-010 and WEB-011. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 5 is published and publicly verified on 2026-09-24. The custom procedural sailboat, island details, and bounded wake are ready for visual/interaction review. Stronger boat/wave interaction and an offshore storm boundary are scheduled separately as WEB-010 and WEB-011. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -48,7 +48,7 @@
 
 - Phase 4 public verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Exact-SHA Pages, byte-identical public assets, and the public interaction suite passed.
 
-- Phase 5 local verification: [artifacts/phase5/VERIFICATION.md](artifacts/phase5/VERIFICATION.md), including custom-geometry provenance, hull/landmark bounds, pooled wake lifecycle, and measured VM rendering counts/timings. Public release verification is pending.
+- Phase 5 public verification: [artifacts/phase5/VERIFICATION.md](artifacts/phase5/VERIFICATION.md), including custom-geometry provenance, hull/landmark bounds, pooled wake lifecycle, and measured VM rendering counts/timings. Exact-SHA Pages, byte-identical public assets, and public interaction checks passed.
 
 ### Implementation discipline
 
@@ -59,4 +59,4 @@
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- The instruction to proceed continued the published external-testing workflow: Phase 5 is authorized through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for visual review before the subsequent wave/storm tasks. A routine local build alone is not blanket authorization for unrelated future publication.
+- The instruction to proceed continued the published external-testing workflow: Phase 5 is verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for visual review before the subsequent wave/storm tasks. A routine local build alone is not blanket authorization for unrelated future publication.

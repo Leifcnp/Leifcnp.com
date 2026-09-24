@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 5 is authorized and in progress**: a bespoke low-poly sailboat, primitive docks/beacons, and bounded wake/foam. The user approved proceeding on 2026-09-24 and requested stronger water interaction plus an offshore storm area as later tasks. Complete the visual phase, publish it, and stop for review. WEB-010 deepens boat/wave coupling after that review; WEB-011 then adds the storm boundary.
+**Phase 5 is complete and published**: a bespoke low-poly sailboat, primitive docks/beacons, and bounded wake/foam. The user approved proceeding on 2026-09-24 and requested stronger water interaction plus an offshore storm area as later tasks. The custom geometry, bounded wake, controls, scanner, and content interface passed local/public verification. Stop for visual/interaction review; see [Phase 5 evidence](artifacts/phase5/VERIFICATION.md). WEB-010 deepens boat/wave coupling after that review; WEB-011 then adds the storm boundary.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -20,7 +20,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 5 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Further wave/storm implementation remains gated on review of the visual phase.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 5 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; further wave/storm implementation remains gated on review of the visual phase.
 
 ## Work packages and review gates
 

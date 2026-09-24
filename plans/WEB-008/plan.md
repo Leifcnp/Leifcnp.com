@@ -66,7 +66,7 @@ Authorized on 2026-09-24 when the user approved the next phase. Three Luna agent
 - [x] Sailboat agent: replace the proxy mesh using owned low-poly hull/deck/mast/sails; preserve local +Z bow, collision dimensions, sampled pose, and lifecycle API. No physics redesign.
 - [x] Landmark agent: add small docks/beacons inside declared land collision radii; preserve stable IDs, island coordinates, rings, and projection anchors. Extend geometry/disposal tests.
 - [x] Wake agent: add a bounded pooled/instanced foam effect with a narrow update/reset/reduced-motion/dispose API. Emission responds to vessel speed and direction, follows the shared water, and fades on stop.
-- [ ] Root: integrate wake into active simulation only; clear it on reset/instant scanner relocation; honor current reduced-motion preference. Update obsolete proxy copy, inspect six layouts and screenshot/renderer metrics, verify interaction regressions and cleanup, then publish the exact tested build.
+- [x] Root: integrate wake into active simulation only; clear it on reset/instant scanner relocation; honor current reduced-motion preference. Update obsolete proxy copy, inspect six layouts and screenshot/renderer metrics, verify interaction regressions and cleanup, then publish the exact tested build.
 
 ### Scope decisions
 
@@ -79,3 +79,5 @@ Build/typecheck and relevant native tests; source fixtures for sailboat pose/dis
 User clarification: the boat must be custom-built, with no third-party model/art assets. The implementation uses original procedural geometry and flat-color materials; record provenance in `ASSETS.md`.
 
 Local integration is complete: 41 native tests and strict build pass; fixtures verify boat pose/bounds, wake pooling/disposal/motion preferences, and scanner regression. Rendering measurements are recorded with software-GPU limitations in `artifacts/phase5/VERIFICATION.md`. Next: publish the tested candidate and verify exact-SHA Pages/public assets.
+
+Published application commit `57e891f` passed Pages run 36070256359; public HTML/assets match and the public desktop/mobile interaction suite passed. See `artifacts/phase5/public-assets.json` and `public-checks.json`. Stop for visual/interaction review before WEB-010 and WEB-011.
