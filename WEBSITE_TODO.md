@@ -40,18 +40,21 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-009 — Remove obsolete Hugo files and publish Phase 1 for external testing.
-  - Authorization: On 2026-09-24 the user explicitly requested pushing Phase 1 to `leifcnp.com` for mobile/web testing and removing obsolete Hugo files.
-  - Acceptance criteria: Remove the legacy source archive, theme reference, Hugo configuration, obsolete deployment script, and generated Hugo pages. Keep current source/plans and `leifcnp.com` custom-domain metadata. Build/type checks pass; commit and push the reviewed Phase 1 source and generated `docs/` to the existing Pages branch without forcing. Verify the exact commit's Pages deployment and public HTML/assets, and record domain/browser limitations. Phase 2 remains unimplemented.
-  - Progress (2026-09-24): Verified archived files against their Git originals, then removed them and empty theme directories. Remote `master` matches local HEAD. Public deployment history confirms `master`; HTTP works, HTTPS hostname validation fails (WEB-001). Rebuilding and updating current instructions before publication.
-  - Next step: Review the complete staged diff, commit/push to `origin/master`, wait for the matching Pages deployment, and test the public output.
-  - Plan: [plans/WEB-009/plan.md](plans/WEB-009/plan.md).
+No tasks currently in progress.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-009 — Remove obsolete Hugo files and publish Phase 1 for external testing.
+  - Authorization: On 2026-09-24 the user explicitly requested pushing Phase 1 to `leifcnp.com` for mobile/web testing and removing obsolete Hugo files.
+  - Acceptance criteria: Remove the legacy source archive, theme reference, Hugo configuration, obsolete deployment script, and generated Hugo pages. Keep current source/plans and `leifcnp.com` custom-domain metadata. Build/type checks pass; commit and push the reviewed Phase 1 source and generated `docs/` to the existing Pages branch without forcing. Verify the exact commit's Pages deployment and public HTML/assets, and record domain/browser limitations. Phase 2 remains unimplemented.
+  - Completed: 2026-09-24. Verified obsolete source against Git history and removed all legacy/archive/theme paths. Application commit `41813c8` was pushed to `origin/master`; Pages run `36057874116` completed successfully. Public HTTP HTML, JS, CSS, and favicon matched the built output; removed Hugo routes returned 404.
+  - Verification: Type check/build and public Chromium desktop/mobile/motion/reduced-motion/fallback checks passed. Evidence: [deployment record](artifacts/phase1-deployment/VERIFICATION.md) and [browser checks](artifacts/phase1-deployment/checks.json). Vite development-server advisories discovered during push were addressed with Vite 7.3.6 and its allowed esbuild 0.28.2 dependency; final full and production lockfile audits both report zero vulnerabilities.
+  - Remaining limitation: Use `http://leifcnp.com/` for testing while HTTPS certificate mismatch remains in WEB-001. Physical mobile GPU behavior needs external-user feedback. Phase 2 remains unimplemented.
+  - Plan: [plans/WEB-009/plan.md](plans/WEB-009/plan.md).
 
 - [x] WEB-002 — Phase 1: replace the active Hugo site with a runnable Vite, TypeScript, and Three.js foundation.
   - Acceptance criteria: Fresh locked dependency install, dev/preview/build commands, strict type checking, separate mock portfolio content, and clear README. Vite regenerates tracked `docs/`, preserves `leifcnp.com`, and removes stale generated Hugo routes. Legacy source is archived outside public assets. Existing user instruction/task history is preserved.

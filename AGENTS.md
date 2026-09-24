@@ -15,7 +15,7 @@
 - The user reports that GoDaddy is already set up. This is user-provided context, not an independent DNS verification.
 - The former Hugo configuration used `baseURL = "https://www.leifcnp.com/"`; that configuration was removed with the legacy working tree. The current Vite build uses relative asset paths and retains `docs/CNAME` as `leifcnp.com`.
 - Earlier restricted-environment HTTP/HTTPS curl checks failed DNS resolution for both `leifcnp.com` and `www.leifcnp.com`, and web fetches failed. These results do not establish that HTTPS or `www` is broken; the user reports the non-www HTTP address open in their browser.
-- A current external check on 2026-09-24 observed HTTP 200 from `http://leifcnp.com/`, still serving the previous Hugo Pages deployment, while apex HTTPS failed hostname certificate verification. Public Actions/Pages evidence identifies `master` and the tracked `docs/` output as the current deployment path; unauthenticated settings inspection is unavailable. Treat this as hosting evidence only: do not bypass TLS warnings or change DNS/domain settings here; WEB-001 remains the separate investigation.
+- External checks on 2026-09-24 observed HTTP 200 from `http://leifcnp.com/`. The authorized Phase 1 push replaced the old Hugo output; public HTML/assets matched the new build, and Pages reported success for application commit `41813c8`. Apex HTTPS failed hostname certificate verification. Public Actions/Pages evidence identifies `master` and the tracked `docs/` output as the deployment path; unauthenticated settings inspection is unavailable. Do not bypass TLS warnings or change DNS/domain settings merely to reconcile these observations; WEB-001 remains the separate investigation.
 - Follow-up investigation is tracked as `WEB-001` in [WEBSITE_TODO.md](WEBSITE_TODO.md). Do not change domain, DNS, or site configuration merely to reconcile these observations.
 
 ## Website to-do list
@@ -41,6 +41,7 @@
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
 - Verification record: [artifacts/phase1/VERIFICATION.md](artifacts/phase1/VERIFICATION.md). Chromium software-rendered browser checks passed; the embedded browser's VM graphics driver failed WebGL initialization. Do not mistake that specific failure for a site or domain outage.
+- Public release verification: [artifacts/phase1-deployment/VERIFICATION.md](artifacts/phase1-deployment/VERIFICATION.md). Real-domain browser checks cover desktop/mobile layouts, motion, keyboard, reduced motion, and WebGL fallback.
 
 ### Implementation discipline
 

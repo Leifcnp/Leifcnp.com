@@ -11,6 +11,7 @@ The user requested publication of the existing Phase 1 prototype on 2026-09-24 f
 - Refresh current setup instructions; historical verification remains factual and dated.
 - Rebuild `docs/` through Vite. Never hand-edit generated output.
 - Commit and push to existing `origin/master`, without force, then verify the exact commit's public Pages deployment.
+- Address concrete dependency alerts discovered during the push using the smallest compatible patch. Keep runtime code and phase scope unchanged; rerun dependency audits and the build before publishing that maintenance change.
 - No DNS/registrar changes, new hosting platform, new phase, or unrelated files.
 
 ## Execution steps
@@ -37,4 +38,6 @@ Hugo is absent from the active tree/build dependencies, the intended commit is o
 
 ## Status
 
-In progress: cleanup completed; build, reviewed commit/push, and deployment verification pending.
+Completed on 2026-09-24. Legacy paths are removed; type checking/build and reviewed staged changes passed. Application commit `41813c8` was pushed to `origin/master`, and its Pages run `36057874116` succeeded. Public HTML, JS, CSS, and favicon match the local build; obsolete routes return 404. Public Chromium desktop/mobile/motion/fallback checks passed. See [deployment verification](../../artifacts/phase1-deployment/VERIFICATION.md). HTTPS remains tracked separately in WEB-001. Phase 2 is still gated on user review.
+
+Release maintenance: GitHub's push-time alert count did not match the current lockfile audit. The original production audit was clean; six direct Vite 7.1.7 development-server advisories were reproducible. Vite was patched within the same major to 7.3.6, with its permitted esbuild 0.28.2 dependency. Frozen-lockfile installation passed. Both final full and production audits report zero vulnerabilities; audit snapshots are saved with the deployment verification.

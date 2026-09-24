@@ -41,7 +41,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed Phase 1 output. No Hugo build, theme checkout, configuration, or deploy script is involved. A local build does not by itself authorize publication; the current external-testing push is authorized for Phase 1 only. This README does not claim that the remote deployment has completed until the hosting result is verified.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed Phase 1 output. No Hugo build, theme checkout, configuration, or deploy script is involved. A local build does not by itself authorize publication; the current external-testing push is authorized for Phase 1 only.
+
+Phase 1 was published and verified on 2026-09-24 at [http://leifcnp.com/](http://leifcnp.com/). The [deployment verification](artifacts/phase1-deployment/VERIFICATION.md) records the successful Pages run, public asset comparisons, and public desktop/mobile browser checks. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 
@@ -55,4 +57,4 @@ See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per
 
 See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mobile screenshots. The production scene passed browser checks in Chromium 151 using SwiftShader software rendering. The Codex embedded browser in this VirtualBox guest failed WebGL context creation through Mesa; it correctly displays the fallback instead of the scene. Open the preview in a browser with working WebGL2 to review live motion. No browser or VM graphics settings were changed.
 
-The screenshot tests cover mobile layouts, not performance on physical mobile hardware. This record does not establish remote deployment or DNS state; verify the external URL after the authorized push.
+The screenshot tests cover mobile layouts, not performance on physical mobile hardware. No DNS or certificate settings were changed during publication.
