@@ -2,7 +2,9 @@
 
 ## Current delivery
 
-**Phase 2 is complete and published**: four mock, data-driven island landmasses, visible docking boundaries, and readable static labels on the existing water field. The user confirmed the live Phase 1 site and authorized proceeding on 2026-09-24. The [verification record](artifacts/phase2/VERIFICATION.md) covers the successful Pages deployment, matching public assets, eight unit tests, and six-viewport browser checks. Stop for review before boat mechanics.
+**Phase 3 is in progress**: a primitive vessel with an unmistakable bow, forward/reverse/braking, rudder steering and drag, smooth wave response, and an isometric camera that follows it. The user approved the next phase on 2026-09-24. Keyboard and touch controls support the established external-testing workflow. Verify and publish this slice, then stop before proximity/HUD/content interaction.
+
+Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
 The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has a detailed `plan.md` below. Future phases are designed now and implemented only after review of their predecessor.
 
@@ -18,7 +20,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 2 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 3 implementation remains gated on review of the island layout.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 3 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 4 implementation remains gated on review of the boat controls.
 
 ## Work packages and review gates
 
@@ -37,9 +39,9 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna data agent: island schema, mock records, validation, and independent geometry invariant checks.
-- Luna world agent: primitive landmasses, docking rings, responsive isometric framing, and rendering lifecycle.
-- Luna UI agent: static projected labels, responsive identity/motion shell, and readable fallback.
+- Luna physics agent: pure vessel state/integration, tuning, collision bounds, and behavioral tests.
+- Luna world agent: primitive vessel, shared water sampling, buoyancy, fixed-step scene integration, and smooth camera following.
+- Luna controls agent: keyboard/touch input lifecycle, responsive helm UI, static labels, and readable fallback.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -53,4 +55,4 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 2 includes landmarks, static labels, and responsive framing. Boat physics, HUD category links, content drawers, and scanner travel stay in future plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 3 includes vessel movement, responsive input, buoyancy, and camera following. HUD category links, proximity actions, content drawers, scanner travel, and final artwork stay in future plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.

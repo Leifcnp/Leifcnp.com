@@ -1,0 +1,11 @@
+{
+  "browser": "151.0.7922.34",
+  "checks": [
+    "Keyboard thrust+rudder, independent key aliases, brake, and key releases produce correct intent.",
+    "Modifier shortcuts/editable fields retain native behavior; leaving a held button releases it.",
+    "Real multi-touch combines throttle and rudder, releases pointers independently, and cancels cleanly.",
+    "Reset remains available while paused, while movement keys stay disabled.",
+    "Blur/pause release held input; secondary mouse buttons do not thrust; disabled controls remain inert.",
+    "Input disposal is idempotent and removes listeners without browser errors."
+  ]
+}

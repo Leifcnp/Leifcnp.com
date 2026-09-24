@@ -15,12 +15,6 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-006 — Phase 3: add the primitive vessel, steering, wave response, and camera tracking.
-  - Acceptance criteria: A simple block has an unmistakable bow; forward thrust, reverse/braking, rudder yaw, and drag respond consistently to elapsed time. Shared wave sampling drives smooth heave/pitch. The isometric camera follows smoothly. Keyboard/mobile controls, input focus, and world boundaries have defined behavior.
-  - Progress: Planning only; implementation awaits Phase 2 review.
-  - Next step: After approved islands, implement bounded vessel kinematics and test acceleration, stopping, turning, wave alignment, and tracking; stop for Phase 3 review.
-  - Plan: [plans/WEB-006/plan.md](plans/WEB-006/plan.md).
-
 - [ ] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.
   - Acceptance criteria: Entering an island zone reveals an interaction prompt. A persistent top DOM navigation reaches every category. Clicking a category immediately opens its mock content and smoothly directs the boat/camera to the destination. Drawer keyboard/focus/close behavior, repeated navigation, travel interruption, and reduced-motion behavior are verified. HUD remains accessible to scanners without boat controls.
   - Progress: Planning only; implementation awaits Phase 3 review.
@@ -35,7 +29,12 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-No tasks in progress. Phase 2 awaits user review.
+- [ ] WEB-006 — Phase 3: add the primitive vessel, steering, wave response, and camera tracking.
+  - Acceptance criteria: A simple block has an unmistakable bow; forward thrust, reverse/braking, rudder yaw, and drag respond consistently to elapsed time. Shared wave sampling drives smooth heave/pitch. The isometric camera follows smoothly. Keyboard/mobile controls, input focus, and world boundaries have defined behavior.
+  - Authorization (2026-09-24): User accepted proceeding with “ok go for next” after the Phase 2 live review handoff. Continue the established external-testing workflow and stop after Phase 3.
+  - Progress: Primitive vessel, ground-up kinematics, shared wave pose, smooth camera follow, collision boundaries, and keyboard/touch helm are integrated. All 25 tests and the strict production build pass. Local browser checks cover six layouts, real multitouch, input cleanup, pose, camera, pause/reset, and fallback.
+  - Next step: Push the verified Phase 3 source/output, verify the exact Pages deployment and public browser behavior, then record completion and stop for steering review.
+  - Plan: [plans/WEB-006/plan.md](plans/WEB-006/plan.md).
 
 ## Blocked
 

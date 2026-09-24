@@ -1,0 +1,18 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "browser": "151.0.7922.34",
+  "renderer": "SwiftShader",
+  "checks": [
+    "Keyboard thrust and rudder drive the rendered boat after Resume; camera tracks; Pause freezes pixels; Reset restores camera.",
+    "desktop 1440×900: canvas fits, controls ≥44px and unobstructed, labels avoid boat/header/helm.",
+    "mobile 390×844: canvas fits, controls ≥44px and unobstructed, labels avoid boat/header/helm.",
+    "small 320×568: canvas fits, controls ≥44px and unobstructed, labels avoid boat/header/helm.",
+    "tall 360×915: canvas fits, controls ≥44px and unobstructed, labels avoid boat/header/helm.",
+    "landscape 844×390: canvas fits, controls ≥44px and unobstructed, labels avoid boat/header/helm.",
+    "wide 2560×1080: canvas fits, controls ≥44px and unobstructed, labels avoid boat/header/helm.",
+    "Simultaneous real touch on Forward and Turn right drives the scene; cancellation releases the gesture.",
+    "Reduced motion starts still with controls disabled; explicit Resume enables movement.",
+    "No console or page errors with WebGL.",
+    "WebGL fallback retains the island guide and disables sailing/motion controls."
+  ]
+}

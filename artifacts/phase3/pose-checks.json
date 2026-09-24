@@ -1,0 +1,154 @@
+{
+  "checks": [
+    "Hull pitch and roll follow shared wave heights at four headings and three times.",
+    "Hull center/freeboard leaves the primitive partly submerged.",
+    "Heave responds with damping; pose snapshots cannot mutate live state.",
+    "All four vessel GPU resources dispose exactly once; scene group is removed."
+  ],
+  "samples": [
+    {
+      "heading": 0,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.20000000000000007,
+      "pose": {
+        "heave": 0.7650382616837187,
+        "pitch": -0.03622142930838589,
+        "roll": 0.06714098381931279
+      }
+    },
+    {
+      "heading": 0,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.46099204896770085,
+        "pitch": -0.023013717812922083,
+        "roll": -0.040755701146925824
+      }
+    },
+    {
+      "heading": 0,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -1.0122149647042893,
+        "pitch": -0.00674803265373913,
+        "roll": -0.02695127757652479
+      }
+    },
+    {
+      "heading": 1.5707963267948966,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.7645622871024151,
+        "pitch": -0.06593677370798368,
+        "roll": -0.0363710209843065
+      }
+    },
+    {
+      "heading": 1.5707963267948966,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.20000000000000007,
+      "pose": {
+        "heave": 0.4559675701800784,
+        "pitch": 0.040297816448988166,
+        "roll": -0.023047434250909892
+      }
+    },
+    {
+      "heading": 1.5707963267948966,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -1.012797218471683,
+        "pitch": 0.026511989070388767,
+        "roll": -0.007259656884217449
+      }
+    },
+    {
+      "heading": -1.5707963267948966,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.7645622871024154,
+        "pitch": 0.06593677370798368,
+        "roll": 0.0363710209843065
+      }
+    },
+    {
+      "heading": -1.5707963267948966,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.20000000000000007,
+      "pose": {
+        "heave": 0.4559675701800784,
+        "pitch": -0.040297816448988166,
+        "roll": 0.023047434250909892
+      }
+    },
+    {
+      "heading": -1.5707963267948966,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -1.012797218471683,
+        "pitch": -0.026511989070388767,
+        "roll": 0.007259656884217449
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.7650382616837188,
+        "pitch": 0.0362214293083859,
+        "roll": -0.06714098381931279
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.46099204896770085,
+        "pitch": 0.023013717812922083,
+        "roll": 0.040755701146925824
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -1.0122149647042893,
+        "pitch": 0.00674803265373913,
+        "roll": 0.02695127757652479
+      }
+    }
+  ]
+}

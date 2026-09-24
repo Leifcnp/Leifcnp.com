@@ -1,36 +1,35 @@
 import * as THREE from 'three';
+import { ISLAND_WORLD_LIMIT, VESSEL_SPAWN } from '../content/islands';
 import {
   createLandmarks,
   type IslandDefinition,
-  type LandmarkBounds,
   type LandmarkProjectionAnchor,
 } from './createLandmarks';
+import { createCameraRig } from './createCameraRig';
+import { createVessel } from './createVessel';
+import { sampleWaterHeight } from './waves';
+import {
+  createVesselState,
+  stepVessel,
+  type VesselInput,
+  type VesselState,
+} from './vessel/kinematics';
 
-/**
- * Return the water height at a world-space position.
- *
- * The input time is measured in seconds. Keeping this function deterministic
- * makes it useful later for buoyancy and vessel heave calculations.
- */
-export function sampleWaterHeight(x: number, z: number, timeSeconds = 0): number {
-  const time = timeSeconds;
-  const longSwell = Math.sin(x * 0.075 + time * 0.42) * 0.62;
-  const crossSwell = Math.cos(z * 0.1 - time * 0.32) * 0.38;
-  const diagonalRipple = Math.sin((x + z) * 0.16 + time * 0.56) * 0.16;
-  const counterRipple = Math.cos((x - z) * 0.21 - time * 0.44) * 0.08;
-
-  return longSwell + crossSwell + diagonalRipple + counterRipple;
-}
+// Preserve the Phase 1 import path while sharing the implementation with the
+// vessel's buoyancy sampler.
+export { sampleWaterHeight } from './waves';
 
 export interface WaterWorldOptions {
   /** Start paused when true. The host can explicitly resume with setPaused(false). */
   reducedMotion?: boolean;
-  /** Phase-two island records. An empty list retains the Phase-one water view. */
+  /** Phase-two island records. An empty list retains the water-only view. */
   islands?: readonly IslandDefinition[];
   /** CSS-pixel space reserved for the DOM HUD and landmark labels. */
   framingInsets?: Partial<FramingInsets>;
-  /** Called after initial layout and whenever the viewport changes. */
+  /** Called after layout and on each rendered frame for DOM label projection. */
   onLandmarkProjection?: (positions: readonly LandmarkProjection[]) => void;
+  /** Called after each rendered vessel update with a small serialisable snapshot. */
+  onVesselUpdate?: (snapshot: VesselTelemetry) => void;
 }
 
 export interface FramingInsets {
@@ -47,8 +46,18 @@ export interface LandmarkProjection {
   readonly visible: boolean;
 }
 
+export interface VesselTelemetry {
+  readonly x: number;
+  readonly z: number;
+  readonly heading: number;
+  readonly speed: number;
+}
+
 export interface WaterWorldController {
   setPaused(paused: boolean): void;
+  setInput(input: VesselInput): void;
+  resetVessel(): void;
+  getVesselState(): Readonly<VesselState>;
   dispose(): void;
 }
 
@@ -57,10 +66,12 @@ export interface WaterWorldController {
 // Keep generous screen-space coverage at portrait heights after the camera is
 // fitted tightly around the four landmarks. Segment count stays fixed so this
 // only extends the footprint; it does not increase the triangle budget.
-const FIELD_SIZE = 540;
+const FIELD_SIZE = 720;
 const FIELD_SEGMENTS = 76;
-const VIEW_HEIGHT = 94;
 const MAX_DPR = 1.75;
+const FIXED_STEP = 1 / 120;
+const MAX_FRAME_DELTA = 0.1;
+const MAX_STEPS_PER_FRAME = 12;
 
 /**
  * Create the water field and its true isometric camera.  Passing island data
@@ -79,16 +90,9 @@ export function createWaterWorld(
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x082f3d);
-  // The camera sits farther along the same diagonal so the finite water field
-  // remains in front of the orthographic near plane on wide fits.
   scene.fog = new THREE.Fog(0x082f3d, 540, 800);
-
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 1200);
-  // Equal x/y/z components create the classic true isometric direction.
-  // Keep the finite water field in front of the orthographic near plane even
-  // after a narrow viewport causes the fitted frustum to widen substantially.
-  camera.position.set(220, 220, 220);
-  camera.lookAt(0, 0, 0);
+  const cameraRig = createCameraRig();
+  const camera = cameraRig.camera;
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -120,6 +124,18 @@ export function createWaterWorld(
   scene.add(water);
 
   const landmarks = createLandmarks(scene, options.islands ?? []);
+  const vessel = createVessel(scene);
+  const vesselSpawn = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
+  let vesselState: VesselState = vesselSpawn;
+  let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
+  const vesselEnvironment = {
+    worldLimit: ISLAND_WORLD_LIMIT,
+    obstacles: (options.islands ?? []).map((island) => ({
+      x: island.position.x,
+      z: island.position.z,
+      radius: island.landCollisionRadius,
+    })),
+  };
 
   // A cool hemisphere and a warm directional highlight make the facets legible
   // while keeping the palette calm enough for the future cream HUD overlay.
@@ -140,6 +156,7 @@ export function createWaterWorld(
   let frameHandle: number | null = null;
   let lastTime = 0;
   let elapsed = 0;
+  let fixedAccumulator = 0;
 
   const isMotionPaused = (): boolean => manuallyPaused || documentHidden || !inViewport;
 
@@ -147,10 +164,23 @@ export function createWaterWorld(
     if (disposed) return;
 
     if (!lastTime) lastTime = now;
-    const delta = Math.min((now - lastTime) / 1000, 0.05);
+    const delta = Math.min(Math.max(0, (now - lastTime) / 1000), MAX_FRAME_DELTA);
     lastTime = now;
-    if (!isMotionPaused()) elapsed += delta;
+    if (!isMotionPaused()) {
+      elapsed += delta;
+      fixedAccumulator = Math.min(fixedAccumulator + delta, FIXED_STEP * MAX_STEPS_PER_FRAME);
+      let steps = 0;
+      while (fixedAccumulator >= FIXED_STEP && steps < MAX_STEPS_PER_FRAME) {
+        vesselState = stepVessel(vesselState, vesselInput, FIXED_STEP, vesselEnvironment);
+        fixedAccumulator -= FIXED_STEP;
+        steps += 1;
+      }
+      cameraRig.update(vesselState.x, vesselState.z, delta);
+      vessel.update(vesselState, elapsed, delta);
+      options.onVesselUpdate?.(toVesselTelemetry(vesselState));
+    }
 
+    options.onLandmarkProjection?.(projectLandmarks(camera, getViewportWidth(container), getViewportHeight(container), landmarks.anchors, options.framingInsets));
     updateWaterGeometry(geometry, elapsed);
     renderer.render(scene, camera);
 
@@ -177,12 +207,10 @@ export function createWaterWorld(
     if (disposed) return;
     const width = Math.max(1, container.clientWidth || window.innerWidth);
     const height = Math.max(1, container.clientHeight || window.innerHeight);
-    const insets = getFramingInsets(width, height, options.framingInsets);
-    applyFraming(camera, width, height, insets, landmarks.landmarkBounds);
-    camera.updateProjectionMatrix();
+    cameraRig.resize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
     renderer.setSize(width, height, false);
-    options.onLandmarkProjection?.(projectLandmarks(camera, width, height, landmarks.anchors));
+    options.onLandmarkProjection?.(projectLandmarks(camera, width, height, landmarks.anchors, options.framingInsets));
     if (isMotionPaused()) renderer.render(scene, camera);
   };
 
@@ -191,6 +219,9 @@ export function createWaterWorld(
     manuallyPaused = paused;
     if (isMotionPaused()) {
       stopRendering();
+      fixedAccumulator = 0;
+      lastTime = 0;
+      vesselInput = { throttle: 0, rudder: 0, brake: false };
       renderer.render(scene, camera);
     } else {
       startRendering();
@@ -201,6 +232,9 @@ export function createWaterWorld(
     documentHidden = document.hidden;
     if (isMotionPaused()) {
       stopRendering();
+      fixedAccumulator = 0;
+      lastTime = 0;
+      vesselInput = { throttle: 0, rudder: 0, brake: false };
       renderer.render(scene, camera);
     } else {
       startRendering();
@@ -214,6 +248,9 @@ export function createWaterWorld(
             inViewport = entries[0]?.isIntersecting ?? true;
             if (isMotionPaused()) {
               stopRendering();
+              fixedAccumulator = 0;
+              lastTime = 0;
+              vesselInput = { throttle: 0, rudder: 0, brake: false };
               renderer.render(scene, camera);
             } else {
               startRendering();
@@ -227,6 +264,9 @@ export function createWaterWorld(
     typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
 
   resize();
+  vessel.resetPose(vesselState, elapsed);
+  cameraRig.snapTo(vesselState.x, vesselState.z);
+  options.onVesselUpdate?.(toVesselTelemetry(vesselState));
   resizeObserver?.observe(container);
   // ResizeObserver tracks container changes; this also catches viewport/DPR
   // changes where the container's CSS dimensions remain unchanged.
@@ -239,6 +279,29 @@ export function createWaterWorld(
 
   return {
     setPaused,
+    setInput: (input): void => {
+      if (disposed) return;
+      vesselInput = {
+        throttle: clamp(input.throttle, -1, 1),
+        rudder: clamp(input.rudder, -1, 1),
+        brake: Boolean(input.brake),
+      };
+    },
+    resetVessel: (): void => {
+      if (disposed) return;
+      vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
+      vesselInput = { throttle: 0, rudder: 0, brake: false };
+      fixedAccumulator = 0;
+      lastTime = 0;
+      elapsed = 0;
+      vessel.resetPose(vesselState, elapsed);
+      cameraRig.snapTo(vesselState.x, vesselState.z);
+      updateWaterGeometry(geometry, elapsed);
+      options.onVesselUpdate?.(toVesselTelemetry(vesselState));
+      options.onLandmarkProjection?.(projectLandmarks(camera, getViewportWidth(container), getViewportHeight(container), landmarks.anchors, options.framingInsets));
+      renderer.render(scene, camera);
+    },
+    getVesselState: (): Readonly<VesselState> => ({ ...vesselState }),
     dispose: (): void => {
       if (disposed) return;
       disposed = true;
@@ -248,6 +311,8 @@ export function createWaterWorld(
       visibilityObserver?.disconnect();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       landmarks.dispose();
+      vessel.dispose();
+      cameraRig.dispose();
       geometry.dispose();
       material.dispose();
       renderer.dispose();
@@ -257,7 +322,30 @@ export function createWaterWorld(
   };
 }
 
-function getFramingInsets(
+function projectLandmarks(
+  camera: THREE.OrthographicCamera,
+  width: number,
+  height: number,
+  anchors: readonly LandmarkProjectionAnchor[],
+  requestedInsets: Partial<FramingInsets> | undefined,
+): LandmarkProjection[] {
+  const insets = getProjectionInsets(width, height, requestedInsets);
+  return anchors.map(({ id, position }) => {
+    const projected = position.clone().project(camera);
+    const x = (projected.x * 0.5 + 0.5) * width;
+    const y = (1 - (projected.y * 0.5 + 0.5)) * height;
+    return {
+      id,
+      x,
+      y,
+      visible: projected.z >= -1 && projected.z <= 1 &&
+        x >= insets.left && x <= width - insets.right &&
+        y >= insets.top && y <= height - insets.bottom,
+    };
+  });
+}
+
+function getProjectionInsets(
   width: number,
   height: number,
   requested: Partial<FramingInsets> | undefined,
@@ -275,102 +363,25 @@ function getFramingInsets(
   };
 }
 
-/**
- * Fit the island and docking-ring bounds in the usable CSS viewport.  The
- * orthographic frustum is shifted instead of moving the camera target, which
- * keeps the view genuinely isometric and leaves the camera fixed in world
- * space for the later vessel phase.
- */
-function applyFraming(
-  camera: THREE.OrthographicCamera,
-  width: number,
-  height: number,
-  insets: FramingInsets,
-  landmarkBounds: readonly LandmarkBounds[],
-): void {
-  if (landmarkBounds.length === 0) {
-    const aspect = width / height;
-    const halfHeight = VIEW_HEIGHT * 0.5;
-    camera.left = -halfHeight * aspect;
-    camera.right = halfHeight * aspect;
-    camera.top = halfHeight;
-    camera.bottom = -halfHeight;
-    return;
-  }
+function getViewportWidth(container: HTMLElement): number {
+  return Math.max(1, container.clientWidth || window.innerWidth);
+}
 
-  camera.updateMatrixWorld(true);
-  const bounds = {
-    minX: Number.POSITIVE_INFINITY,
-    maxX: Number.NEGATIVE_INFINITY,
-    minY: Number.POSITIVE_INFINITY,
-    maxY: Number.NEGATIVE_INFINITY,
+function getViewportHeight(container: HTMLElement): number {
+  return Math.max(1, container.clientHeight || window.innerHeight);
+}
+
+function clamp(value: number, minimum: number, maximum: number): number {
+  return Math.min(maximum, Math.max(minimum, Number.isFinite(value) ? value : 0));
+}
+
+function toVesselTelemetry(state: Readonly<VesselState>): VesselTelemetry {
+  return {
+    x: state.x,
+    z: state.z,
+    heading: state.heading,
+    speed: Math.hypot(state.velocityX, state.velocityZ),
   };
-
-  for (const landmark of landmarkBounds) {
-    for (const corner of boxCorners(landmark.bounds)) {
-      const point = corner.applyMatrix4(camera.matrixWorldInverse);
-      bounds.minX = Math.min(bounds.minX, point.x);
-      bounds.maxX = Math.max(bounds.maxX, point.x);
-      bounds.minY = Math.min(bounds.minY, point.y);
-      bounds.maxY = Math.max(bounds.maxY, point.y);
-    }
-  }
-
-  const usableWidth = Math.max(1, width - insets.left - insets.right);
-  const usableHeight = Math.max(1, height - insets.top - insets.bottom);
-  const boundWidth = Math.max(1, bounds.maxX - bounds.minX);
-  const boundHeight = Math.max(1, bounds.maxY - bounds.minY);
-  const worldPerPixel = Math.max(
-    boundWidth / usableWidth,
-    boundHeight / usableHeight,
-  ) * 1.12;
-  const frustumWidth = worldPerPixel * width;
-  const frustumHeight = worldPerPixel * height;
-  const boundsCenterX = (bounds.minX + bounds.maxX) * 0.5;
-  const boundsCenterY = (bounds.minY + bounds.maxY) * 0.5;
-  const desiredCenterX = ((insets.left - insets.right) * 0.5) * worldPerPixel;
-  const desiredCenterY = ((insets.top - insets.bottom) * 0.5) * worldPerPixel;
-  const frustumCenterX = boundsCenterX - desiredCenterX;
-  // Positive top inset means the usable center sits lower on the screen. In
-  // camera coordinates that requires a positive upward frustum shift.
-  const frustumCenterY = boundsCenterY + desiredCenterY;
-
-  camera.left = frustumCenterX - frustumWidth * 0.5;
-  camera.right = frustumCenterX + frustumWidth * 0.5;
-  camera.top = frustumCenterY + frustumHeight * 0.5;
-  camera.bottom = frustumCenterY - frustumHeight * 0.5;
-}
-
-function boxCorners(box: THREE.Box3): THREE.Vector3[] {
-  return [
-    new THREE.Vector3(box.min.x, box.min.y, box.min.z),
-    new THREE.Vector3(box.min.x, box.min.y, box.max.z),
-    new THREE.Vector3(box.min.x, box.max.y, box.min.z),
-    new THREE.Vector3(box.min.x, box.max.y, box.max.z),
-    new THREE.Vector3(box.max.x, box.min.y, box.min.z),
-    new THREE.Vector3(box.max.x, box.min.y, box.max.z),
-    new THREE.Vector3(box.max.x, box.max.y, box.min.z),
-    new THREE.Vector3(box.max.x, box.max.y, box.max.z),
-  ];
-}
-
-function projectLandmarks(
-  camera: THREE.OrthographicCamera,
-  width: number,
-  height: number,
-  anchors: readonly LandmarkProjectionAnchor[],
-): LandmarkProjection[] {
-  return anchors.map(({ id, position }) => {
-    const projected = position.clone().project(camera);
-    const x = (projected.x * 0.5 + 0.5) * width;
-    const y = (1 - (projected.y * 0.5 + 0.5)) * height;
-    return {
-      id,
-      x,
-      y,
-      visible: projected.z >= -1 && projected.z <= 1 && x >= 0 && x <= width && y >= 0 && y <= height,
-    };
-  });
 }
 
 function createWaterGeometry(): THREE.BufferGeometry {

@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:5173/__phase3-qa",
+  "browser": "151.0.7922.34",
+  "checks": [
+    "Fixed-step scene advances forward along +Z; camera following updates island projections.",
+    "Right rudder turns toward starboard; Pause freezes vessel state and all rendered pixels.",
+    "Reset clears velocity/input and restores the boat and camera to the origin.",
+    "Reverse drives the vessel backwards from rest.",
+    "Repeated world disposal removes the canvas; no browser errors."
+  ]
+}
