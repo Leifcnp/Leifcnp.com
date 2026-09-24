@@ -1,0 +1,44 @@
+{
+  "browser": "151.0.7922.34",
+  "renderer": "SwiftShader; timings are VM diagnostics, not physical mobile performance",
+  "checks": [
+    "Forward movement emits a bounded 96-slot foam effect; Pause freezes every foam matrix and all rendered pixels.",
+    "Instant scanner arrival and reset clear the trail; reduced motion suppresses foam even with explicit sailing enabled.",
+    "Reverse motion does not emit a misleading forward wake.",
+    "Desktop/mobile renderer budgets stay below 100 calls and 16,000 triangles; disposal removes the scene and canvas without errors."
+  ],
+  "profiles": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "samples": 36,
+      "medianFrameMs": 64.20000000111759,
+      "p95FrameMs": 133.30000000074506,
+      "drawCalls": 50,
+      "triangles": 14005,
+      "geometries": 38,
+      "textures": 0,
+      "pixelRatio": 1,
+      "foam": 55
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "samples": 74,
+      "medianFrameMs": 31.800000000745058,
+      "p95FrameMs": 60.79999999888241,
+      "drawCalls": 41,
+      "triangles": 13769,
+      "geometries": 38,
+      "textures": 0,
+      "pixelRatio": 1,
+      "foam": 55
+    }
+  ],
+  "beforeDispose": {
+    "geometry": 38,
+    "children": 7
+  }
+}

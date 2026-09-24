@@ -1,6 +1,10 @@
 import * as THREE from 'three';
-import { sampleWaterSurface } from './waves';
+import { sampleWaterHeight } from './waves';
 import { VESSEL_TUNING, type VesselState } from './vessel/kinematics';
+import {
+  calculateVesselPose,
+  sampleVesselSurface,
+} from './vessel/pose';
 
 export interface VesselPose {
   readonly heave: number;
@@ -12,13 +16,13 @@ export interface VesselController {
   readonly group: THREE.Group;
   update(state: Readonly<VesselState>, timeSeconds: number, deltaSeconds: number): void;
   resetPose(state: Readonly<VesselState>, timeSeconds?: number): void;
+  setReducedMotion(reduced: boolean): void;
   getPose(): Readonly<VesselPose>;
   dispose(): void;
 }
 
 const VESSEL_LENGTH = VESSEL_TUNING.length;
 const VESSEL_WIDTH = VESSEL_TUNING.width;
-const SAMPLE_OFFSET = 0.35;
 const WATER_CLEARANCE = 0.2;
 
 /** Build the owned low-poly Phase 5 sailboat. Local +Z remains the bow. */
@@ -183,6 +187,7 @@ export function createVessel(scene: THREE.Scene): VesselController {
   group.add(bow);
 
   const pose = { heave: 0, pitch: 0, roll: 0 };
+  let reducedMotion = false;
   let disposed = false;
 
   const updatePose = (
@@ -191,13 +196,32 @@ export function createVessel(scene: THREE.Scene): VesselController {
     deltaSeconds: number,
     snap: boolean,
   ): void => {
-    const surface = sampleVesselSurface(state.x, state.z, state.heading, timeSeconds);
-    const smoothing = snap ? 1 : 1 - Math.exp(-Math.max(0, deltaSeconds) * 7.5);
-    pose.heave = approach(pose.heave, surface.heave, smoothing);
-    pose.pitch = approach(pose.pitch, surface.pitch, smoothing);
-    pose.roll = approach(pose.roll, surface.roll, smoothing);
-    group.position.set(state.x, pose.heave + WATER_CLEARANCE, state.z);
-    group.rotation.y = state.heading;
+    const safeTime = Number.isFinite(timeSeconds) ? timeSeconds : 0;
+    const surface = sampleVesselSurface(
+      state.x,
+      state.z,
+      state.heading,
+      VESSEL_LENGTH,
+      VESSEL_WIDTH,
+      (worldX, worldZ) => ({ height: sampleWaterHeight(worldX, worldZ, safeTime) }),
+    );
+    const forwardSpeed = state.velocityX * Math.sin(state.heading) + state.velocityZ * Math.cos(state.heading);
+    const target = calculateVesselPose(
+      surface,
+      { forwardSpeed, yawRate: state.yawRate },
+      reducedMotion,
+    );
+    const validDelta = Number.isFinite(deltaSeconds) && deltaSeconds > 0 ? Math.min(deltaSeconds, 0.25) : 0;
+    const smoothing = snap ? 1 : 1 - Math.exp(-validDelta * 7.5);
+    pose.heave = approach(pose.heave, target.heave, smoothing);
+    pose.pitch = approach(pose.pitch, target.pitch, smoothing);
+    pose.roll = approach(pose.roll, target.roll, smoothing);
+    group.position.set(
+      Number.isFinite(state.x) ? state.x : 0,
+      pose.heave + WATER_CLEARANCE,
+      Number.isFinite(state.z) ? state.z : 0,
+    );
+    group.rotation.y = Number.isFinite(state.heading) ? state.heading : 0;
     group.rotation.x = pose.pitch;
     group.rotation.z = pose.roll;
   };
@@ -212,6 +236,10 @@ export function createVessel(scene: THREE.Scene): VesselController {
     resetPose: (state, timeSeconds = 0): void => {
       if (disposed) return;
       updatePose(state, timeSeconds, 0, true);
+    },
+    setReducedMotion: (reduced): void => {
+      if (disposed) return;
+      reducedMotion = reduced === true;
     },
     getPose: (): Readonly<VesselPose> => ({ ...pose }),
     dispose: (): void => {
@@ -312,44 +340,6 @@ function createTriangleGeometry(points: readonly number[]): THREE.BufferGeometry
   geometry.setIndex([0, 1, 2]);
   geometry.computeVertexNormals();
   return geometry;
-}
-
-interface VesselSurface {
-  readonly heave: number;
-  readonly pitch: number;
-  readonly roll: number;
-}
-
-function sampleVesselSurface(
-  x: number,
-  z: number,
-  heading: number,
-  timeSeconds: number,
-): VesselSurface {
-  const bow = sampleAt(x, z, heading, 0, VESSEL_LENGTH * 0.5, timeSeconds);
-  const stern = sampleAt(x, z, heading, 0, -VESSEL_LENGTH * 0.5, timeSeconds);
-  const port = sampleAt(x, z, heading, -VESSEL_WIDTH * 0.5, 0, timeSeconds);
-  const starboard = sampleAt(x, z, heading, VESSEL_WIDTH * 0.5, 0, timeSeconds);
-  return {
-    heave: (bow.height + stern.height + port.height + starboard.height) * 0.25,
-    pitch: -Math.atan2(bow.height - stern.height, VESSEL_LENGTH),
-    roll: Math.atan2(starboard.height - port.height, VESSEL_WIDTH),
-  };
-}
-
-function sampleAt(
-  x: number,
-  z: number,
-  heading: number,
-  localX: number,
-  localZ: number,
-  timeSeconds: number,
-): ReturnType<typeof sampleWaterSurface> {
-  const cos = Math.cos(heading);
-  const sin = Math.sin(heading);
-  const worldX = x + localX * cos + localZ * sin;
-  const worldZ = z - localX * sin + localZ * cos;
-  return sampleWaterSurface(worldX, worldZ, timeSeconds, SAMPLE_OFFSET);
 }
 
 function approach(current: number, target: number, amount: number): number {

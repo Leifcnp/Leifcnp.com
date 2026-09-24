@@ -7,6 +7,9 @@
  * movement contract can be exercised independently of the scene.
  */
 
+import { sampleWaterSurface } from '../waves.ts'
+import { calculateWaveResponse } from './waveResponse.ts'
+
 export interface VesselInput {
   /** -1 is full reverse, +1 is full ahead. */
   readonly throttle: number
@@ -38,7 +41,7 @@ export interface VesselEnvironment {
   readonly obstacles: readonly VesselObstacle[]
 }
 
-/** Tunable dimensions and coefficients for the temporary block vessel. */
+/** Shared hull dimensions and coefficients for the custom sailboat. */
 export const VESSEL_TUNING = {
   length: 5.2,
   width: 2.6,
@@ -205,6 +208,7 @@ function integrateSubstep(
   input: VesselInput,
   dt: number,
   environment: VesselEnvironment,
+  waveTimeSeconds?: number,
 ): VesselState {
   const sinHeading = Math.sin(state.heading)
   const cosHeading = Math.cos(state.heading)
@@ -221,6 +225,19 @@ function integrateSubstep(
     ? input.throttle * VESSEL_TUNING.forwardAcceleration
     : input.throttle * VESSEL_TUNING.reverseAcceleration
   longitudinalVelocity += thrust * dt
+
+  // Wave force is intentionally opt-in. Scanner/reduced-motion callers can
+  // omit the time argument and retain the exact legacy movement contract.
+  // Apply it before braking so the explicit brake retains longitudinal
+  // authority even while a wave slope is trying to move the vessel.
+  if (waveTimeSeconds !== undefined && Number.isFinite(waveTimeSeconds)) {
+    const response = calculateWaveResponse(
+      sampleWaterSurface(state.x, state.z, waveTimeSeconds),
+      state.heading,
+    )
+    longitudinalVelocity += response.surgeAcceleration * dt
+    lateralVelocity += response.swayAcceleration * dt
+  }
 
   if (input.brake) {
     const brakingDirection = Math.sign(longitudinalVelocity) || Math.sign(thrust)
@@ -293,6 +310,8 @@ export function stepVessel(
   input: VesselInput,
   dt: number,
   environment: VesselEnvironment,
+  /** Wave time at the start of this step. Omit to disable wave force. */
+  waveTimeSeconds?: number,
 ): VesselState {
   const initial = safeState(state)
   const controls = safeInput(input)
@@ -309,10 +328,21 @@ export function stepVessel(
   }
 
   let remaining = validDt
+  let elapsed = 0
   while (remaining > 0) {
     const substep = Math.min(remaining, MAX_SUBSTEP)
-    integratedState = integrateSubstep(integratedState, controls, substep, environment)
+    const substepWaveTime = waveTimeSeconds !== undefined && Number.isFinite(waveTimeSeconds)
+      ? waveTimeSeconds + elapsed
+      : undefined
+    integratedState = integrateSubstep(
+      integratedState,
+      controls,
+      substep,
+      environment,
+      substepWaveTime,
+    )
     remaining -= substep
+    elapsed += substep
   }
 
   return integratedState

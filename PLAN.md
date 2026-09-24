@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 5 is complete and published**: a bespoke low-poly sailboat, primitive docks/beacons, and bounded wake/foam. The user approved proceeding on 2026-09-24 and requested stronger water interaction plus an offshore storm area as later tasks. The custom geometry, bounded wake, controls, scanner, and content interface passed local/public verification. Stop for visual/interaction review; see [Phase 5 evidence](artifacts/phase5/VERIFICATION.md). WEB-010 deepens boat/wave coupling after that review; WEB-011 then adds the storm boundary.
+**Phase 6 / WEB-010 is in final verification**: shared wave forces, hull-sized water support, speed pitch/turn heel, and wave/turn-sensitive contact foam. The user accepted Phase 5 and requested the next level on 2026-09-24. The original custom sailboat and scanner/content interface remain intact. WEB-011 offshore storm water follows review of this release.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -20,7 +20,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 5 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; further wave/storm implementation remains gated on review of the visual phase.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-010 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; storm implementation remains gated on review of WEB-010.
 
 ## Work packages and review gates
 
@@ -41,9 +41,9 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna sailboat agent: owned low-poly hull/deck/mast/sails, preserving the vessel pose and collision contract.
-- Luna landmark agent: primitive docks and beacons within existing collision envelopes, plus geometry/disposal checks.
-- Luna wake agent: bounded pooled/instanced foam with shared-water placement and lifecycle controls.
+- Luna wave dynamics agent: shared surface velocity, bounded force calculation and kinematic integration, pure tests.
+- Luna vessel response agent: hull support sampling, restrained speed/turn pose cues, finite smoothing and reduced-motion behavior.
+- Luna contact agent: pooled bow/turn wash that responds to the active water phase and encounter speed.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -57,4 +57,4 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 5 refines boat/island geometry and adds visual wake while preserving the established interaction contracts. Stronger wave forces and offshore storm water remain in their separate follow-up plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-010 strengthens boat/water coupling while preserving established controls, content, scanner routes, and custom artwork. Offshore storm water stays in WEB-011 for the next review gate. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.

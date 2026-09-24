@@ -1,0 +1,26 @@
+{
+  ".nojekyll": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "CNAME": {
+    "bytes": 12,
+    "sha256": "45213e89b742e5aada546ffc4acbd2d0a0f8f1af98d08a944a832f4e3cf738f1"
+  },
+  "assets/index-DGEknR0p.js": {
+    "bytes": 546527,
+    "sha256": "8ecaf1100036348d1b6dbe4a4c0e393048449a4a5126aca2b62fc2de7249834d"
+  },
+  "assets/index-i9Atd13z.css": {
+    "bytes": 10672,
+    "sha256": "5949d9521d08c696a3f02f993ccc0673f6185fa852cbe7722cc018ff06d3183f"
+  },
+  "favicon.svg": {
+    "bytes": 354,
+    "sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa"
+  },
+  "index.html": {
+    "bytes": 621,
+    "sha256": "30e77137c63f6982188be1c50bdb8d6070f51cee3edafa1f6533a3269c5d298d"
+  }
+}

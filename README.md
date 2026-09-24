@@ -1,6 +1,6 @@
 # Leif Pedersen — Under way
 
-The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 5 adds a custom procedural sailboat, shoreline docks/beacons, and a pooled wake around the accessible category scanner and island content drawers. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
+The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 6 strengthens the custom sailboat’s interaction with the water: gentle wave-driven drift, hull support sampling, speed pitch/turn heel, and wave-sensitive bow/side foam. Shoreline landmarks and the accessible category scanner/content drawers remain in place. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
 
 The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after the Phase 1 archival checks. The old version remains recoverable in Git history at commit `863b788`; it is not part of the current build or deployment path.
 
@@ -42,9 +42,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user approved Phase 5 after the scanner/content phase; this continues the external-testing workflow. Future phases still require review.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user approved WEB-010 after reviewing the custom sailboat phase; this continues the external-testing workflow. Future phases still require review.
 
-Phase 5 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase5/VERIFICATION.md). The custom boat, island details, and wake are ready for review. The earlier [Phase 3 verification](artifacts/phase3/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
+Phase 5 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase5/VERIFICATION.md). That reviewed release is the baseline for WEB-010, now in final verification. The earlier [Phase 3 verification](artifacts/phase3/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 
@@ -63,9 +63,9 @@ The top scanner navigation reaches résumé (Chartroom), projects (Shipyard), wr
 
 The content drawer is non-modal: top navigation stays accessible while reading. Close or **Escape** returns focus to the triggering control. Keyboard input inside the drawer is reserved for reading. Closing the drawer leaves scanner travel running. Reset clears navigation, content, and proximity.
 
-Pause cancels scanner travel at the current position. Category navigation while paused or with reduced motion places the boat/camera at the safe destination immediately without resuming animation. If WebGL is unavailable, the same category navigation and content remain usable. All entries remain clearly marked placeholders in the separate content file. The boat model and all new art are generated from original geometry in this repository, with no downloaded model or texture assets. See [artwork provenance](ASSETS.md). A fixed pool supplies stern wake and small bow foam; pause freezes it and reset/instant travel clears it. Reduced motion suppresses foam even when sailing is explicitly resumed.
+Pause cancels scanner travel at the current position. Category navigation while paused or with reduced motion places the boat/camera at the safe destination immediately without resuming animation. If WebGL is unavailable, the same category navigation and content remain usable. All entries remain clearly marked placeholders in the separate content file. The boat model and all new art are generated from original geometry in this repository, with no downloaded model or texture assets. See [artwork provenance](ASSETS.md). A fixed pool supplies stern wake, split bow foam, and outer-turn wash, with contact strength tied to the active swell encounter; pause freezes it and reset/instant travel clears it. Reduced motion suppresses foam and added wave drift/speed pitch/turn heel even when sailing is explicitly resumed. While sailing freely, wave slopes add a gentle bounded drift; thrust, rudder, brake, and collision limits retain authority. Scanner arrivals stay horizontally alongside their island while reading, until helm input releases the hold. Hull buoyancy continues to follow the same water surface.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Phase 5 sailboat, island details, and wake are complete; stop for visual/interaction review. Stronger boat–wave coupling is planned as WEB-010, followed by the offshore storm boundary as WEB-011.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. WEB-010 adds stronger boat–wave coupling; stop for sailing-feel review before the offshore storm boundary in WEB-011.
 
 
 ## Verification and VM graphics

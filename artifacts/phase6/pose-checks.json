@@ -1,0 +1,200 @@
+{
+  "checks": [
+    "Actual controller verifies speed lift, turn heel, reduced-motion suppression, finite invalid-frame handling, and matching 30/60/120Hz damping.",
+    "Hull pitch and roll follow shared wave heights at four headings and three times.",
+    "Hull center/freeboard leaves the sailboat partly submerged.",
+    "Heave responds with damping; pose snapshots cannot mutate live state.",
+    "Every unique sailboat GPU resource disposes exactly once; hull bounds fit the collision radius and mesh/triangle counts remain bounded."
+  ],
+  "samples": [
+    {
+      "heading": 0,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.5720563954059679,
+        "pitch": -0.03628096858749921,
+        "roll": 0.06433608362698952
+      }
+    },
+    {
+      "heading": 0,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.34589221143715765,
+        "pitch": -0.0231918524931061,
+        "roll": -0.039871164644246615
+      }
+    },
+    {
+      "heading": 0,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -0.7563940030804284,
+        "pitch": -0.006353936093073848,
+        "roll": -0.02605637043855869
+      }
+    },
+    {
+      "heading": 1.5707963267948966,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.5715804208246644,
+        "pitch": -0.06524622080785492,
+        "roll": -0.03662415393072478
+      }
+    },
+    {
+      "heading": 1.5707963267948966,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.2,
+      "pose": {
+        "heave": 0.34086773264953524,
+        "pitch": 0.040079254267490594,
+        "roll": -0.02376714291554273
+      }
+    },
+    {
+      "heading": 1.5707963267948966,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -0.7569762568478222,
+        "pitch": 0.026293187315753697,
+        "roll": -0.0056558343458951235
+      }
+    },
+    {
+      "heading": -1.5707963267948966,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.5715804208246644,
+        "pitch": 0.0652462208078549,
+        "roll": 0.03662415393072482
+      }
+    },
+    {
+      "heading": -1.5707963267948966,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.2,
+      "pose": {
+        "heave": 0.34086773264953524,
+        "pitch": -0.04007925426749061,
+        "roll": 0.02376714291554275
+      }
+    },
+    {
+      "heading": -1.5707963267948966,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -0.7569762568478222,
+        "pitch": -0.026293187315753697,
+        "roll": 0.0056558343458951235
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "time": 0,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": 0.5720563954059676,
+        "pitch": 0.03628096858749921,
+        "roll": -0.06433608362698953
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "time": 3,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.2,
+      "pose": {
+        "heave": 0.3458922114371577,
+        "pitch": 0.0231918524931061,
+        "roll": 0.039871164644246615
+      }
+    },
+    {
+      "heading": 3.141592653589793,
+      "time": 8,
+      "bowRises": true,
+      "sideRises": true,
+      "freeboard": 0.19999999999999996,
+      "pose": {
+        "heave": -0.7563940030804284,
+        "pitch": 0.006353936093073848,
+        "roll": 0.02605637043855861
+      }
+    }
+  ],
+  "dynamic": {
+    "heave": 0.7026710770886211,
+    "pitch": -0.08610379309489632,
+    "roll": -0.06706935466242953
+  },
+  "reduced": {
+    "heave": 0.7026710770886212,
+    "pitch": -0.021103793094896323,
+    "roll": 0.052930645337570484
+  },
+  "frameResults": [
+    {
+      "heave": 0.7026710770886212,
+      "pitch": -0.0860678426108367,
+      "roll": -0.06700298453801176
+    },
+    {
+      "heave": 0.7026710770886212,
+      "pitch": -0.0860678426108367,
+      "roll": -0.06700298453801176
+    },
+    {
+      "heave": 0.7026710770886212,
+      "pitch": -0.08606784261083672,
+      "roll": -0.06700298453801176
+    }
+  ],
+  "finite": true,
+  "last": {
+    "heave": -0.7563940030804283,
+    "pitch": 0.006353936093073845,
+    "roll": 0.0260563704385586
+  },
+  "after": {
+    "heave": -0.7044398581144975,
+    "pitch": 0.00973446266767808,
+    "roll": 0.02720966758007207
+  },
+  "unchanged": true,
+  "disposeCount": 18,
+  "resourceCount": 18,
+  "meshCount": 11,
+  "triangles": 109,
+  "maxRadius": 2.906888264125697,
+  "removed": true
+}

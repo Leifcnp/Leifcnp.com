@@ -155,7 +155,12 @@ export function createWaterWorld(
   const landmarks = createLandmarks(scene, options.islands ?? []);
   const vessel = createVessel(scene);
   const wake = createWake(scene);
-  wake.setReducedMotion(Boolean(initialReducedMotion));
+  let reducedMotion = Boolean(initialReducedMotion);
+  vessel.setReducedMotion(reducedMotion);
+  wake.setReducedMotion(reducedMotion);
+  // Keep a scanner arrival alongside its island while the visitor reads.
+  // Helm input releases the mooring; ordinary free sailing still feels swell.
+  let horizontallyMoored = false;
   const vesselSpawn = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
   let vesselState: VesselState = vesselSpawn;
   let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
@@ -206,6 +211,7 @@ export function createWaterWorld(
 
   const applyScannerState = (next: ScannerState): void => {
     scannerState = next;
+    if (next.status === 'arrived') horizontallyMoored = true;
     vesselState = {
       x: next.x,
       z: next.z,
@@ -264,16 +270,21 @@ export function createWaterWorld(
     const delta = Math.min(Math.max(0, (now - lastTime) / 1000), MAX_FRAME_DELTA);
     lastTime = now;
     if (!isMotionPaused()) {
-      elapsed += delta;
       fixedAccumulator = Math.min(fixedAccumulator + delta, FIXED_STEP * MAX_STEPS_PER_FRAME);
       let steps = 0;
-      while (fixedAccumulator >= FIXED_STEP && steps < MAX_STEPS_PER_FRAME) {
+      while (fixedAccumulator + 1e-9 >= FIXED_STEP && steps < MAX_STEPS_PER_FRAME) {
         if (scannerIsActive(scannerState)) {
           advanceScan(FIXED_STEP);
-        } else {
-          vesselState = stepVessel(vesselState, vesselInput, FIXED_STEP, vesselEnvironment);
+        } else if (!horizontallyMoored) {
+          vesselState = stepVessel(
+            vesselState, vesselInput, FIXED_STEP, vesselEnvironment,
+            reducedMotion ? undefined : elapsed,
+          );
         }
-        fixedAccumulator -= FIXED_STEP;
+        // Water and forces share active simulation time. Discarded frames and
+        // hidden/paused time never advance either side of the coupling.
+        elapsed += FIXED_STEP;
+        fixedAccumulator = Math.max(0, fixedAccumulator - FIXED_STEP);
         steps += 1;
       }
       cameraRig.update(vesselState.x, vesselState.z, delta);
@@ -385,6 +396,8 @@ export function createWaterWorld(
     setPaused,
     setReducedMotion: (reduced): void => {
       if (disposed) return;
+      reducedMotion = reduced;
+      vessel.setReducedMotion(reduced);
       wake.setReducedMotion(reduced);
       if (isMotionPaused()) renderer.render(scene, camera);
     },
@@ -395,14 +408,20 @@ export function createWaterWorld(
         rudder: clamp(input.rudder, -1, 1),
         brake: Boolean(input.brake),
       };
-      if (scannerIsActive(scannerState) && (Math.abs(nextInput.throttle) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake)) {
+      if (Math.abs(nextInput.throttle) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake) {
+        horizontallyMoored = false;
         cancelScanInternal('Scanner navigation cancelled by helm input.');
+        if (scannerState.status === 'arrived') {
+          scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
+          publishScannerState(scannerState);
+        }
       }
       vesselInput = nextInput;
     },
     resetVessel: (): void => {
       if (disposed) return;
       wake.reset();
+      horizontallyMoored = false;
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
       publishScannerState(scannerState);
@@ -437,6 +456,7 @@ export function createWaterWorld(
       }
 
       vesselInput = { throttle: 0, rudder: 0, brake: false };
+      horizontallyMoored = false;
       const current = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
       applyScannerState(startScannerScan(current, { islandId, route: route.points }));
 

@@ -1,0 +1,56 @@
+{
+  "checks": [
+    "Unmoored neutral vessel responds gently to swell.",
+    "Pause holds force/pose/foam history; resume discards elapsed wall time.",
+    "Integrated wave/force clock gives matching 30/60/120 Hz trajectories.",
+    "All four scanner arrivals stay moored in safe docking annuli while waves continue.",
+    "Helm releases the mooring and clears the stale arrival status.",
+    "Animated scan remains on its safe path; arrival holds and manual cancellation hands off to waves.",
+    "Hidden-document suspension freezes physics and skips catch-up.",
+    "Reduced motion suppresses added drift and contact effects while explicitly resumed helm works.",
+    "All 5784 sampled states retain hull clearance and finite world bounds.",
+    "Idempotent teardown removes canvas with no script errors."
+  ],
+  "drift": {
+    "x": -0.11721188617402091,
+    "z": -0.3379656153944008,
+    "velocityX": 0.015465804545201174,
+    "velocityZ": -0.061342766983327746,
+    "heading": 0,
+    "yawRate": 0
+  },
+  "trajectories": [
+    {
+      "x": -2.6047692630478476,
+      "z": 28.240855552713995,
+      "velocityX": -2.7231604558682876,
+      "velocityZ": 13.739606615508293,
+      "heading": -0.2279790587236712,
+      "yawRate": -0.11960994440280101
+    },
+    {
+      "x": -2.6047692630478476,
+      "z": 28.240855552713995,
+      "velocityX": -2.7231604558682876,
+      "velocityZ": 13.739606615508293,
+      "heading": -0.2279790587236712,
+      "yawRate": -0.11960994440280101
+    },
+    {
+      "x": -2.6047692630478476,
+      "z": 28.240855552713995,
+      "velocityX": -2.7231604558682876,
+      "velocityZ": 13.739606615508293,
+      "heading": -0.2279790587236712,
+      "yawRate": -0.11960994440280101
+    }
+  ],
+  "spread": 0,
+  "activeFoam": 57,
+  "renderer": {
+    "calls": 50,
+    "triangles": 14005,
+    "geometries": 38,
+    "textures": 0
+  }
+}

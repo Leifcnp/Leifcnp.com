@@ -2,7 +2,7 @@
 
 ## Goal and scheduling
 
-User requested more interaction between the boat and the water on 2026-09-24. Schedule this after Phase 5 visual review. The baseline already has sampled buoyancy and will gain a pooled wake; this task deepens that coupling rather than replacing the completed controls or duplicating the wake task.
+User requested more interaction between the boat and the water on 2026-09-24. The user accepted Phase 5 and authorized this next release on 2026-09-24. The baseline has sampled buoyancy and a pooled wake; this task deepens that coupling rather than replacing the completed controls or duplicating the wake task.
 
 ## Scope
 
@@ -35,4 +35,35 @@ Too much wave force makes a portfolio feel difficult to navigate. Prefer small, 
 
 ## Review gate
 
-Review improved sailing feel and the motion/performance record before WEB-011 introduces offshore storm forces. This task is planned, not part of the current Phase 5 implementation.
+Review improved sailing feel and the motion/performance record before WEB-011 introduces offshore storm forces. This is the active follow-up release; stop after its verified deployment and review handoff.
+
+
+## Implementation assignments and release checklist
+
+- Luna wave dynamics: shared height/slope/vertical-velocity sample, bounded horizontal wave force before collision resolution, optional simulation-time input, and pure dynamics tests.
+- Luna hull response: hull-sized sampling, restrained speed pitch and turn heel, finite smoothing/reset, reduced-motion suppression, and pose verification. Preserve the custom geometry.
+- Luna contact effects: speed/turn/swell-sensitive original procedural foam within a fixed instance pool; verify lifecycle/disposal.
+- Root integration: simulation clock, scanner arrival hold/manual handoff, reduced-motion policy, browser review, build and Pages publication. No shared-file agent edits.
+
+- [x] Confirm clean reviewed Phase 5 baseline and repository build/deployment contract.
+- [x] Move WEB-010 to In progress; retain WEB-011 in Backlog.
+- [x] Integrate the three bounded implementation packages.
+- [x] Verify wave-force signs/bounds, temporal sampling and frame-rate behavior, collision handling, hull contact, and resource lifecycle.
+- [x] Verify all six desktop/mobile layouts, keyboard/multitouch, scanner arrival/cancellation, pause/reset, hidden tabs, reduced motion, and WebGL fallback.
+- [x] Inspect desktop/mobile sailing visuals and record renderer cost with VM limitations.
+- [ ] Build, inspect generated output/domain metadata, commit and push the focused release, verify exact-SHA Pages and public assets/interactions.
+- [ ] Record verification, update canonical task status, and stop before the storm phase.
+
+## Integration contract
+
+`stepVessel` accepts an optional fifth `waveTimeSeconds` argument representing the start of the step. Omit it for reduced motion; scan paths bypass forces, and a completed scanner arrival remains horizontally moored until helm input. Use active fixed simulation time so pause/visibility changes cannot cause wave-phase jumps or catch-up. The visible surface keeps its existing deterministic wave equation. Additional hull/effect response shares its phase and is suppressed by reduced motion. Instant navigation/reset clear contact history and settle pose.
+
+
+## Implemented behavior and local evidence — 2026-09-24
+
+- Surface vertical velocity is the derivative of the existing height field. Wave slopes supply capped surge/sway before braking and collision resolution. Legacy motion remains available when wave time is omitted.
+- Eight hull support points produce smoothed buoyancy; forward speed adds at most 0.065 radians bow lift and turn rate adds at most 0.12 radians heel. Original boat geometry is unchanged.
+- Split bow foam and outer-turn wash react to `abs(surface.velocityY + velocity · surface.gradient)` at the current simulation time. The 96-instance pool, one mesh/material/geometry, and reset/disposal contracts are retained; at most 58 slots were active in the lifecycle fixture.
+- Root integrated a shared fixed clock, corrected the floating-point accumulator threshold, and added horizontal mooring for completed scans. Manual input releases mooring; added drift/pose effects/foam are suppressed by reduced motion.
+- 52 native tests and strict production build pass. Actual controller/source-world tests cover 5,784 finite, collision-safe states, identical 30/60/120 Hz trajectories, manual handoff, mooring, pause/visibility, reduced motion, reset, and disposal.
+- Six-layout production browser checks pass, including real two-finger touch and fallback content. Original art/resource budget remains unchanged at 38 geometries, zero textures, and up to 50 observed draw calls. Full evidence: [Phase 6 verification](../../artifacts/phase6/VERIFICATION.md).

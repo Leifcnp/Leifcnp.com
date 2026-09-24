@@ -16,6 +16,8 @@ export interface WaterSample {
   readonly height: number;
   readonly slopeX: number;
   readonly slopeZ: number;
+  /** Vertical surface velocity, in world units per second. */
+  readonly velocityY: number;
 }
 
 /** Sample height and finite-difference slopes from the same wave function. */
@@ -25,7 +27,13 @@ export function sampleWaterSurface(
   timeSeconds = 0,
   sampleDistance = 0.35,
 ): WaterSample {
-  const distance = Math.max(0.01, sampleDistance);
+  const distance = Number.isFinite(sampleDistance)
+    ? Math.max(0.01, sampleDistance)
+    : 0.35;
+  const longPhase = x * 0.075 + timeSeconds * 0.42;
+  const crossPhase = z * 0.1 - timeSeconds * 0.32;
+  const diagonalPhase = (x + z) * 0.16 + timeSeconds * 0.56;
+  const counterPhase = (x - z) * 0.21 - timeSeconds * 0.44;
   return {
     height: sampleWaterHeight(x, z, timeSeconds),
     slopeX:
@@ -36,6 +44,10 @@ export function sampleWaterSurface(
       (sampleWaterHeight(x, z + distance, timeSeconds) -
         sampleWaterHeight(x, z - distance, timeSeconds)) /
       (distance * 2),
+    velocityY:
+      0.62 * 0.42 * Math.cos(longPhase) +
+      0.38 * 0.32 * Math.sin(crossPhase) +
+      0.16 * 0.56 * Math.cos(diagonalPhase) +
+      0.08 * 0.44 * Math.sin(counterPhase),
   };
 }
-

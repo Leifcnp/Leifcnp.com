@@ -15,13 +15,6 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-010 — Deepen the boat’s physical and visible interaction with waves.
-  - Requested (2026-09-24): “more wave/water interaction between the boat and the water.” This is a follow-up to Phase 5’s baseline wake/foam, not a prerequisite for that release.
-  - Acceptance criteria: The hull visibly meets the sampled water and responds coherently to swell, speed, and turns. Add bounded wave-driven movement/response and contact effects without unpredictable steering, land penetration, or mismatch between visual water and the boat. Tune keyboard/touch feel, scanner handoff, pause/reset, reduced motion, and mobile cost together; preserve deterministic finite state.
-  - Progress: Planned after Phase 5 visual review; current shared-wave heave/pitch/roll and new wake remain the baseline.
-  - Next step: Review Phase 5 feedback, choose a small shared wave-force/contact model, implement and test it before the storm boundary depends on it.
-  - Plan: [plans/WEB-010/plan.md](plans/WEB-010/plan.md).
-
 - [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
   - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
   - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
@@ -31,7 +24,13 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-No tasks in progress. Phase 5 awaits visual/interaction review.
+- [ ] WEB-010 — Deepen the boat’s physical and visible interaction with waves.
+  - Requested (2026-09-24): “more wave/water interaction between the boat and the water.” This is a follow-up to Phase 5’s baseline wake/foam, not a prerequisite for that release.
+  - Acceptance criteria: The hull visibly meets the sampled water and responds coherently to swell, speed, and turns. Add bounded wave-driven movement/response and contact effects without unpredictable steering, land penetration, or mismatch between visual water and the boat. Tune keyboard/touch feel, scanner handoff, pause/reset, reduced motion, and mobile cost together; preserve deterministic finite state.
+  - Authorization (2026-09-24): User accepted the published Phase 5 and requested “lets go to the next level”; proceed with WEB-010 and the established external-testing release workflow.
+  - Progress: Luna agents are implementing shared wave forces, bounded hull response, and pooled contact effects; root owns simulation integration, regression verification, and publishing.
+  - Next step: Integrate fixed-step wave forcing and lifecycle behavior, verify steering/collisions/scanner/reduced motion, review desktop/mobile visuals, and publish for review before WEB-011.
+  - Plan: [plans/WEB-010/plan.md](plans/WEB-010/plan.md).
 
 
 ## Blocked

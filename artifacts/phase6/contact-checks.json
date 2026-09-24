@@ -1,0 +1,7 @@
+{
+  "contactStraight": 2,
+  "contactTurn": 3,
+  "changedOnTurn": true,
+  "changedOnWaveTime": true,
+  "stationaryContact": 0
+}
