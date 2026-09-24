@@ -2,16 +2,53 @@
 
 ## Project
 
-- This repository contains the Hugo source for `https://www.leifcnp.com/`.
-- The site uses the `aafu` theme from the `themes/aafu` Git submodule.
-- Hugo publishes generated output to `docs/`, which is tracked for GitHub Pages.
-- Preserve `docs/CNAME` and the custom-domain configuration.
+- This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
+- Only Phase 1 is authorized for implementation in this delivery. Complete one phase, verify it, and wait for user review before implementing the next phase.
+- Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
+- Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
+- Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
+- The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after archival verification. The prior version remains recoverable in Git history at commit `863b788`; do not reintroduce it into the new site by default.
+
+## Website access
+
+- User-confirmed working browser URL on 2026-09-16: [http://leifcnp.com/](http://leifcnp.com/) (HTTP, without `www`).
+- The user reports that GoDaddy is already set up. This is user-provided context, not an independent DNS verification.
+- The former Hugo configuration used `baseURL = "https://www.leifcnp.com/"`; that configuration was removed with the legacy working tree. The current Vite build uses relative asset paths and retains `docs/CNAME` as `leifcnp.com`.
+- Earlier restricted-environment HTTP/HTTPS curl checks failed DNS resolution for both `leifcnp.com` and `www.leifcnp.com`, and web fetches failed. These results do not establish that HTTPS or `www` is broken; the user reports the non-www HTTP address open in their browser.
+- A current external check on 2026-09-24 observed HTTP 200 from `http://leifcnp.com/`, still serving the previous Hugo Pages deployment, while apex HTTPS failed hostname certificate verification. Public Actions/Pages evidence identifies `master` and the tracked `docs/` output as the current deployment path; unauthenticated settings inspection is unavailable. Treat this as hosting evidence only: do not bypass TLS warnings or change DNS/domain settings here; WEB-001 remains the separate investigation.
+- Follow-up investigation is tracked as `WEB-001` in [WEBSITE_TODO.md](WEBSITE_TODO.md). Do not change domain, DNS, or site configuration merely to reconcile these observations.
+
+## Website to-do list
+
+- The canonical website to-do list is [WEBSITE_TODO.md](WEBSITE_TODO.md) at the repository root. Read it before website work.
+- Interpret requests such as "add things to the website todo list" as instructions to update that file. Append requested tasks to Backlog without automatically executing them, unless the user also requests execution.
+- Check all sections for duplicates before adding a task; update an existing matching task when appropriate.
+- Use stable IDs in the form `WEB-001`, allocating the next unused number above the highest existing ID. Never renumber or reuse IDs.
+- Keep tasks in Backlog, In progress, Blocked, or Done. Each task uses a checkbox, a concise description, and acceptance criteria. Use unchecked boxes until complete and checked boxes in Done.
+- Move the same task entry as its status changes. Record progress and a concrete next step for unfinished work; for blocked work, also record the blocker and what is needed to resume.
+- When resuming, read the task's acceptance criteria, progress, blocker, and next step, and confirm current repository state before continuing. Listing a task is not authorization to execute it.
+- Mark a task Done only after appropriate verification; record the completion date and verification evidence. Preserve completed entries and their IDs as history.
 
 ## Working conventions
 
-- Treat `config.toml`, `content/`, `static/`, and the theme submodule as source files.
-- Do not edit generated files under `docs/` by hand; regenerate them with Hugo.
-- Initialize dependencies after cloning with `git submodule update --init --recursive`.
-- Preview changes locally with Hugo before committing.
-- Build the published site with `hugo -t aafu` and review the resulting `docs/` changes.
+### Verified commands (2026-09-24)
+
+- Runtime: Node 24.19.0 and pnpm 11.19.0. This VM exposes them through the bundled runtime, not the default shell PATH. Use the PATH and `PNPM_CONFIG_STORE_DIR` / `PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN` setup in README.md.
+- Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
+- Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
+- Type check: `pnpm run typecheck`.
+- Production build: `pnpm run build` (includes type checking), generating `docs/`.
+- Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
+- Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
+- Verification record: [artifacts/phase1/VERIFICATION.md](artifacts/phase1/VERIFICATION.md). Chromium software-rendered browser checks passed; the embedded browser's VM graphics driver failed WebGL initialization. Do not mistake that specific failure for a site or domain outage.
+
+### Implementation discipline
+
+- Build mechanics intentionally from the ground up; do not introduce an all-in-one game template.
+- Use primitive geometry through Phase 4. Phase 1 water must remain empty: no islands, vessel, docking rings, or scanner navigation.
+- Do not edit generated files under `docs/` by hand; regenerate them with the package build command.
+- Install dependencies using the checked-in package-manager lockfile; consult README.md for setup and commands.
+- Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
+- Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
+- A routine local build is not blanket authorization to publish. The user has explicitly authorized the reviewed Phase 1 output for external testing; Phase 2 remains gated on the user’s review of Phase 1 and must not be implemented or published as part of this release.

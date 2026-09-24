@@ -1,0 +1,3 @@
+# Vite output is generated; Three.js embeds shader source strings in its bundle.
+docs/** linguist-generated=true
+docs/assets/*.js -whitespace

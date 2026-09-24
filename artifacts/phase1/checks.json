@@ -1,0 +1,18 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "browser": "151.0.7922.34",
+  "renderer": "SwiftShader test renderer",
+  "checks": [
+    "Rendered canvas changes between animated frames.",
+    "Pause freezes rendered canvas pixels.",
+    "Keyboard Enter resumes motion.",
+    "mobile: 390×844 canvas fits; no horizontal overflow; motion target ≥44px.",
+    "landscape: 844×390 canvas fits; no horizontal overflow; motion target ≥44px.",
+    "wide: 2560×1080 canvas fits; no horizontal overflow; motion target ≥44px.",
+    "small: 320×568 canvas fits; no horizontal overflow; motion target ≥44px.",
+    "Reduced-motion preference starts still; explicit Resume works.",
+    "Changing preference to reduce pauses a running scene.",
+    "Supported WebGL scene has no console errors or uncaught page errors.",
+    "Unavailable WebGL shows readable fallback and disables motion control."
+  ]
+}
