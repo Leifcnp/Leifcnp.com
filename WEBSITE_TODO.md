@@ -34,8 +34,8 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 - [ ] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
   - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
   - Authorization (2026-09-24): User approved “go with next phase” while Phase 4 publication was being verified. Continue the established external-testing workflow.
-  - Progress: Luna agents are implementing the sailboat, island details, and bounded wake/foam; root integrates and verifies.
-  - Next step: Integrate the three visual components, verify hull/collision/route consistency and motion cleanup, inspect desktop/mobile performance and interactions, then publish Phase 5 for review.
+  - Progress: Custom procedural boat, grounded island details, and a 96-instance wake are integrated. Forty-one tests, strict build, pose/bounds/wake lifecycle fixtures, and rendering-budget checks pass. No external model or texture assets were used; provenance is in `ASSETS.md`.
+  - Next step: Finish production interaction checks, commit/push the verified build, confirm exact-SHA Pages and public bytes/browser behavior, then stop for Phase 5 review.
   - Plan: [plans/WEB-008/plan.md](plans/WEB-008/plan.md).
 
 

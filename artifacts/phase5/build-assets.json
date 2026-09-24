@@ -1,0 +1,18 @@
+{
+  "index.html": {
+    "bytes": 621,
+    "sha256": "7b20a63a6c7ad769f5b4ce5c06aa626ebd296442b818f7b85aeddd1edc1fbcba"
+  },
+  "favicon.svg": {
+    "bytes": 354,
+    "sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa"
+  },
+  "assets/index-DkyPZtfk.js": {
+    "bytes": 542540,
+    "sha256": "af02b5db649d054f64cf5138330b45c59d08c6c21fe533337a78dc571e6163d9"
+  },
+  "assets/index-i9Atd13z.css": {
+    "bytes": 10672,
+    "sha256": "5949d9521d08c696a3f02f993ccc0673f6185fa852cbe7722cc018ff06d3183f"
+  }
+}

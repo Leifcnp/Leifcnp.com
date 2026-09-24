@@ -102,6 +102,55 @@ test('uses declared island positions, exact docking radii, and matching anchor I
   landmarks.dispose()
 })
 
+test('adds one distinct Phase 5 detail per island without reaching the collision edge', () => {
+  const scene = new THREE.Scene()
+  const landmarks = createLandmarks(scene, portfolioIslands)
+  landmarks.group.updateMatrixWorld(true)
+
+  const expectedDetails = new Map([
+    ['island-resume', ['chartroom-tower', 'chartroom-tower-roof']],
+    ['island-projects', ['shipyard-dock', 'shipyard-dock-pile']],
+    ['island-writing', ['logbook-marker', 'logbook-marker-cap']],
+    ['island-media', ['signal-cove-light', 'signal-cove-light-cap', 'signal-cove-lantern']],
+  ])
+
+  for (const island of portfolioIslands) {
+    const group = islandGroup(scene, island.id)
+    const detailNames = expectedDetails.get(island.id)
+    assert.ok(detailNames, `${island.id} has an expected detail set`)
+
+    for (const detailName of detailNames) {
+      const detail = group.getObjectByName(detailName)
+      assert.ok(detail instanceof THREE.Mesh, `${island.id} has ${detailName}`)
+      assert.equal(typeof detail.userData.detailRole, 'string')
+      assert.equal(typeof detail.userData.supportY, 'number')
+      const bounds = new THREE.Box3().setFromObject(detail)
+      assert.ok(
+        bounds.min.y >= detail.userData.supportY - EPSILON,
+        `${island.id}/${detailName} is not buried below its support surface`,
+      )
+      assert.ok(
+        bounds.max.y > detail.userData.supportY + (detail.userData.detailRole === 'dock' ? 0.04 : 0.2),
+        `${island.id}/${detailName} has a visible top above its support surface`,
+      )
+    }
+
+    group.traverse((object) => {
+      if (!(object instanceof THREE.Mesh) || typeof object.userData.detailRole !== 'string') return
+      const positions = object.geometry.getAttribute('position')
+      assert.ok(positions, `${island.id}/${object.name} has detail vertices`)
+      for (let index = 0; index < positions.count; index += 1) {
+        assert.ok(
+          localXZRadius(object, positions, index) <= island.landCollisionRadius + EPSILON,
+          `${island.id}/${object.name} reaches outside its collision radius`,
+        )
+      }
+    })
+  }
+
+  landmarks.dispose()
+})
+
 test('disposes every unique geometry and material once, including on repeated dispose', () => {
   const scene = new THREE.Scene()
   const landmarks = createLandmarks(scene, portfolioIslands)

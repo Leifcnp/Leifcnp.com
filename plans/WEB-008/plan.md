@@ -63,9 +63,9 @@ Authorized on 2026-09-24 when the user approved the next phase. Three Luna agent
 
 ## Current execution checklist
 
-- [ ] Sailboat agent: replace the proxy mesh using owned low-poly hull/deck/mast/sails; preserve local +Z bow, collision dimensions, sampled pose, and lifecycle API. No physics redesign.
-- [ ] Landmark agent: add small docks/beacons inside declared land collision radii; preserve stable IDs, island coordinates, rings, and projection anchors. Extend geometry/disposal tests.
-- [ ] Wake agent: add a bounded pooled/instanced foam effect with a narrow update/reset/reduced-motion/dispose API. Emission responds to vessel speed and direction, follows the shared water, and fades on stop.
+- [x] Sailboat agent: replace the proxy mesh using owned low-poly hull/deck/mast/sails; preserve local +Z bow, collision dimensions, sampled pose, and lifecycle API. No physics redesign.
+- [x] Landmark agent: add small docks/beacons inside declared land collision radii; preserve stable IDs, island coordinates, rings, and projection anchors. Extend geometry/disposal tests.
+- [x] Wake agent: add a bounded pooled/instanced foam effect with a narrow update/reset/reduced-motion/dispose API. Emission responds to vessel speed and direction, follows the shared water, and fades on stop.
 - [ ] Root: integrate wake into active simulation only; clear it on reset/instant scanner relocation; honor current reduced-motion preference. Update obsolete proxy copy, inspect six layouts and screenshot/renderer metrics, verify interaction regressions and cleanup, then publish the exact tested build.
 
 ### Scope decisions
@@ -75,3 +75,7 @@ Use code-owned geometry and existing materials/palette; no downloads or dependen
 ### Verification evidence required
 
 Build/typecheck and relevant native tests; source fixtures for sailboat pose/disposal and bounded wake lifecycle; production views at 1440×900, 390×844, 320×568, 360×915, 844×390, and 2560×1080; scanner/manual/instant/pause/reset/reduced-motion/fallback regressions; draw-call/triangle counts and measured VM frame timings with limitations; exact-SHA Pages and public asset verification. Stop for Phase 5 visual review.
+
+User clarification: the boat must be custom-built, with no third-party model/art assets. The implementation uses original procedural geometry and flat-color materials; record provenance in `ASSETS.md`.
+
+Local integration is complete: 41 native tests and strict build pass; fixtures verify boat pose/bounds, wake pooling/disposal/motion preferences, and scanner regression. Rendering measurements are recorded with software-GPU limitations in `artifacts/phase5/VERIFICATION.md`. Next: publish the tested candidate and verify exact-SHA Pages/public assets.

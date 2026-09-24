@@ -1,0 +1,20 @@
+{
+  "initial": 0,
+  "max": 56,
+  "slots": 96,
+  "finite": true,
+  "resourcesStable": true,
+  "dynamic": true,
+  "stopped": 0,
+  "reversed": 0,
+  "restarted": 53,
+  "reduced": 0,
+  "suppressed": 0,
+  "reset": 0,
+  "disposals": {
+    "mesh": 1,
+    "geometry": 1,
+    "material": 1
+  },
+  "remainingChildren": 0
+}

@@ -37,7 +37,7 @@
 - Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
 - Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
 - Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 40 individual data, geometry, vessel, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
+- Tests: `pnpm test` (Node 24 native TypeScript; 41 individual data, geometry, vessel, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
 - Production build: `pnpm run build` (includes type checking), generating `docs/`.
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
@@ -47,6 +47,8 @@
 - Phase 3 verification: [artifacts/phase3/VERIFICATION.md](artifacts/phase3/VERIFICATION.md), including keyboard/multitouch, wave pose, pause/reset, camera following/coverage, and six viewport sizes.
 
 - Phase 4 public verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Exact-SHA Pages, byte-identical public assets, and the public interaction suite passed.
+
+- Phase 5 local verification: [artifacts/phase5/VERIFICATION.md](artifacts/phase5/VERIFICATION.md), including custom-geometry provenance, hull/landmark bounds, pooled wake lifecycle, and measured VM rendering counts/timings. Public release verification is pending.
 
 ### Implementation discipline
 

@@ -7,6 +7,7 @@ import {
 } from './createLandmarks';
 import { createCameraRig } from './createCameraRig';
 import { createVessel } from './createVessel';
+import { createWake } from './effects/createWake';
 import { planSafeDockingRoute } from '../navigation/routePlanner';
 import {
   advanceScan as advanceScannerScan,
@@ -80,6 +81,7 @@ export interface ScanStartOptions {
 
 export interface WaterWorldController {
   setPaused(paused: boolean): void;
+  setReducedMotion(reduced: boolean): void;
   setInput(input: VesselInput): void;
   resetVessel(): void;
   getVesselState(): Readonly<VesselState>;
@@ -152,6 +154,8 @@ export function createWaterWorld(
 
   const landmarks = createLandmarks(scene, options.islands ?? []);
   const vessel = createVessel(scene);
+  const wake = createWake(scene);
+  wake.setReducedMotion(Boolean(initialReducedMotion));
   const vesselSpawn = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
   let vesselState: VesselState = vesselSpawn;
   let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
@@ -183,6 +187,7 @@ export function createWaterWorld(
   };
 
   const refreshStaticFrame = (): void => {
+    wake.reset();
     vessel.resetPose(vesselState, elapsed);
     cameraRig.snapTo(vesselState.x, vesselState.z);
     updateWaterGeometry(geometry, elapsed);
@@ -273,6 +278,7 @@ export function createWaterWorld(
       }
       cameraRig.update(vesselState.x, vesselState.z, delta);
       vessel.update(vesselState, elapsed, delta);
+      wake.update(vesselState, elapsed, delta);
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
     }
 
@@ -377,6 +383,11 @@ export function createWaterWorld(
 
   return {
     setPaused,
+    setReducedMotion: (reduced): void => {
+      if (disposed) return;
+      wake.setReducedMotion(reduced);
+      if (isMotionPaused()) renderer.render(scene, camera);
+    },
     setInput: (input): void => {
       if (disposed) return;
       const nextInput = {
@@ -391,6 +402,7 @@ export function createWaterWorld(
     },
     resetVessel: (): void => {
       if (disposed) return;
+      wake.reset();
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
       publishScannerState(scannerState);
@@ -457,6 +469,7 @@ export function createWaterWorld(
       document.removeEventListener('visibilitychange', onVisibilityChange);
       landmarks.dispose();
       vessel.dispose();
+      wake.dispose();
       cameraRig.dispose();
       geometry.dispose();
       material.dispose();

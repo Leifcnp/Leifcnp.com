@@ -36,7 +36,7 @@ app.innerHTML = `
 
     <aside class="vessel-model-note" aria-label="Boat orientation">
       <span class="vessel-model-note__swatch" aria-hidden="true"></span>
-      <span>Coral end is the bow.</span>
+      <span>Coral marks the bow.</span>
     </aside>
 
     <section class="helm-panel" data-vessel-controls aria-label="Boat controls">
@@ -304,6 +304,7 @@ const onKeyDown = (event: KeyboardEvent) => {
 window.addEventListener('keydown', onKeyDown)
 
 const onReducedMotionChange = (event: MediaQueryListEvent) => {
+  waterWorld?.setReducedMotion(event.matches)
   if (event.matches) {
     isPaused = true
     vesselInput.setEnabled(false, Boolean(waterWorld))

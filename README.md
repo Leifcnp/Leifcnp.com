@@ -1,6 +1,6 @@
 # Leif Pedersen — Under way
 
-The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 4 adds an always-accessible category scanner, island proximity prompts, mock-content drawers, and safe autopilot around the steerable primitive vessel. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
+The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 5 adds a custom procedural sailboat, shoreline docks/beacons, and a pooled wake around the accessible category scanner and island content drawers. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
 
 The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after the Phase 1 archival checks. The old version remains recoverable in Git history at commit `863b788`; it is not part of the current build or deployment path.
 
@@ -48,7 +48,7 @@ Phase 4 is published and verified at [http://leifcnp.com/](http://leifcnp.com/);
 
 ## Phase boundary and review
 
-Phase 3 is implemented: a cream block vessel with a coral bow, forward/reverse thrust, braking, rudder steering, drag, shared-wave heave/pitch/roll, and a smooth camera follow. The camera keeps its isometric angle and follows horizontal movement; islands and labels can leave the view as you sail. Conservative collision circles keep the hull outside land and inside the playable world.
+The custom low-poly sailboat has a pointed hull, wood deck, mast/boom, cream sails, and coral bow markings. Forward/reverse thrust, braking, rudder steering, drag, shared-wave heave/pitch/roll, and smooth camera following retain the approved controls. The camera keeps its isometric angle and follows horizontal movement; islands and labels can leave the view as you sail. Conservative collision circles keep the hull outside land and inside the playable world.
 
 - **W / Up:** forward thrust. **S / Down:** slow down, then reverse.
 - **A / Left** and **D / Right:** steer relative to the bow. The rudder reverses its effect when backing.
@@ -63,7 +63,7 @@ The top scanner navigation reaches résumé (Chartroom), projects (Shipyard), wr
 
 The content drawer is non-modal: top navigation stays accessible while reading. Close or **Escape** returns focus to the triggering control. Keyboard input inside the drawer is reserved for reading. Closing the drawer leaves scanner travel running. Reset clears navigation, content, and proximity.
 
-Pause cancels scanner travel at the current position. Category navigation while paused or with reduced motion places the boat/camera at the safe destination immediately without resuming animation. If WebGL is unavailable, the same category navigation and content remain usable. All entries remain clearly marked placeholders in the separate content file. The vessel remains a primitive block until the next art phase.
+Pause cancels scanner travel at the current position. Category navigation while paused or with reduced motion places the boat/camera at the safe destination immediately without resuming animation. If WebGL is unavailable, the same category navigation and content remain usable. All entries remain clearly marked placeholders in the separate content file. The boat model and all new art are generated from original geometry in this repository, with no downloaded model or texture assets. See [artwork provenance](ASSETS.md). A fixed pool supplies stern wake and small bow foam; pause freezes it and reset/instant travel clears it. Reduced motion suppresses foam even when sailing is explicitly resumed.
 
 See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Phase 5 sailboat, island details, and wake are now in progress. Stronger boat–wave coupling is planned as WEB-010, followed by the offshore storm boundary as WEB-011.
 
