@@ -1,6 +1,6 @@
-# Leif Pedersen — Open water
+# Leif Pedersen — First landfall
 
-The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 01 is intentionally spare: an isometric water field with an editorial overlay and a motion control. Content is kept in `src/content/portfolio.ts` so later islands and drawers can consume it without coupling copy to the scene.
+The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 2 adds four primitive island landmarks, dashed docking boundaries, and static labels to the animated isometric water field. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
 
 The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after the Phase 1 archival checks. The old version remains recoverable in Git history at commit `863b788`; it is not part of the current build or deployment path.
 
@@ -31,6 +31,7 @@ Open the URL Vite prints, usually `http://localhost:5173/`.
 ```sh
 pnpm install --frozen-lockfile
 pnpm run typecheck
+pnpm test
 pnpm run build
 pnpm run preview
 ```
@@ -41,19 +42,21 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed Phase 1 output. No Hugo build, theme checkout, configuration, or deploy script is involved. A local build does not by itself authorize publication; the current external-testing push is authorized for Phase 1 only.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user confirmed the published site and authorized proceeding; Phase 2 continues the external-testing workflow. Future phases still require review.
 
 Phase 1 was published and verified on 2026-09-24 at [http://leifcnp.com/](http://leifcnp.com/). The [deployment verification](artifacts/phase1-deployment/VERIFICATION.md) records the successful Pages run, public asset comparisons, and public desktop/mobile browser checks. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 
-Only Phase 1 is implemented: empty water, actual wave displacement, a fixed isometric orthographic camera, and a small identity/motion overlay. Pause/resume works by button or the `P` key when the page body has focus. Reduced motion starts paused; an explicit Resume opts into motion. Switching a system preference back off does not override a paused scene.
+Phase 2 is implemented: displaced water, a fixed isometric orthographic camera, four low-poly islands, docking rings, and readable labels. The camera fits the island geometry on resize. Pause/resume works by button or the `P` key when the page body has focus. Reduced motion starts paused; an explicit Resume opts into motion. Switching a system preference back off does not override a paused scene.
 
-Mock resume entries, projects, writing, and media are in `src/content/portfolio.ts`; they are not displayed yet.
+The island categories are résumé (Chartroom), projects (Shipyard), writing (Logbook), and media (Signal Cove). Their rings show future interaction boundaries; they do not respond to clicks yet. Mock content is referenced and validated but will be displayed in Phase 4. Boat movement comes in Phase 3.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Phase 2 must wait for user review.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop for Phase 2 review before implementing the vessel.
 
 ## Verification and VM graphics
+
+Phase 2 checks are recorded in [artifacts/phase2/VERIFICATION.md](artifacts/phase2/VERIFICATION.md). `pnpm test` runs eight data and geometry checks without additional test dependencies. Browser verification covers six viewport sizes, label layout, water coverage, motion, and the readable island fallback.
 
 See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mobile screenshots. The production scene passed browser checks in Chromium 151 using SwiftShader software rendering. The Codex embedded browser in this VirtualBox guest failed WebGL context creation through Mesa; it correctly displays the fallback instead of the scene. Open the preview in a browser with working WebGL2 to review live motion. No browser or VM graphics settings were changed.
 

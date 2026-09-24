@@ -14,11 +14,6 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Deployment observation (2026-09-24): An unrestricted request to `http://leifcnp.com/` returned HTTP 200 from GitHub Pages. A verified TLS request to `https://leifcnp.com/` failed because the certificate did not match the hostname. Public Actions/deployment history confirms the `master` branch and `github-pages` environment. Pages settings require authenticated access; GoDaddy settings and the full hostname/redirect investigation remain outstanding. No DNS or certificate settings changed.
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
-- [ ] WEB-005 — Phase 2: add mock island data, primitive landmasses, and visible docking zones.
-  - Acceptance criteria: Separate typed data defines unique names, coordinates, radius, category, and mock portfolio content. Low-poly island geometry and visible zone rings agree with those coordinates/radii. All landmarks are distinct, readable, and compatible with water sampling. No vessel or Phase 4 interface yet.
-  - Progress: Planning only; implementation awaits Phase 1 review.
-  - Next step: Obtain Phase 1 review, then implement and verify island/ring placement; stop for Phase 2 review.
-  - Plan: [plans/WEB-005/plan.md](plans/WEB-005/plan.md).
 
 - [ ] WEB-006 — Phase 3: add the primitive vessel, steering, wave response, and camera tracking.
   - Acceptance criteria: A simple block has an unmistakable bow; forward thrust, reverse/braking, rudder yaw, and drag respond consistently to elapsed time. Shared wave sampling drives smooth heave/pitch. The isometric camera follows smoothly. Keyboard/mobile controls, input focus, and world boundaries have defined behavior.
@@ -40,7 +35,12 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-No tasks currently in progress.
+- [ ] WEB-005 — Phase 2: add mock island data, primitive landmasses, and visible docking zones.
+  - Acceptance criteria: Separate typed data defines unique names, coordinates, radius, category, and mock portfolio content. Low-poly island geometry and visible zone rings agree with those coordinates/radii. All landmarks are distinct, readable, and compatible with water sampling. No vessel or Phase 4 interface yet.
+  - Authorization (2026-09-24): User confirmed the published site is up and authorized proceeding with next steps. Implement and verify Phase 2, publish it to the existing external testing site, then stop at the next phase review gate.
+  - Progress: Integrated four typed landmarks, exact-radius docking rings, static labels, per-island camera framing, and readable fallback. Eight data/geometry tests and the production build pass. Browser checks cover six viewport sizes, motion, reduced motion, and fallback; visual review corrected label placement and water clipping on phones.
+  - Next step: Publish the verified Phase 2 build, verify the exact Pages deployment and public assets, and record completion before returning for island-layout review.
+  - Plan: [plans/WEB-005/plan.md](plans/WEB-005/plan.md).
 
 ## Blocked
 

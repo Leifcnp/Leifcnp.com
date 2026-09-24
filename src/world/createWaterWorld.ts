@@ -1,4 +1,10 @@
 import * as THREE from 'three';
+import {
+  createLandmarks,
+  type IslandDefinition,
+  type LandmarkBounds,
+  type LandmarkProjectionAnchor,
+} from './createLandmarks';
 
 /**
  * Return the water height at a world-space position.
@@ -19,6 +25,26 @@ export function sampleWaterHeight(x: number, z: number, timeSeconds = 0): number
 export interface WaterWorldOptions {
   /** Start paused when true. The host can explicitly resume with setPaused(false). */
   reducedMotion?: boolean;
+  /** Phase-two island records. An empty list retains the Phase-one water view. */
+  islands?: readonly IslandDefinition[];
+  /** CSS-pixel space reserved for the DOM HUD and landmark labels. */
+  framingInsets?: Partial<FramingInsets>;
+  /** Called after initial layout and whenever the viewport changes. */
+  onLandmarkProjection?: (positions: readonly LandmarkProjection[]) => void;
+}
+
+export interface FramingInsets {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export interface LandmarkProjection {
+  readonly id: string;
+  readonly x: number;
+  readonly y: number;
+  readonly visible: boolean;
 }
 
 export interface WaterWorldController {
@@ -28,17 +54,18 @@ export interface WaterWorldController {
 
 // The extra margin keeps the finite geometry beyond the viewport on wide
 // displays while retaining the same orthographic isometric framing.
-const FIELD_SIZE = 360;
+// Keep generous screen-space coverage at portrait heights after the camera is
+// fitted tightly around the four landmarks. Segment count stays fixed so this
+// only extends the footprint; it does not increase the triangle budget.
+const FIELD_SIZE = 540;
 const FIELD_SEGMENTS = 76;
 const VIEW_HEIGHT = 94;
 const MAX_DPR = 1.75;
 
 /**
- * Create the empty Phase 1 water field and its true isometric camera.
- *
- * The scene deliberately contains no content beyond the tessellated water,
- * lighting, and background. Later phases can build on this module only after
- * this foundation is reviewed.
+ * Create the water field and its true isometric camera.  Passing island data
+ * adds the Phase-two landforms while leaving interaction and portfolio copy
+ * outside this rendering lifecycle.
  */
 export function createWaterWorld(
   container: HTMLElement,
@@ -52,11 +79,15 @@ export function createWaterWorld(
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x082f3d);
-  scene.fog = new THREE.Fog(0x082f3d, 260, 520);
+  // The camera sits farther along the same diagonal so the finite water field
+  // remains in front of the orthographic near plane on wide fits.
+  scene.fog = new THREE.Fog(0x082f3d, 540, 800);
 
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 500);
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 1200);
   // Equal x/y/z components create the classic true isometric direction.
-  camera.position.set(58, 58, 58);
+  // Keep the finite water field in front of the orthographic near plane even
+  // after a narrow viewport causes the fitted frustum to widen substantially.
+  camera.position.set(220, 220, 220);
   camera.lookAt(0, 0, 0);
 
   const renderer = new THREE.WebGLRenderer({
@@ -87,6 +118,8 @@ export function createWaterWorld(
   const water = new THREE.Mesh(geometry, material);
   water.name = 'phase-one-water-field';
   scene.add(water);
+
+  const landmarks = createLandmarks(scene, options.islands ?? []);
 
   // A cool hemisphere and a warm directional highlight make the facets legible
   // while keeping the palette calm enough for the future cream HUD overlay.
@@ -144,15 +177,12 @@ export function createWaterWorld(
     if (disposed) return;
     const width = Math.max(1, container.clientWidth || window.innerWidth);
     const height = Math.max(1, container.clientHeight || window.innerHeight);
-    const aspect = width / height;
-    const halfHeight = VIEW_HEIGHT * 0.5;
-    camera.left = -halfHeight * aspect;
-    camera.right = halfHeight * aspect;
-    camera.top = halfHeight;
-    camera.bottom = -halfHeight;
+    const insets = getFramingInsets(width, height, options.framingInsets);
+    applyFraming(camera, width, height, insets, landmarks.landmarkBounds);
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
     renderer.setSize(width, height, false);
+    options.onLandmarkProjection?.(projectLandmarks(camera, width, height, landmarks.anchors));
     if (isMotionPaused()) renderer.render(scene, camera);
   };
 
@@ -217,6 +247,7 @@ export function createWaterWorld(
       window.removeEventListener('resize', resize);
       visibilityObserver?.disconnect();
       document.removeEventListener('visibilitychange', onVisibilityChange);
+      landmarks.dispose();
       geometry.dispose();
       material.dispose();
       renderer.dispose();
@@ -224,6 +255,122 @@ export function createWaterWorld(
       scene.clear();
     },
   };
+}
+
+function getFramingInsets(
+  width: number,
+  height: number,
+  requested: Partial<FramingInsets> | undefined,
+): FramingInsets {
+  const compactLandscape = height <= 460;
+  const defaults: FramingInsets = width <= 600
+    ? { top: 140, right: 20, bottom: 68, left: 20 }
+    : { top: 160, right: 28, bottom: 70, left: 28 };
+  if (compactLandscape) defaults.top = 112;
+  return {
+    top: Math.max(0, requested?.top ?? defaults.top),
+    right: Math.max(0, requested?.right ?? defaults.right),
+    bottom: Math.max(0, requested?.bottom ?? defaults.bottom),
+    left: Math.max(0, requested?.left ?? defaults.left),
+  };
+}
+
+/**
+ * Fit the island and docking-ring bounds in the usable CSS viewport.  The
+ * orthographic frustum is shifted instead of moving the camera target, which
+ * keeps the view genuinely isometric and leaves the camera fixed in world
+ * space for the later vessel phase.
+ */
+function applyFraming(
+  camera: THREE.OrthographicCamera,
+  width: number,
+  height: number,
+  insets: FramingInsets,
+  landmarkBounds: readonly LandmarkBounds[],
+): void {
+  if (landmarkBounds.length === 0) {
+    const aspect = width / height;
+    const halfHeight = VIEW_HEIGHT * 0.5;
+    camera.left = -halfHeight * aspect;
+    camera.right = halfHeight * aspect;
+    camera.top = halfHeight;
+    camera.bottom = -halfHeight;
+    return;
+  }
+
+  camera.updateMatrixWorld(true);
+  const bounds = {
+    minX: Number.POSITIVE_INFINITY,
+    maxX: Number.NEGATIVE_INFINITY,
+    minY: Number.POSITIVE_INFINITY,
+    maxY: Number.NEGATIVE_INFINITY,
+  };
+
+  for (const landmark of landmarkBounds) {
+    for (const corner of boxCorners(landmark.bounds)) {
+      const point = corner.applyMatrix4(camera.matrixWorldInverse);
+      bounds.minX = Math.min(bounds.minX, point.x);
+      bounds.maxX = Math.max(bounds.maxX, point.x);
+      bounds.minY = Math.min(bounds.minY, point.y);
+      bounds.maxY = Math.max(bounds.maxY, point.y);
+    }
+  }
+
+  const usableWidth = Math.max(1, width - insets.left - insets.right);
+  const usableHeight = Math.max(1, height - insets.top - insets.bottom);
+  const boundWidth = Math.max(1, bounds.maxX - bounds.minX);
+  const boundHeight = Math.max(1, bounds.maxY - bounds.minY);
+  const worldPerPixel = Math.max(
+    boundWidth / usableWidth,
+    boundHeight / usableHeight,
+  ) * 1.12;
+  const frustumWidth = worldPerPixel * width;
+  const frustumHeight = worldPerPixel * height;
+  const boundsCenterX = (bounds.minX + bounds.maxX) * 0.5;
+  const boundsCenterY = (bounds.minY + bounds.maxY) * 0.5;
+  const desiredCenterX = ((insets.left - insets.right) * 0.5) * worldPerPixel;
+  const desiredCenterY = ((insets.top - insets.bottom) * 0.5) * worldPerPixel;
+  const frustumCenterX = boundsCenterX - desiredCenterX;
+  // Positive top inset means the usable center sits lower on the screen. In
+  // camera coordinates that requires a positive upward frustum shift.
+  const frustumCenterY = boundsCenterY + desiredCenterY;
+
+  camera.left = frustumCenterX - frustumWidth * 0.5;
+  camera.right = frustumCenterX + frustumWidth * 0.5;
+  camera.top = frustumCenterY + frustumHeight * 0.5;
+  camera.bottom = frustumCenterY - frustumHeight * 0.5;
+}
+
+function boxCorners(box: THREE.Box3): THREE.Vector3[] {
+  return [
+    new THREE.Vector3(box.min.x, box.min.y, box.min.z),
+    new THREE.Vector3(box.min.x, box.min.y, box.max.z),
+    new THREE.Vector3(box.min.x, box.max.y, box.min.z),
+    new THREE.Vector3(box.min.x, box.max.y, box.max.z),
+    new THREE.Vector3(box.max.x, box.min.y, box.min.z),
+    new THREE.Vector3(box.max.x, box.min.y, box.max.z),
+    new THREE.Vector3(box.max.x, box.max.y, box.min.z),
+    new THREE.Vector3(box.max.x, box.max.y, box.max.z),
+  ];
+}
+
+function projectLandmarks(
+  camera: THREE.OrthographicCamera,
+  width: number,
+  height: number,
+  anchors: readonly LandmarkProjectionAnchor[],
+): LandmarkProjection[] {
+  return anchors.map(({ id, position }) => {
+    const projected = position.clone().project(camera);
+    const x = (projected.x * 0.5 + 0.5) * width;
+    const y = (1 - (projected.y * 0.5 + 0.5)) * height;
+    return {
+      id,
+      x,
+      y,
+      visible: projected.z >= -1 && projected.z <= 1 && x >= 0 && x <= width && y >= 0 && y <= height,
+    };
+  });
 }
 
 function createWaterGeometry(): THREE.BufferGeometry {

@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-Deliver **Phase 1 only**: a runnable replacement website showing empty, gently animated low-poly water through a fixed isometric camera. The user authorized the rebuild and Luna implementation team on 2026-09-24, and has now authorized the reviewed Phase 1 output to be pushed for external testing. That release authorization does not skip phase reviews: stop before implementing Phase 2 and await the user's review.
+Deliver **Phase 2 only**: four mock, data-driven island landmasses, visible docking boundaries, and readable static labels on the existing water field. The user confirmed the live Phase 1 site and authorized proceeding on 2026-09-24. Continue the existing external-testing workflow by publishing the verified Phase 2 slice, then stop for review before boat mechanics.
 
 The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has a detailed `plan.md` below. Future phases are designed now and implemented only after review of their predecessor.
 
@@ -18,7 +18,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 1 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 2 implementation and release remain blocked on user review.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 2 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 3 implementation remains gated on review of the island layout.
 
 ## Work packages and review gates
 
@@ -37,9 +37,9 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna foundation agent: package setup, static build, entry point, restrained DOM shell, content data, README.
-- Luna water agent: world creation, camera, water geometry, shared wave function, rendering lifecycle.
-- Luna planning agent: detailed plans and alternatives for all task IDs. Once planning completes, independently review Phase 1 risks.
+- Luna data agent: island schema, mock records, validation, and independent geometry invariant checks.
+- Luna world agent: primitive landmasses, docking rings, responsive isometric framing, and rendering lifecycle.
+- Luna UI agent: static projected labels, responsive identity/motion shell, and readable fallback.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -53,4 +53,4 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. Improvements to the scene, accessibility, and build reliability may ship in Phase 1. Islands, boat physics, HUD category links, content drawers, and scanner travel stay in future plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 2 includes landmarks, static labels, and responsive framing. Boat physics, HUD category links, content drawers, and scanner travel stay in future plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.

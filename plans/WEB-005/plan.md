@@ -6,7 +6,7 @@ Add mock, data-driven island landmarks to the water field and make each island�
 
 ## Dependencies
 
-- Accepted WEB-004 Phase 1 review.
+- Phase 1 published and accepted as the starting point by the user on 2026-09-24.
 - WEB-002’s separate typed content module and WEB-003’s deterministic wave sampler.
 
 ## Scope and exclusions
@@ -25,9 +25,9 @@ Exclude boat movement, collision response, proximity prompts, drawer/HUD interac
 
 ## Module boundaries and APIs
 
-- `src/content/portfolio.ts`: owns serializable mock island records and content payloads; no Three.js imports.
-- `src/world/createLandmarks.ts`: `createLandmarks(scene, islands)` returns `{ group, dispose }` and maps records to meshes/markers.
-- `src/world/islandTypes.ts`: shared types and validation helpers.
+- `src/content/portfolio.ts`: owns serializable mock content payloads; no Three.js imports.
+- `src/content/islands.ts`: shared island types, records, content references, and validation helpers; no Three.js imports.
+- `src/world/createLandmarks.ts`: `createLandmarks(scene, islands)` returns the group, label anchors, framing bounds, and disposal function; maps records to meshes/markers.
 - `createWaterWorld` or an explicit scene composition layer owns adding/removing the landmark group, while the water module remains ignorant of content semantics.
 
 ## Acceptance checks
@@ -56,4 +56,22 @@ Pause after visual and data-contract review. Do not add vessel controls or trigg
 
 ## Implementation status
 
-Planned for a later phase; explicitly unimplemented during Phase 1.
+Implemented on 2026-09-24; release verification is in progress. The user authorized next steps after confirming the live Phase 1 site. Three Luna agents implemented data/validation, world geometry/framing, and DOM labels/shell, with root integration and release verification.
+
+## Integration decisions
+
+- Separate `src/content/islands.ts` owns `IslandDefinition`, four records, content references, and runtime validation; the existing `portfolio.ts` retains mock content. No Three.js imports in content.
+- Pass island records into `createWaterWorld` through options; render land through an isolated `createLandmarks` module. Export projected label coordinates through an optional callback so the DOM does not import Three.js.
+- Frame all four fixed-coordinate islands and their rings with a fixed true-isometric orthographic camera, adapting the frustum to viewport and overlay margins. No orbit/zoom controls or vessel tracking.
+- Static labels are readable and noninteractive. The top identity/motion shell is compacted, but category navigation remains Phase 4.
+- Keep the origin clear, rings non-overlapping, land inside its collision radius, and visible rings defined by the larger docking radius. Water displacement remains unchanged.
+- Validate malformed data, content references, geometry bounds and ring radii. Inspect desktop, mobile portrait, short landscape, and wide viewport captures. Verify pause, reduced motion, fallback, and disposal still work.
+- Build and publish only after integration checks. Preserve `leifcnp.com`, avoid dependency upgrades, and stop at the Phase 2 review gate.
+
+## Review findings addressed
+
+- Project per-island generated bounds rather than estimated peak heights or one oversized combined box. Correct the camera-space Y inset so content moves below the header.
+- Move the camera along the same isometric diagonal and extend the water background to 540 world units while retaining 76 segments (11,552 triangles). This prevents near-plane clipping and exposed field corners on tall phones without increasing triangle count.
+- Put labels below the landforms, enlarge small-screen category text, and space Chartroom farther from Logbook to keep its label clear of the adjacent landmass.
+- Keep all visible land vertices within the collision radius and every docking-ring sample on the trigger radius. Verify shared geometry/material disposal runs exactly once.
+- Preserve the existing water sampler and keep the ±180 playable domain inside the larger decorative water field.

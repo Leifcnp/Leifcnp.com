@@ -1,0 +1,14 @@
+{
+  "favicon.svg": {
+    "bytes": 354,
+    "sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa"
+  },
+  "assets/index-CxCYv3Dg.js": {
+    "bytes": 497296,
+    "sha256": "b4eb9fb48f7f4167fe30c57f6fa4bf9035bb45480d4612d7be8748fe4eb7142f"
+  },
+  "assets/index-DM5Kvu7Z.css": {
+    "bytes": 4684,
+    "sha256": "aba03c0a19d6256edbedbef21571ad91b3b410d65a93f6ad3b18eac2bdeb8faf"
+  }
+}
