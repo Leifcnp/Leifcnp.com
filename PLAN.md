@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 3 is in progress**: a primitive vessel with an unmistakable bow, forward/reverse/braking, rudder steering and drag, smooth wave response, and an isometric camera that follows it. The user approved the next phase on 2026-09-24. Keyboard and touch controls support the established external-testing workflow. Verify and publish this slice, then stop before proximity/HUD/content interaction.
+**Phase 3 is complete and published**: a primitive vessel with an unmistakable bow, forward/reverse/braking, rudder steering and drag, smooth wave response, and an isometric camera that follows it. The user approved the next phase on 2026-09-24. Keyboard and touch controls support the established external-testing workflow. The [Phase 3 verification](artifacts/phase3/VERIFICATION.md) records the successful deployment, matching public assets, 25 tests, and browser checks. Stop for steering review before proximity/HUD/content interaction.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 

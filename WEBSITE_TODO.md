@@ -29,18 +29,21 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-006 — Phase 3: add the primitive vessel, steering, wave response, and camera tracking.
-  - Acceptance criteria: A simple block has an unmistakable bow; forward thrust, reverse/braking, rudder yaw, and drag respond consistently to elapsed time. Shared wave sampling drives smooth heave/pitch. The isometric camera follows smoothly. Keyboard/mobile controls, input focus, and world boundaries have defined behavior.
-  - Authorization (2026-09-24): User accepted proceeding with “ok go for next” after the Phase 2 live review handoff. Continue the established external-testing workflow and stop after Phase 3.
-  - Progress: Primitive vessel, ground-up kinematics, shared wave pose, smooth camera follow, collision boundaries, and keyboard/touch helm are integrated. All 25 tests and the strict production build pass. Local browser checks cover six layouts, real multitouch, input cleanup, pose, camera, pause/reset, and fallback.
-  - Next step: Push the verified Phase 3 source/output, verify the exact Pages deployment and public browser behavior, then record completion and stop for steering review.
-  - Plan: [plans/WEB-006/plan.md](plans/WEB-006/plan.md).
+No tasks in progress. Phase 3 awaits steering review.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-006 — Phase 3: add the primitive vessel, steering, wave response, and camera tracking.
+  - Acceptance criteria: A simple block has an unmistakable bow; forward thrust, reverse/braking, rudder yaw, and drag respond consistently to elapsed time. Shared wave sampling drives smooth heave/pitch. The isometric camera follows smoothly. Keyboard/mobile controls, input focus, and world boundaries have defined behavior.
+  - Authorization (2026-09-24): User accepted proceeding with “ok go for next” after the Phase 2 live review handoff. Continue the established external-testing workflow and stop after Phase 3.
+  - Completed: 2026-09-24. Three Luna agents implemented ground-up kinematics, the primitive vessel/wave pose/follow camera, and keyboard/touch controls. Root integrated and verified the release. Application commit `8548207` is published on `origin/master`; [Pages run 36065708258](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36065708258) succeeded for that exact SHA.
+  - Verification: All 25 tests and strict production build pass. Local and public browser checks cover keyboard and simultaneous real touch, six viewport sizes, pause/reset/reduced motion, clear controls, and WebGL fallback. Additional source fixtures verify input cleanup, shared-wave tilt signs, state/camera reset, and disposal. Public HTML/JS/CSS/favicon match the build byte for byte. See [verification](artifacts/phase3/VERIFICATION.md), [public checks](artifacts/phase3/public-checks.json), and [asset evidence](artifacts/phase3/public-assets.json).
+  - Review gate: Phase 3 is live at `http://leifcnp.com/`. Await steering/feel review before WEB-007 proximity, scanner navigation, and content drawers. Physical mobile performance and the existing WEB-001 HTTPS issue remain outside this verification.
+  - Plan: [plans/WEB-006/plan.md](plans/WEB-006/plan.md).
 
 - [x] WEB-005 — Phase 2: add mock island data, primitive landmasses, and visible docking zones.
   - Acceptance criteria: Separate typed data defines unique names, coordinates, radius, category, and mock portfolio content. Low-poly island geometry and visible zone rings agree with those coordinates/radii. All landmarks are distinct, readable, and compatible with water sampling. No vessel or Phase 4 interface yet.

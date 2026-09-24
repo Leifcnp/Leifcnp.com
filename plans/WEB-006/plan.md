@@ -61,7 +61,7 @@ Stop for a steering/feel review on desktop and mobile before adding any proximit
 
 ## Implementation status
 
-In progress on 2026-09-24 after the user's “ok go for next.” Clean baseline `26713d2` confirmed. Three Luna agents implement physics, world rendering, and input/UI with separate file ownership; root integrates, reviews, tests, documents, and publishes.
+Completed and published on 2026-09-24 after the user's “ok go for next.” Three Luna agents implemented physics, world rendering, and input/UI with separate file ownership; root integrated, reviewed, tested, documented, and published application commit `8548207`.
 
 ## Integration contract
 
@@ -83,8 +83,8 @@ In progress on 2026-09-24 after the user's “ok go for next.” Clean baseline 
 - [x] Fixed-step scene lifecycle, responsive isometric follow camera, moving label projection, and reset.
 - [x] Keyboard and multi-pointer controls with correct focus/cancellation; compact 44px touch targets and readable instructions/fallback.
 - [x] Integration QA: supported WebGL, motion/pause/reduced motion, keyboard and touch thrust/turn/release/brake/reset, camera tracking, bounds/collision, no console errors, responsive captures.
-- [ ] Production build and custom-domain metadata verified; commit/push to existing Pages path, verify exact deployment SHA and public output, update WEB-006 evidence, then stop for review.
+- [x] Production build and custom-domain metadata verified; commit/push to existing Pages path, verify exact deployment SHA and public output, update WEB-006 evidence, then stop for review.
 
 ## Integration verification
 
-The 25-test suite, strict production build, and local browser checks pass. Evidence is in [artifacts/phase3/VERIFICATION.md](../../artifacts/phase3/VERIFICATION.md). Release verification remains the final step before the Phase 3 review handoff.
+The 25-test suite, strict production build, and local browser checks pass. Evidence is in [artifacts/phase3/VERIFICATION.md](../../artifacts/phase3/VERIFICATION.md). [Pages run 36065708258](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36065708258) succeeded for application commit `8548207`; public assets match the build and all public browser checks pass. Await steering review before Phase 4.

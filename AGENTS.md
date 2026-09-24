@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 2 (islands and docking zones) is published and verified. On 2026-09-24 the user approved the next phase; the current delivery is Phase 3 vessel mechanics, buoyancy, and camera following. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 3 (vessel mechanics, buoyancy, and camera following) is published and verified on 2026-09-24. Await steering review before Phase 4 proximity/scanner/content interaction. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -55,4 +55,4 @@
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- The instruction to proceed continues the published external-testing workflow: verify and publish Phase 3 through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop before Phase 4. A routine local build alone is not blanket authorization for unrelated future publication.
+- The instruction to proceed continued the published external-testing workflow: Phase 3 is verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop before Phase 4. A routine local build alone is not blanket authorization for unrelated future publication.

@@ -42,4 +42,8 @@ Visual review corrected hull height, bow-marker placement, compact landscape sca
 
 Software-rendered browser tests verify behavior and phone viewport layouts, not physical phone GPU performance or subjective steering feel. The existing HTTPS hostname mismatch remains WEB-001; use the explicit HTTP testing URL. No DNS, certificate, or hosting settings changed.
 
-Public Pages deployment and asset verification are pending the release push. The established publishing path remains `master` / `docs/`.
+Application commit `85482079b04dae785915dedaa049832c5503db15` was pushed to `origin/master`. [Pages run 36065708258](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36065708258) succeeded for that exact SHA. The established publishing path remains `master` / `docs/`.
+
+The [public HTTP site](http://leifcnp.com/) returned HTTP 200, and its HTML, JavaScript, CSS, and favicon match the reviewed build byte for byte with expected MIME types; see [public asset evidence](public-assets.json). The full keyboard/touch and six-viewport browser suite also passed against the real domain; see [public browser results](public-checks.json).
+
+WEB-006 is complete. Phase 4 remains unimplemented and awaits steering review.
