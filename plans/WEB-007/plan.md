@@ -24,7 +24,7 @@ Exclude final art, real resume/media data, networking, auth, CMS integration, an
 4. Add a route planner for scanner navigation. Resolve a target docking point inside the target island’s docking-trigger radius but outside its land/collision radius plus vessel clearance. Treat land collision circles, expanded by vessel clearance, as obstacles; do not treat every harmless docking-trigger ring as solid unless a future design decision explicitly opts into that behavior. Check the direct segment for intersections; when blocked, generate deterministic detour waypoints around obstacle tangents or another bounded route strategy, while keeping every waypoint inside finite world bounds. The final leg must approach the target safe point without crossing land or the vessel-clearance boundary.
 5. Add scanner navigation as an interruptible state machine: selecting a category resolves an island, opens its drawer immediately, and commands vessel/camera motion along the safe route. A new scanner click or user steering cancels/replaces the current command. If no safe route can be found, stop autopilot, retain the drawer, and announce a recoverable status so the user can steer manually.
 6. Clamp autopilot movement to the same finite world bounds used by vessel kinematics and avoid entering island meshes or their vessel-clearance envelopes. Respect reduced motion by shortening or skipping UI/camera transitions while preserving destination state.
-6. Add responsive layout and compact mobile controls that remain usable without covering the drawer or canvas. Keep pointer and keyboard paths equivalent.
+7. Add responsive layout and compact mobile controls that remain usable without covering the drawer or canvas. Keep pointer and keyboard paths equivalent.
 
 ## Module boundaries and APIs
 
@@ -64,4 +64,24 @@ Review interaction flow with keyboard, pointer, mobile viewport, and reduced mot
 
 ## Implementation status
 
-Planned for a later phase; explicitly unimplemented during Phase 1.
+Authorized on 2026-09-24 after the user confirmed basic vessel controls work. Implementing with three Luna agents; root integrates, verifies, and publishes.
+
+
+## Execution checklist and contracts (2026-09-24)
+
+- [x] Navigation agent: implement a pure deterministic route planner using land collision circles expanded by vessel clearance, bounded detours, safe docking annulus endpoints, recoverable failure, and segment-level safety tests. Own `src/navigation/`, `src/interaction/proximity.ts`, and their tests.
+- [x] World agent: expose `startScan(islandId, { instant? })`, `cancelScan()`, and `onScanUpdate` with idle/travelling/arrived/cancelled/failed states. Own scene adapter files only. Preserve existing fixed-step manual physics, camera angle, buoyancy, and lifecycle cleanup.
+- [x] UI agent: persistent four-category HUD and non-modal drawer, immediate mock content, semantic status, prompt/E interaction, focus management and responsive layout. Own main/styles/UI/input only.
+- [ ] Root: integrate contracts, review safety/cancellation and content rendering, verify all viewport and keyboard/touch paths against the production build, record evidence, preserve Pages metadata, publish and verify the exact release.
+
+### Interaction decisions
+
+Scanner clicks release held steering and immediately open the matching content; the latest scanner selection replaces any prior journey. Nonzero manual steering cancels travel. Closing a drawer leaves travel intact. Pausing cancels current travel and freezes the world. Selecting a category while paused places the vessel/camera at the safe destination immediately without resuming animation; reduced motion also uses immediate placement. Reset clears navigation and returns to the original spawn. Hidden tabs suspend progression without catching up on return.
+
+The drawer is non-modal so top navigation stays operable. Keyboard input originating inside content must not steer the vessel. Drawer focus moves to its heading on open and returns to its trigger on close, with a persistent navigation fallback if the proximity trigger disappears. Placeholder `#` links render as unavailable copy. WebGL failure leaves navigation/content fully usable.
+
+### Verification matrix
+
+Pure tests: direct and obstructed routes, every island pair, full segment clearance, annulus endpoints, finite bounds, invalid/unreachable requests, bounded time steps, proximity entry/exit hysteresis. Browser source fixture: actual vessel/camera motion, replacement, manual cancellation, pause/reset/instant, arrival with zero velocity, and disposal. Production browser: all four categories, immediate content during travel, prompt entry/exit, non-modal focus/close/Escape, keyboard reachability of nav while open, mobile touch navigation and steering, reduced motion, fallback, console errors. Layout sizes: 1440×900, 390×844, 320×568, 360×915, 844×390, and 2560×1080. Check 44px targets, clipping, drawer scrolling, and navigation hit testing. Public release: successful exact-SHA Pages run and byte-identical HTML/assets; repeat interaction smoke checks on the public HTTP URL. Physical phone GPU performance remains for external user testing.
+
+Local integration passed 40 tests, the strict production build, six-viewport interaction and touch checks, and focused world/HUD fixtures. Root corrected overlapping panels, drawer reading input, and proximity updates during content viewing. See `artifacts/phase4/VERIFICATION.md`. Next: commit/push the reviewed candidate, verify exact-SHA Pages and public bytes, and stop for user review.

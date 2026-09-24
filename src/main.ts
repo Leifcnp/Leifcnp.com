@@ -1,6 +1,8 @@
 import { portfolioContent } from './content/portfolio'
 import { portfolioIslands, validateIslandDefinitions } from './content/islands'
 import { VesselInputController } from './controls/vesselInput'
+import { getProximityState } from './interaction/proximity'
+import { createPortfolioHud } from './ui/hud'
 import { createWaterWorld } from './world/createWaterWorld'
 import './styles.css'
 
@@ -74,7 +76,7 @@ app.innerHTML = `
 
     <section class="webgl-fallback is-hidden" data-webgl-fallback aria-live="polite">
       <p class="webgl-fallback__label">Island guide</p>
-      <p>This browser cannot display the water animation. The island guide is still available here.</p>
+      <p>The 3D water is unavailable in this browser. Use the category buttons above to explore the full portfolio.</p>
       <ul class="island-summary" data-island-summary></ul>
     </section>
   </main>
@@ -87,14 +89,35 @@ const helmPanel = document.querySelector<HTMLElement>('[data-vessel-controls]')
 const vesselModelNote = document.querySelector<HTMLElement>('.vessel-model-note')
 const fallback = document.querySelector<HTMLElement>('[data-webgl-fallback]')
 const islandSummary = document.querySelector<HTMLUListElement>('[data-island-summary]')
+const shell = document.querySelector<HTMLElement>('.portfolio-shell')
 
-if (!sceneLayer || !landmarkLayer || !motionToggle || !helmPanel || !fallback || !islandSummary) {
+if (!sceneLayer || !landmarkLayer || !motionToggle || !helmPanel || !fallback || !islandSummary || !shell) {
   throw new Error('The portfolio shell is incomplete.')
 }
 
 // Keep the serializable island contract honest before handing it to either
 // the renderer or the readable fallback.
 validateIslandDefinitions(portfolioIslands, portfolioContent)
+
+let waterWorld: ReturnType<typeof createWaterWorld> | undefined
+let previousProximityId: string | null = null
+
+const hud = createPortfolioHud({
+  root: shell,
+  islands: portfolioIslands,
+  content: portfolioContent,
+  onScanRequest: (islandId) => {
+    vesselInput.releaseAll()
+    waterWorld?.startScan(islandId, {
+      instant: isPaused || reducedMotionQuery.matches,
+    })
+  },
+  onExploreRequest: () => {
+    // Nearby exploration opens content without taking control away from the
+    // helm. Persistent scanner buttons own automatic travel.
+    vesselInput.releaseAll()
+  },
+})
 
 const labels = new Map<string, HTMLDivElement>()
 const labelSizes = new Map<string, { width: number; height: number }>()
@@ -144,8 +167,6 @@ for (const [index, island] of portfolioIslands.entries()) {
   islandSummary.append(summaryItem)
 }
 
-let waterWorld: ReturnType<typeof createWaterWorld> | undefined
-
 const updateMotionButton = () => {
   motionToggle.textContent = isPaused ? 'Resume motion' : 'Pause motion'
   motionToggle.setAttribute('aria-pressed', String(isPaused))
@@ -154,8 +175,13 @@ const updateMotionButton = () => {
 
 const vesselInput = new VesselInputController({
   root: helmPanel,
-  onInput: (input) => waterWorld?.setInput(input),
-  onReset: () => waterWorld?.resetVessel(),
+  onInput: (input) => {
+    waterWorld?.setInput(input)
+  },
+  onReset: () => {
+    waterWorld?.resetVessel()
+    hud.closeDrawer(false)
+  },
 })
 
 const updateLandmarkLabels = (
@@ -186,7 +212,7 @@ function canPlaceLabel(
   const right = left + width
   const bottom = top + height
   const margin = Math.min(48, Math.max(16, viewport.width * 0.04))
-  const headerBottom = viewport.height <= 460 ? 112 : viewport.width <= 600 ? 140 : 160
+  const headerBottom = viewport.height <= 460 ? 110 : viewport.width <= 900 ? 200 : 160
   const helmBottom = viewport.height <= 460 ? 105 : 155
   const helmLeft = viewport.width <= 540
     ? margin
@@ -224,10 +250,20 @@ try {
   waterWorld = createWaterWorld(sceneLayer, {
     reducedMotion: reducedMotionQuery.matches,
     islands: portfolioIslands,
-    // Reserve the static header and helm panel without measuring either on
-    // every frame. The world also uses these insets when fitting the camera.
+    // Reserve room for the interface without DOM layout reads every frame.
+    // Responsive label bounds below refine this conservative projection.
     framingInsets: { top: 145, right: 20, bottom: 155, left: 20 },
     onLandmarkProjection: updateLandmarkLabels,
+    onVesselUpdate: (snapshot) => {
+      const proximity = getProximityState(
+        { x: snapshot.x, z: snapshot.z },
+        portfolioIslands,
+        previousProximityId,
+      )
+      previousProximityId = proximity?.id ?? null
+      hud.setProximity(proximity)
+    },
+    onScanUpdate: (update) => hud.setScanUpdate(update),
   })
   waterWorld.setPaused(isPaused)
   vesselInput.setEnabled(!isPaused, Boolean(waterWorld))
@@ -253,6 +289,15 @@ motionToggle.addEventListener('click', onMotionToggle)
 const onKeyDown = (event: KeyboardEvent) => {
   if (event.key.toLowerCase() === 'p' && event.target === document.body) {
     motionToggle.click()
+    return
+  }
+  if (event.key.toLowerCase() !== 'e' || event.repeat || event.altKey || event.ctrlKey || event.metaKey) return
+  if (event.target instanceof Element && event.target.closest('.content-drawer, input, textarea, select, [contenteditable]')) return
+  const promptButton = document.querySelector<HTMLButtonElement>('[data-explore-action]')
+  const drawerOpen = document.querySelector<HTMLElement>('.content-drawer:not([hidden])')
+  if (!drawerOpen && promptButton && !promptButton.closest('[hidden]')) {
+    event.preventDefault()
+    promptButton.click()
   }
 }
 
@@ -275,6 +320,7 @@ const onPageHide = (event: PageTransitionEvent) => {
   if (!event.persisted) {
     vesselInput.dispose()
     waterWorld?.dispose()
+    hud.dispose()
     labelResizeObserver?.disconnect()
     window.removeEventListener('resize', onViewportResize)
   }
@@ -292,6 +338,7 @@ if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     waterWorld?.dispose()
     vesselInput.dispose()
+    hud.dispose()
     motionToggle.removeEventListener('click', onMotionToggle)
     window.removeEventListener('keydown', onKeyDown)
     reducedMotionQuery.removeEventListener('change', onReducedMotionChange)

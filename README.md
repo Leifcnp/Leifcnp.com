@@ -1,6 +1,6 @@
 # Leif Pedersen — Under way
 
-The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 3 adds a steerable primitive vessel, wave response, and a smoothly following isometric camera to the four-island water field. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
+The portfolio is being rebuilt as a small Vite + TypeScript + Three.js scene. Phase 4 adds an always-accessible category scanner, island proximity prompts, mock-content drawers, and safe autopilot around the steerable primitive vessel. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land and docking radii, categories, and content references independently of the renderer.
 
 The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after the Phase 1 archival checks. The old version remains recoverable in Git history at commit `863b788`; it is not part of the current build or deployment path.
 
@@ -42,9 +42,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user approved Phase 3 after the published Phase 2 handoff; this continues the external-testing workflow. Future phases still require review.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user approved Phase 4 after confirming the vessel controls work; this continues the external-testing workflow. Future phases still require review.
 
-Phase 3 is published at [http://leifcnp.com/](http://leifcnp.com/). The [Phase 3 verification](artifacts/phase3/VERIFICATION.md) records the successful Pages run, public asset comparisons, and public desktop/mobile browser checks. The earlier [Phase 1 deployment record](artifacts/phase1-deployment/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
+Phase 4 release verification is in progress for [http://leifcnp.com/](http://leifcnp.com/). The earlier [Phase 3 verification](artifacts/phase3/VERIFICATION.md) is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 
@@ -59,13 +59,18 @@ Phase 3 is implemented: a cream block vessel with a coral bow, forward/reverse t
 
 Reduced motion starts paused with movement controls disabled; explicit Resume enables sailing. Switching a system preference back off does not override a paused scene. Losing focus or cancelling a gesture releases held controls.
 
-The island categories are résumé (Chartroom), projects (Shipyard), writing (Logbook), and media (Signal Cove). Their rings show future interaction boundaries; they do not respond to clicks yet. Mock content is referenced and validated but will be displayed in Phase 4. The boat is deliberately a primitive placeholder until the later art phase.
+The top scanner navigation reaches résumé (Chartroom), projects (Shipyard), writing (Logbook), and media (Signal Cove). Selecting a category immediately opens its mock content and sends the boat along a safe route. Choose another category to replace travel, or steer to cancel it. Docking inside an island's ring reveals an **Explore** prompt; **E** opens nearby content without starting another journey.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop for Phase 3 steering review before implementing proximity interactions and scanner navigation.
+The content drawer is non-modal: top navigation stays accessible while reading. Close or **Escape** returns focus to the triggering control. Keyboard input inside the drawer is reserved for reading. Closing the drawer leaves scanner travel running. Reset clears navigation, content, and proximity.
+
+Pause cancels scanner travel at the current position. Category navigation while paused or with reduced motion places the boat/camera at the safe destination immediately without resuming animation. If WebGL is unavailable, the same category navigation and content remain usable. All entries remain clearly marked placeholders in the separate content file. The vessel remains a primitive block until the next art phase.
+
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop for Phase 4 interaction review before implementing the sailboat, island details, and wake.
+
 
 ## Verification and VM graphics
 
-Phase 3 checks are recorded in [artifacts/phase3/VERIFICATION.md](artifacts/phase3/VERIFICATION.md). `pnpm test` checks data, geometry, steering behavior, input intent, and camera invariants without additional test dependencies. Browser verification covers six viewport sizes, keyboard and real multi-touch input, wave pose, pause/reset/reduced motion, and the readable island fallback. [Phase 2 evidence](artifacts/phase2/VERIFICATION.md) is retained as history.
+Phase 4 adds pure route-safety, scanner-state, and proximity tests to the existing data, geometry, steering, input, and camera checks. Browser verification covers six viewport sizes, scanner travel and cancellation, content and focus behavior, keyboard and real multi-touch input, pause/reset/reduced motion, and WebGL fallback. The release evidence will be recorded in `artifacts/phase4/`. [Phase 2 evidence](artifacts/phase2/VERIFICATION.md) is retained as history.
 
 See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mobile screenshots. The production scene passed browser checks in Chromium 151 using SwiftShader software rendering. The Codex embedded browser in this VirtualBox guest failed WebGL context creation through Mesa; it correctly displays the fallback instead of the scene. Open the preview in a browser with working WebGL2 to review live motion. No browser or VM graphics settings were changed.
 

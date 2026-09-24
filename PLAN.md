@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 3 is complete and published**: a primitive vessel with an unmistakable bow, forward/reverse/braking, rudder steering and drag, smooth wave response, and an isometric camera that follows it. The user approved the next phase on 2026-09-24. Keyboard and touch controls support the established external-testing workflow. The [Phase 3 verification](artifacts/phase3/VERIFICATION.md) records the successful deployment, matching public assets, 25 tests, and browser checks. Stop for steering review before proximity/HUD/content interaction.
+**Phase 4 is authorized and in progress**: proximity prompts, an always-accessible scanner navigation bar, a non-modal content drawer, and safe interruptible autopilot. The user confirmed that basic controls work on 2026-09-24 and requested this next phase. Preserve the verified Phase 3 controls and publish the reviewed Phase 4 result for desktop/mobile testing. Stop before Phase 5 art and wake effects.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -20,7 +20,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 3 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 4 implementation remains gated on review of the boat controls.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized Phase 4 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; Phase 5 remains gated on review of the interactions.
 
 ## Work packages and review gates
 
@@ -39,9 +39,9 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna physics agent: pure vessel state/integration, tuning, collision bounds, and behavioral tests.
-- Luna world agent: primitive vessel, shared water sampling, buoyancy, fixed-step scene integration, and smooth camera following.
-- Luna controls agent: keyboard/touch input lifecycle, responsive helm UI, static labels, and readable fallback.
+- Luna navigation agent: pure route planner, scanner advancement, proximity hysteresis, and behavioral tests.
+- Luna world agent: scene command adapter, scanner/physics transitions, camera following, and motion/lifecycle semantics.
+- Luna UI agent: persistent HUD, typed content rendering, drawer focus, proximity prompt, responsive layout, and input isolation.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -55,4 +55,4 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 3 includes vessel movement, responsive input, buoyancy, and camera following. HUD category links, proximity actions, content drawers, scanner travel, and final artwork stay in future plans. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. Phase 4 adds HUD category links, proximity actions, content drawers, and scanner travel. Existing vessel mechanics stay intact; final artwork and wake remain in Phase 5. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.

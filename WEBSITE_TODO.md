@@ -15,12 +15,6 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.
-  - Acceptance criteria: Entering an island zone reveals an interaction prompt. A persistent top DOM navigation reaches every category. Clicking a category immediately opens its mock content and smoothly directs the boat/camera to the destination. Drawer keyboard/focus/close behavior, repeated navigation, travel interruption, and reduced-motion behavior are verified. HUD remains accessible to scanners without boat controls.
-  - Progress: Planning only; implementation awaits Phase 3 review.
-  - Next step: After approved vessel mechanics, implement explicit navigation state and accessible UI; test all entry paths; stop for Phase 4 review.
-  - Plan: [plans/WEB-007/plan.md](plans/WEB-007/plan.md).
-
 - [ ] WEB-008 — Phase 5: replace the test block with a sailboat and add island details, wake, and polish.
   - Acceptance criteria: A coherent stylized low-poly sailboat replaces the block without changing controls. Primitive docks and beacons identify islands. Wake/foam reacts to movement and remains bounded in cost. Desktop/mobile visuals, motion preferences, readability, and interaction regressions pass review.
   - Progress: Planning only; implementation awaits Phase 4 review.
@@ -29,7 +23,12 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-No tasks in progress. Phase 3 awaits steering review.
+- [ ] WEB-007 — Phase 4: add proximity interactions, persistent scanner HUD, content drawer, and autopilot.
+  - Acceptance criteria: Entering an island zone reveals an interaction prompt. A persistent top DOM navigation reaches every category. Clicking a category immediately opens its mock content and smoothly directs the boat/camera to the destination. Drawer keyboard/focus/close behavior, repeated navigation, travel interruption, and reduced-motion behavior are verified. HUD remains accessible to scanners without boat controls.
+  - Authorization (2026-09-24): User confirmed basic controls work and explicitly requested the next phase. Continue the established publish-and-review workflow.
+  - Progress: Three Luna implementations are integrated and reviewed. Forty tests, strict build, six production viewports, touch/scanner/content/fallback checks, and source world/HUD fixtures pass. Evidence is in `artifacts/phase4/VERIFICATION.md`.
+  - Next step: Commit and push the verified build, confirm exact-SHA Pages success and public assets/browser behavior, then stop before Phase 5.
+  - Plan: [plans/WEB-007/plan.md](plans/WEB-007/plan.md).
 
 ## Blocked
 

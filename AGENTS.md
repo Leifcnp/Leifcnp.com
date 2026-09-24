@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 3 (vessel mechanics, buoyancy, and camera following) is published and verified on 2026-09-24. Await steering review before Phase 4 proximity/scanner/content interaction. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 3 is published and verified. On 2026-09-24 the user confirmed controls work and approved Phase 4 proximity/scanner/content interaction; implement and publish that phase. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -37,7 +37,7 @@
 - Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
 - Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
 - Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 25 individual data, geometry, vessel, input, and camera tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
+- Tests: `pnpm test` (Node 24 native TypeScript; 40 individual data, geometry, vessel, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
 - Production build: `pnpm run build` (includes type checking), generating `docs/`.
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
@@ -46,13 +46,15 @@
 - Phase 2 verification: [artifacts/phase2/VERIFICATION.md](artifacts/phase2/VERIFICATION.md), including six viewport sizes, readable projected labels, data/geometry tests, and unchanged custom-domain metadata.
 - Phase 3 verification: [artifacts/phase3/VERIFICATION.md](artifacts/phase3/VERIFICATION.md), including keyboard/multitouch, wave pose, pause/reset, camera following/coverage, and six viewport sizes.
 
+- Phase 4 local verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Publication verification is pending.
+
 ### Implementation discipline
 
 - Build mechanics intentionally from the ground up; do not introduce an all-in-one game template.
-- Use primitive geometry through Phase 4. Phase 3 adds a temporary block vessel, keyboard/touch controls, wave response, simple collision boundaries, and camera following. Keep proximity behavior, scanner navigation, content drawers, final sailboat art, and wake in their later phases.
+- Use primitive geometry through Phase 4. Phase 4 adds proximity, scanner navigation, and content drawers around the established vessel/physics/camera. Final sailboat art, island details, and wake remain in Phase 5.
 - Do not edit generated files under `docs/` by hand; regenerate them with the package build command.
 - Install dependencies using the checked-in package-manager lockfile; consult README.md for setup and commands.
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- The instruction to proceed continued the published external-testing workflow: Phase 3 is verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop before Phase 4. A routine local build alone is not blanket authorization for unrelated future publication.
+- The instruction to proceed continued the published external-testing workflow: Phase 4 is authorized through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for interaction review before Phase 5. A routine local build alone is not blanket authorization for unrelated future publication.

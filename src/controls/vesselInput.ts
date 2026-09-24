@@ -246,6 +246,9 @@ export class VesselInputController {
 
   private readonly onKeyDown = (event: KeyboardEvent): void => {
     if (this.disposed || isEditableTarget(event.target)) return
+    // The non-modal drawer owns its keyboard space;
+    // reading content with arrows or Space must never steer the vessel.
+    if (isPortfolioUiTarget(event.target)) return
     if (event.altKey || event.ctrlKey || event.metaKey) return
     const key = normalizeKey(event.key)
     // Let native buttons and controls retain their normal Space/Enter behavior.
@@ -315,6 +318,10 @@ function normalizeKey(key: string): string {
 function isEditableTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false
   return target.isContentEditable || Boolean(target.closest('input, select, textarea'))
+}
+
+function isPortfolioUiTarget(target: EventTarget | null): boolean {
+  return target instanceof Element && Boolean(target.closest('.content-drawer'))
 }
 
 function sameInput(a: VesselInput, b: VesselInput): boolean {

@@ -1,0 +1,13 @@
+{
+  "url": "http://127.0.0.1:5173/__phase4-qa",
+  "checks": [
+    "Scanner selection while paused immediately docks safely, updates actual vessel/camera, and keeps all motion frozen.",
+    "Animated scan moves through intermediate positions; replacement reaches the latest island with zero arrival velocity.",
+    "Manual steering cancels scanner travel; Pause cancels travel and freezes the current vessel state.",
+    "An invalid replacement request stops the previous trip and preserves its current position.",
+    "Simulated document visibility loss freezes navigation; restoring visibility resumes without catching up hidden time.",
+    "All four instant destinations are inside their docking annulus; invalid selection reports failure without moving.",
+    "All 157 observed vessel states respect world bounds and land plus hull clearance; reset clears held input/navigation.",
+    "Disposal is idempotent; browser reports no script or rendering errors."
+  ]
+}

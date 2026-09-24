@@ -7,10 +7,20 @@ import {
 } from './createLandmarks';
 import { createCameraRig } from './createCameraRig';
 import { createVessel } from './createVessel';
+import { planSafeDockingRoute } from '../navigation/routePlanner';
+import {
+  advanceScan as advanceScannerScan,
+  cancelScan as cancelScannerScan,
+  createScannerState,
+  scannerIsActive,
+  startScan as startScannerScan,
+  type ScannerState,
+} from '../navigation/scanner';
 import { sampleWaterHeight } from './waves';
 import {
   createVesselState,
   stepVessel,
+  VESSEL_TUNING,
   type VesselInput,
   type VesselState,
 } from './vessel/kinematics';
@@ -30,6 +40,8 @@ export interface WaterWorldOptions {
   onLandmarkProjection?: (positions: readonly LandmarkProjection[]) => void;
   /** Called after each rendered vessel update with a small serialisable snapshot. */
   onVesselUpdate?: (snapshot: VesselTelemetry) => void;
+  /** Called when scanner navigation changes state. */
+  onScanUpdate?: (snapshot: ScanTelemetry) => void;
 }
 
 export interface FramingInsets {
@@ -53,11 +65,26 @@ export interface VesselTelemetry {
   readonly speed: number;
 }
 
+export type ScanStatus = 'idle' | 'travelling' | 'arrived' | 'cancelled' | 'failed';
+
+export interface ScanTelemetry {
+  readonly status: ScanStatus;
+  readonly islandId: string | null;
+  readonly message?: string;
+}
+
+export interface ScanStartOptions {
+  /** Skip travel animation. The caller should use this for reduced motion. */
+  readonly instant?: boolean;
+}
+
 export interface WaterWorldController {
   setPaused(paused: boolean): void;
   setInput(input: VesselInput): void;
   resetVessel(): void;
   getVesselState(): Readonly<VesselState>;
+  startScan(islandId: string, options?: ScanStartOptions): void;
+  cancelScan(): void;
   dispose(): void;
 }
 
@@ -137,6 +164,71 @@ export function createWaterWorld(
     })),
   };
 
+  let scannerState: ScannerState = createScannerState({
+    x: vesselState.x,
+    z: vesselState.z,
+    heading: vesselState.heading,
+  });
+  let scanTelemetry: ScanTelemetry = { status: 'idle', islandId: null };
+
+  const publishScan = (
+    status: ScanStatus,
+    islandId: string | null,
+    message?: string,
+  ): void => {
+    scanTelemetry = message === undefined
+      ? { status, islandId }
+      : { status, islandId, message };
+    options.onScanUpdate?.(scanTelemetry);
+  };
+
+  const refreshStaticFrame = (): void => {
+    vessel.resetPose(vesselState, elapsed);
+    cameraRig.snapTo(vesselState.x, vesselState.z);
+    updateWaterGeometry(geometry, elapsed);
+    options.onVesselUpdate?.(toVesselTelemetry(vesselState));
+    options.onLandmarkProjection?.(
+      projectLandmarks(
+        camera,
+        getViewportWidth(container),
+        getViewportHeight(container),
+        landmarks.anchors,
+        options.framingInsets,
+      ),
+    );
+    renderer.render(scene, camera);
+  };
+
+  const applyScannerState = (next: ScannerState): void => {
+    scannerState = next;
+    vesselState = {
+      x: next.x,
+      z: next.z,
+      velocityX: next.velocityX,
+      velocityZ: next.velocityZ,
+      heading: next.heading,
+      yawRate: 0,
+    };
+  };
+
+  const publishScannerState = (state: ScannerState): void => {
+    const status: ScanStatus = state.status === 'active' ? 'travelling' : state.status;
+    publishScan(status, state.islandId, state.reason ?? undefined);
+  };
+
+  const cancelScanInternal = (message: string): void => {
+    if (!scannerIsActive(scannerState)) return;
+    applyScannerState(cancelScannerScan(scannerState, message));
+    publishScannerState(scannerState);
+  };
+
+  const advanceScan = (deltaSeconds: number): void => {
+    if (!scannerIsActive(scannerState)) return;
+    const previousStatus = scannerState.status;
+    applyScannerState(advanceScannerScan(scannerState, deltaSeconds));
+    if (scannerState.status !== previousStatus) publishScannerState(scannerState);
+  };
+
   // A cool hemisphere and a warm directional highlight make the facets legible
   // while keeping the palette calm enough for the future cream HUD overlay.
   scene.add(new THREE.HemisphereLight(0xa7d7d0, 0x073340, 1.65));
@@ -171,7 +263,11 @@ export function createWaterWorld(
       fixedAccumulator = Math.min(fixedAccumulator + delta, FIXED_STEP * MAX_STEPS_PER_FRAME);
       let steps = 0;
       while (fixedAccumulator >= FIXED_STEP && steps < MAX_STEPS_PER_FRAME) {
-        vesselState = stepVessel(vesselState, vesselInput, FIXED_STEP, vesselEnvironment);
+        if (scannerIsActive(scannerState)) {
+          advanceScan(FIXED_STEP);
+        } else {
+          vesselState = stepVessel(vesselState, vesselInput, FIXED_STEP, vesselEnvironment);
+        }
         fixedAccumulator -= FIXED_STEP;
         steps += 1;
       }
@@ -216,6 +312,7 @@ export function createWaterWorld(
 
   const setPaused = (paused: boolean): void => {
     if (disposed) return;
+    if (paused) cancelScanInternal('Scanner navigation paused.');
     manuallyPaused = paused;
     if (isMotionPaused()) {
       stopRendering();
@@ -267,6 +364,7 @@ export function createWaterWorld(
   vessel.resetPose(vesselState, elapsed);
   cameraRig.snapTo(vesselState.x, vesselState.z);
   options.onVesselUpdate?.(toVesselTelemetry(vesselState));
+  options.onScanUpdate?.(scanTelemetry);
   resizeObserver?.observe(container);
   // ResizeObserver tracks container changes; this also catches viewport/DPR
   // changes where the container's CSS dimensions remain unchanged.
@@ -281,15 +379,21 @@ export function createWaterWorld(
     setPaused,
     setInput: (input): void => {
       if (disposed) return;
-      vesselInput = {
+      const nextInput = {
         throttle: clamp(input.throttle, -1, 1),
         rudder: clamp(input.rudder, -1, 1),
         brake: Boolean(input.brake),
       };
+      if (scannerIsActive(scannerState) && (Math.abs(nextInput.throttle) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake)) {
+        cancelScanInternal('Scanner navigation cancelled by helm input.');
+      }
+      vesselInput = nextInput;
     },
     resetVessel: (): void => {
       if (disposed) return;
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
+      scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
+      publishScannerState(scannerState);
       vesselInput = { throttle: 0, rudder: 0, brake: false };
       fixedAccumulator = 0;
       lastTime = 0;
@@ -302,6 +406,47 @@ export function createWaterWorld(
       renderer.render(scene, camera);
     },
     getVesselState: (): Readonly<VesselState> => ({ ...vesselState }),
+    startScan: (islandId, startOptions = {}): void => {
+      if (disposed) return;
+
+      // A replacement takes over immediately. Do not publish an intermediate
+      // cancelled state that would make the drawer announce stale progress.
+      const route = planSafeDockingRoute(
+        { x: vesselState.x, z: vesselState.z },
+        islandId,
+        options.islands ?? [],
+        { worldLimit: ISLAND_WORLD_LIMIT, vesselClearance: VESSEL_TUNING.collisionRadius },
+      );
+      if (!route.ok) {
+        cancelScanInternal('Scanner navigation replaced by an invalid route.');
+        vesselInput = { throttle: 0, rudder: 0, brake: false };
+        publishScan('failed', islandId, route.message);
+        return;
+      }
+
+      vesselInput = { throttle: 0, rudder: 0, brake: false };
+      const current = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
+      applyScannerState(startScannerScan(current, { islandId, route: route.points }));
+
+      const instant = Boolean(startOptions.instant) || manuallyPaused;
+      if (instant) {
+        if (scannerIsActive(scannerState)) {
+          applyScannerState(advanceScannerScan(scannerState, scannerState.duration));
+        }
+        fixedAccumulator = 0;
+        lastTime = 0;
+        refreshStaticFrame();
+        publishScannerState(scannerState);
+        return;
+      }
+
+      publishScannerState(scannerState);
+      startRendering();
+    },
+    cancelScan: (): void => {
+      if (disposed) return;
+      cancelScanInternal('Scanner navigation cancelled.');
+    },
     dispose: (): void => {
       if (disposed) return;
       disposed = true;

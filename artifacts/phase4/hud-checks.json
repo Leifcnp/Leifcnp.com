@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "Long mock content scrolls inside the narrow drawer while Close stays fixed; text resembling markup is rendered as text.",
+    "Proximity changes while reading update the prompt for the correct island on close.",
+    "If the proximity trigger disappears, Escape returns focus to the matching persistent category button.",
+    "New content resets scroll; repeated disposal removes interface and reading state without stale focus."
+  ]
+}
