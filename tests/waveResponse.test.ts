@@ -10,6 +10,7 @@ import {
   type VesselState,
 } from '../src/world/vessel/kinematics.ts'
 import {
+  calculateUphillResistance,
   calculateWaveResponse,
   WAVE_RESPONSE_TUNING,
 } from '../src/world/vessel/waveResponse.ts'
@@ -35,6 +36,10 @@ function speed(state: VesselState): number {
   return Math.hypot(state.velocityX, state.velocityZ)
 }
 
+function forwardSpeed(state: VesselState): number {
+  return state.velocityX * Math.sin(state.heading) + state.velocityZ * Math.cos(state.heading)
+}
+
 test('wave response points downhill and respects local acceleration bounds', () => {
   const ahead = calculateWaveResponse({ slopeX: 0, slopeZ: 1 }, 0)
   assert.equal(ahead.surgeAcceleration, -WAVE_RESPONSE_TUNING.maxSurgeAcceleration)
@@ -51,6 +56,18 @@ test('wave response points downhill and respects local acceleration bounds', () 
     assert.ok(Number.isFinite(response.accelerationX))
     assert.ok(Number.isFinite(response.accelerationZ))
   }
+})
+
+test('uphill resistance slows powered climbing smoothly and releases downhill', () => {
+  const uphill = { surgeAcceleration: -WAVE_RESPONSE_TUNING.maxSurgeAcceleration }
+  const downhill = { surgeAcceleration: WAVE_RESPONSE_TUNING.maxSurgeAcceleration }
+  const maximum = calculateUphillResistance(uphill, VESSEL_TUNING.maxForwardSpeed, 1, VESSEL_TUNING.maxForwardSpeed)
+  assert.ok(maximum < 0)
+  assert.ok(Math.abs(maximum) <= WAVE_RESPONSE_TUNING.maxUphillResistanceAcceleration)
+  assert.ok(Math.abs(calculateUphillResistance(downhill, VESSEL_TUNING.maxForwardSpeed, 1, VESSEL_TUNING.maxForwardSpeed)) < 1e-12)
+  assert.ok(Math.abs(calculateUphillResistance(uphill, VESSEL_TUNING.maxForwardSpeed, 0, VESSEL_TUNING.maxForwardSpeed)) < 1e-12)
+  assert.ok(Math.abs(calculateUphillResistance(uphill, 0, 1, VESSEL_TUNING.maxForwardSpeed)) < 1e-12)
+  assert.ok(Math.abs(calculateUphillResistance(uphill, 7, 1, VESSEL_TUNING.maxForwardSpeed)) < Math.abs(maximum))
 })
 
 test('omitting wave time preserves the legacy kinematics exactly', () => {
@@ -72,6 +89,29 @@ test('wave response is finite, bounded, and stable across frame partitions', () 
   }
   assert.ok(Math.hypot(at60.x - at120.x, at60.z - at120.z) < 0.03)
   assert.ok(Math.abs(at60.heading - at120.heading) < 0.001)
+})
+
+test('powered sailing speed varies with wave faces after settling', () => {
+  const collectSpeeds = (initial: VesselState): number[] => {
+    let state = initial
+    const speeds: number[] = []
+    for (let frame = 0; frame < 8 * 60; frame += 1) {
+      const time = frame / 60
+      state = stepVessel(state, { throttle: 1, rudder: 0, brake: false }, 1 / 60, EMPTY_WATER, time)
+      if (frame >= 6 * 60) speeds.push(forwardSpeed(state))
+    }
+    return speeds
+  }
+
+  const defaultHeading = collectSpeeds(createVesselState())
+  const primaryWaveHeading = collectSpeeds({ ...createVesselState(), heading: Math.atan2(-0.92, -0.39) })
+  for (const speeds of [defaultHeading, primaryWaveHeading]) {
+    assert.ok(Math.max(...speeds) - Math.min(...speeds) > 0.35, 'wave faces should produce a measurable settled speed range')
+    assert.ok(Math.max(...speeds) <= VESSEL_TUNING.maxForwardSpeed + 1e-9)
+    assert.ok(speeds.every(Number.isFinite))
+  }
+  assert.ok(Math.min(...defaultHeading) < 13.8, 'default full throttle should slow on an uphill wave face')
+  assert.ok(Math.min(...primaryWaveHeading) < 13.6, 'heading into the primary swell should slow more visibly')
 })
 
 test('long and invalid wave frames preserve finite collision-safe state', () => {

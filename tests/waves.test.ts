@@ -38,3 +38,12 @@ test('surface samples remain finite across representative positions and times', 
     for (const value of Object.values(sample)) assert.ok(Number.isFinite(value))
   }
 })
+
+test('travelling swells visibly change height over a short review interval', () => {
+  const points = [[0, 0], [15, -22], [-48, 31], [84, 76]] as const
+  const changes = points.map(([x, z]) => Math.abs(
+    sampleWaterHeight(x, z, 2.4) - sampleWaterHeight(x, z, 0),
+  ))
+  assert.ok(changes.some((change) => change > 0.45))
+  assert.ok(changes.every((change) => Number.isFinite(change)))
+})

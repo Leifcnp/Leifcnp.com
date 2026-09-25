@@ -2,16 +2,11 @@
 
 ## Goal and scheduling
 
-Future feedback says the current background feels too static and the boat's
-impact on the water is too subtle. Deepen the visible and local interaction
-between hull, waves, and wake after WEB-011 has been reviewed. This is a new
-visual/physics phase beyond WEB-010's shipped modest bounded wave response; it
-does not reopen WEB-010 by default.
+The user explicitly moved this work ahead of the storm on 2026-09-24 because the published interaction was not clearly visible. WEB-013 is now active. Deliver moving swells, readable wake, and coherent hull response at the existing desktop/mobile camera distances. This follows WEB-010's modest baseline and uses the existing publish-and-review workflow; stop after this release.
 
 ## Dependencies and exclusions
 
-Depends on the reviewed WEB-010 shared sampler/response and WEB-011 storm
-field. If WEB-012 wind-driven sailing is implemented first, align wave force,
+Depends on the shipped WEB-010 sampler/response. WEB-011 storm is not a prerequisite; it remains deferred by the user’s latest direction. If WEB-012 wind-driven sailing is implemented first, align wave force,
 apparent wind, wake direction, and simulation timing with its vessel state.
 Preserve scanner/autopilot, keyboard/mobile controls, pause, reset,
 reduced-motion, collision safety, fixed-step determinism, and the current
@@ -25,7 +20,7 @@ ship independently if it gives stronger contact without harming control feel.
 ## Interaction model to establish first
 
 1. Measure the shared wave phase, hull sample points, current wake pool, and
-   storm intensity across representative speeds and headings. Identify where
+   shared surface motion across representative speeds and headings. Identify where
    the water appears static because displacement amplitude, lighting, camera
    scale, or hull contact is too weak.
 2. Define a bounded local interaction footprint around the hull. Candidate
@@ -41,8 +36,8 @@ ship independently if it gives stronger contact without harming control feel.
 
 ## Execution steps
 
-1. Capture the reviewed WEB-011 scene at rest, slow/fast forward travel,
-   reverse, sharp/soft turns, scanner arrival, storm entry/exit, and shore
+1. Capture the published WEB-010 scene at rest, slow/fast forward travel,
+   reverse, sharp/soft turns, scanner arrival, current wave motion, and shore
    contact. Record draw calls, frame time, wake-pool usage, and mobile viewport
    captures as the baseline.
 2. Prototype visual-only local displacement and contact effects using the
@@ -59,7 +54,7 @@ ship independently if it gives stronger contact without harming control feel.
    reset, instant scanner placement, pause transitions where required, and
    disposal.
 5. Refine water shading/displacement so the wider field carries readable
-   motion in calm and storm bands. Keep geometry and effect counts bounded;
+   motion in the current open water. Keep geometry and effect counts bounded;
    suppress nonessential ripples under reduced motion while retaining
    navigation/content access.
 6. Verify visual coherence and steering at six layouts, then repeat resource
@@ -69,9 +64,10 @@ ship independently if it gives stronger contact without harming control feel.
 
 ## Module boundaries
 
-The shared wave sampler and storm field remain the sole sources for surface
-phase and intensity. A pure `waveInteraction` module near vessel kinematics
-owns local disturbance and force calculations. `createWake` or a sibling
+The shared `waves.ts` sampler remains the sole source for surface phase and
+intensity. `waveResponse.ts` owns bounded slope force and powered uphill
+resistance; `pose.ts` owns hull support and tilt. `createOceanSurface.ts` owns
+water/crest buffers. Storm integration stays deferred. `createWake` or a sibling
 pooled effect module owns visual ripples/foam and disposal. Water geometry
 consumes sampled displacement; the vessel pose consumes hull samples; UI and
 scanner code only receive state and do not mutate effects or meshes.
@@ -80,8 +76,7 @@ scanner code only receive state and do not mutate effects or meshes.
 
 - The ordinary background shows clear, coherent motion at the approved camera
   distance. Hull contact, bow disturbance, stern wake, and turn effects are
-  visibly tied to sampled water phase, vessel speed, heading, and storm
-  intensity.
+  visibly tied to sampled water phase, vessel speed, heading, and the shared swell phase.
 - Local displacement and force response are finite, bounded, deterministic,
   and frame-rate stable. They cannot cause land penetration, boundary escape,
   scanner failure, or unpredictable manual steering.
@@ -89,9 +84,9 @@ scanner code only receive state and do not mutate effects or meshes.
   budget. Pause, reset, instant travel, reduced motion, hidden tabs, and
   disposal leave no stale effects or resource leaks.
 - Pure tests cover shared-sampler agreement, disturbance sign/decay, force
-  caps, invalid/long frames, frame partitioning, storm blending, collision and
+  caps, invalid/long frames, frame partitioning, collision and
   bounds interaction, brake/manual control precedence, and scanner handoff.
-- Browser checks cover calm/storm visuals, slow/fast travel, turns, shore
+- Browser checks cover ordinary water visuals, slow/fast travel, turns, shore
   contact, keyboard/touch, six layouts, reduced motion, pause/reset, fallback
   content, and renderer/resource disposal. Record VM and physical-device
   performance separately.
@@ -108,8 +103,33 @@ types instead of increasing the pool.
 
 ## Review gate
 
-Deliver a bounded interaction prototype for visual and steering review after
+Deliver the stronger waves/wake release for visual and steering review before
 WEB-011, with a clear performance record. Require review of calm/background
-motion, hull contact, storm coherence, scanner behavior, and mobile cost
-before making the response more physically complex or publishing a stronger
-wave model.
+motion, hull contact, scanner behavior, and mobile cost before implementing
+the storm or adding more complex sailing physics.
+
+
+## Active assignments and review criteria
+
+- Luna water agent: shorter/faster travelling swells, animated crest/trough shading, efficient indexed mesh with finer central water sampling, shared deterministic surface derivatives, geometry/lifecycle tests.
+- Luna wake agent: continuous curved V wake and broad stern wash from bounded travel history, readable bow contact, speed/turn/phase response, zero growing GPU resources.
+- Luna hull agent: correct weighted heave normalization, align response/freeboard with the stronger shared surface, modest bounded horizontal wave force, finite-state and contact verification.
+- Root: world lifecycle integration, plan/TODO priority, baseline/candidate motion captures at normal camera distance, native/build/browser checks, public deployment verification.
+
+- [x] Confirm user priority override and clean published baseline.
+- [x] Integrate the water/wake/hull packages without implementing other backlog controls or UI.
+- [x] Review multi-frame evidence at normal camera scale: travelling wave highlights must visibly move; the hull must rise/tilt with them; wake must broaden and follow turns rather than read as dotted rails.
+- [x] Verify shared surface agreement, hull freeboard, bounded forces/collisions, scanner mooring/handoff, pause/reset/visibility/reduced motion, and fixed resource lifecycle.
+- [x] Inspect desktop/mobile production UI, keyboard/touch and fallback regressions; record renderer cost and VM limitations.
+- [ ] Build, publish through existing Pages setup, confirm exact-SHA deployment and public files/interactions, update task Done and stop for review.
+
+The original custom boat geometry, content, domain, rudder tuning, and top navigation stay in their existing contracts. Storm, wind propulsion, tighter turns, translucent drawers, and submenu harbours are outside this implementation.
+
+
+## Root review corrections
+
+The first visible candidate established obvious moving swells but had broad pale crest patches and dark wake tails. Root requested narrower restrained crest accents, real vertex-alpha fade, and endpoint taper. Subsequent review corrected inactive wake history connecting to the world origin, repositioned bow foam against the hull, and required crest recycling only outside the water field so accents remain continuous over long sessions. Hull heave now divides by the actual sample weights; powered uphill wave resistance closes the previous full-throttle speed-cap gap.
+
+Normal-camera baseline and final motion frames are retained in the verification artifact. Functional tests alone are not considered evidence of visible improvement; review the travelling crests, changed hull orientation, and curved/dissolving wake on desktop and portrait views.
+
+Final browser review also caught duplicate shader color-space declarations that native compilation cannot detect. Root removed the redundant include and verified the corrected shader with zero WebGL console errors. See [Phase 7 verification](../../artifacts/phase7/VERIFICATION.md).

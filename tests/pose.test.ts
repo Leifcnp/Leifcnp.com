@@ -4,6 +4,7 @@ import test from 'node:test'
 import {
   calculateVesselPose,
   sampleVesselSurface,
+  VESSEL_POSE_TUNING,
   type VesselSurfaceSamples,
 } from '../src/world/vessel/pose.ts'
 
@@ -29,6 +30,14 @@ test('surface sampling remains hull aligned and includes coherent corner support
   assert.ok(samples.sternPort.height < samples.sternStarboard.height)
 })
 
+test('a constant water plane maps to the same heave at every hull support', () => {
+  const constant = sampleVesselSurface(4, -8, 0.8, 5.2, 2.6, () => ({ height: 1.15 }))
+  const pose = calculateVesselPose(constant)
+  assert.ok(Math.abs(pose.heave - 1.15) < 1e-12)
+  assert.ok(Math.abs(pose.pitch) < 1e-12)
+  assert.ok(Math.abs(pose.roll) < 1e-12)
+})
+
 test('speed lift and turn heel are visible, signed, and bounded', () => {
   const still = calculateVesselPose(FLAT_SURFACE)
   const moving = calculateVesselPose(FLAT_SURFACE, { forwardSpeed: 14, yawRate: 0.6 })
@@ -37,8 +46,8 @@ test('speed lift and turn heel are visible, signed, and bounded', () => {
   assert.ok(moving.roll < still.roll, 'positive port turn heels toward the outside')
   assert.equal(reduced.pitch, still.pitch)
   assert.equal(reduced.roll, still.roll)
-  assert.ok(Math.abs(moving.pitch) <= 0.31)
-  assert.ok(Math.abs(moving.roll) <= 0.36)
+  assert.ok(Math.abs(moving.pitch) <= 0.36)
+  assert.ok(Math.abs(moving.roll) <= 0.4)
 })
 
 test('steep waves and invalid samples remain finite and bounded', () => {
@@ -53,8 +62,8 @@ test('steep waves and invalid samples remain finite and bounded', () => {
   }
   const target = calculateVesselPose(sloped, { forwardSpeed: 7, yawRate: -0.3 })
   finitePose(target)
-  assert.ok(Math.abs(target.pitch) <= 0.31)
-  assert.ok(Math.abs(target.roll) <= 0.36)
+  assert.ok(Math.abs(target.pitch) <= 0.36)
+  assert.ok(Math.abs(target.roll) <= 0.4)
 
   const invalid = calculateVesselPose(
     {
@@ -70,6 +79,7 @@ test('steep waves and invalid samples remain finite and bounded', () => {
     { forwardSpeed: Number.NaN, yawRate: Number.POSITIVE_INFINITY },
   )
   finitePose(invalid)
-  assert.ok(Math.abs(invalid.pitch) <= 0.31)
-  assert.ok(Math.abs(invalid.roll) <= 0.36)
+  assert.ok(Math.abs(invalid.pitch) <= 0.36)
+  assert.ok(Math.abs(invalid.roll) <= 0.4)
+  assert.ok(Math.abs(invalid.heave) <= VESSEL_POSE_TUNING.maxHeave)
 })

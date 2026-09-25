@@ -3,13 +3,17 @@ import type { WaterSample } from '../waves.ts';
 /** Conservative bounds for the small horizontal response from a wave slope. */
 export const WAVE_RESPONSE_TUNING = {
   /** Maximum acceleration along the vessel's forward axis. */
-  maxSurgeAcceleration: 0.75,
+  maxSurgeAcceleration: 0.9,
   /** Maximum acceleration along the vessel's local lateral axis. */
-  maxSwayAcceleration: 0.5,
+  maxSwayAcceleration: 0.65,
   /** Slope acceleration before the per-axis bounds are applied. */
-  slopeAcceleration: 2.2,
+  slopeAcceleration: 2.8,
   /** Defensive input bound; the authored water slopes are far below this. */
   maxInputSlope: 8,
+  /** Maps uphill surge into a smooth speed-sensitive resistance. */
+  uphillResistanceScale: 12,
+  /** Bound uphill loading so forward thrust and braking retain authority. */
+  maxUphillResistanceAcceleration: 7.2,
 } as const;
 
 export interface WaveResponse {
@@ -17,6 +21,34 @@ export interface WaveResponse {
   readonly accelerationZ: number;
   readonly surgeAcceleration: number;
   readonly swayAcceleration: number;
+}
+
+/**
+ * Return a bounded resistance for a powered vessel climbing a wave face.
+ *
+ * This is deliberately separate from downhill wave acceleration: a positive
+ * (downhill) surge never slows the vessel, and a released or reverse throttle
+ * never receives an invented forward drag. The caller applies this before its
+ * existing brake logic so manual braking retains priority.
+ */
+export function calculateUphillResistance(
+  response: Pick<WaveResponse, 'surgeAcceleration'>,
+  forwardSpeed: number,
+  throttle: number,
+  maxForwardSpeed: number,
+): number {
+  const uphillAcceleration = clamp(
+    -finiteOr(response?.surgeAcceleration ?? 0, 0),
+    0,
+    WAVE_RESPONSE_TUNING.maxSurgeAcceleration,
+  )
+  const speedLimit = Math.max(0.01, finiteOr(maxForwardSpeed, 14))
+  const speedRatio = clamp(finiteOr(forwardSpeed, 0) / speedLimit, 0, 1)
+  const throttleRatio = clamp(finiteOr(throttle, 0), 0, 1)
+  return -Math.min(
+    uphillAcceleration * WAVE_RESPONSE_TUNING.uphillResistanceScale * speedRatio * speedRatio * throttleRatio,
+    WAVE_RESPONSE_TUNING.maxUphillResistanceAcceleration,
+  )
 }
 
 function finiteOr(value: number, fallback: number): number {

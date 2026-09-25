@@ -8,7 +8,7 @@
  */
 
 import { sampleWaterSurface } from '../waves.ts'
-import { calculateWaveResponse } from './waveResponse.ts'
+import { calculateUphillResistance, calculateWaveResponse } from './waveResponse.ts'
 
 export interface VesselInput {
   /** -1 is full reverse, +1 is full ahead. */
@@ -236,6 +236,12 @@ function integrateSubstep(
       state.heading,
     )
     longitudinalVelocity += response.surgeAcceleration * dt
+    longitudinalVelocity += calculateUphillResistance(
+      response,
+      longitudinalVelocity,
+      input.throttle,
+      VESSEL_TUNING.maxForwardSpeed,
+    ) * dt
     lateralVelocity += response.swayAcceleration * dt
   }
 

@@ -1,0 +1,50 @@
+{
+  "method": "Actual transformed deck/hull vertices at every frame during 8 seconds forward/turn; every frame must retain a submerged hull point and dry deck",
+  "profiles": [
+    {
+      "rate": 30,
+      "minDeck": 0.3100571079493597,
+      "maxLowestHull": -0.258498340922511,
+      "heaveRange": 2.919691805680836,
+      "maxTilt": 0.21797420701043532,
+      "finalState": {
+        "x": -39.79470591566418,
+        "z": 53.27863928072588,
+        "velocityX": -8.254814533258717,
+        "velocityZ": 11.312103011555427,
+        "heading": -0.6544128401651039,
+        "yawRate": -0.09573740460191191
+      }
+    },
+    {
+      "rate": 60,
+      "minDeck": 0.280696181925446,
+      "maxLowestHull": -0.23821907184758456,
+      "heaveRange": 2.9200085876610613,
+      "maxTilt": 0.21797579554529245,
+      "finalState": {
+        "x": -39.794705915664174,
+        "z": 53.27863928072588,
+        "velocityX": -8.254814533258715,
+        "velocityZ": 11.312103011555429,
+        "heading": -0.6544128401651039,
+        "yawRate": -0.09573740460191191
+      }
+    },
+    {
+      "rate": 120,
+      "minDeck": 0.2650537512641431,
+      "maxLowestHull": -0.22743712262373766,
+      "heaveRange": 2.919608039589907,
+      "maxTilt": 0.21793360666592382,
+      "finalState": {
+        "x": -39.794705915664174,
+        "z": 53.27863928072588,
+        "velocityX": -8.254814533258715,
+        "velocityZ": 11.312103011555429,
+        "heading": -0.6544128401651039,
+        "yawRate": -0.09573740460191191
+      }
+    }
+  ]
+}

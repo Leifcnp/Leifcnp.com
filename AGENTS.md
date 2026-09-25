@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. WEB-011 offshore storm water stays in Backlog until this release is reviewed. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. The user subsequently selected WEB-013 clearer waves/wake ahead of WEB-011; Phase 7 is active and the storm remains deferred. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -37,7 +37,7 @@
 - Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
 - Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
 - Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 52 individual data, geometry, vessel, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
+- Tests: `pnpm test` (Node 24 native TypeScript; 61 individual data, geometry, vessel, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
 - Production build: `pnpm run build` (includes type checking), generating `docs/`.
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
@@ -55,10 +55,10 @@
 ### Implementation discipline
 
 - Build mechanics intentionally from the ground up; do not introduce an all-in-one game template.
-- WEB-010 adds bounded wave coupling using the shared wave sampler. The custom boat geometry remains owned. Scanner arrivals are horizontally held until helm input; reduced motion suppresses added forces, dynamic pitch/heel, and contact effects. Preserve navigation/UI contracts; the storm region stays in WEB-011 until this release is reviewed.
+- WEB-013 builds on WEB-010 with travelling swell shading/crest ribbons, stronger hull support, powered uphill resistance, and bounded curved wake/bow effects using the shared sampler. The custom boat geometry remains owned. Scanner arrivals are horizontally held until helm input; reduced motion suppresses added forces, dynamic pitch/heel, and contact effects. Preserve navigation/UI contracts; the storm region stays in WEB-011 until WEB-013 is reviewed.
 - Do not edit generated files under `docs/` by hand; regenerate them with the package build command.
 - Install dependencies using the checked-in package-manager lockfile; consult README.md for setup and commands.
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- The instruction to proceed continues the published external-testing workflow: verify and publish WEB-010 through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for sailing-feel review before WEB-011 storm water. A routine local build alone is not blanket authorization for unrelated future publication.
+- The instruction to proceed continues the published external-testing workflow: verify and publish active WEB-013 through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. Stop for waves/wake review before WEB-011 storm water. A routine local build alone is not blanket authorization for unrelated future publication.

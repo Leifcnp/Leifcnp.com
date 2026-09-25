@@ -47,11 +47,18 @@ export type VesselWaterSampler = (x: number, z: number) => SampledWaterSurface
 
 /** Visual response tuning. These values intentionally stay below a dramatic arcade tilt. */
 export const VESSEL_POSE_TUNING = {
-  maxHeave: 1.5,
-  maxWavePitch: 0.24,
-  maxWaveRoll: 0.27,
+  // The stronger WEB-013 field can reach roughly 1.8 world units at an
+  // aligned crest. Keep the cap above that authored range so the vessel
+  // follows the shared surface instead of flattening at the bound.
+  maxHeave: 1.85,
+  maxWavePitch: 0.29,
+  maxWaveRoll: 0.3,
   maxSpeedLift: 0.065,
   maxTurnHeel: 0.12,
+  /** Fast enough to keep hull freeboard close to shorter encounter waves. */
+  heaveResponseRate: 15,
+  /** Tilt follows the same field with a softer filter for visual comfort. */
+  tiltResponseRate: 9,
   maxForwardSpeed: VESSEL_TUNING.maxForwardSpeed,
   maxYawRate: VESSEL_TUNING.maxYawRate,
 } as const
@@ -69,6 +76,12 @@ function clamp(value: number, minimum: number, maximum: number): number {
 function mean(values: readonly number[]): number {
   const total = values.reduce((sum, value) => sum + value, 0)
   return finiteOr(total / values.length, 0)
+}
+
+function weightedMean(values: readonly [number, number][]): number {
+  const totalWeight = values.reduce((sum, [, weight]) => sum + weight, 0)
+  const total = values.reduce((sum, [value, weight]) => sum + value * weight, 0)
+  return totalWeight > 0 ? finiteOr(total / totalWeight, 0) : 0
 }
 
 function point(height: number): VesselWaterPoint {
@@ -144,7 +157,16 @@ export function calculateVesselPose(
   const portRail = mean([port, bowPort, sternPort])
   const starboardRail = mean([starboard, bowStarboard, sternStarboard])
   const heave = clamp(
-    mean([bow, stern, port, starboard, bowPort * 0.5, bowStarboard * 0.5, sternPort * 0.5, sternStarboard * 0.5]),
+    weightedMean([
+      [bow, 1],
+      [stern, 1],
+      [port, 1],
+      [starboard, 1],
+      [bowPort, 0.5],
+      [bowStarboard, 0.5],
+      [sternPort, 0.5],
+      [sternStarboard, 0.5],
+    ]),
     -VESSEL_POSE_TUNING.maxHeave,
     VESSEL_POSE_TUNING.maxHeave,
   )
@@ -177,7 +199,7 @@ export function calculateVesselPose(
 
   return {
     heave,
-    pitch: clamp(wavePitch - speedLift, -0.31, 0.31),
-    roll: clamp(waveRoll + turnHeel, -0.36, 0.36),
+    pitch: clamp(wavePitch - speedLift, -0.36, 0.36),
+    roll: clamp(waveRoll + turnHeel, -0.4, 0.4),
   }
 }

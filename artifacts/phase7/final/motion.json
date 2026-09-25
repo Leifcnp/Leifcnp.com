@@ -1,0 +1,12 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "method": "Fixed 30 Hz simulation screenshots, 0/1/2s neutral, then 3s forward and 1.5s forward/right; normal application camera",
+  "shots": [
+    "rest-0.png",
+    "rest-1.png",
+    "rest-2.png",
+    "sailing-straight.png",
+    "sailing-turn.png",
+    "sailing-mobile.png"
+  ]
+}

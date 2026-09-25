@@ -18,28 +18,21 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 - [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
   - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
   - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
-  - Progress: Backlog after WEB-010 so storm visuals and boat forces share one wave model. No storm implementation in Phase 5 or WEB-010.
+  - Progress: Deferred behind active WEB-013 by the user’s explicit request for clearer waves/wake. No storm implementation yet.
   - Next step: After the stronger boat/water coupling is reviewed, choose storm bounds from the camera footprint and playable world, prototype a gradual storm band, and verify inward recovery across headings and speeds.
   - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
 
 - [ ] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
   - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.
   - Acceptance criteria: Wind direction and sail trim are visible and controllable on keyboard/touch. Propulsion depends coherently on wind, heading, and mainsail angle; direct upwind sailing loses drive and a sequence of tacks makes progress. Preserve safe scanner navigation, accessible content, pause/reset/reduced motion, and the original custom boat/sail geometry. Explain the new helm with concise visitor-facing cues.
-  - Progress: Backlog only. Keep WEB-011 storm next; scope/tuning is reviewed before replacing the approved controls. Coordinate turn authority with WEB-014.
+  - Progress: Backlog only. After active WEB-013 and WEB-011 storm, scope/tuning is reviewed before replacing the approved controls. Coordinate turn authority with WEB-014.
   - Next step: After the current queue/review gates, prototype a deterministic wind/sail force model and approachable tacking controls, then compare feel on desktop/touch before integration.
   - Plan: [plans/WEB-012/plan.md](plans/WEB-012/plan.md).
-
-- [ ] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.
-  - Requested (2026-09-24): Brainstorming feedback: the water background feels too static, does not affect the boat enough, and wake/waves should feel interactive.
-  - Acceptance criteria: Increase readable surface movement and boat response together using the shared field, with local wake/contact/displacement reacting to vessel motion. Demonstrate a noticeable improvement over WEB-010's deliberately modest baseline while keeping steering usable, hull contact coherent, shoreline safety, bounded resources, pause/reset, and reduced-motion access. Coordinate calm water and the WEB-011 storm rather than introducing disconnected wave phases.
-  - Progress: Future follow-up to completed WEB-010, not a reopening or interruption of its release. Keep storm work ahead in the queue; align with wind-driven sailing if WEB-012 has landed.
-  - Next step: Review a few bounded amplitude/response/contact prototypes after WEB-011, measure visual and physical differences from WEB-010, and select the simplest satisfying model.
-  - Plan: [plans/WEB-013/plan.md](plans/WEB-013/plan.md).
 
 - [ ] WEB-014 — Give the boat tighter, more responsive turns.
   - Requested (2026-09-24): Brainstorming note: “We need to be able to make tighter turns.”
   - Acceptance criteria: Reduce the practical turning radius and improve low-speed harbour manoeuvring without instant spins, uncontrolled lateral sliding, land penetration, or loss of keyboard/touch consistency. Verify speed-dependent rudder response and safe scanner/manual handoff; tune tacking alongside WEB-012 when wind propulsion is introduced.
-  - Progress: Backlog only; no steering changes in the current release. Keep WEB-011 next and coordinate later tuning with WEB-012/WEB-013.
+  - Progress: Backlog only; no steering changes in the current release. Keep WEB-013/WEB-011 ahead and coordinate later tuning with WEB-012/WEB-013.
   - Next step: Measure current turn radius and response at several speeds, prototype bounded rudder/yaw/drag adjustments, and review tighter turns on desktop and touch.
   - Plan: [plans/WEB-014/plan.md](plans/WEB-014/plan.md).
 
@@ -59,7 +52,13 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-No tasks in progress. WEB-010 / Phase 6 awaits sailing-feel review.
+- [ ] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.
+  - Requested (2026-09-24): Brainstorming feedback: the water background feels too static, does not affect the boat enough, and wake/waves should feel interactive.
+  - Acceptance criteria: Increase readable surface movement and boat response together using the shared field, with local wake/contact/displacement reacting to vessel motion. Demonstrate a noticeable improvement over WEB-010's deliberately modest baseline while keeping steering usable, hull contact coherent, shoreline safety, bounded resources, pause/reset, and reduced-motion access. Coordinate calm water and the WEB-011 storm rather than introducing disconnected wave phases.
+  - Authorization (2026-09-24): User explicitly reprioritized this work: “I don’t see any clear wave interaction, lets work on the waves and wake next.” Implement WEB-013 before WEB-011; continue the established publish-and-review workflow.
+  - Progress: Three Luna agents and root integration completed travelling water/crest shading, continuous curved wake/bow foam, corrected hull support, and bounded powered uphill loading. 61 native tests, production build, source integration/contact/lifecycle checks, and six-layout production browser checks pass. Final desktop/mobile motion frames reviewed.
+  - Next step: Publish the reviewed build and confirm exact-SHA Pages success, public asset equality and external interactions; then mark Done and stop for review. Storm, wind controls, tighter rudder turns, translucent drawers, and subharbours remain separate.
+  - Plan: [plans/WEB-013/plan.md](plans/WEB-013/plan.md).
 
 ## Blocked
 

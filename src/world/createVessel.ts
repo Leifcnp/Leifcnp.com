@@ -1,10 +1,11 @@
 import * as THREE from 'three';
-import { sampleWaterHeight } from './waves';
-import { VESSEL_TUNING, type VesselState } from './vessel/kinematics';
+import { sampleWaterHeight } from './waves.ts';
+import { VESSEL_TUNING, type VesselState } from './vessel/kinematics.ts';
 import {
   calculateVesselPose,
   sampleVesselSurface,
-} from './vessel/pose';
+  VESSEL_POSE_TUNING,
+} from './vessel/pose.ts';
 
 export interface VesselPose {
   readonly heave: number;
@@ -212,10 +213,11 @@ export function createVessel(scene: THREE.Scene): VesselController {
       reducedMotion,
     );
     const validDelta = Number.isFinite(deltaSeconds) && deltaSeconds > 0 ? Math.min(deltaSeconds, 0.25) : 0;
-    const smoothing = snap ? 1 : 1 - Math.exp(-validDelta * 7.5);
-    pose.heave = approach(pose.heave, target.heave, smoothing);
-    pose.pitch = approach(pose.pitch, target.pitch, smoothing);
-    pose.roll = approach(pose.roll, target.roll, smoothing);
+    const heaveSmoothing = snap ? 1 : 1 - Math.exp(-validDelta * VESSEL_POSE_TUNING.heaveResponseRate);
+    const tiltSmoothing = snap ? 1 : 1 - Math.exp(-validDelta * VESSEL_POSE_TUNING.tiltResponseRate);
+    pose.heave = approach(pose.heave, target.heave, heaveSmoothing);
+    pose.pitch = approach(pose.pitch, target.pitch, tiltSmoothing);
+    pose.roll = approach(pose.roll, target.roll, tiltSmoothing);
     group.position.set(
       Number.isFinite(state.x) ? state.x : 0,
       pose.heave + WATER_CLEARANCE,

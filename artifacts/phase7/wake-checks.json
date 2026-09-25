@@ -1,0 +1,17 @@
+{
+  "originTethers": 0,
+  "maxFoam": 65,
+  "slots": 96,
+  "finite": true,
+  "stable": true,
+  "vertexAlpha": true,
+  "frozen": true,
+  "stoppedAlpha": false,
+  "stoppedFoam": 0,
+  "reduced": true,
+  "disposals": 7,
+  "resources": 7,
+  "children": 0,
+  "ribbonTriangles": 124,
+  "bowTriangles": 34
+}

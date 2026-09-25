@@ -10,3 +10,5 @@ The Phase 5 boat was custom-built specifically for this portfolio on 2026-09-24.
 Three.js is the existing rendering library, not a source of third-party boat art. There are no new external art dependencies, asset services, or model downloads in Phase 5. Future model/texture additions must preserve the user's requirement to build the boat in this repository rather than importing someone else's model.
 
 WEB-010 / Phase 6 retains the original sailboat geometry and extends only its mathematical water response and procedural foam. No external model, texture, or artwork was added.
+
+WEB-013 / Phase 7 adds an original indexed wave surface, short procedural crest ribbons, travelled-path wake strips, and a bow-wave arc. All geometry and shaders are authored in this repository; no models, sprites, water textures, or other external artwork were added.
