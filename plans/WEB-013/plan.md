@@ -2,7 +2,7 @@
 
 ## Goal and scheduling
 
-The user explicitly moved this work ahead of the storm on 2026-09-24 because the published interaction was not clearly visible. WEB-013 is now active. Deliver moving swells, readable wake, and coherent hull response at the existing desktop/mobile camera distances. This follows WEB-010's modest baseline and uses the existing publish-and-review workflow; stop after this release.
+The user explicitly moved this work ahead of the storm on 2026-09-24 because the published interaction was not clearly visible. WEB-013 is now complete, published and awaiting review. Deliver moving swells, readable wake, and coherent hull response at the existing desktop/mobile camera distances. This follows WEB-010's modest baseline and uses the existing publish-and-review workflow; stop after this release.
 
 ## Dependencies and exclusions
 
@@ -121,7 +121,7 @@ the storm or adding more complex sailing physics.
 - [x] Review multi-frame evidence at normal camera scale: travelling wave highlights must visibly move; the hull must rise/tilt with them; wake must broaden and follow turns rather than read as dotted rails.
 - [x] Verify shared surface agreement, hull freeboard, bounded forces/collisions, scanner mooring/handoff, pause/reset/visibility/reduced motion, and fixed resource lifecycle.
 - [x] Inspect desktop/mobile production UI, keyboard/touch and fallback regressions; record renderer cost and VM limitations.
-- [ ] Build, publish through existing Pages setup, confirm exact-SHA deployment and public files/interactions, update task Done and stop for review.
+- [x] Build, publish through existing Pages setup, confirm exact-SHA deployment and public files/interactions, update task Done and stop for review.
 
 The original custom boat geometry, content, domain, rudder tuning, and top navigation stay in their existing contracts. Storm, wind propulsion, tighter turns, translucent drawers, and submenu harbours are outside this implementation.
 
@@ -133,3 +133,7 @@ The first visible candidate established obvious moving swells but had broad pale
 Normal-camera baseline and final motion frames are retained in the verification artifact. Functional tests alone are not considered evidence of visible improvement; review the travelling crests, changed hull orientation, and curved/dissolving wake on desktop and portrait views.
 
 Final browser review also caught duplicate shader color-space declarations that native compilation cannot detect. Root removed the redundant include and verified the corrected shader with zero WebGL console errors. See [Phase 7 verification](../../artifacts/phase7/VERIFICATION.md).
+
+## Completion — 2026-09-24
+
+Application commit `742a4d4` is live; Pages succeeded for the exact SHA and public files match the build. All 61 native tests and the local/public six-layout browser suites passed. Actual hull contact, deterministic world paths and bounded wake resources were verified. [Release evidence](../../artifacts/phase7/VERIFICATION.md) records the visible before/after and the higher geometry cost/software-VM timing limits. Stop here for user review before WEB-011 or any other backlog implementation.

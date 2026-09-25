@@ -25,7 +25,7 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 - [ ] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
   - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.
   - Acceptance criteria: Wind direction and sail trim are visible and controllable on keyboard/touch. Propulsion depends coherently on wind, heading, and mainsail angle; direct upwind sailing loses drive and a sequence of tacks makes progress. Preserve safe scanner navigation, accessible content, pause/reset/reduced motion, and the original custom boat/sail geometry. Explain the new helm with concise visitor-facing cues.
-  - Progress: Backlog only. After active WEB-013 and WEB-011 storm, scope/tuning is reviewed before replacing the approved controls. Coordinate turn authority with WEB-014.
+  - Progress: Backlog only. After WEB-013 review and WEB-011 storm, scope/tuning is reviewed before replacing the approved controls. Coordinate turn authority with WEB-014.
   - Next step: After the current queue/review gates, prototype a deterministic wind/sail force model and approachable tacking controls, then compare feel on desktop/touch before integration.
   - Plan: [plans/WEB-012/plan.md](plans/WEB-012/plan.md).
 
@@ -52,19 +52,22 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.
-  - Requested (2026-09-24): Brainstorming feedback: the water background feels too static, does not affect the boat enough, and wake/waves should feel interactive.
-  - Acceptance criteria: Increase readable surface movement and boat response together using the shared field, with local wake/contact/displacement reacting to vessel motion. Demonstrate a noticeable improvement over WEB-010's deliberately modest baseline while keeping steering usable, hull contact coherent, shoreline safety, bounded resources, pause/reset, and reduced-motion access. Coordinate calm water and the WEB-011 storm rather than introducing disconnected wave phases.
-  - Authorization (2026-09-24): User explicitly reprioritized this work: “I don’t see any clear wave interaction, lets work on the waves and wake next.” Implement WEB-013 before WEB-011; continue the established publish-and-review workflow.
-  - Progress: Three Luna agents and root integration completed travelling water/crest shading, continuous curved wake/bow foam, corrected hull support, and bounded powered uphill loading. 61 native tests, production build, source integration/contact/lifecycle checks, and six-layout production browser checks pass. Final desktop/mobile motion frames reviewed.
-  - Next step: Publish the reviewed build and confirm exact-SHA Pages success, public asset equality and external interactions; then mark Done and stop for review. Storm, wind controls, tighter rudder turns, translucent drawers, and subharbours remain separate.
-  - Plan: [plans/WEB-013/plan.md](plans/WEB-013/plan.md).
+No tasks in progress. Awaiting review of the published WEB-013 release.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.
+  - Requested (2026-09-24): Brainstorming feedback: the water background feels too static, does not affect the boat enough, and wake/waves should feel interactive.
+  - Acceptance criteria: Increase readable surface movement and boat response together using the shared field, with local wake/contact/displacement reacting to vessel motion. Demonstrate a noticeable improvement over WEB-010's deliberately modest baseline while keeping steering usable, hull contact coherent, shoreline safety, bounded resources, pause/reset, and reduced-motion access. Coordinate calm water and the WEB-011 storm rather than introducing disconnected wave phases.
+  - Authorization (2026-09-24): User explicitly reprioritized this work: “I don’t see any clear wave interaction, lets work on the waves and wake next.” Implement WEB-013 before WEB-011; continue the established publish-and-review workflow.
+  - Completed: 2026-09-24. Three Luna agents and root integration delivered travelling swells/crest accents, corrected stronger hull support, bounded powered uphill loading, curved wake strips and sampled bow foam. The original custom boat art remains unchanged. Application commit `742a4d4` is published; [Pages run 36076016317](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36076016317) succeeded for the exact SHA.
+  - Verification: 61 native tests, strict production build, matching 30/60/120 Hz integration, 5,784 collision-safe samples, actual dry-deck/submerged-hull checks, bounded wake lifecycle, normal-camera before/after visual review, and local/public six-layout browser checks passed. Public files match the build byte for byte. See [verification](artifacts/phase7/VERIFICATION.md), [public checks](artifacts/phase7/public-checks.json), and [deployment evidence](artifacts/phase7/public-assets.json). Higher water geometry cost and software-VM timing limitations are recorded for external-device review.
+  - Review gate: Stop here for the user's visible waves/wake and sailing-feel review. WEB-011 storm, wind sailing, tighter turns, translucent drawers and submenu harbours remain Backlog.
+  - Plan: [plans/WEB-013/plan.md](plans/WEB-013/plan.md).
 
 - [x] WEB-010 — Deepen the boat’s physical and visible interaction with waves.
   - Requested (2026-09-24): “more wave/water interaction between the boat and the water.” This is a follow-up to Phase 5’s baseline wake/foam, not a prerequisite for that release.

@@ -37,4 +37,6 @@ These short timing samples are software SwiftShader inside VirtualBox at DPR 1. 
 
 ## Publication
 
-Local verification complete. Application commit, exact-SHA Pages result, public byte equality and public browser evidence will be recorded after deployment. No DNS, certificate, or GitHub Pages settings changes are part of this release.
+Application commit `742a4d420ed5b875afbeefc24c3cbf450bd814e8` is published on `origin/master`. [Pages run 36076016317](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36076016317) completed successfully for that exact SHA. Public HTML, JavaScript, CSS and favicon all returned HTTP 200 and matched `docs/` byte for byte; see [asset hashes and deployment evidence](public-assets.json). The complete [public browser suite](public-checks.json) passed on [http://leifcnp.com/](http://leifcnp.com/), including all six layouts, touch, scanner/content/focus, reduced motion and fallback. No WebGL script or console errors.
+
+WEB-013 is Done and awaiting user review. No DNS, certificate, or GitHub Pages settings changed. The known HTTPS certificate observation remains WEB-001; use the explicit HTTP link for this review. Storm and other future tasks remain Backlog.

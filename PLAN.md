@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**WEB-013 / Phase 7 is active**: the user reprioritized clearly visible waves and wake ahead of the storm on 2026-09-24. The prior WEB-010 release passed functional verification but the user found its visual interaction too subtle. This phase targets a moving, readable water surface, continuous wake, and coherent hull response at normal camera scale. Stop for review after publication; WEB-011 remains deferred.
+**WEB-013 / Phase 7 is published and awaiting review**: the user reprioritized clearly visible waves and wake ahead of the storm on 2026-09-24. The prior WEB-010 release passed functional verification but the user found its visual interaction too subtle. This phase delivers a moving, readable water surface, continuous wake, and coherent hull response at normal camera scale. [Verification and public release evidence](artifacts/phase7/VERIFICATION.md) are complete. Stop for review after publication; WEB-011 remains deferred.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -38,7 +38,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-010 | Follow-up | Stronger boat/wave coupling and contact | Phase 5 visual review | [plan](plans/WEB-010/plan.md) |
 | WEB-011 | Deferred behind WEB-013 | Offshore storm and inward recovery | WEB-013 review | [plan](plans/WEB-011/plan.md) |
 | WEB-012 | Future brainstorm | Wind propulsion, mainsail trim, tacking | Existing queue and controls design review | [plan](plans/WEB-012/plan.md) |
-| WEB-013 | Active Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
+| WEB-013 | Published Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
 | WEB-014 | Future brainstorm | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
 | WEB-015 | Future brainstorm | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Future brainstorm | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
