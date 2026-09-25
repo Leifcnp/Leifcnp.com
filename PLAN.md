@@ -2,11 +2,13 @@
 
 ## Current delivery
 
-**WEB-012 / Phase 9 is in progress**: the user approved moving on after the
-published storm. Three Luna agents implement wind forces/tighter turns, trim controls/load heel, and
-the original larger rotating single-sail rig. Root integrates and verifies deterministic tacking,
-scanner assistance, mobile readability and publication. Stop for review after this
-release; WEB-015–WEB-017 remain separate backlog items. The user subsequently added clearer on-boat trim (larger main, no jib) and WEB-014 tighter turns to this phase, then requested WEB-018 sail-load heel.
+**Phase 9 is published and awaiting review.** WEB-012 wind sailing now includes
+an enlarged original cambered main with no jib, WEB-014 tighter turns and
+WEB-018 wind-driven heel. Three Luna agents and root integration delivered the
+release. [Local/public evidence](artifacts/phase9/VERIFICATION.md) covers the
+combined controls, pose, geometry, navigation and publication. Stop here for
+review; WEB-015 transparent drawers, WEB-016 subharbours and low-priority
+WEB-017 wave variation remain Backlog.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -41,12 +43,12 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-008 | 5 | Sailboat, landmarks, wake and visual polish | Approved after Phase 4 | [plan](plans/WEB-008/plan.md) |
 | WEB-010 | Follow-up | Stronger boat/wave coupling and contact | Phase 5 visual review | [plan](plans/WEB-010/plan.md) |
 | WEB-011 | Published Phase 8 | Offshore storm and inward recovery | Accepted WEB-013 | [plan](plans/WEB-011/plan.md) |
-| WEB-012 | Active Phase 9 | Wind propulsion, mainsail trim, tacking | Accepted WEB-011 | [plan](plans/WEB-012/plan.md) |
+| WEB-012 | Published Phase 9 | Wind propulsion, mainsail trim, tacking | Accepted WEB-011 | [plan](plans/WEB-012/plan.md) |
 | WEB-013 | Published Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
-| WEB-014 | Active Phase 9 | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
+| WEB-014 | Published Phase 9 | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
 | WEB-015 | Future brainstorm | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Future brainstorm | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
-| WEB-018 | Active Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
+| WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 
 ## Team and integration ownership

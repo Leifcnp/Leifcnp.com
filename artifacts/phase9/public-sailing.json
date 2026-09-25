@@ -1,0 +1,13 @@
+{
+  "url": "http://leifcnp.com/",
+  "checks": [
+    "Unmodified published bundle starts at 85° and explains trim.",
+    "Real W input trims to 45°; released trim holds its setting as wind moves the scene.",
+    "Real A input crosses the no-go zone and changes the apparent wind to the opposite side.",
+    "Space spills wind with the expected guidance; no script or shader errors."
+  ],
+  "opening": "85°",
+  "trim": "45°",
+  "crossedNoGo": true,
+  "endingWindFrom": "STARBOARD BOW"
+}

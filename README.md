@@ -44,7 +44,7 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user authorized the next phase after the published storm; WEB-012 wind sailing continues this external-testing workflow. Future phases still require review.
 
-Phase 9 is being verified for publication at [http://leifcnp.com/](http://leifcnp.com/). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
+Phase 9 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 9 release evidence](artifacts/phase9/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
 
 ## Phase boundary and review
 
@@ -74,7 +74,15 @@ See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per
 
 ## Verification and VM graphics
 
-Phase 8 passes 76 native tests plus source-browser checks for storm approach/recovery, shared wave timing, scanner return/mooring and handoff, actual hull contact, wake lifecycle, and disposal. Production and public browser suites cover six viewport sizes, scanner travel and cancellation, content/focus, real multi-touch, pause/reset/reduced motion, and WebGL fallback. Storm captures, camera coverage, renderer counts and software-VM frame timings are recorded in [artifacts/phase8/VERIFICATION.md](artifacts/phase8/VERIFICATION.md). Earlier phase evidence is retained as history.
+Phase 9 passes 101 native tests, strict build, quantitative tighter-turn checks,
+6,528 transformed hull/contact frames and browser keyboard/touch tacks. Source
+fixtures verify matching frame-rate trajectories, pause/reset/reduced motion,
+scanner mooring/handoff and disposal. Local and public production suites cover
+six viewport sizes, content/focus, touch, fallback and an actual published sail.
+Public HTML/assets match the deployed build. Rendering remains bounded at 53
+calls, 33,000 triangles, 39 geometries and zero textures in the sampled view.
+Details are in [artifacts/phase9/VERIFICATION.md](artifacts/phase9/VERIFICATION.md).
+
 
 See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mobile screenshots. The production scene passed browser checks in Chromium 151 using SwiftShader software rendering. The Codex embedded browser in this VirtualBox guest failed WebGL context creation through Mesa; it correctly displays the fallback instead of the scene. Open the preview in a browser with working WebGL2 to review live motion. No browser or VM graphics settings were changed.
 

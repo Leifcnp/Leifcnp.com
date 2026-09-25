@@ -52,8 +52,12 @@ Date: 2026-09-24. Tasks: WEB-012, WEB-014 and WEB-018.
 
 ## Publication
 
-Final local checks passed. Pending commit/push, exact-commit Pages completion
-and public HTML/asset verification. Public browser and sailing evidence will be recorded here.
+Application commit `b73f434` is published on `origin/master`; [Pages run 36083098095](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36083098095) succeeded for the exact SHA. Public HTTP HTML, JS, CSS and favicon match
+`docs/` byte for byte (`public-assets.json`). The public six-layout interaction
+suite passes (`public-checks.json`); `public-sailing.json` additionally exercises
+the unmodified production bundle through real trim input, a no-go-zone tack and
+spill control. Public captures are retained alongside local evidence.
+
 
 ## Limits and review boundary
 

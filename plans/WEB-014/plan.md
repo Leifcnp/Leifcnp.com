@@ -110,3 +110,12 @@ Deliver tighter turns for review after WEB-011, either alongside WEB-012 or
 as a focused follow-up. Do not impose a new queue order: choose the shared
 heading/force contract when those future tasks become active.
 
+
+## Completion — 2026-09-24
+
+Application commit `b73f434` is published on `origin/master`; [Pages run 36083098095](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36083098095) succeeded for the exact SHA.
+
+All combined Phase 9 acceptance checks are recorded in
+[the verification record](../../artifacts/phase9/VERIFICATION.md). Public
+HTML/assets and browser controls were verified. Stop for user review before
+implementing another backlog phase.

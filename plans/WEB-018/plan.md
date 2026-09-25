@@ -53,3 +53,12 @@ turn loading in storm water needed a bounded 0.1-unit heel-related buoyancy
 correction. After correction, every sampled hull crosses the waterline and
 every deck frame stays above it; reduced motion and zero-load behavior remain.
 See Phase 9 contact evidence for the 6,528 sampled frames.
+
+## Completion — 2026-09-24
+
+Application commit `b73f434` is published on `origin/master`; [Pages run 36083098095](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36083098095) succeeded for the exact SHA.
+
+All combined Phase 9 acceptance checks are recorded in
+[the verification record](../../artifacts/phase9/VERIFICATION.md). Public
+HTML/assets and browser controls were verified. Stop for user review before
+implementing another backlog phase.

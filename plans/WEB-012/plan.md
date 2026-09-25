@@ -148,3 +148,12 @@ increase original main area by at least 60%, with a taller mast/longer boom,
 and use a contrasting original foot/clew panel. Keep hull and collision geometry
 unchanged. Inspect both tacks at the ordinary desktop and mobile camera scales;
 no downloaded assets or extra floating labels are required.
+
+## Completion — 2026-09-24
+
+Application commit `b73f434` is published on `origin/master`; [Pages run 36083098095](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36083098095) succeeded for the exact SHA.
+
+All combined Phase 9 acceptance checks are recorded in
+[the verification record](../../artifacts/phase9/VERIFICATION.md). Public
+HTML/assets and browser controls were verified. Stop for user review before
+implementing another backlog phase.
