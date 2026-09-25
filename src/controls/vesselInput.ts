@@ -1,6 +1,6 @@
 import type { VesselInput } from '../world/vessel/kinematics'
 
-export type VesselControl = 'forward' | 'reverse' | 'left' | 'right' | 'brake'
+export type VesselControl = 'trimIn' | 'trimOut' | 'left' | 'right' | 'brake'
 
 export interface VesselInputControllerOptions {
   /** Element containing buttons with `data-vessel-control` actions. */
@@ -18,18 +18,18 @@ interface PointerIntent {
 }
 
 const CONTROL_NAMES: readonly VesselControl[] = [
-  'forward',
-  'reverse',
+  'trimIn',
+  'trimOut',
   'left',
   'right',
   'brake',
 ]
 
 const KEY_CONTROLS: ReadonlyMap<string, VesselControl> = new Map([
-  ['w', 'forward'],
-  ['arrowup', 'forward'],
-  ['s', 'reverse'],
-  ['arrowdown', 'reverse'],
+  ['w', 'trimIn'],
+  ['arrowup', 'trimIn'],
+  ['s', 'trimOut'],
+  ['arrowdown', 'trimOut'],
   ['a', 'left'],
   ['arrowleft', 'left'],
   ['d', 'right'],
@@ -37,15 +37,16 @@ const KEY_CONTROLS: ReadonlyMap<string, VesselControl> = new Map([
   [' ', 'brake'],
 ])
 
-const EMPTY_INPUT: VesselInput = { throttle: 0, rudder: 0, brake: false }
+const EMPTY_INPUT: VesselInput = { throttle: 0, sheet: 0, rudder: 0, brake: false }
 
 /** Reduce any set of concurrently held controls to the shared physics intent. */
 export function vesselInputFromControls(activeControls: Iterable<VesselControl>): VesselInput {
   const controls = new Set(activeControls)
   return {
-    throttle: controls.has('forward') === controls.has('reverse')
+    throttle: 0,
+    sheet: controls.has('trimIn') === controls.has('trimOut')
       ? 0
-      : controls.has('forward') ? 1 : -1,
+      : controls.has('trimIn') ? -1 : 1,
     rudder: controls.has('left') === controls.has('right')
       ? 0
       : controls.has('left') ? -1 : 1,
@@ -325,5 +326,5 @@ function isPortfolioUiTarget(target: EventTarget | null): boolean {
 }
 
 function sameInput(a: VesselInput, b: VesselInput): boolean {
-  return a.throttle === b.throttle && a.rudder === b.rudder && a.brake === b.brake
+  return a.throttle === b.throttle && a.sheet === b.sheet && a.rudder === b.rudder && a.brake === b.brake && a.sailAngle === b.sailAngle
 }

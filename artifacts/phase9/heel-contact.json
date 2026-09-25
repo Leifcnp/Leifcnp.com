@@ -1,0 +1,57 @@
+{
+  "test": "tests/sailingContact.test.ts",
+  "coverage": {
+    "radii": [
+      0,
+      185
+    ],
+    "headings": 8,
+    "times": 16,
+    "beamAngles": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "yawRates": [
+      -1.1,
+      0,
+      1.1
+    ],
+    "staticFramesPerMode": 1536,
+    "dynamicTrajectoryFrames": 1920
+  },
+  "contactClearance": {
+    "loaded": {
+      "frames": 1536,
+      "minDeckClearance": 0.02160642199189513,
+      "maxDeckClearance": 1.3727383874212324,
+      "minHullClearance": -0.7003006276176968,
+      "maxHullClearance": 1.3560864110465194
+    },
+    "spilled": {
+      "frames": 1536,
+      "minDeckClearance": 0.26803850388329126,
+      "maxDeckClearance": 1.0003786527556147,
+      "minHullClearance": -0.6445358050978869,
+      "maxHullClearance": 0.9804102322938266
+    },
+    "reduced": {
+      "frames": 1536,
+      "minDeckClearance": 0.47913374514281526,
+      "maxDeckClearance": 0.9001770090224093,
+      "minHullClearance": -0.63296302032089,
+      "maxHullClearance": 0.8381057382691786
+    },
+    "dynamic": {
+      "frames": 1920,
+      "minDeckClearance": 0.3279982645993179,
+      "maxDeckClearance": 1.1778460661273953,
+      "minHullClearance": -0.593785030981008,
+      "maxHullClearance": 1.1796753683662513
+    }
+  },
+  "interpretation": {
+    "everyFrameChecksDryDeckAndSubmergedHull": true,
+    "windHeelRadians": 0.26,
+    "maxHeelBuoyancyCorrection": 0.1
+  }
+}

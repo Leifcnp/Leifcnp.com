@@ -4,9 +4,26 @@
 
 Make tighter turns feel immediate at low speed while preserving the vessel's
 existing hull safety, shoreline clearance, reverse behaviour, and readable
-heading response. This is a future follow-up after the WEB-011 storm release
-has been reviewed. The queue position is provisional and must be reconciled
-with the future windboat work in WEB-012 before implementation.
+heading response. The user explicitly requested tighter turning during active Phase 9 work on
+2026-09-24. Implement and publish this focused change alongside WEB-012.
+
+## Active delivery contract
+
+- Luna physics owns sailing-only rudder tuning in `kinematics.ts`, relevant
+  sail constants, and trajectory/steering tests. Record current and candidate
+  90°/180° response and practical turn radius at low and cruising speed.
+- Start by comparing a maximum yaw around 1.0–1.15 rad/s, a stalled allowance
+  around 0.55 rad/s and response around 6–7/s with the pre-tuning 0.6/0.25/4.
+  Select final constants from measured outcomes; no instantaneous heading jumps.
+- Retain true/apparent-wind no-go behavior, controllable trim, finite world and
+  island clearance, small-wave helm stability and meaningful reverse response.
+  Legacy pure fixtures may retain historical mode; live world uses sailing mode.
+- Root integrates browser keyboard/touch tacks, near-shore approaches and safe
+  scanner handoff. The custom-rig agent concurrently enlarges the single main
+  and removes the jib in WEB-012; do not change hull footprint or collision radii.
+- Final evidence must quantify the improvement and cover rudder release,
+  direction reversal, pause/reset/reduced motion, 30/60/120Hz and bounded state.
+  Stop after the combined Phase 9 release for user review.
 
 ## Dependencies and exclusions
 

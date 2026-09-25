@@ -14,3 +14,7 @@ WEB-010 / Phase 6 retains the original sailboat geometry and extends only its ma
 WEB-013 / Phase 7 adds an original indexed wave surface, short procedural crest ribbons, travelled-path wake strips, and a bow-wave arc. All geometry and shaders are authored in this repository; no models, sprites, water textures, or other external artwork were added.
 
 WEB-011 / Phase 8 changes only mathematical storm intensity/forces, existing wave amplitude, procedural water colors and hull support limits. No imported boat art, weather textures, sprites, models or new dependencies were added.
+
+WEB-012 / Phase 9 enlarges the original main by 68%, removes the jib/bowsprit and pivots the main, shade, coral clew panel and coral boom around a taller original mast. The wind dial is DOM/CSS geometry. No boat art, textures, models or dependencies were imported.
+
+WEB-018 wind-driven heel uses the same original hull, shared water samples and bounded pose math. No artwork was imported.

@@ -2,7 +2,11 @@
 
 ## Current delivery
 
-**WEB-011 / Phase 8 is published and awaiting review**: the user accepted the Phase 7 swells and authorized the next obvious step. The offshore storm boundary now uses a shared smooth field, darker rougher water and bounded inward recovery. [Local/public release evidence](artifacts/phase8/VERIFICATION.md) is complete. Preserve the reviewed central scene and stop after publication for review. Incoming-wave variation and common direction are captured as low-priority WEB-017, without jumping the queue.
+**WEB-012 / Phase 9 is in progress**: the user approved moving on after the
+published storm. Three Luna agents implement wind forces/tighter turns, trim controls/load heel, and
+the original larger rotating single-sail rig. Root integrates and verifies deterministic tacking,
+scanner assistance, mobile readability and publication. Stop for review after this
+release; WEB-015–WEB-017 remain separate backlog items. The user subsequently added clearer on-boat trim (larger main, no jib) and WEB-014 tighter turns to this phase, then requested WEB-018 sail-load heel.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -20,7 +24,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-011 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for storm review before another backlog phase.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-012 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for wind-sailing review before another backlog phase.
 
 ## Work packages and review gates
 
@@ -37,19 +41,21 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-008 | 5 | Sailboat, landmarks, wake and visual polish | Approved after Phase 4 | [plan](plans/WEB-008/plan.md) |
 | WEB-010 | Follow-up | Stronger boat/wave coupling and contact | Phase 5 visual review | [plan](plans/WEB-010/plan.md) |
 | WEB-011 | Published Phase 8 | Offshore storm and inward recovery | Accepted WEB-013 | [plan](plans/WEB-011/plan.md) |
-| WEB-012 | Future brainstorm | Wind propulsion, mainsail trim, tacking | Existing queue and controls design review | [plan](plans/WEB-012/plan.md) |
+| WEB-012 | Active Phase 9 | Wind propulsion, mainsail trim, tacking | Accepted WEB-011 | [plan](plans/WEB-012/plan.md) |
 | WEB-013 | Published Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
-| WEB-014 | Future brainstorm | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
+| WEB-014 | Active Phase 9 | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
 | WEB-015 | Future brainstorm | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Future brainstorm | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
+| WEB-018 | Active Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna storm-water agent: smoothly modulated shared surface, darker storm shading/crests, hull support bounds and sampler/visual tests.
-- Luna storm-physics agent: pure radial intensity field, bounded return acceleration/damping and recovery/determinism tests.
-- Root: camera coverage and route checks, world/scanner integration, browser visual/lifecycle checks, release evidence and publication.
+- Luna wind-physics agent: pure wind/sail response, propulsion and meaningful trajectory tests.
+- Luna controls/pose agent: keyboard/touch trim, wind HUD, wind-load heel and real hull contact.
+- Luna custom-rig agent: larger original cambered mainsail/coral boom, no jib, geometry/lifecycle tests.
+- Root: fixed-step trim and scanner integration, review, browser checks and publication.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -63,7 +69,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-011 adds offshore storm water and bounded inward recovery while preserving the reviewed central waves, established controls, content, scanner routes and custom artwork. Stop for storm review before another backlog phase. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-012 replaces manual motor thrust with wind and mainsail trim while preserving shared waves/storm, content access, safe assisted scanner routes and custom artwork. Stop for storm review before another backlog phase. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
 
 
 ## Brainstorming intake — 2026-09-24
@@ -75,3 +81,5 @@ Priority override: the user subsequently selected WEB-013 to run next because wa
 
 
 Phase 8 authorization: after accepting the new swells, the user requested the next obvious step at root discretion. WEB-011 is selected. WEB-017 is saved as low priority and does not change this release.
+
+Phase 9 authorization: the user requested the next phase after storm publication. WEB-012 replaces manual thrust with wind and trim; scanner access remains assisted.

@@ -1,0 +1,79 @@
+{
+  "phase": "WEB-014",
+  "measuredAt": "2026-09-24",
+  "scenario": "sailingEnabled, sailAngle=45deg, full rudder, calm water, heading 0",
+  "baseline": {
+    "tuning": {
+      "sailingMaxYawRate": 0.6,
+      "sailingYawResponse": 4,
+      "stallYawRate": 0.25
+    },
+    "lowSpeed": {
+      "speed": 0.6,
+      "timeTo90Seconds": 5.2333,
+      "timeTo180Seconds": 11.05,
+      "maxYawRate": 0.37452,
+      "arcTo90": 31.72266,
+      "arcTo180": 57.83423,
+      "approxRadiusTo90": 20.19527,
+      "approxRadiusTo180": 18.40921
+    },
+    "cruisingSpeed": {
+      "speed": 8,
+      "timeTo90Seconds": 4.5,
+      "timeTo180Seconds": 10.3667,
+      "maxYawRate": 0.39719,
+      "arcTo90": 35.17213,
+      "arcTo180": 60.21776,
+      "approxRadiusTo90": 22.39127,
+      "approxRadiusTo180": 19.16791
+    }
+  },
+  "candidate": {
+    "tuning": {
+      "sailingMaxYawRate": 1.1,
+      "sailingYawResponse": 6.5,
+      "stallYawRate": 0.55
+    },
+    "lowSpeed": {
+      "speed": 0.6,
+      "timeTo90Seconds": 2.95,
+      "timeTo180Seconds": 5.8,
+      "maxYawRate": 0.59473,
+      "arcTo90": 15.03362,
+      "arcTo180": 27.29899,
+      "approxRadiusTo90": 9.5707,
+      "approxRadiusTo180": 8.68954
+    },
+    "cruisingSpeed": {
+      "speed": 8,
+      "timeTo90Seconds": 2.4333,
+      "timeTo180Seconds": 5.2667,
+      "maxYawRate": 0.71019,
+      "arcTo90": 19.6761,
+      "arcTo180": 34.8073,
+      "approxRadiusTo90": 12.52619,
+      "approxRadiusTo180": 11.07951
+    },
+    "frameAgreement": {
+      "testedHz": [30, 60, 120],
+      "positionToleranceMeters": 0.05,
+      "steeringTestsPassed": true
+    },
+    "safety": {
+      "worldLimit": 220,
+      "collisionRadius": 3.2,
+      "stormAndObstacleTrajectoryPassed": true,
+      "invalidAndLongFrameFinite": true,
+      "releaseSettlesYaw": true
+    }
+  },
+  "poseAndWakeReview": {
+    "maxTurnHeelRadians": 0.12,
+    "poseYawRatioClampsAtExistingPoseLimit": true,
+    "wakeTurnStrengthClampsAtExisting0_6Reference": true,
+    "physicsHullRadiusChanged": false,
+    "assessment": "Higher sailing yaw rates increase turn curvature and saturate existing heel/wake response limits; no additional pose or wake safety change was required."
+  },
+  "headingDeltaNormalization": "Heading deltas were unwrapped per frame into a continuous signed delta before 90/180 degree event detection."
+}

@@ -225,7 +225,7 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
   function setScanUpdate(update: ScanUpdate): void {
     if (disposed) return
     const fallback = update.status === 'travelling'
-      ? `Scanning toward ${islandById.get(update.islandId ?? '')?.name ?? 'island'}`
+      ? `Assisted passage to ${islandById.get(update.islandId ?? '')?.name ?? 'island'}`
       : update.status === 'arrived'
         ? `Arrived at ${islandById.get(update.islandId ?? '')?.name ?? 'island'}`
         : update.status === 'cancelled'

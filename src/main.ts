@@ -3,7 +3,7 @@ import { portfolioIslands, validateIslandDefinitions } from './content/islands'
 import { VesselInputController } from './controls/vesselInput'
 import { getProximityState } from './interaction/proximity'
 import { createPortfolioHud } from './ui/hud'
-import { createWaterWorld } from './world/createWaterWorld'
+import { createWaterWorld, type SailingTelemetry } from './world/createWaterWorld'
 import './styles.css'
 
 const app = document.querySelector<HTMLDivElement>('#app')
@@ -34,34 +34,43 @@ app.innerHTML = `
 
     <div class="landmark-layer" data-landmark-layer role="list" aria-label="Island landmarks"></div>
 
-    <aside class="vessel-model-note" aria-label="Boat orientation">
+    <aside class="vessel-model-note" aria-label="Visible sail trim">
       <span class="vessel-model-note__swatch" aria-hidden="true"></span>
-      <span>Coral marks the bow.</span>
+      <span>Coral boom shows sail trim.</span>
     </aside>
 
-    <section class="helm-panel" data-vessel-controls aria-label="Boat controls">
+    <section class="sailing-hud" data-sailing-hud aria-label="Wind and sail trim">
+      <div class="sailing-hud__dial" aria-hidden="true"><span class="sailing-hud__bow"></span><span data-wind-marker>•</span></div>
+      <div class="sailing-hud__readout">
+        <p class="sailing-hud__eyebrow">Wind from <span data-wind-direction>ahead</span> · <span data-wind-speed>9 m/s</span></p>
+        <p class="sailing-hud__trim">Main <span data-sail-angle> eased</span> · Aim <span data-suggested-trim>beam reach</span></p>
+        <p class="sailing-hud__guidance" data-sailing-guidance>Trim in with W / ↑ to build power.</p>
+      </div>
+    </section>
+
+    <section class="helm-panel" data-vessel-controls aria-label="Sailing controls">
       <div class="helm-panel__heading">
         <p class="helm-panel__eyebrow">Helm</p>
         <p class="helm-panel__hint">
-          <span class="helm-panel__hint-keyboard">WASD or arrows to steer · Space to brake</span>
-          <span class="helm-panel__hint-touch">Hold to sail · Combine forward + turn</span>
+          <span class="helm-panel__hint-keyboard">W / ↑ trim in · S / ↓ ease out · A/D steer</span>
+          <span class="helm-panel__hint-touch">Trim in/out · steer to tack · hold Spill wind</span>
         </p>
       </div>
       <div class="helm-controls" role="group" aria-label="Steering controls">
         <button class="helm-button helm-button--turn-left" type="button" data-vessel-control="left" aria-label="Turn left">
           <span aria-hidden="true">↶</span><span>Left</span>
         </button>
-        <button class="helm-button helm-button--forward" type="button" data-vessel-control="forward" aria-label="Forward">
-          <span aria-hidden="true">↑</span><span>Forward</span>
+        <button class="helm-button helm-button--trim-in" type="button" data-vessel-control="trimIn" aria-label="Trim sail in">
+          <span aria-hidden="true">↗</span><span>Trim in</span>
         </button>
-        <button class="helm-button helm-button--reverse" type="button" data-vessel-control="reverse" aria-label="Reverse">
-          <span aria-hidden="true">↓</span><span>Reverse</span>
+        <button class="helm-button helm-button--trim-out" type="button" data-vessel-control="trimOut" aria-label="Ease sail out">
+          <span aria-hidden="true">↘</span><span>Ease out</span>
         </button>
         <button class="helm-button helm-button--turn-right" type="button" data-vessel-control="right" aria-label="Turn right">
           <span aria-hidden="true">↷</span><span>Right</span>
         </button>
-        <button class="helm-button helm-button--brake" type="button" data-vessel-control="brake" aria-label="Brake">
-          <span aria-hidden="true">■</span><span>Brake</span>
+        <button class="helm-button helm-button--brake" type="button" data-vessel-control="brake" aria-label="Spill wind">
+          <span aria-hidden="true">■</span><span>Spill wind</span>
         </button>
         <button class="helm-button helm-button--reset" type="button" data-vessel-reset aria-label="Reset boat">
           <span aria-hidden="true">↺</span><span>Reset boat</span>
@@ -86,12 +95,19 @@ const sceneLayer = document.querySelector<HTMLDivElement>('[data-scene-layer]')
 const landmarkLayer = document.querySelector<HTMLDivElement>('[data-landmark-layer]')
 const motionToggle = document.querySelector<HTMLButtonElement>('[data-motion-toggle]')
 const helmPanel = document.querySelector<HTMLElement>('[data-vessel-controls]')
+const sailingHud = document.querySelector<HTMLElement>('[data-sailing-hud]')
+const windMarker = document.querySelector<HTMLElement>('[data-wind-marker]')
+const windDirection = document.querySelector<HTMLElement>('[data-wind-direction]')
+const windSpeed = document.querySelector<HTMLElement>('[data-wind-speed]')
+const sailAngle = document.querySelector<HTMLElement>('[data-sail-angle]')
+const suggestedTrim = document.querySelector<HTMLElement>('[data-suggested-trim]')
+const sailingGuidance = document.querySelector<HTMLElement>('[data-sailing-guidance]')
 const vesselModelNote = document.querySelector<HTMLElement>('.vessel-model-note')
 const fallback = document.querySelector<HTMLElement>('[data-webgl-fallback]')
 const islandSummary = document.querySelector<HTMLUListElement>('[data-island-summary]')
 const shell = document.querySelector<HTMLElement>('.portfolio-shell')
 
-if (!sceneLayer || !landmarkLayer || !motionToggle || !helmPanel || !fallback || !islandSummary || !shell) {
+if (!sceneLayer || !landmarkLayer || !motionToggle || !helmPanel || !sailingHud || !windMarker || !windDirection || !windSpeed || !sailAngle || !suggestedTrim || !sailingGuidance || !fallback || !islandSummary || !shell) {
   throw new Error('The portfolio shell is incomplete.')
 }
 
@@ -122,6 +138,11 @@ const hud = createPortfolioHud({
 const labels = new Map<string, HTMLDivElement>()
 const labelSizes = new Map<string, { width: number; height: number }>()
 const viewport = { width: window.innerWidth, height: window.innerHeight }
+let sailingHudBounds = sailingHud.getBoundingClientRect()
+const sailingHudObserver = typeof ResizeObserver !== 'undefined'
+  ? new ResizeObserver(() => { sailingHudBounds = sailingHud.getBoundingClientRect() })
+  : null
+sailingHudObserver?.observe(sailingHud)
 const labelResizeObserver = typeof ResizeObserver !== 'undefined'
   ? new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -173,6 +194,51 @@ const updateMotionButton = () => {
   helmPanel.setAttribute('aria-disabled', String(!waterWorld))
 }
 
+function updateSailingHud(snapshot: SailingTelemetry): void {
+  if (!windMarker || !windDirection || !windSpeed || !sailAngle || !suggestedTrim || !sailingHud || !sailingGuidance) return
+  const degrees = (radians: number): number => Math.round(Math.abs(radians) * 180 / Math.PI)
+  const markerRadius = 14
+  const markerX = -Math.sin(snapshot.relativeWindAngle) * markerRadius
+  const markerY = -Math.cos(snapshot.relativeWindAngle) * markerRadius
+  windMarker.style.transform = `translate(calc(-50% + ${markerX}px), calc(-50% + ${markerY}px))`
+  windDirection.textContent = directionLabel(snapshot.relativeWindAngle)
+  windSpeed.textContent = `${snapshot.windSpeed.toFixed(0)} m/s`
+  sailingHud.setAttribute('aria-label', `Wind from ${directionLabel(snapshot.relativeWindAngle)}, ${snapshot.windSpeed.toFixed(0)} metres per second. Sail angle ${degrees(snapshot.sailAngle)} degrees; suggested ${degrees(snapshot.suggestedAngle)} degrees.`)
+  sailAngle.textContent = `${degrees(snapshot.sailAngle)}°`
+  suggestedTrim.textContent = `${degrees(snapshot.suggestedAngle)}°`
+  sailingHud.toggleAttribute('data-no-go', snapshot.noGo)
+  sailingHud.toggleAttribute('data-luffing', snapshot.luffing)
+  if (snapshot.assisted) {
+    sailingGuidance.textContent = 'Assisted passage: steer when you are ready to take the helm.'
+  } else if (snapshot.moored) {
+    sailingGuidance.textContent = 'Moored. Trim or steer to set sail.'
+  } else if (snapshot.luffing) {
+    sailingGuidance.textContent = 'Wind spilled. Release to catch the wind.'
+  } else if (snapshot.noGo) {
+    sailingGuidance.textContent = 'Into the wind. Turn left or right to tack.'
+  } else if (snapshot.sailAngle > snapshot.suggestedAngle + 0.1) {
+    sailingGuidance.textContent = 'Trim in toward the suggested angle for more drive.'
+  } else if (snapshot.sailAngle < snapshot.suggestedAngle - 0.1) {
+    sailingGuidance.textContent = 'Ease out toward the suggested angle for more drive.'
+  } else if (snapshot.power < 0.08) {
+    sailingGuidance.textContent = 'Turn across the wind to fill the sail.'
+  } else {
+    sailingGuidance.textContent = 'Good trim. Sail diagonally and tack to travel upwind.'
+  }
+}
+
+function directionLabel(angle: number): string {
+  const degrees = ((angle * 180 / Math.PI) + 360) % 360
+  if (degrees < 22.5 || degrees >= 337.5) return 'ahead'
+  if (degrees < 67.5) return 'port bow'
+  if (degrees < 112.5) return 'port'
+  if (degrees < 157.5) return 'port quarter'
+  if (degrees < 202.5) return 'astern'
+  if (degrees < 247.5) return 'starboard quarter'
+  if (degrees < 292.5) return 'starboard'
+  return 'starboard bow'
+}
+
 const vesselInput = new VesselInputController({
   root: helmPanel,
   onInput: (input) => {
@@ -212,6 +278,8 @@ function canPlaceLabel(
   const right = left + width
   const bottom = top + height
   const margin = Math.min(48, Math.max(16, viewport.width * 0.04))
+  if (left < sailingHudBounds.right + 6 && right > sailingHudBounds.left - 6
+    && top < sailingHudBounds.bottom + 6 && bottom > sailingHudBounds.top - 6) return false
   const headerBottom = viewport.height <= 460 ? 110 : viewport.width <= 900 ? 200 : 160
   const helmBottom = viewport.height <= 460 ? 105 : 155
   const helmLeft = viewport.width <= 540
@@ -242,6 +310,7 @@ function canPlaceLabel(
 const onViewportResize = () => {
   viewport.width = window.innerWidth
   viewport.height = window.innerHeight
+  sailingHudBounds = sailingHud.getBoundingClientRect()
 }
 
 window.addEventListener('resize', onViewportResize)
@@ -263,6 +332,7 @@ try {
       previousProximityId = proximity?.id ?? null
       hud.setProximity(proximity)
     },
+    onSailingUpdate: updateSailingHud,
     onScanUpdate: (update) => hud.setScanUpdate(update),
   })
   waterWorld.setPaused(isPaused)
@@ -323,6 +393,7 @@ const onPageHide = (event: PageTransitionEvent) => {
     waterWorld?.dispose()
     hud.dispose()
     labelResizeObserver?.disconnect()
+    sailingHudObserver?.disconnect()
     window.removeEventListener('resize', onViewportResize)
   }
 }
@@ -347,6 +418,7 @@ if (import.meta.hot) {
     window.removeEventListener('pageshow', onPageShow)
     window.removeEventListener('resize', onViewportResize)
     labelResizeObserver?.disconnect()
+    sailingHudObserver?.disconnect()
   })
 }
 

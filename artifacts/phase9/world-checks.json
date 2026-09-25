@@ -1,0 +1,81 @@
+{
+  "checks": [
+    "Opening eased sail waits; throttle ignored; 1.6s trim selects45degrees and releasedtrim retains windpropulsion.",
+    "Original mainsail pivotsleeward; Spillwind removesdrive and slowsvessel.",
+    "World wind+trim+wave integration matches30/60/120Hz.",
+    "Pause/visibility freezes trim/rig/physics, releases held input and discardswalltime.",
+    "Allscanner docks remain held againstwind/waves; trim releasesmooring.",
+    "Safe assistedroute completes; sheet takeover cancels scan immediately.",
+    "Explicit reducedmotion sailing retainswind whileoptionaldrift/foam stay suppressed.",
+    "4542 integratedsamples retainfinitebounds andlandclearance.",
+    "Idempotentteardown removescanvas; realWebGL shaders render withoutconsole errors."
+  ],
+  "start": {
+    "sailAngle": 1.4835298641951802,
+    "suggestedAngle": 0.7853981633974483,
+    "signedSailAngle": 1.4835298641951802,
+    "relativeWindAngle": 1.5707963267948966,
+    "power": 0,
+    "noGo": false,
+    "windSpeed": 9,
+    "luffing": false,
+    "moored": false,
+    "assisted": false
+  },
+  "trimmed": {
+    "sailAngle": 0.7853981633974416,
+    "suggestedAngle": 0.6312698646834871,
+    "signedSailAngle": 0.7853981633974416,
+    "relativeWindAngle": 1.2625397293669742,
+    "power": 0.7484778956649771,
+    "noGo": false,
+    "windSpeed": 9.294263101778174,
+    "luffing": false,
+    "moored": false,
+    "assisted": false
+  },
+  "sailed": {
+    "x": -0.49778385197589653,
+    "z": 18.12423992513867,
+    "velocityX": -0.11615428346269521,
+    "velocityZ": 6.952755980277721,
+    "heading": 0,
+    "yawRate": 0
+  },
+  "trajectories": [
+    {
+      "x": -6.800393382004872,
+      "z": 26.09387013454638,
+      "velocityX": -0.049913436215716644,
+      "velocityZ": 5.955151265839766,
+      "heading": -0.5850594820848443,
+      "yawRate": -0.1497142781428886,
+      "sailAngle": 0.7853981633974416
+    },
+    {
+      "x": -6.800393382004872,
+      "z": 26.09387013454638,
+      "velocityX": -0.049913436215716644,
+      "velocityZ": 5.955151265839766,
+      "heading": -0.5850594820848443,
+      "yawRate": -0.1497142781428886,
+      "sailAngle": 0.7853981633974416
+    },
+    {
+      "x": -6.800393382004872,
+      "z": 26.09387013454638,
+      "velocityX": -0.049913436215716644,
+      "velocityZ": 5.955151265839766,
+      "heading": -0.5850594820848443,
+      "yawRate": -0.1497142781428886,
+      "sailAngle": 0.7853981633974416
+    }
+  ],
+  "spread": 0,
+  "renderer": {
+    "calls": 53,
+    "triangles": 33000,
+    "geometries": 39,
+    "textures": 0
+  }
+}

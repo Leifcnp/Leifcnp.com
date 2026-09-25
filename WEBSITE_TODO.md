@@ -15,20 +15,6 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
-  - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.
-  - Acceptance criteria: Wind direction and sail trim are visible and controllable on keyboard/touch. Propulsion depends coherently on wind, heading, and mainsail angle; direct upwind sailing loses drive and a sequence of tacks makes progress. Preserve safe scanner navigation, accessible content, pause/reset/reduced motion, and the original custom boat/sail geometry. Explain the new helm with concise visitor-facing cues.
-  - Progress: Backlog only. After WEB-013 review and WEB-011 storm, scope/tuning is reviewed before replacing the approved controls. Coordinate turn authority with WEB-014.
-  - Next step: After the current queue/review gates, prototype a deterministic wind/sail force model and approachable tacking controls, then compare feel on desktop/touch before integration.
-  - Plan: [plans/WEB-012/plan.md](plans/WEB-012/plan.md).
-
-- [ ] WEB-014 — Give the boat tighter, more responsive turns.
-  - Requested (2026-09-24): Brainstorming note: “We need to be able to make tighter turns.”
-  - Acceptance criteria: Reduce the practical turning radius and improve low-speed harbour manoeuvring without instant spins, uncontrolled lateral sliding, land penetration, or loss of keyboard/touch consistency. Verify speed-dependent rudder response and safe scanner/manual handoff; tune tacking alongside WEB-012 when wind propulsion is introduced.
-  - Progress: Backlog only; no steering changes in the current release. Keep WEB-013/WEB-011 ahead and coordinate later tuning with WEB-012/WEB-013.
-  - Next step: Measure current turn radius and response at several speeds, prototype bounded rudder/yaw/drag adjustments, and review tighter turns on desktop and touch.
-  - Plan: [plans/WEB-014/plan.md](plans/WEB-014/plan.md).
-
 - [ ] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
   - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
   - Acceptance criteria: The scene and boat remain visible through the open content drawer while text, links, focus, and controls retain readable contrast. Preserve persistent scanner access, independent scrolling, close/focus behavior, touch targets, reduced motion, and WebGL fallback. Check every category at desktop/mobile sizes and against bright/dark water; avoid costly effects by default.
@@ -52,7 +38,30 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-No tasks in progress. Awaiting review of the published WEB-011 storm release.
+- [ ] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
+  - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.
+  - Acceptance criteria: Wind direction and sail trim are visible and controllable on keyboard/touch. Propulsion depends coherently on wind, heading, and mainsail angle; direct upwind sailing loses drive and a sequence of tacks makes progress. Preserve safe scanner navigation, accessible content, pause/reset/reduced motion, and the original custom boat/sail geometry. Explain the new helm with concise visitor-facing cues.
+  - Authorization (2026-09-24): User accepted proceeding after the storm release and requested the next phase. WEB-012 is Phase 9, continuing the established publish-and-review workflow.
+  - Progress: Three Luna agents own wind/force physics, keyboard/touch/HUD, and the original mainsail rig. Root integrates fixed-step trim, assisted scanner, lifecycle checks and publication. Stable wind, explicit trim and recoverable no-go behavior are selected; WEB-014 tighter-turn tuning and WEB-018 load heel are included following the user’s in-phase requests.
+  - Review steering (2026-09-24): User requests clearer trim on the boat itself, suggesting a bigger mainsail without the jib. Enlarge the original main, remove the jib and emphasize the rotating boom/clew; include WEB-014 tighter turns now.
+  - Progress verification: Final local build, 101 native tests, keyboard/touch tacks, six layouts, source-world lifecycle and 6,528 hull-contact frames pass. Original main is larger/cambered with no jib; wind drives both propulsion and visible heel.
+  - Next step: Publish the reviewed build and verify exact-commit Pages/public assets and interactions, then stop for review.
+  - Plan: [plans/WEB-012/plan.md](plans/WEB-012/plan.md).
+
+- [ ] WEB-014 — Give the boat tighter, more responsive turns.
+  - Requested (2026-09-24): Brainstorming note: “We need to be able to make tighter turns.”
+  - Acceptance criteria: Reduce the practical turning radius and improve low-speed harbour manoeuvring without instant spins, uncontrolled lateral sliding, land penetration, or loss of keyboard/touch consistency. Verify speed-dependent rudder response and safe scanner/manual handoff; tune tacking alongside WEB-012 when wind propulsion is introduced.
+  - Authorization (2026-09-24): During Phase 9 review work, the user explicitly reiterated that tighter turning is needed now. Include this focused steering change in the active wind-sailing release.
+  - Progress: Luna physics agent is measuring the new windboat baseline and tuning bounded sailing yaw/rudder response. Root will verify tacking, shoreline clearance and keyboard/touch behavior with the larger single mainsail.
+  - Next step: Record before/after turn radius and heading response, verify finite collision-safe trajectories and manual/scanner handoff, then publish with Phase 9 for review.
+  - Plan: [plans/WEB-014/plan.md](plans/WEB-014/plan.md).
+
+- [ ] WEB-018 — Make sail loading visibly heel the boat away from the wind.
+  - Requested and authorized (2026-09-24): During Phase 9 the user requested a heel-over effect; include it with wind/trim, the larger single main and tighter turns.
+  - Acceptance criteria: Loaded sail visibly leans the boat leeward, reverses naturally between tacks and settles when sail power is spilled or lost. Blend with the shared wave pose and turning heel without abrupt jumps, floating, excessive flooding or capsize. Preserve safe navigation, pause/reset/reduced motion, original artwork and bounded resources.
+  - Progress: Luna pose agent owns pure load-to-heel math/tests; rig agent exposes the sail-load setter; root connects actual wind power and verifies visual/hull contact and lifecycle.
+  - Next step: Verify mirrored loaded/spilled poses, combined waves and tight turns, normal camera readability and actual transformed hull contact, then publish in Phase 9.
+  - Plan: [plans/WEB-018/plan.md](plans/WEB-018/plan.md).
 
 ## Blocked
 
@@ -66,7 +75,7 @@ No blocked tasks.
   - Authorization (2026-09-24): User accepted the new swells and requested the next obvious step at our discretion. Root selected the previously queued offshore storm as Phase 8; continue the established publish-and-review workflow.
   - Completed: 2026-09-24. Two Luna agents and root integration delivered a smooth offshore storm field, navy/slate water with up to 40% larger shared swells, coherent hull support and bounded inward recovery. The ordinary starting view and island routes stay calm. Application commit `813d069` is published; [Pages run 36079090864](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36079090864) succeeded for the exact SHA.
   - Verification: 76 native tests, strict build, camera coverage and safe scanner routes, four-heading hull contact at 30/60/120 Hz, powered/released storm recovery, pause/reset/reduced motion, resource disposal and local/public six-layout browser checks passed. Public assets match the build; an actual published voyage reached the storm and returned toward calm. See [verification](artifacts/phase8/VERIFICATION.md), [public checks](artifacts/phase8/public-checks.json), and [deployment evidence](artifacts/phase8/public-assets.json).
-  - Review gate: Stop for storm appearance/recovery and real-device feedback. Sustained outward thrust may balance the current in the soft band; releasing or steering inward returns toward calm. Geometry budgets are unchanged; software-VM timing and extreme-aspect-ratio limits are documented. Wind sailing, tighter turns, translucent drawers, subharbours and low-priority WEB-017 remain Backlog.
+  - Review gate: User authorized Phase 9 wind sailing on 2026-09-24. Physical-device feedback remains welcome. Sustained outward thrust may balance the current in the soft band; releasing or steering inward returns toward calm. Geometry budgets are unchanged; software-VM timing and extreme-aspect-ratio limits are documented. Wind sailing, tighter turns, translucent drawers, subharbours and low-priority WEB-017 remain Backlog.
   - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
 
 - [x] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.

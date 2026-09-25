@@ -9,6 +9,7 @@
 
 import { sampleWaterSurface } from '../waves.ts'
 import { sampleStormField } from '../stormField.ts'
+import { calculateSailResponse, SAIL_TUNING } from './sailResponse.ts'
 import { calculateUphillResistance, calculateWaveResponse } from './waveResponse.ts'
 
 export interface VesselInput {
@@ -17,6 +18,10 @@ export interface VesselInput {
   /** -1 is left/port, +1 is right/starboard. */
   readonly rudder: number
   readonly brake: boolean
+  /** Held trim intent: -1 tighter, +1 eased. */
+  readonly sheet?: number
+  /** Absolute mainsail angle in radians, supplied by the world/controller. */
+  readonly sailAngle?: number
 }
 
 export interface VesselState {
@@ -42,6 +47,8 @@ export interface VesselEnvironment {
   readonly obstacles: readonly VesselObstacle[]
   /** Enables offshore recovery forces; omitted/false preserves calm behavior. */
   readonly stormEnabled?: boolean
+  /** Enables wind-driven sailing in place of direct throttle thrust. */
+  readonly sailingEnabled?: boolean
 }
 
 /** Shared hull dimensions and coefficients for the custom sailboat. */
@@ -84,6 +91,8 @@ function safeInput(input: VesselInput): VesselInput {
     throttle: clamp(finiteOr(input?.throttle ?? 0, 0), -1, 1),
     rudder: clamp(finiteOr(input?.rudder ?? 0, 0), -1, 1),
     brake: input?.brake === true,
+    sheet: clamp(finiteOr(input?.sheet ?? 0, 0), -1, 1),
+    sailAngle: finiteOr(input?.sailAngle ?? SAIL_TUNING.defaultAngle, SAIL_TUNING.defaultAngle),
   }
 }
 
@@ -93,13 +102,14 @@ function wrapHeading(heading: number): number {
 }
 
 function safeState(state: VesselState): VesselState {
+  const yawLimit = Math.max(VESSEL_TUNING.maxYawRate, SAIL_TUNING.sailingMaxYawRate)
   return {
     x: finiteOr(state?.x ?? 0, 0),
     z: finiteOr(state?.z ?? 0, 0),
     velocityX: finiteOr(state?.velocityX ?? 0, 0),
     velocityZ: finiteOr(state?.velocityZ ?? 0, 0),
     heading: wrapHeading(finiteOr(state?.heading ?? 0, 0)),
-    yawRate: clamp(finiteOr(state?.yawRate ?? 0, 0), -VESSEL_TUNING.maxYawRate, VESSEL_TUNING.maxYawRate),
+    yawRate: clamp(finiteOr(state?.yawRate ?? 0, 0), -yawLimit, yawLimit),
   }
 }
 
@@ -227,10 +237,19 @@ function integrateSubstep(
   longitudinalVelocity *= Math.exp(-VESSEL_TUNING.longitudinalDrag * dt)
   lateralVelocity *= Math.exp(-VESSEL_TUNING.lateralDrag * dt)
 
-  const thrust = input.throttle >= 0
-    ? input.throttle * VESSEL_TUNING.forwardAcceleration
-    : input.throttle * VESSEL_TUNING.reverseAcceleration
+  const sailing = environment?.sailingEnabled === true
+  const sailResponse = sailing
+    ? calculateSailResponse(state, input.sailAngle, input.brake ? 1 : 0)
+    : undefined
+  const thrust = sailing
+    ? (input.brake ? 0 : sailResponse?.driveAcceleration ?? 0)
+    : input.throttle >= 0
+      ? input.throttle * VESSEL_TUNING.forwardAcceleration
+      : input.throttle * VESSEL_TUNING.reverseAcceleration
   longitudinalVelocity += thrust * dt
+  if (sailing && sailResponse !== undefined) {
+    lateralVelocity += sailResponse.lateralAcceleration * dt
+  }
 
   // Wave force is intentionally opt-in. Scanner/reduced-motion callers can
   // omit the time argument and retain the exact legacy movement contract.
@@ -245,7 +264,7 @@ function integrateSubstep(
     longitudinalVelocity += calculateUphillResistance(
       response,
       longitudinalVelocity,
-      input.throttle,
+      sailing ? sailResponse?.power ?? 0 : input.throttle,
       VESSEL_TUNING.maxForwardSpeed,
     ) * dt
     lateralVelocity += response.swayAcceleration * dt
@@ -299,21 +318,26 @@ function integrateSubstep(
   const nextVelocityX = longitudinalVelocity * sinHeading + lateralVelocity * cosHeading
   const nextVelocityZ = longitudinalVelocity * cosHeading - lateralVelocity * sinHeading
 
-  // A rudder command asks for a target yaw rate. Its sign follows the
-  // physical travel direction: starboard rudder is negative yaw ahead and
-  // positive yaw while backing. Throttle gives limited low-speed authority.
-  const travelDirection = Math.abs(longitudinalVelocity) > MIN_SPEED
-    ? Math.sign(longitudinalVelocity)
-    : Math.sign(input.throttle)
+  // At sailing stall speeds, small wave drift must not reverse the helm.
+  // A continuous authority floor lets the visitor turn out of irons. Meaningful
+  // backwards travel still reverses rudder response; full-speed tuning is unchanged.
+  const travelDirection = sailing
+    ? longitudinalVelocity < -0.6 ? -1 : 1
+    : Math.abs(longitudinalVelocity) > MIN_SPEED
+      ? Math.sign(longitudinalVelocity)
+      : Math.sign(input.throttle)
   const speedReference = travelDirection < 0 ? VESSEL_TUNING.maxReverseSpeed : VESSEL_TUNING.maxForwardSpeed
   const speedResponse = clamp(Math.abs(longitudinalVelocity) / speedReference, 0, 1)
-  const lowSpeedAuthority = travelDirection === 0 ? 0 : 0.12 + speedResponse * 0.88
-  const targetYawRate = -input.rudder * travelDirection * VESSEL_TUNING.maxYawRate * lowSpeedAuthority
-  const yawBlend = 1 - Math.exp(-VESSEL_TUNING.yawResponse * dt)
+  const maxYawRate = sailing ? SAIL_TUNING.sailingMaxYawRate : VESSEL_TUNING.maxYawRate
+  const lowSpeedAuthority = sailing
+    ? Math.max(SAIL_TUNING.stallYawRate / maxYawRate, 0.12 + speedResponse * 0.88)
+    : travelDirection === 0 ? 0 : 0.12 + speedResponse * 0.88
+  const targetYawRate = -input.rudder * travelDirection * maxYawRate * lowSpeedAuthority
+  const yawBlend = 1 - Math.exp(-(sailing ? SAIL_TUNING.sailingYawResponse : VESSEL_TUNING.yawResponse) * dt)
   const yawRate = clamp(
     state.yawRate + (targetYawRate - state.yawRate) * yawBlend,
-    -VESSEL_TUNING.maxYawRate,
-    VESSEL_TUNING.maxYawRate,
+    -maxYawRate,
+    maxYawRate,
   )
   const heading = wrapHeading(state.heading + yawRate * dt)
 

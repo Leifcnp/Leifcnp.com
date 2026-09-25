@@ -29,10 +29,14 @@ export interface VesselSurfaceSamples {
 export interface VesselPoseDynamics {
   /** Signed speed along the vessel's local +Z bow axis. */
   readonly forwardSpeed?: number
-  /** Signed speed along the local +X starboard axis. */
+  /** Signed speed along the local +X port axis. */
   readonly lateralSpeed?: number
   /** Signed yaw rate. Positive is the existing port-turn convention. */
   readonly yawRate?: number
+  /** Normalized sail loading from the apparent-wind response. */
+  readonly sailPower?: number
+  /** Apparent wind-from angle in local vessel coordinates. */
+  readonly relativeWindAngle?: number
 }
 
 export interface VesselPose {
@@ -57,6 +61,10 @@ export const VESSEL_POSE_TUNING = {
   maxWaveRoll: 0.3,
   maxSpeedLift: 0.065,
   maxTurnHeel: 0.12,
+  /** Beam-wind sail loading produces a readable but comfortable heel. */
+  maxWindHeel: 0.26,
+  /** Small buoyancy correction preserves leeward freeboard under combined load. */
+  maxWindHeelLift: 0.1,
   /** Fast enough to keep hull freeboard close to shorter encounter waves. */
   heaveResponseRate: 15,
   /** Tilt follows the same field with a softer filter for visual comfort. */
@@ -186,6 +194,8 @@ export function calculateVesselPose(
 
   const forwardSpeed = finiteOr(dynamics?.forwardSpeed, 0)
   const yawRate = finiteOr(dynamics?.yawRate, 0)
+  const sailPower = clamp(finiteOr(dynamics?.sailPower, 0), 0, 1)
+  const relativeWindAngle = finiteOr(dynamics?.relativeWindAngle, 0)
   const speedRatio = clamp(forwardSpeed / VESSEL_POSE_TUNING.maxForwardSpeed, 0, 1)
   const turnRatio = clamp(
     (yawRate / VESSEL_POSE_TUNING.maxYawRate) * Math.min(1, Math.abs(forwardSpeed) / VESSEL_POSE_TUNING.maxForwardSpeed),
@@ -198,10 +208,16 @@ export function calculateVesselPose(
   // to rise. Positive yaw is a port turn, so the outward starboard side sinks.
   const speedLift = speedRatio * speedRatio * VESSEL_POSE_TUNING.maxSpeedLift * dynamicScale
   const turnHeel = -turnRatio * VESSEL_POSE_TUNING.maxTurnHeel * dynamicScale
+  // Positive local +X apparent wind (the repository's port side) rolls the
+  // vessel toward -X, represented by positive Z rotation. The crosswind
+  // component therefore mirrors cleanly across tacks and fades downwind.
+  const windHeel = Math.sin(relativeWindAngle) * sailPower * VESSEL_POSE_TUNING.maxWindHeel * dynamicScale
+
+  const heelLift = Math.abs(windHeel) / VESSEL_POSE_TUNING.maxWindHeel * VESSEL_POSE_TUNING.maxWindHeelLift
 
   return {
-    heave,
+    heave: clamp(heave + heelLift, -VESSEL_POSE_TUNING.maxHeave, VESSEL_POSE_TUNING.maxHeave),
     pitch: clamp(wavePitch - speedLift, -0.36, 0.36),
-    roll: clamp(waveRoll + turnHeel, -0.4, 0.4),
+    roll: clamp(waveRoll + turnHeel + windHeel, -0.4, 0.4),
   }
 }

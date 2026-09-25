@@ -101,3 +101,41 @@ test('full storm crest follows the shared height bound without heave clipping', 
   assert.ok(Math.abs(pose.pitch) <= 0.36)
   assert.ok(Math.abs(pose.roll) <= 0.4)
 })
+
+test('wind loading heels the boat across the wind and mirrors across tacks', () => {
+  const portWind = calculateVesselPose(FLAT_SURFACE, { sailPower: 1, relativeWindAngle: Math.PI / 2 })
+  const starboardWind = calculateVesselPose(FLAT_SURFACE, { sailPower: 1, relativeWindAngle: -Math.PI / 2 })
+  const downwind = calculateVesselPose(FLAT_SURFACE, { sailPower: 1, relativeWindAngle: Math.PI })
+  assert.ok(portWind.roll > 0.2)
+  assert.ok(starboardWind.roll < -0.2)
+  assert.ok(Math.abs(portWind.roll + starboardWind.roll) < 1e-12)
+  assert.ok(Math.abs(downwind.roll) < 1e-12)
+})
+
+test('wind heel responds to power, spills to upright, and respects reduced motion', () => {
+  const loaded = calculateVesselPose(FLAT_SURFACE, { sailPower: 1, relativeWindAngle: Math.PI / 2 })
+  const half = calculateVesselPose(FLAT_SURFACE, { sailPower: 0.5, relativeWindAngle: Math.PI / 2 })
+  const spilled = calculateVesselPose(FLAT_SURFACE, { sailPower: 0, relativeWindAngle: Math.PI / 2 })
+  const reduced = calculateVesselPose(FLAT_SURFACE, { sailPower: 1, relativeWindAngle: Math.PI / 2 }, true)
+  assert.ok(loaded.roll > half.roll && half.roll > spilled.roll)
+  assert.equal(spilled.roll, 0)
+  assert.equal(reduced.roll, 0)
+})
+
+test('wind heel remains bounded with invalid or combined loading', () => {
+  const combined = calculateVesselPose(
+    {
+      ...FLAT_SURFACE,
+      bow: { height: 1.2 },
+      stern: { height: -1.2 },
+      port: { height: -0.8 },
+      starboard: { height: 0.8 },
+    },
+    { sailPower: 4, relativeWindAngle: Math.PI / 2, yawRate: 4, forwardSpeed: 40 },
+  )
+  const invalid = calculateVesselPose(FLAT_SURFACE, { sailPower: Number.NaN, relativeWindAngle: Number.POSITIVE_INFINITY })
+  finitePose(combined)
+  finitePose(invalid)
+  assert.ok(Math.abs(combined.roll) <= 0.4)
+  assert.ok(Math.abs(invalid.roll) <= 0.4)
+})

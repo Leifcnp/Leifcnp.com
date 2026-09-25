@@ -2,11 +2,42 @@
 
 ## Goal and scheduling
 
-User feedback requested a future sailing model in which wind, heading, and
-controllable mainsail trim determine propulsion. Replace the current arcade
-forward/reverse thrust model only after the WEB-010 wave response and WEB-011
-storm boundary have been reviewed. Keep this as a backlog design; it is not a
-reopening of the shipped movement work.
+Phase 9 is authorized on 2026-09-24 by “ok go for the next phase” after the
+published WEB-011 storm. Implement and publish one playable wind/trim release,
+then stop for review. No dependencies or downloaded art are needed.
+
+## Resolved implementation contract and ownership
+
+- Luna physics: pure `wind.ts`, `vessel/sailResponse.ts`, kinematics and force tests.
+  Stable wind velocity (-9, 0) in world X/Z; apparent wind subtracts boat velocity.
+  Bounded heading/trim polar, 32–48° smooth no-go transition using true/apparent wind (40° warning),
+  leeway, drag and minimal stalled-rudder recovery. Preserve storm/collision bounds.
+- Luna controls: input adapter, main DOM and stylesheet, small sailing HUD, input
+  tests. W/Up trims in, S/Down eases out, A/D steer, Space spills wind, R resets.
+  Simultaneous touch, reading focus, pointer cancellation and 44px targets remain.
+- Luna rig: original main/shade/boom pivot about the authored mast, driven by signed
+  leeward trim with bounded smoothing. Keep all geometry/material ownership.
+- Root: world API, fixed 120Hz sheet integration, telemetry, plans, visual and
+  trajectory checks, built/public verification and publishing. No concurrent edits
+  to owned files. Agents can propose alternatives before integration.
+
+Mainsail trim spans 8–85 degrees at 25 degrees/second. The initial 85-degree trim
+leaves the starting beam reach unpowered until the visitor trims in. Releasing
+trim retains its setting; propulsion then continues with the wind. The HUD explains
+wind-from relative to the bow, actual/suggested trim and tack/trim guidance.
+Scanner travel remains an explicitly labelled assisted safe route with immediate
+content access, and preserves the visitor's manual trim for takeover. Docking
+holds the boat alongside until helm input; paused/reduced-motion scanner placement
+remains instant. The custom rig shows assisted trim during travel. Reset snaps the
+rig and clears forces/time/input. Pause/hidden time never advances trim or physics.
+
+The retained legacy pure-physics thrust mode exists for historical regression
+fixtures only; the actual world always enables sailing and ignores throttle.
+During this phase the user explicitly requested a larger, clearer single main
+without a jib and tighter turns. Enlarge the custom main and emphasize its
+rotating boom/clew; WEB-014 is now included with measured steering changes.
+WEB-015 transparency, WEB-016 subharbours, and WEB-017 random/common-direction
+wave sets remain separate backlog work.
 
 ## Dependencies and exclusions
 
@@ -23,7 +54,7 @@ its assisted journey uses visible tacks or a bounded guided route, without
 delaying immediate content access. Paused/reduced-motion selection retains
 instant safe placement.
 
-## Sailing model decisions to resolve before implementation
+## Design rationale
 
 1. Define a smooth deterministic wind vector or direction field for the calm
    portfolio area and document its speed range. If WEB-011 introduces a storm
@@ -109,3 +140,11 @@ Deliver a playable wind-and-trim candidate for interaction review after
 WEB-011. Review reachability, tack clarity, manual feel, scanner handoff, and
 mobile readability before adding more realistic sail dynamics or weather
 variation.
+
+## In-phase visual review steering
+
+The user wants trim legible on the actual boat. Remove the jib and its accent;
+increase original main area by at least 60%, with a taller mast/longer boom,
+and use a contrasting original foot/clew panel. Keep hull and collision geometry
+unchanged. Inspect both tacks at the ordinary desktop and mobile camera scales;
+no downloaded assets or extra floating labels are required.

@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { VESSEL_SPAWN } from '../content/islands';
 import { STORM_TUNING } from './stormField';
+import { calculateApparentWind, sampleWind } from './wind';
+import { calculateSailResponse, SAIL_TUNING } from './vessel/sailResponse';
 import {
   createLandmarks,
   type IslandDefinition,
@@ -44,6 +46,7 @@ export interface WaterWorldOptions {
   onVesselUpdate?: (snapshot: VesselTelemetry) => void;
   /** Called when scanner navigation changes state. */
   onScanUpdate?: (snapshot: ScanTelemetry) => void;
+  onSailingUpdate?: (snapshot: SailingTelemetry) => void;
 }
 
 export interface FramingInsets {
@@ -67,6 +70,19 @@ export interface VesselTelemetry {
   readonly speed: number;
 }
 
+export interface SailingTelemetry {
+  readonly sailAngle: number;
+  readonly suggestedAngle: number;
+  readonly signedSailAngle: number;
+  readonly relativeWindAngle: number;
+  readonly power: number;
+  readonly noGo: boolean;
+  readonly windSpeed: number;
+  readonly luffing: boolean;
+  readonly moored: boolean;
+  readonly assisted: boolean;
+}
+
 export type ScanStatus = 'idle' | 'travelling' | 'arrived' | 'cancelled' | 'failed';
 
 export interface ScanTelemetry {
@@ -86,6 +102,7 @@ export interface WaterWorldController {
   setInput(input: VesselInput): void;
   resetVessel(): void;
   getVesselState(): Readonly<VesselState>;
+  getSailingState(): SailingTelemetry;
   startScan(islandId: string, options?: ScanStartOptions): void;
   cancelScan(): void;
   dispose(): void;
@@ -148,7 +165,9 @@ export function createWaterWorld(
   const vesselSpawn = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
   let vesselState: VesselState = vesselSpawn;
   let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
+  let sailAngle: number = SAIL_TUNING.defaultAngle;
   const vesselEnvironment = {
+    sailingEnabled: true,
     worldLimit: STORM_TUNING.worldLimit,
     stormEnabled: true,
     obstacles: (options.islands ?? []).map((island) => ({
@@ -165,6 +184,33 @@ export function createWaterWorld(
   });
   let scanTelemetry: ScanTelemetry = { status: 'idle', islandId: null };
 
+  const getSailingState = (): SailingTelemetry => {
+    const assisted = scannerIsActive(scannerState);
+    const luffing = vesselInput.brake || horizontallyMoored;
+    const reference = calculateSailResponse(vesselState, sailAngle, luffing ? 1 : 0);
+    const displayedAngle = assisted ? reference.suggestedAngle : sailAngle;
+    const response = assisted ? calculateSailResponse(vesselState, displayedAngle) : reference;
+    return {
+      sailAngle: displayedAngle,
+      suggestedAngle: response.suggestedAngle,
+      signedSailAngle: response.signedAngle,
+      relativeWindAngle: response.relativeWindAngle,
+      power: response.power,
+      noGo: response.noGo,
+      windSpeed: calculateApparentWind(sampleWind(), vesselState.velocityX, vesselState.velocityZ).speed,
+      luffing,
+      moored: horizontallyMoored,
+      assisted,
+    };
+  };
+
+  const updateSailing = (snap = false): void => {
+    const telemetry = getSailingState();
+    vessel.setSailLoad(telemetry.power, telemetry.relativeWindAngle);
+    vessel.setSailAngle(telemetry.signedSailAngle, snap);
+    options.onSailingUpdate?.(telemetry);
+  };
+
   const publishScan = (
     status: ScanStatus,
     islandId: string | null,
@@ -178,6 +224,7 @@ export function createWaterWorld(
 
   const refreshStaticFrame = (): void => {
     wake.reset();
+    updateSailing(true);
     vessel.resetPose(vesselState, elapsed);
     cameraRig.snapTo(vesselState.x, vesselState.z);
     ocean.update(elapsed);
@@ -261,8 +308,9 @@ export function createWaterWorld(
         if (scannerIsActive(scannerState)) {
           advanceScan(FIXED_STEP);
         } else if (!horizontallyMoored) {
+          sailAngle = clamp(sailAngle + (vesselInput.sheet ?? 0) * SAIL_TUNING.trimRate * FIXED_STEP, SAIL_TUNING.minAngle, SAIL_TUNING.maxAngle);
           vesselState = stepVessel(
-            vesselState, vesselInput, FIXED_STEP, vesselEnvironment,
+            vesselState, { ...vesselInput, sailAngle }, FIXED_STEP, vesselEnvironment,
             reducedMotion ? undefined : elapsed,
           );
         }
@@ -273,6 +321,7 @@ export function createWaterWorld(
         steps += 1;
       }
       cameraRig.update(vesselState.x, vesselState.z, delta);
+      updateSailing();
       vessel.update(vesselState, elapsed, delta);
       wake.update(vesselState, elapsed, delta);
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
@@ -325,6 +374,7 @@ export function createWaterWorld(
     } else {
       startRendering();
     }
+    options.onSailingUpdate?.(getSailingState());
   };
 
   const onVisibilityChange = (): void => {
@@ -363,6 +413,7 @@ export function createWaterWorld(
     typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
 
   resize();
+  updateSailing(true);
   vessel.resetPose(vesselState, elapsed);
   cameraRig.snapTo(vesselState.x, vesselState.z);
   options.onVesselUpdate?.(toVesselTelemetry(vesselState));
@@ -389,11 +440,13 @@ export function createWaterWorld(
     setInput: (input): void => {
       if (disposed) return;
       const nextInput = {
-        throttle: clamp(input.throttle, -1, 1),
+        // Manual propulsion comes only from the sail; legacy throttle is ignored.
+        throttle: 0,
+        sheet: clamp(input.sheet ?? 0, -1, 1),
         rudder: clamp(input.rudder, -1, 1),
         brake: Boolean(input.brake),
       };
-      if (Math.abs(nextInput.throttle) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake) {
+      if (Math.abs(nextInput.sheet) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake) {
         horizontallyMoored = false;
         cancelScanInternal('Scanner navigation cancelled by helm input.');
         if (scannerState.status === 'arrived') {
@@ -402,6 +455,7 @@ export function createWaterWorld(
         }
       }
       vesselInput = nextInput;
+      options.onSailingUpdate?.(getSailingState());
     },
     resetVessel: (): void => {
       if (disposed) return;
@@ -414,6 +468,8 @@ export function createWaterWorld(
       fixedAccumulator = 0;
       lastTime = 0;
       elapsed = 0;
+      sailAngle = SAIL_TUNING.defaultAngle;
+      updateSailing(true);
       vessel.resetPose(vesselState, elapsed);
       cameraRig.snapTo(vesselState.x, vesselState.z);
       ocean.update(elapsed);
@@ -422,6 +478,7 @@ export function createWaterWorld(
       renderer.render(scene, camera);
     },
     getVesselState: (): Readonly<VesselState> => ({ ...vesselState }),
+    getSailingState,
     startScan: (islandId, startOptions = {}): void => {
       if (disposed) return;
 

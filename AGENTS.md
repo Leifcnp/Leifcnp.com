@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. The user subsequently selected WEB-013 clearer waves/wake ahead of WEB-011; Phase 7 is published, publicly verified and accepted. The user then authorized the next obvious step; WEB-011 / Phase 8 offshore storm is published and publicly verified; stop for storm review. WEB-017 incoming-wave variation/direction is low-priority Backlog. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. The user subsequently selected WEB-013 clearer waves/wake ahead of WEB-011; Phase 7 is published, publicly verified and accepted. The user then authorized the next obvious step; WEB-011 / Phase 8 offshore storm is published and publicly verified; the user then authorized WEB-012 / Phase 9 wind sailing, now in progress; in-phase requests add WEB-014 tighter turns, a larger main without jib, and WEB-018 wind-driven heel. WEB-017 incoming-wave variation/direction is low-priority Backlog. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -37,7 +37,7 @@
 - Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
 - Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
 - Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 76 individual data, geometry, vessel, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
+- Tests: `pnpm test` (Node 24 native TypeScript; 101 individual data, geometry, wind, steering, hull-contact, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
 - Production build: `pnpm run build` (includes type checking), generating `docs/`.
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
@@ -65,4 +65,4 @@
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- WEB-013 was verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. The user accepted the swells and authorized WEB-011, which is now verified and published through the same workflow. Stop for storm review before implementing another backlog task. A routine local build alone is not blanket authorization for unrelated future publication.
+- WEB-013 was verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. The user accepted the swells and authorized WEB-011, which is now verified and published through the same workflow. WEB-012 wind sailing is now authorized through the same workflow; stop for its review before another backlog task. A routine local build alone is not blanket authorization for unrelated future publication.

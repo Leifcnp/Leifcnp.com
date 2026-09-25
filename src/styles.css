@@ -70,6 +70,23 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
   color: #c4d8d6; font-size: 9px; line-height: 1.3; letter-spacing: .045em;
   text-align: right; pointer-events: none;
 }
+.sailing-hud {
+  position: absolute; z-index: 4; top: 114px; right: 32px;
+  display: flex; align-items: center; gap: 10px; width: 252px; min-height: 58px;
+  padding: 8px 10px; border: 1px solid #719398; border-radius: 8px;
+  color: #f4efe4; background: rgba(7,31,40,.82); box-shadow: 0 8px 28px rgba(2,19,26,.14);
+  pointer-events: none;
+}
+.sailing-hud__dial { position: relative; display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border: 1px solid #77989c; border-radius: 50%; color: #f0ad83; font-size: 22px; }
+.sailing-hud__bow { position: absolute; top: 5px; left: 50%; width: 0; height: 0; border-right: 4px solid transparent; border-bottom: 9px solid #f4efe4; border-left: 4px solid transparent; transform: translateX(-50%); }
+.sailing-hud__dial [data-wind-marker] { position: absolute; top: 50%; left: 50%; color: #f0ad83; font-size: 17px; line-height: 1; }
+.sailing-hud__readout { min-width: 0; }
+.sailing-hud__eyebrow, .sailing-hud__trim, .sailing-hud__guidance { margin: 0; }
+.sailing-hud__eyebrow { color: #c4d8d6; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.sailing-hud__trim { margin-top: 3px; overflow: hidden; font: 12px Georgia, serif; text-overflow: ellipsis; white-space: nowrap; }
+.sailing-hud__guidance { margin-top: 4px; color: #c4d8d6; font-size: 9px; line-height: 1.25; }
+.sailing-hud[data-no-go] { border-color: #f0ad83; }
+.sailing-hud[data-luffing] .sailing-hud__guidance { color: #f0ad83; }
 .landmark-layer { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
 .landmark-label {
   position: absolute; max-width: min(11rem, 42vw); padding: 7px 9px;
@@ -148,7 +165,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
 .content-card .content-card__meta { color: #486368; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 .content-card a { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; color: #085e67; font-size: 13px; text-underline-offset: 3px; }
 .content-card .content-card__placeholder { font-size: 12px; color: #50696b; }
-.is-reading .helm-panel, .is-reading .explore-prompt { display: none; }
+.is-reading .helm-panel, .is-reading .explore-prompt, .is-reading .sailing-hud { display: none; }
+.portfolio-shell:has(.webgl-fallback:not(.is-hidden)) .sailing-hud { display: none; }
 .webgl-fallback {
   position: absolute; z-index: 3; top: 220px; right: 24px; left: 24px;
   max-width: 480px; max-height: calc(100% - 240px); overflow: auto; margin: auto;
@@ -175,6 +193,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
   .scanner-hud__link-name { font-size: 10px; }
   .scanner-hud__status { font-size: 9px; }
   .vessel-model-note { top: 180px; left: 16px; font-size: 9px; }
+  .sailing-hud { top: 168px; right: 16px; left: 16px; width: auto; }
+  .vessel-model-note { display: none; }
   .content-drawer { left: 16px; right: 16px; bottom: 16px; width: auto; padding: 18px; }
   .content-drawer__title { font-size: 32px; }
   .is-reading .vessel-model-note { display: none; }
@@ -205,6 +225,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
   .scanner-hud__number { display: none; }
   .scanner-hud__status { font-size: 8px; }
   .vessel-model-note { top: 85px; left: 16px; font-size: 8px; }
+  .sailing-hud { top: 84px; right: 16px; left: auto; width: min(270px,calc(100% - 32px)); }
   .content-drawer { left: auto; width: min(420px,50vw); padding: 16px; }
   .content-drawer__title { font-size: 30px; }
   .helm-panel { left: auto; width: min(496px,calc(100% - 32px)); }

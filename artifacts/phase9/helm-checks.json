@@ -1,0 +1,85 @@
+{
+  "checks": [
+    "Real keyboard trim changes main to45degrees; propulsion continues after release.",
+    "Actual keyboard tack crosses zero-drive no-go zone, swings main to opposite side and makes netupwind progress.",
+    "Spillwind removes drive and explains release.",
+    "Blur releases trim without resetting chosenangle.",
+    "Assisted passage is labelled while reading; drawer keys keep scanner; manual trim afterclosing cancelsit.",
+    "Real simultaneous mobile touches trim and turn together; touchcancel releasesheldsheet.",
+    "Pausedreset restores easedmain; no runtime or shadererrors."
+  ],
+  "before": {
+    "vessel": {
+      "x": 8.812168118856235,
+      "z": 28.06305295312748,
+      "velocityX": 0.9620343383167588,
+      "velocityZ": 1.0109101575790234,
+      "heading": 0.7935025609769042,
+      "yawRate": 4.2259042268655625e-15
+    },
+    "sail": {
+      "sailAngle": 0.7853981633974416,
+      "suggestedAngle": 0.3380818337140551,
+      "signedSailAngle": 0.7853981633974416,
+      "relativeWindAngle": 0.67616366742811,
+      "power": 0.08633089985353326,
+      "noGo": true,
+      "windSpeed": 10.01319467025877,
+      "luffing": false,
+      "moored": false,
+      "assisted": false
+    },
+    "hint": "Into the wind. Turn left or right to tack."
+  },
+  "after": {
+    "vessel": {
+      "x": 14.147399386211221,
+      "z": 22.639367565377924,
+      "velocityX": -0.21778182736873536,
+      "velocityZ": -0.8129664826346402,
+      "heading": 2.5535025609769058,
+      "yawRate": 4.224662572948533e-15
+    },
+    "sail": {
+      "sailAngle": 0.7853981633974416,
+      "suggestedAngle": 0.4451998449747707,
+      "signedSailAngle": -0.7853981633974416,
+      "relativeWindAngle": -0.8903996899495414,
+      "power": 0.37136633945367387,
+      "noGo": false,
+      "windSpeed": 8.819765900157563,
+      "luffing": false,
+      "moored": false,
+      "assisted": false
+    },
+    "hint": "Trim in toward the suggested angle for more drive."
+  },
+  "crossing": {
+    "sawNoGo": true,
+    "minPower": 0,
+    "heading": 2.4711581554586566
+  },
+  "touch": {
+    "vessel": {
+      "x": -1.3794268933434808,
+      "z": 2.095219470659829,
+      "velocityX": -2.648364422768277,
+      "velocityZ": 3.0788900244932003,
+      "heading": -0.7976581003502154,
+      "yawRate": -0.5499832621343453
+    },
+    "sail": {
+      "sailAngle": 0.7853981633974416,
+      "suggestedAngle": 0.9585447029505424,
+      "signedSailAngle": 0.7853981633974416,
+      "relativeWindAngle": 1.917089405901085,
+      "power": 0.5402962806639422,
+      "noGo": false,
+      "windSpeed": 7.058529470709852,
+      "luffing": false,
+      "moored": false,
+      "assisted": false
+    },
+    "hint": "Ease out toward the suggested angle for more drive."
+  }
+}

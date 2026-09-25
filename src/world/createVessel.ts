@@ -18,6 +18,9 @@ export interface VesselController {
   update(state: Readonly<VesselState>, timeSeconds: number, deltaSeconds: number): void;
   resetPose(state: Readonly<VesselState>, timeSeconds?: number): void;
   setReducedMotion(reduced: boolean): void;
+  setSailAngle(signedRadians: number, snap?: boolean): void;
+  setSailLoad(power: number, relativeWindAngle: number): void;
+  getSailAngle(): number;
   getPose(): Readonly<VesselPose>;
   dispose(): void;
 }
@@ -25,6 +28,10 @@ export interface VesselController {
 const VESSEL_LENGTH = VESSEL_TUNING.length;
 const VESSEL_WIDTH = VESSEL_TUNING.width;
 const WATER_CLEARANCE = 0.2;
+const SAIL_MIN_ANGLE = 8 * Math.PI / 180;
+const SAIL_MAX_ANGLE = 85 * Math.PI / 180;
+const SAIL_SMOOTHING_RATE = 9;
+const SAIL_RIG_PIVOT_Z = -0.34;
 
 /** Build the owned low-poly Phase 5 sailboat. Local +Z remains the bow. */
 export function createVessel(scene: THREE.Scene): VesselController {
@@ -90,30 +97,39 @@ export function createVessel(scene: THREE.Scene): VesselController {
     flatShading: true,
   }));
   const mast = new THREE.Mesh(
-    registerGeometry(new THREE.CylinderGeometry(0.085, 0.12, 4.35, 6)),
+    registerGeometry(new THREE.CylinderGeometry(0.085, 0.12, 5.45, 6)),
     riggingMaterial,
   );
   mast.name = 'vessel-mast';
-  mast.position.set(0, 2.64, -0.34);
+  mast.position.set(0, 3.19, -0.34);
   group.add(mast);
 
+  const sailRig = new THREE.Group();
+  sailRig.name = 'sail-rig';
+  sailRig.position.set(0, 0, SAIL_RIG_PIVOT_Z);
+  group.add(sailRig);
+
+  // The authored geometry is specified in vessel-local coordinates. Moving a
+  // child under the mast pivot therefore needs the inverse pivot translation
+  // to preserve the neutral world-space pose exactly.
+  const attachToSailRig = (mesh: THREE.Mesh): void => {
+    mesh.position.z -= SAIL_RIG_PIVOT_Z;
+    sailRig.add(mesh);
+  };
+
   const boom = new THREE.Mesh(
-    registerGeometry(new THREE.CylinderGeometry(0.055, 0.07, 2.55, 6)),
-    riggingMaterial,
+    registerGeometry(new THREE.CylinderGeometry(0.06, 0.075, 3.1, 6)),
+    registerMaterial(new THREE.MeshStandardMaterial({
+      color: 0xf06f68,
+      roughness: 0.64,
+      metalness: 0,
+      flatShading: true,
+    })),
   );
   boom.name = 'vessel-main-boom';
   boom.rotation.x = Math.PI * 0.5;
-  boom.position.set(0, 2.34, -1.32);
-  group.add(boom);
-
-  const bowsprit = new THREE.Mesh(
-    registerGeometry(new THREE.CylinderGeometry(0.045, 0.06, 1.58, 6)),
-    riggingMaterial,
-  );
-  bowsprit.name = 'vessel-bowsprit';
-  bowsprit.rotation.x = Math.PI * 0.5;
-  bowsprit.position.set(0, 0.7, 0.82);
-  group.add(bowsprit);
+  boom.position.set(0, 2.04, -1.895);
+  attachToSailRig(boom);
 
   const sailMaterial = registerMaterial(new THREE.MeshBasicMaterial({
     color: 0xfff7e6,
@@ -126,37 +142,36 @@ export function createVessel(scene: THREE.Scene): VesselController {
     toneMapped: false,
   }));
   const mainSail = new THREE.Mesh(
-    registerGeometry(createTriangleGeometry([
-      0.055, 4.46, -0.39,
-      0.055, 0.74, -0.39,
-      0.055, 2.19, -2.22,
-    ])),
+    registerGeometry(createCamberedSailGeometry(
+      0.055,
+      -0.6,
+      [
+        [5.8, -0.39],
+        [2.0, -0.39],
+        [2.08, -3.4],
+        [3.3, -1.52],
+      ],
+    )),
     sailMaterial,
   );
   mainSail.name = 'vessel-cream-mainsail';
-  group.add(mainSail);
+  attachToSailRig(mainSail);
 
   const mainSailShade = new THREE.Mesh(
-    registerGeometry(createTriangleGeometry([
-      0.062, 4.43, -0.41,
-      0.062, 0.76, -0.41,
-      0.062, 2.19, -1.52,
-    ])),
+    registerGeometry(createCamberedSailGeometry(
+      0.062,
+      -0.42,
+      [
+        [5.76, -0.41],
+        [2.02, -0.41],
+        [2.08, -2.74],
+        [3.28, -1.28],
+      ],
+    )),
     sailShadeMaterial,
   );
   mainSailShade.name = 'vessel-mainsail-facet';
-  group.add(mainSailShade);
-
-  const jib = new THREE.Mesh(
-    registerGeometry(createTriangleGeometry([
-      0.065, 4.07, -0.2,
-      0.065, 0.74, 0.04,
-      0.065, 1.7, 2.28,
-    ])),
-    sailMaterial,
-  );
-  jib.name = 'vessel-cream-jib';
-  group.add(jib);
+  attachToSailRig(mainSailShade);
 
   const coralMaterial = registerMaterial(new THREE.MeshStandardMaterial({
     color: 0xf06f68,
@@ -165,16 +180,16 @@ export function createVessel(scene: THREE.Scene): VesselController {
     side: THREE.DoubleSide,
     flatShading: true,
   }));
-  const jibAccent = new THREE.Mesh(
+  const clewAccent = new THREE.Mesh(
     registerGeometry(createTriangleGeometry([
-      0.073, 1.54, 0.45,
-      0.073, 0.84, 0.17,
-      0.073, 1.22, 1.55,
+      0.073, 2.08, -0.48,
+      0.073, 2.12, -3.05,
+      0.073, 2.38, -2.78,
     ])),
     coralMaterial,
   );
-  jibAccent.name = 'vessel-coral-jib-accent';
-  group.add(jibAccent);
+  clewAccent.name = 'vessel-coral-main-clew';
+  attachToSailRig(clewAccent);
 
   const bow = new THREE.Mesh(
     registerGeometry(createTriangleGeometry([
@@ -189,7 +204,32 @@ export function createVessel(scene: THREE.Scene): VesselController {
 
   const pose = { heave: 0, pitch: 0, roll: 0 };
   let reducedMotion = false;
+  let sailAngle = SAIL_MAX_ANGLE;
+  let sailAngleTarget = SAIL_MAX_ANGLE;
+  let sailPower = 0;
+  let relativeWindAngle = 0;
   let disposed = false;
+
+  const normalizeSailAngle = (signedRadians: number): number => {
+    if (!Number.isFinite(signedRadians)) return SAIL_MAX_ANGLE;
+    const sign = signedRadians < 0 ? -1 : 1;
+    const magnitude = Math.min(SAIL_MAX_ANGLE, Math.max(SAIL_MIN_ANGLE, Math.abs(signedRadians)));
+    return sign * magnitude;
+  };
+
+  const updateSailRig = (deltaSeconds: number, snap: boolean): void => {
+    const validDelta = Number.isFinite(deltaSeconds) && deltaSeconds > 0
+      ? Math.min(deltaSeconds, 0.25)
+      : 0;
+    const smoothing = snap || reducedMotion
+      ? 1
+      : 1 - Math.exp(-validDelta * SAIL_SMOOTHING_RATE);
+    sailAngle = approach(sailAngle, sailAngleTarget, smoothing);
+    sailRig.rotation.y = sailAngle;
+    // Mirror the shallow authored belly when trim changes tack so the visible
+    // fullness stays on the leeward side of the rotating mainsail.
+    sailRig.scale.x = sailAngle < 0 ? -1 : 1;
+  };
 
   const updatePose = (
     state: Readonly<VesselState>,
@@ -209,7 +249,12 @@ export function createVessel(scene: THREE.Scene): VesselController {
     const forwardSpeed = state.velocityX * Math.sin(state.heading) + state.velocityZ * Math.cos(state.heading);
     const target = calculateVesselPose(
       surface,
-      { forwardSpeed, yawRate: state.yawRate },
+      {
+        forwardSpeed,
+        yawRate: state.yawRate,
+        sailPower,
+        relativeWindAngle,
+      },
       reducedMotion,
     );
     const validDelta = Number.isFinite(deltaSeconds) && deltaSeconds > 0 ? Math.min(deltaSeconds, 0.25) : 0;
@@ -226,6 +271,7 @@ export function createVessel(scene: THREE.Scene): VesselController {
     group.rotation.y = Number.isFinite(state.heading) ? state.heading : 0;
     group.rotation.x = pose.pitch;
     group.rotation.z = pose.roll;
+    updateSailRig(deltaSeconds, snap);
   };
 
   scene.add(group);
@@ -242,7 +288,19 @@ export function createVessel(scene: THREE.Scene): VesselController {
     setReducedMotion: (reduced): void => {
       if (disposed) return;
       reducedMotion = reduced === true;
+      if (reducedMotion) updateSailRig(0, true);
     },
+    setSailAngle: (signedRadians, snap = false): void => {
+      if (disposed) return;
+      sailAngleTarget = normalizeSailAngle(signedRadians);
+      updateSailRig(0, snap);
+    },
+    setSailLoad: (power, windAngle): void => {
+      if (disposed) return;
+      sailPower = Number.isFinite(power) ? Math.min(1, Math.max(0, power)) : 0;
+      relativeWindAngle = Number.isFinite(windAngle) ? windAngle : 0;
+    },
+    getSailAngle: (): number => sailAngle,
     getPose: (): Readonly<VesselPose> => ({ ...pose }),
     dispose: (): void => {
       if (disposed) return;
@@ -340,6 +398,26 @@ function createTriangleGeometry(points: readonly number[]): THREE.BufferGeometry
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.Float32BufferAttribute([...points], 3));
   geometry.setIndex([0, 1, 2]);
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+function createCamberedSailGeometry(
+  outerX: number,
+  bellyX: number,
+  points: readonly [readonly [number, number], readonly [number, number], readonly [number, number], readonly [number, number]],
+): THREE.BufferGeometry {
+  const [head, tack, clew, belly] = points;
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute([
+    outerX, head[0], head[1],
+    outerX, tack[0], tack[1],
+    outerX, clew[0], clew[1],
+    bellyX, belly[0], belly[1],
+  ], 3));
+  // A shared interior vertex gives the sail three broad low-poly facets while
+  // retaining the authored mast, tack, and clew silhouette at its edges.
+  geometry.setIndex([0, 1, 3, 1, 2, 3, 2, 0, 3]);
   geometry.computeVertexNormals();
   return geometry;
 }
