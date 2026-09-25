@@ -1,0 +1,51 @@
+{
+  "url": "http://leifcnp.com/",
+  "colors": {
+    "background": "rgba(244, 239, 228, 0.84)",
+    "opacity": "1",
+    "filter": "none",
+    "samples": [
+      {
+        "selector": ".content-drawer__title",
+        "color": "rgb(16, 47, 56)",
+        "minimumContrast": 8.537070551520735
+      },
+      {
+        "selector": ".content-drawer__close",
+        "color": "rgb(16, 47, 56)",
+        "minimumContrast": 8.537070551520735
+      },
+      {
+        "selector": ".content-drawer__description",
+        "color": "rgb(59, 89, 96)",
+        "minimumContrast": 4.556292093669548
+      },
+      {
+        "selector": ".content-card h3",
+        "color": "rgb(16, 47, 56)",
+        "minimumContrast": 8.537070551520735
+      },
+      {
+        "selector": ".content-card p",
+        "color": "rgb(64, 89, 92)",
+        "minimumContrast": 4.527550503928534
+      },
+      {
+        "selector": ".content-card__meta",
+        "color": "rgb(64, 89, 92)",
+        "minimumContrast": 4.527550503928534
+      }
+    ]
+  },
+  "linkColors": {
+    "link": "rgb(16, 47, 56)",
+    "placeholder": "rgb(60, 86, 91)"
+  },
+  "checks": [
+    "Opaque text over translucent paper passes 4.5:1 over any black-to-white underlay; no backdrop blur.",
+    "Temporary long content scrolls independently by mouse wheel, PageDown and real touch swipe; page stays fixed.",
+    "prefers-contrast uses solid paper.",
+    "prefers-reduced-transparency uses solid paper.",
+    "Forced colors use system surfaces and preserve focus return."
+  ]
+}

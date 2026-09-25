@@ -7,7 +7,7 @@ sail toward the selected harbour. Use lightly transparent content blocks so
 the world remains part of the interaction, while maintaining readable
 contrast, predictable focus, and comfortable scrolling. On 2026-09-24 the
 user authorized proceeding with the next task at root discretion. WEB-015 is
-active Phase 10, followed by WEB-016 after review. New sailing ideas remain
+published Phase 10, followed by WEB-016 after review. New sailing ideas remain
 Backlog. Continue the established build, publish and public-review workflow.
 
 ## Dependencies and exclusions
@@ -106,3 +106,20 @@ submenu-specific scene changes; those belong to WEB-016.
   temporary long mock content, not extra shipped filler.
 - Publish generated `docs/` with the custom domain preserved; confirm exact-SHA
   Pages success and byte-identical public assets before marking Done.
+
+## Completion — 2026-09-24
+
+Application commit `910744b` is published on `origin/master`; [Pages run 36086581324](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36086581324) succeeded for the exact SHA.
+
+The drawer uses 84% warm paper with opaque readable text. Phone/tablet sheets
+are content-sized and capped at 44% viewport height; short landscape keeps a
+narrower side panel. Root added a labelled keyboard-focusable scroll region
+after testing long content, and verified actual boat visibility and dark-water
+reading. Contrast/reduced-transparency preferences and WebGL fallback use
+solid paper; forced colors use system surfaces. No blur or physics changes.
+
+Strict build, 101 native tests, six local/public layouts and category routes,
+keyboard/touch long-content scrolling, preference fallbacks and exact public
+asset matching pass. See [verification](../../artifacts/phase10/VERIFICATION.md).
+The remaining review is the user's visual/physical-device feedback. Stop here;
+WEB-016 harbours and the new sailing ideas remain future tasks.

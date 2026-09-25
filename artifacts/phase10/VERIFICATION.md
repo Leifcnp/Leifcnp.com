@@ -50,8 +50,11 @@ Date: 2026-09-24. Task: WEB-015.
 
 ## Publication
 
-Local verification complete. Exact-SHA Pages and public asset/interaction
-verification are the remaining release checks.
+Application commit `910744b` is published on `origin/master`; [Pages run 36086581324](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36086581324) succeeded for the exact SHA. Public HTTP HTML, JS,
+CSS and favicon match `docs/` byte for byte (`public-assets.json`). The public
+six-layout suite (`public/checks.json`) and targeted scrolling/contrast/media
+preference checks (`public/drawer-checks.json`) pass. Public captures are saved
+under `public/` alongside those records.
 
 ## Limits and review boundary
 

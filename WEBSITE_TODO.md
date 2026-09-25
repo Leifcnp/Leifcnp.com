@@ -54,19 +54,22 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
-  - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
-  - Acceptance criteria: The scene and boat remain visible through the open content drawer while text, links, focus, and controls retain readable contrast. Preserve persistent scanner access, independent scrolling, close/focus behavior, touch targets, reduced motion, and WebGL fallback. Check every category at desktop/mobile sizes and against bright/dark water; avoid costly effects by default.
-  - Authorization (2026-09-24): User requested adding further sailing ideas, then proceeding with the next task at root discretion. WEB-015 is selected as Phase 10, using the established publish-and-review workflow.
-  - Progress: Luna implementation and independent review are complete. Root verified the strict build, 101 native tests, six layouts, long-content keyboard/touch scrolling, contrast fallbacks and visible scanner voyages. New sailing ideas remain Backlog.
-  - Next step: Publish the reviewed build, verify exact-SHA Pages/public assets and interactions, then record completion and stop for review.
-  - Plan: [plans/WEB-015/plan.md](plans/WEB-015/plan.md).
+No tasks in progress. Phase 10 is published and awaiting drawer review.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
+  - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
+  - Acceptance criteria: The scene and boat remain visible through the open content drawer while text, links, focus, and controls retain readable contrast. Preserve persistent scanner access, independent scrolling, close/focus behavior, touch targets, reduced motion, and WebGL fallback. Check every category at desktop/mobile sizes and against bright/dark water; avoid costly effects by default.
+  - Authorization (2026-09-24): User requested adding further sailing ideas, then proceeding with the next task at root discretion. WEB-015 is selected as Phase 10, using the established publish-and-review workflow.
+  - Completed: 2026-09-24. Application commit `910744b` is published on `origin/master`; [Pages run 36086581324](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36086581324) succeeded for the exact SHA.
+  - Verification: Strict build, 101 native tests, six-layout local/public interactions, independent keyboard/touch scrolling, contrast/preferences/fallback checks and visible boat voyages pass. Public HTML/assets match the build. See [verification](artifacts/phase10/VERIFICATION.md), [public checks](artifacts/phase10/public/checks.json) and [deployment evidence](artifacts/phase10/public-assets.json).
+  - Review gate: Stop for drawer review. WEB-016 local submenu harbours is next queued; WEB-017 and WEB-019–WEB-021 remain future work.
+  - Plan: [plans/WEB-015/plan.md](plans/WEB-015/plan.md).
 
 - [x] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
   - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.

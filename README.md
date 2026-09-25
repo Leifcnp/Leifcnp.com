@@ -44,7 +44,7 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user authorized the next queued task after wind sailing; WEB-015 translucent drawers continues this external-testing workflow. Future phases still require review.
 
-Phase 10 is undergoing release verification at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 10 release evidence](artifacts/phase10/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
+Phase 10 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 10 release evidence](artifacts/phase10/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
 
 ## Phase boundary and review
 

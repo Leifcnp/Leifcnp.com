@@ -2,12 +2,13 @@
 
 ## Current delivery
 
-**Phase 10 is in progress: WEB-015 translucent content drawers.** The user
-requested saving additional sailing ideas and proceeding with the next task
-at root discretion. Preserve the published Phase 9 wind sailing, original
-single-main boat, tighter steering and heel while making its voyage visible
-behind readable content. Luna agents own the CSS treatment, future-task plans
-and independent review; root integrates, verifies and publishes.
+**Phase 10 is published and awaiting review: WEB-015 translucent drawers.**
+The reading surface reveals the world behind it; compact phone sheets and
+narrower landscape panels keep the boat in view. Opaque text, solid preference
+fallbacks and a labelled keyboard-scroll region preserve content access.
+Luna implementation/planning/review and root integration delivered this phase.
+[Local and public evidence](artifacts/phase10/VERIFICATION.md) verifies the
+release. Stop here for review before WEB-016.
 
 **Next queued after review:** WEB-016 manual-arrival zoom and submenu harbours.
 WEB-017 wave variation/direction stays low priority. WEB-019 now includes
@@ -51,7 +52,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-012 | Published Phase 9 | Wind propulsion, mainsail trim, tacking | Accepted WEB-011 | [plan](plans/WEB-012/plan.md) |
 | WEB-013 | Published Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
 | WEB-014 | Published Phase 9 | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
-| WEB-015 | Active Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
+| WEB-015 | Published Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Queued after WEB-015 | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
