@@ -47,3 +47,26 @@ test('travelling swells visibly change height over a short review interval', () 
   assert.ok(changes.some((change) => change > 0.45))
   assert.ok(changes.every((change) => Number.isFinite(change)))
 })
+
+test('storm modulation preserves calm water and grows smoothly offshore', () => {
+  const calm = sampleWaterSurface(0, 0, 1.7)
+  const edge = sampleWaterSurface(157, 0, 1.7)
+  const outer = sampleWaterSurface(220, 0, 1.7)
+  assert.equal(calm.stormIntensity, 0)
+  assert.ok(edge.stormIntensity > 0 && edge.stormIntensity < 1)
+  assert.equal(outer.stormIntensity, 1)
+  assert.ok(Math.abs(outer.height) <= 2.52)
+  for (const value of Object.values(outer)) assert.ok(Number.isFinite(value))
+})
+
+test('storm-aware slopes agree with finite differences through the transition', () => {
+  const x = 154
+  const z = 36
+  const time = 2.3
+  const distance = 1e-4
+  const sample = sampleWaterSurface(x, z, time)
+  const slopeX = (sampleWaterHeight(x + distance, z, time) - sampleWaterHeight(x - distance, z, time)) / (2 * distance)
+  const slopeZ = (sampleWaterHeight(x, z + distance, time) - sampleWaterHeight(x, z - distance, time)) / (2 * distance)
+  assert.ok(Math.abs(sample.slopeX - slopeX) < 1e-4)
+  assert.ok(Math.abs(sample.slopeZ - slopeZ) < 1e-4)
+})

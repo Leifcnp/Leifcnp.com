@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { sampleStormField, STORM_TUNING } from './stormField.ts';
 import {
   MAX_WAVE_HEIGHT,
   PRIMARY_WAVE,
@@ -31,6 +32,10 @@ const TROUGHS = [0.012, 0.16, 0.23] as const;
 const MID_WATER = [0.018, 0.31, 0.4] as const;
 const CRESTS = [0.045, 0.43, 0.5] as const;
 const FOAM = [0.34, 0.58, 0.56] as const;
+const STORM_TROUGHS = [0.007, 0.02, 0.045] as const;
+const STORM_MID = [0.016, 0.055, 0.085] as const;
+const STORM_CRESTS = [0.055, 0.12, 0.16] as const;
+const STORM_FOAM = [0.28, 0.34, 0.36] as const;
 
 /** Create and own the shared animated low-poly water mesh. */
 export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
@@ -103,7 +108,7 @@ export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
       const [x, z] = coordinates[index];
       const sample = sampleWaterSurface(x, z, time);
       position.setY(index, sample.height);
-      setWaterColor(color, index, sample.height, sample.slopeX, sample.slopeZ);
+      setWaterColor(color, index, sample.height, sample.slopeX, sample.slopeZ, sample.stormIntensity);
     }
     position.needsUpdate = true;
     color.needsUpdate = true;
@@ -264,16 +269,17 @@ function createCrestRibbons(): CrestRibbonController {
         0.5 + 0.5 * Math.cos(sampleCrossingWavePhase(centerX, centerZ, time)),
       );
       const active = descriptor.activity > 0.48 ? 1 : 0;
-      const strength = active * primaryCrest * crossingSupport * 0.3;
+      const stormIntensity = sampleStormIntensity(centerX, centerZ);
+      const strength = active * primaryCrest * crossingSupport * (0.3 + stormIntensity * 0.18);
       const tangentStartX = tangentX * halfLength;
       const tangentStartZ = tangentZ * halfLength;
       const normalOffsetX = normalX * halfWidth;
       const normalOffsetZ = normalZ * halfWidth;
       const vertexBase = descriptorIndex * 4;
-      setCrestVertex(position, vertexBase, centerX - tangentStartX - normalOffsetX, centerZ - tangentStartZ - normalOffsetZ, time);
-      setCrestVertex(position, vertexBase + 1, centerX + tangentStartX - normalOffsetX, centerZ + tangentStartZ - normalOffsetZ, time);
-      setCrestVertex(position, vertexBase + 2, centerX + tangentStartX + normalOffsetX, centerZ + tangentStartZ + normalOffsetZ, time);
-      setCrestVertex(position, vertexBase + 3, centerX - tangentStartX + normalOffsetX, centerZ - tangentStartZ + normalOffsetZ, time);
+      setCrestVertex(position, vertexBase, centerX - tangentStartX - normalOffsetX, centerZ - tangentStartZ - normalOffsetZ, time, stormIntensity);
+      setCrestVertex(position, vertexBase + 1, centerX + tangentStartX - normalOffsetX, centerZ + tangentStartZ - normalOffsetZ, time, stormIntensity);
+      setCrestVertex(position, vertexBase + 2, centerX + tangentStartX + normalOffsetX, centerZ + tangentStartZ + normalOffsetZ, time, stormIntensity);
+      setCrestVertex(position, vertexBase + 3, centerX - tangentStartX + normalOffsetX, centerZ - tangentStartZ + normalOffsetZ, time, stormIntensity);
       opacity.setX(vertexBase, strength);
       opacity.setX(vertexBase + 1, strength);
       opacity.setX(vertexBase + 2, strength);
@@ -302,8 +308,9 @@ function setCrestVertex(
   x: number,
   z: number,
   timeSeconds: number,
+  stormIntensity = 0,
 ): void {
-  position.setXYZ(index, x, sampleWaterHeight(x, z, timeSeconds) + 0.045, z);
+  position.setXYZ(index, x, sampleWaterHeight(x, z, timeSeconds) + 0.045 + stormIntensity * 0.018, z);
 }
 
 function createAdaptiveAxis(): number[] {
@@ -326,8 +333,12 @@ function setWaterColor(
   height: number,
   slopeX: number,
   slopeZ: number,
+  stormIntensity = 0,
 ): void {
-  const normalizedHeight = (height + MAX_WAVE_HEIGHT) / (MAX_WAVE_HEIGHT * 2);
+  const intensity = Math.min(1, Math.max(0, stormIntensity));
+  const waveScale = 1 + intensity * (STORM_TUNING.maxWaveScale - 1);
+  const normalizedHeight = (height + MAX_WAVE_HEIGHT * waveScale) /
+    (MAX_WAVE_HEIGHT * 2 * waveScale);
   const baseMix = smoothstep(0.1, 0.52, normalizedHeight);
   const crestMix = smoothstep(0.6, 0.9, normalizedHeight) * 0.52;
   const slope = Math.min(1, Math.hypot(slopeX, slopeZ) * 2.8);
@@ -341,10 +352,27 @@ function setWaterColor(
   const waterRed = troughRed + (CRESTS[0] - troughRed) * crestMix;
   const waterGreen = troughGreen + (CRESTS[1] - troughGreen) * crestMix;
   const waterBlue = troughBlue + (CRESTS[2] - troughBlue) * crestMix;
-  const red = waterRed + (FOAM[0] - waterRed) * foamMix;
-  const green = waterGreen + (FOAM[1] - waterGreen) * foamMix;
-  const blue = waterBlue + (FOAM[2] - waterBlue) * foamMix;
-  color.setXYZ(index, red, green, blue);
+  // Offshore water shifts into a deep navy/slate palette while retaining the
+  // same height and slope variation. At zero intensity these are blended out
+  // exactly, preserving the reviewed calm colors bit-for-bit.
+  const foamStrength = Math.min(0.3, foamMix + intensity * smoothstep(0.38, 0.78, slope) * 0.06);
+  // Write channels directly: this runs for every water vertex each frame.
+  // Avoid short-lived palette/map arrays and their garbage-collection cost.
+  for (let channel = 0; channel < 3; channel += 1) {
+    const trough = STORM_TROUGHS[channel] + (STORM_MID[channel] - STORM_TROUGHS[channel]) * baseMix;
+    const stormWater = trough + (STORM_CRESTS[channel] - trough) * crestMix;
+    const calmWater = channel === 0 ? waterRed : channel === 1 ? waterGreen : waterBlue;
+    const water = calmWater + (stormWater - calmWater) * intensity;
+    const foam = FOAM[channel] + (STORM_FOAM[channel] - FOAM[channel]) * intensity;
+    color.array[index * 3 + channel] = water + (foam - water) * foamStrength;
+  }
+}
+
+function sampleStormIntensity(x: number, z: number): number {
+  // Keep this tiny helper local to the renderer; the wave sampler remains the
+  // source of height/derivatives, while the position-only field drives color
+  // and crest emphasis.
+  return Math.min(1, Math.max(0, sampleStormField(x, z).intensity));
 }
 
 function smoothstep(edge0: number, edge1: number, value: number): number {

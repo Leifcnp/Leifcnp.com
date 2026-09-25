@@ -1,0 +1,50 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "openingRadius": 107.99211701939598,
+    "calmMargin": 34.00788298060402,
+    "maxEdgeCoordinate": 325.34520745805304,
+    "waterMargin": 34.65479254194696
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "openingRadius": 118.84443626461491,
+    "calmMargin": 23.155563735385087,
+    "maxEdgeCoordinate": 320.04740893209663,
+    "waterMargin": 39.95259106790337
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "openingRadius": 99.41194437134584,
+    "calmMargin": 42.58805562865416,
+    "maxEdgeCoordinate": 305.7508678371987,
+    "waterMargin": 54.24913216280129
+  },
+  {
+    "width": 360,
+    "height": 915,
+    "openingRadius": 137.91683158481428,
+    "calmMargin": 4.083168415185725,
+    "maxEdgeCoordinate": 333.91999987920525,
+    "waterMargin": 26.08000012079475
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "openingRadius": 84.77045953267195,
+    "calmMargin": 57.22954046732805,
+    "maxEdgeCoordinate": 301.96989408955136,
+    "waterMargin": 58.03010591044864
+  },
+  {
+    "width": 2560,
+    "height": 1080,
+    "openingRadius": 133.62662577536224,
+    "calmMargin": 8.373374224637757,
+    "maxEdgeCoordinate": 349.8582425391867,
+    "waterMargin": 10.141757460813324
+  }
+]

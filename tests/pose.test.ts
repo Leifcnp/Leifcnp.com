@@ -83,3 +83,21 @@ test('steep waves and invalid samples remain finite and bounded', () => {
   assert.ok(Math.abs(invalid.roll) <= 0.4)
   assert.ok(Math.abs(invalid.heave) <= VESSEL_POSE_TUNING.maxHeave)
 })
+
+test('full storm crest follows the shared height bound without heave clipping', () => {
+  const crest: VesselSurfaceSamples = {
+    bow: { height: 2.52 },
+    stern: { height: 2.3 },
+    port: { height: 2.42 },
+    starboard: { height: 2.44 },
+    bowPort: { height: 2.48 },
+    bowStarboard: { height: 2.5 },
+    sternPort: { height: 2.31 },
+    sternStarboard: { height: 2.34 },
+  }
+  const pose = calculateVesselPose(crest, { forwardSpeed: 14, yawRate: 0.6 })
+  assert.ok(Math.abs(pose.heave - 2.415833333333333) < 1e-9)
+  assert.ok(pose.heave < VESSEL_POSE_TUNING.maxHeave)
+  assert.ok(Math.abs(pose.pitch) <= 0.36)
+  assert.ok(Math.abs(pose.roll) <= 0.4)
+})

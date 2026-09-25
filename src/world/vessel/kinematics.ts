@@ -8,6 +8,7 @@
  */
 
 import { sampleWaterSurface } from '../waves.ts'
+import { sampleStormField } from '../stormField.ts'
 import { calculateUphillResistance, calculateWaveResponse } from './waveResponse.ts'
 
 export interface VesselInput {
@@ -39,6 +40,8 @@ export interface VesselEnvironment {
   /** The playable water square extends from -worldLimit to +worldLimit. */
   readonly worldLimit: number
   readonly obstacles: readonly VesselObstacle[]
+  /** Enables offshore recovery forces; omitted/false preserves calm behavior. */
+  readonly stormEnabled?: boolean
 }
 
 /** Shared hull dimensions and coefficients for the custom sailboat. */
@@ -64,6 +67,9 @@ const DEFAULT_WORLD_LIMIT = 180
 const MAX_SIMULATION_DT = 0.25
 const MAX_SUBSTEP = 1 / 120
 const MIN_SPEED = 1e-7
+const STORM_CURRENT_ACCELERATION = 16
+const STORM_OUTWARD_DAMPING = 2.4
+const MAX_STORM_SPEED_SAMPLE = 100
 
 function finiteOr(value: number, fallback: number): number {
   return Number.isFinite(value) ? value : fallback
@@ -243,6 +249,34 @@ function integrateSubstep(
       VESSEL_TUNING.maxForwardSpeed,
     ) * dt
     lateralVelocity += response.swayAcceleration * dt
+  }
+
+  // Storm assistance is position-based rather than wave-time-based, so it
+  // remains active for reduced-motion sailing. Apply it in world space after
+  // local drag/thrust and before braking, allowing the explicit brake to retain
+  // priority while still preventing outward momentum from reaching the edge.
+  if (environment?.stormEnabled === true) {
+    const storm = sampleStormField(state.x, state.z)
+    if (storm.intensity > 0) {
+      const currentX = storm.inwardX * STORM_CURRENT_ACCELERATION * storm.intensity
+      const currentZ = storm.inwardZ * STORM_CURRENT_ACCELERATION * storm.intensity
+      const stormVelocityX = clamp(
+        finiteOr(longitudinalVelocity * sinHeading + lateralVelocity * cosHeading, 0),
+        -MAX_STORM_SPEED_SAMPLE,
+        MAX_STORM_SPEED_SAMPLE,
+      )
+      const stormVelocityZ = clamp(
+        finiteOr(longitudinalVelocity * cosHeading - lateralVelocity * sinHeading, 0),
+        -MAX_STORM_SPEED_SAMPLE,
+        MAX_STORM_SPEED_SAMPLE,
+      )
+      const outwardSpeed = Math.max(0, stormVelocityX * -storm.inwardX + stormVelocityZ * -storm.inwardZ)
+      const damping = Math.max(0, outwardSpeed) * STORM_OUTWARD_DAMPING * storm.intensity
+      const worldAccelerationX = currentX + storm.inwardX * damping
+      const worldAccelerationZ = currentZ + storm.inwardZ * damping
+      longitudinalVelocity += (worldAccelerationX * sinHeading + worldAccelerationZ * cosHeading) * dt
+      lateralVelocity += (worldAccelerationX * cosHeading - worldAccelerationZ * sinHeading) * dt
+    }
   }
 
   if (input.brake) {

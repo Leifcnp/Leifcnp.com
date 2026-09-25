@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { ISLAND_WORLD_LIMIT, VESSEL_SPAWN } from '../content/islands';
+import { VESSEL_SPAWN } from '../content/islands';
+import { STORM_TUNING } from './stormField';
 import {
   createLandmarks,
   type IslandDefinition,
@@ -148,7 +149,8 @@ export function createWaterWorld(
   let vesselState: VesselState = vesselSpawn;
   let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
   const vesselEnvironment = {
-    worldLimit: ISLAND_WORLD_LIMIT,
+    worldLimit: STORM_TUNING.worldLimit,
+    stormEnabled: true,
     obstacles: (options.islands ?? []).map((island) => ({
       x: island.position.x,
       z: island.position.z,
@@ -429,7 +431,7 @@ export function createWaterWorld(
         { x: vesselState.x, z: vesselState.z },
         islandId,
         options.islands ?? [],
-        { worldLimit: ISLAND_WORLD_LIMIT, vesselClearance: VESSEL_TUNING.collisionRadius },
+        { worldLimit: STORM_TUNING.worldLimit, vesselClearance: VESSEL_TUNING.collisionRadius },
       );
       if (!route.ok) {
         cancelScanInternal('Scanner navigation replaced by an invalid route.');

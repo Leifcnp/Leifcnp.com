@@ -1,6 +1,6 @@
 import type { PortfolioCategory, PortfolioContent } from './portfolio'
 
-/** The playable water field currently reserves this square world extent. */
+/** Island authoring bounds; offshore sailing has a separate storm safety extent. */
 export const ISLAND_WORLD_LIMIT = 180
 
 /** The vessel spawn point is kept clear until the movement phase. */

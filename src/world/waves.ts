@@ -5,8 +5,11 @@
  * The first two components are deliberately broad enough to read from the
  * isometric camera: their wavelengths are 30 and 24 world units and their
  * periods are 5.8 and 4.6 seconds. A smaller crossing swell and ripple keep
- * the surface from looking like one translating sine sheet.
+ * the surface from looking like one translating sine sheet. Offshore storm
+ * intensity scales this authored sum in place so every consumer sees the
+ * same water field.
  */
+import { sampleStormField, STORM_TUNING } from './stormField.ts';
 export const PRIMARY_WAVE = {
   amplitude: 0.96,
   waveNumber: (Math.PI * 2) / 30,
@@ -71,11 +74,11 @@ export function sampleWaterHeight(x: number, z: number, timeSeconds = 0): number
     const phase =
       (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
       time * component.angularSpeed;
-    height += component.amplitude * (
-      component.kind === 'sine' ? Math.sin(phase) : Math.cos(phase)
-    );
+    height += component.amplitude * (component.kind === 'sine' ? Math.sin(phase) : Math.cos(phase));
   }
-  return height;
+  const storm = sampleStormField(worldX, worldZ);
+  const intensity = clamp01(finiteOr(storm.intensity, 0));
+  return height * (1 + intensity * (STORM_TUNING.maxWaveScale - 1));
 }
 
 export interface WaterSample {
@@ -84,6 +87,8 @@ export interface WaterSample {
   readonly slopeZ: number;
   /** Vertical surface velocity, in world units per second. */
   readonly velocityY: number;
+  /** Position-only offshore storm intensity, clamped to [0, 1]. */
+  readonly stormIntensity: number;
 }
 
 /** Sample height and finite-difference slopes from the same wave function. */
@@ -127,10 +132,27 @@ export function sampleWaterSurface(
     slopeZ += component.amplitude * phaseDerivative * slopeFactorZ;
     velocityY += component.amplitude * component.angularSpeed * phaseDerivative;
   }
+  const storm = sampleStormField(worldX, worldZ);
+  const intensity = clamp01(finiteOr(storm.intensity, 0));
+  const waveScale = 1 + intensity * (STORM_TUNING.maxWaveScale - 1);
+  // Scale the same travelling shape and include the intensity derivative in
+  // the gradient. This keeps visible facets, hull contact, and wave response
+  // coherent across the soft offshore transition.
+  const baseHeight = height;
+  height = baseHeight * waveScale;
+  const stormScaleDelta = STORM_TUNING.maxWaveScale - 1;
+  slopeX = slopeX * waveScale + baseHeight * stormScaleDelta * finiteOr(storm.gradientX, 0);
+  slopeZ = slopeZ * waveScale + baseHeight * stormScaleDelta * finiteOr(storm.gradientZ, 0);
+  velocityY *= waveScale;
   return {
     height,
     slopeX,
     slopeZ,
     velocityY,
+    stormIntensity: intensity,
   };
+}
+
+function clamp01(value: number): number {
+  return Math.min(1, Math.max(0, value));
 }

@@ -15,13 +15,6 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
-  - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
-  - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
-  - Progress: Deferred behind active WEB-013 by the user’s explicit request for clearer waves/wake. No storm implementation yet.
-  - Next step: After the stronger boat/water coupling is reviewed, choose storm bounds from the camera footprint and playable world, prototype a gradual storm band, and verify inward recovery across headings and speeds.
-  - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
-
 - [ ] WEB-012 — Replace thrust controls with wind-driven sailing, mainsail trim, and tacking.
   - Requested (2026-09-24): Brainstorming note for future work: show a wind direction, let the visitor rotate the mainsail, and require tacking to travel upwind instead of Forward/Reverse propulsion.
   - Acceptance criteria: Wind direction and sail trim are visible and controllable on keyboard/touch. Propulsion depends coherently on wind, heading, and mainsail angle; direct upwind sailing loses drive and a sequence of tacks makes progress. Preserve safe scanner navigation, accessible content, pause/reset/reduced motion, and the original custom boat/sail geometry. Explain the new helm with concise visitor-facing cues.
@@ -50,9 +43,22 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Next step: Design one island/subsection prototype after the queued phases, resolve camera/trigger and safe harbour-route contracts, and review it before applying the pattern to all islands.
   - Plan: [plans/WEB-016/plan.md](plans/WEB-016/plan.md).
 
+- [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
+  - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
+  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with WEB-012 wind design when that is scoped.
+  - Progress: Low-priority Backlog only. Preserve the reviewed calm wave pattern during WEB-011; this request does not jump the current queue.
+  - Next step: After queued phase reviews, compare seeded wave packets/envelopes along one direction at normal desktop/mobile camera scale and choose the smallest convincing model.
+  - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
+
 ## In progress
 
-No tasks in progress. Awaiting review of the published WEB-013 release.
+- [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
+  - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
+  - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
+  - Authorization (2026-09-24): User accepted the new swells and requested the next obvious step at our discretion. Root selected the previously queued offshore storm as Phase 8; continue the established publish-and-review workflow.
+  - Progress: Two Luna agents and root integration completed the smooth storm field, navy/slate water with up to 40% larger shared swells, expanded hull support and bounded inward recovery. All 76 native tests, strict build, six-layout production browser checks, camera/routes, actual storm hull contact and scanner/reduced-motion recovery pass.
+  - Next step: Publish the reviewed build, confirm exact-SHA Pages success and matching public assets/interactions, then mark Done and stop for review.
+  - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
 
 ## Blocked
 

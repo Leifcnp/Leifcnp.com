@@ -1,4 +1,6 @@
 import { VESSEL_TUNING } from './kinematics.ts'
+import { MAX_WAVE_HEIGHT } from '../waves.ts'
+import { STORM_TUNING } from '../stormField.ts'
 
 /**
  * Pure water-contact and visible pose calculations for the vessel.
@@ -47,10 +49,10 @@ export type VesselWaterSampler = (x: number, z: number) => SampledWaterSurface
 
 /** Visual response tuning. These values intentionally stay below a dramatic arcade tilt. */
 export const VESSEL_POSE_TUNING = {
-  // The stronger WEB-013 field can reach roughly 1.8 world units at an
-  // aligned crest. Keep the cap above that authored range so the vessel
-  // follows the shared surface instead of flattening at the bound.
-  maxHeave: 1.85,
+  // The storm scales the authored 1.8-unit sum up to 2.52. Keep the support
+  // cap at that shared bound so a full storm crest does not flatten the hull;
+  // calm-water values remain unchanged.
+  maxHeave: MAX_WAVE_HEIGHT * STORM_TUNING.maxWaveScale,
   maxWavePitch: 0.29,
   maxWaveRoll: 0.3,
   maxSpeedLift: 0.065,

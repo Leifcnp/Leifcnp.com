@@ -12,3 +12,5 @@ Three.js is the existing rendering library, not a source of third-party boat art
 WEB-010 / Phase 6 retains the original sailboat geometry and extends only its mathematical water response and procedural foam. No external model, texture, or artwork was added.
 
 WEB-013 / Phase 7 adds an original indexed wave surface, short procedural crest ribbons, travelled-path wake strips, and a bow-wave arc. All geometry and shaders are authored in this repository; no models, sprites, water textures, or other external artwork were added.
+
+WEB-011 / Phase 8 changes only mathematical storm intensity/forces, existing wave amplitude, procedural water colors and hull support limits. No imported boat art, weather textures, sprites, models or new dependencies were added.

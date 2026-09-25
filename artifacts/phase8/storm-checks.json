@@ -1,0 +1,153 @@
+{
+  "journey": [
+    {
+      "x": -0.042196003822889495,
+      "z": 143.964775217445,
+      "velocityX": -0.08509245378025869,
+      "velocityZ": 13.572872927173643,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": -0.11302650616100639,
+      "z": 155.47353508386587,
+      "velocityX": 0.015376946134082024,
+      "velocityZ": 8.497806754464358,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": 0.0026194811417012583,
+      "z": 159.7874118534615,
+      "velocityX": 0.17836908651023226,
+      "velocityZ": 1.2508426433671236,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": 0.16350808325211147,
+      "z": 159.88345602514454,
+      "velocityX": 0.08679926758397297,
+      "velocityZ": -0.6205623229050308,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": 0.11981575790208654,
+      "z": 158.8775403459412,
+      "velocityX": -0.155144933443966,
+      "velocityZ": -1.2294564775684602,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": -0.06014391120905266,
+      "z": 157.73488591127304,
+      "velocityX": -0.18725504221974057,
+      "velocityZ": -0.9267178261141503,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": -0.21179311942959758,
+      "z": 157.1953312072606,
+      "velocityX": -0.06524800235822523,
+      "velocityZ": -0.12920438715298393,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": -0.15263191776363608,
+      "z": 157.3574428837049,
+      "velocityX": 0.15873810833970506,
+      "velocityZ": 0.32655521462097414,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": 0.013013058047132452,
+      "z": 157.70834884630952,
+      "velocityX": 0.12815544036579984,
+      "velocityZ": 0.3459249400673017,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": 0.06317582645711904,
+      "z": 158.0323695939865,
+      "velocityX": -0.021218914190335645,
+      "velocityZ": 0.2932265147779451,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": -0.0017306651285225907,
+      "z": 158.23049143397935,
+      "velocityX": -0.09399617981390258,
+      "velocityZ": 0.058918007741363354,
+      "heading": 0,
+      "yawRate": 0
+    },
+    {
+      "x": -0.10192487856113161,
+      "z": 158.0815618541106,
+      "velocityX": -0.09397675521439736,
+      "velocityZ": -0.37753727174267177,
+      "heading": 0,
+      "yawRate": 0
+    }
+  ],
+  "radii": [
+    143.96478140125873,
+    155.47357616799442,
+    159.7874118749328,
+    159.88353963256384,
+    158.8775855248059,
+    157.7348973776329,
+    157.19547388422416,
+    157.35751690783877,
+    157.70834938318558,
+    158.03238222173138,
+    158.230491443444,
+    158.08159471271748
+  ],
+  "recovered": {
+    "x": 0.30085205149956,
+    "z": 125.26674332276458,
+    "velocityX": -0.07870293034066485,
+    "velocityZ": 0.29865497950586756,
+    "heading": 0,
+    "yawRate": 0
+  },
+  "dock": {
+    "x": 15.263928200916324,
+    "z": -14.55664348303032,
+    "velocityX": 0,
+    "velocityZ": 0,
+    "heading": 3.063803943483938,
+    "yawRate": 0
+  },
+  "reduced": {
+    "x": 0,
+    "z": 126.84336454156079,
+    "velocityX": 0,
+    "velocityZ": -0.03798312750953695,
+    "heading": 0,
+    "yawRate": 0
+  },
+  "renderer": {
+    "calls": 55,
+    "triangles": 33021,
+    "geometries": 41,
+    "textures": 0
+  },
+  "checks": [
+    "Opening and offshore desktop/mobile captures use the actual application and normal camera.",
+    "Powered outward travel stays in the smooth storm band, far from the hard boundary.",
+    "Releasing the helm returns to calm without teleporting.",
+    "Pause freezes storm dynamics; resume skips elapsed wall time.",
+    "Scanner returns from storm to Projects harbour and reset returns to spawn.",
+    "Explicitly resumed reduced motion keeps boundary assistance while suppressing foam.",
+    "No browser script or shader errors."
+  ]
+}
