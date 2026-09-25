@@ -3,7 +3,7 @@
 ## Project
 
 - This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. The user subsequently selected WEB-013 clearer waves/wake ahead of WEB-011; Phase 7 is published, publicly verified and accepted. The user then authorized the next obvious step; WEB-011 / Phase 8 offshore storm is active. WEB-017 incoming-wave variation/direction is low-priority Backlog. Complete one phase, verify it, and stop for review before implementing the next phase.
+- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. The user subsequently selected WEB-013 clearer waves/wake ahead of WEB-011; Phase 7 is published, publicly verified and accepted. The user then authorized the next obvious step; WEB-011 / Phase 8 offshore storm is published and publicly verified; stop for storm review. WEB-017 incoming-wave variation/direction is low-priority Backlog. Complete one phase, verify it, and stop for review before implementing the next phase.
 - Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
 - Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
 - Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
@@ -54,13 +54,15 @@
 
 - WEB-013 / Phase 7 verification: [artifacts/phase7/VERIFICATION.md](artifacts/phase7/VERIFICATION.md), including normal-camera before/after motion, coherent hull contact, bounded curved wake, browser shader/lifecycle checks, 61 native tests, public six-layout interactions and exact-SHA deployment.
 
+- WEB-011 / Phase 8 verification: [artifacts/phase8/VERIFICATION.md](artifacts/phase8/VERIFICATION.md), including 76 native tests, offshore recovery, shared storm hull contact, camera/route safety, bounded resources and exact-SHA/public interaction/voyage checks.
+
 ### Implementation discipline
 
 - Build mechanics intentionally from the ground up; do not introduce an all-in-one game template.
-- WEB-013 builds on WEB-010 with travelling swell shading/crest ribbons, stronger hull support, powered uphill resistance, and bounded curved wake/bow effects using the shared sampler. The custom boat geometry remains owned. Scanner arrivals are horizontally held until helm input; reduced motion suppresses added forces, dynamic pitch/heel, and contact effects. Preserve navigation/UI contracts; the active WEB-011 storm extends this shared sampler and preserves the calm central view.
+- WEB-013 builds on WEB-010 with travelling swell shading/crest ribbons, stronger hull support, powered uphill resistance, and bounded curved wake/bow effects using the shared sampler. The custom boat geometry remains owned. Scanner arrivals are horizontally held until helm input; reduced motion suppresses added forces, dynamic pitch/heel, and contact effects. Preserve navigation/UI contracts; the published WEB-011 storm extends this shared sampler and preserves the calm central view.
 - Do not edit generated files under `docs/` by hand; regenerate them with the package build command.
 - Install dependencies using the checked-in package-manager lockfile; consult README.md for setup and commands.
 - Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
 - Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
 - Keep commits focused and do not push or deploy unrelated changes.
-- WEB-013 was verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. The user accepted the swells and authorized the next step; verify and publish WEB-011 through this same workflow, then stop for storm review. A routine local build alone is not blanket authorization for unrelated future publication.
+- WEB-013 was verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. The user accepted the swells and authorized WEB-011, which is now verified and published through the same workflow. Stop for storm review before implementing another backlog task. A routine local build alone is not blanket authorization for unrelated future publication.

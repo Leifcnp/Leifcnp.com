@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**WEB-011 / Phase 8 is active**: the user accepted the Phase 7 swells and authorized the next obvious step. Add the queued offshore storm boundary with a shared smooth field, darker rougher water and bounded inward recovery. Preserve the reviewed central scene and stop after publication for review. Incoming-wave variation and common direction are captured as low-priority WEB-017, without jumping the queue.
+**WEB-011 / Phase 8 is published and awaiting review**: the user accepted the Phase 7 swells and authorized the next obvious step. The offshore storm boundary now uses a shared smooth field, darker rougher water and bounded inward recovery. [Local/public release evidence](artifacts/phase8/VERIFICATION.md) is complete. Preserve the reviewed central scene and stop after publication for review. Incoming-wave variation and common direction are captured as low-priority WEB-017, without jumping the queue.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -36,7 +36,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-007 | 4 | Proximity, persistent HUD, drawer, scanner autopilot | User review of Phase 3 | [plan](plans/WEB-007/plan.md) |
 | WEB-008 | 5 | Sailboat, landmarks, wake and visual polish | Approved after Phase 4 | [plan](plans/WEB-008/plan.md) |
 | WEB-010 | Follow-up | Stronger boat/wave coupling and contact | Phase 5 visual review | [plan](plans/WEB-010/plan.md) |
-| WEB-011 | Active Phase 8 | Offshore storm and inward recovery | Accepted WEB-013 | [plan](plans/WEB-011/plan.md) |
+| WEB-011 | Published Phase 8 | Offshore storm and inward recovery | Accepted WEB-013 | [plan](plans/WEB-011/plan.md) |
 | WEB-012 | Future brainstorm | Wind propulsion, mainsail trim, tacking | Existing queue and controls design review | [plan](plans/WEB-012/plan.md) |
 | WEB-013 | Published Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
 | WEB-014 | Future brainstorm | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |

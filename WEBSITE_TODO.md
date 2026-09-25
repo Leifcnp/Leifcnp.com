@@ -52,19 +52,22 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 ## In progress
 
-- [ ] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
-  - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
-  - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
-  - Authorization (2026-09-24): User accepted the new swells and requested the next obvious step at our discretion. Root selected the previously queued offshore storm as Phase 8; continue the established publish-and-review workflow.
-  - Progress: Two Luna agents and root integration completed the smooth storm field, navy/slate water with up to 40% larger shared swells, expanded hull support and bounded inward recovery. All 76 native tests, strict build, six-layout production browser checks, camera/routes, actual storm hull contact and scanner/reduced-motion recovery pass.
-  - Next step: Publish the reviewed build, confirm exact-SHA Pages success and matching public assets/interactions, then mark Done and stop for review.
-  - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
+No tasks in progress. Awaiting review of the published WEB-011 storm release.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-011 — Add an offshore storm boundary that pushes the boat back toward the play area.
+  - Requested (2026-09-24): A storm area outside the screen with darker, rougher water and waves that push the boat inward.
+  - Acceptance criteria: The ordinary starting view stays calm; approaching the offshore perimeter gradually reveals darker storm water and larger waves. The storm applies a smooth inward force that returns the boat toward playable water without teleporting, trapping it, or breaking controls/camera. Keep island routes inside the calm region, retain a final finite-world safety boundary, and verify transitions, mobile cost, pause/reset, and reduced motion.
+  - Authorization (2026-09-24): User accepted the new swells and requested the next obvious step at our discretion. Root selected the previously queued offshore storm as Phase 8; continue the established publish-and-review workflow.
+  - Completed: 2026-09-24. Two Luna agents and root integration delivered a smooth offshore storm field, navy/slate water with up to 40% larger shared swells, coherent hull support and bounded inward recovery. The ordinary starting view and island routes stay calm. Application commit `813d069` is published; [Pages run 36079090864](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36079090864) succeeded for the exact SHA.
+  - Verification: 76 native tests, strict build, camera coverage and safe scanner routes, four-heading hull contact at 30/60/120 Hz, powered/released storm recovery, pause/reset/reduced motion, resource disposal and local/public six-layout browser checks passed. Public assets match the build; an actual published voyage reached the storm and returned toward calm. See [verification](artifacts/phase8/VERIFICATION.md), [public checks](artifacts/phase8/public-checks.json), and [deployment evidence](artifacts/phase8/public-assets.json).
+  - Review gate: Stop for storm appearance/recovery and real-device feedback. Sustained outward thrust may balance the current in the soft band; releasing or steering inward returns toward calm. Geometry budgets are unchanged; software-VM timing and extreme-aspect-ratio limits are documented. Wind sailing, tighter turns, translucent drawers, subharbours and low-priority WEB-017 remain Backlog.
+  - Plan: [plans/WEB-011/plan.md](plans/WEB-011/plan.md).
 
 - [x] WEB-013 — Make waves, wake, and boat–water feedback more visibly interactive.
   - Requested (2026-09-24): Brainstorming feedback: the water background feels too static, does not affect the boat enough, and wake/waves should feel interactive.

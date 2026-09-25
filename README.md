@@ -44,7 +44,7 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-24 the user accepted WEB-013 swells and authorized the next step; WEB-011 storm continues this external-testing workflow. Future phases still require review.
 
-Phase 7 / WEB-013 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase7/VERIFICATION.md). The travelling swells, stronger hull response and curved wake are ready for sailing-feel review. Earlier phase evidence is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
+Phase 8 / WEB-011 is published and verified at [http://leifcnp.com/](http://leifcnp.com/); see the [release evidence](artifacts/phase8/VERIFICATION.md). The offshore storm appearance and inward recovery are ready for review. Earlier phase evidence is retained as history. Use the explicit HTTP link for now: HTTPS currently has a certificate hostname mismatch, tracked in WEB-001.
 
 ## Phase boundary and review
 

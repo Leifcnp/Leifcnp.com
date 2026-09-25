@@ -2,7 +2,7 @@
 
 ## Goal and scheduling
 
-User requested an off-screen storm area on 2026-09-24: darker storm water with larger waves that push the boat back into the play area. Phase 8 is active after the user accepted WEB-013 swells and authorized the next obvious step. Use its reviewed shared wave model. Keep the normal portfolio route calm and approachable.
+User requested an off-screen storm area on 2026-09-24: darker storm water with larger waves that push the boat back into the play area. Phase 8 is complete and published after the user accepted WEB-013 swells and authorized the next obvious step. Use its reviewed shared wave model. Keep the normal portfolio route calm and approachable.
 
 ## Dependencies and exclusions
 
@@ -60,8 +60,8 @@ Verify and publish this storm phase through the established master/docs GitHub P
 - [x] Integrate shared storm sampling, visible transition, hull support and bounded return forces.
 - [x] Verify heading/speed/reverse/brake recovery, fixed-step determinism, finite collision-safe paths and actual hull contact.
 - [x] Inspect desktop/mobile storm visuals, scanner escape, pause/reset/hidden/reduced motion and resource budgets.
-- [ ] Run native/build/browser checks, publish and verify exact-SHA Pages/public files/public interactions.
-- [ ] Mark WEB-011 Done with evidence and stop for review.
+- [x] Run native/build/browser checks, publish and verify exact-SHA Pages/public files/public interactions.
+- [x] Mark WEB-011 Done with evidence and stop for review.
 
 
 ## Root review findings
@@ -70,3 +70,8 @@ Verify and publish this storm phase through the established master/docs GitHub P
 - Hull heave had to increase from 1.85 to the shared 2.52 maximum; otherwise it clipped storm crests. Actual transformed deck/hull trajectories at four headings and 30/60/120 Hz retain a dry deck and submerged hull contact.
 - Strengthened recovery checks inspect every trajectory sample for hard-edge contact and compare every state component across frame rates. Powered outward travel settles within the soft band; neutral/inward control returns to calm.
 - The camera checks cover six supported layouts up to 2560×1080 and the tall 360×915 view. The minimum opening calm margin is 4.08 units and finite-water margin is 10.14 units. More extreme aspect ratios can expose the distant storm at startup; keep this tradeoff explicit instead of rescaling the approved camera in this phase.
+
+
+## Completion — 2026-09-24
+
+Application commit `813d069` is live. Exact-SHA Pages success, byte-identical public assets, the six-layout public interaction suite and a real published offshore/return voyage passed. [Verification](../../artifacts/phase8/VERIFICATION.md) records all checks, captures, resource counts and limitations. Stop here for user review; do not automatically begin another backlog task.

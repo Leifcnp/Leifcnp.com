@@ -42,4 +42,8 @@ These are short software-SwiftShader measurements in VirtualBox at DPR 1, not ph
 
 ## Publication
 
-Local verification complete. Record the application SHA, successful matching Pages run, public asset hashes and public browser checks after deployment. No DNS, certificate or Pages settings change is part of this phase.
+Application commit `813d0691220c32fac84d0d9dcf6551ff5de802d3` is published on `origin/master`. [Pages run 36079090864](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36079090864) succeeded for that exact SHA. Public HTML, JavaScript, CSS and favicon returned HTTP 200 and matched the build byte for byte; see [deployment and asset hashes](public-assets.json). The [complete public six-layout browser suite](public-checks.json) passed.
+
+A separate [published storm voyage](public-storm.json) held Forward from the actual spawn for 16 simulation seconds, captured [desktop](public-storm-desktop.png) and [portrait](public-storm-mobile.png), then released the helm for 18 seconds and captured the [return toward calm](public-return-mobile.png). This used the unmodified published application, without test positioning or source instrumentation. Root visually reviewed the captures; no browser script or shader errors occurred.
+
+WEB-011 is Done and awaiting user review. WEB-017 remains low-priority Backlog. No DNS, certificate or Pages settings changed; the known HTTPS observation remains separately tracked in WEB-001.
