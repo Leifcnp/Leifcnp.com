@@ -2,11 +2,11 @@
 
 ## Intent and priority
 
-The user likes Phase 7 swells, and requested less repetitive incoming waves that travel from the same direction. This is low-priority planning only; finish WEB-011 and retain the existing review gates before implementation.
+The user likes Phase 7 swells, and requested less repetitive incoming waves that travel from the same direction. The user reaffirmed wave direction and randomness after Phase 9, explicitly as a to-do-list update only. This remains low-priority Backlog; WEB-015 and WEB-016 stay ahead, and implementation needs a later phase selection.
 
 ## Design
 
-Use one prevailing propagation direction. Vary packet amplitude, spacing, period and phase with a fixed seed or smooth deterministic envelopes, rather than introducing opposing swell directions or per-frame random values. The same world-space function must drive displacement, crest accents, hull support, foam and physical forces. Coordinate wind alignment with WEB-012 when that feature is designed; do not assume that storm return currents must change the prevailing wave direction.
+Use one prevailing propagation direction. Vary packet amplitude, spacing, period and phase with a fixed seed or smooth deterministic envelopes, rather than introducing opposing swell directions or per-frame random values. The same world-space function must drive displacement, crest accents, hull support, foam and physical forces. Coordinate wind alignment with the published WEB-012 field and WEB-019 flags/spray; do not assume that storm return currents must change the prevailing wave direction.
 
 ## Implementation sequence
 
@@ -26,3 +26,11 @@ Use one prevailing propagation direction. Vary packet amplitude, spacing, period
 ## Ownership and exclusions
 
 Use Luna subagents for bounded sampler/visual/test slices; root owns integration and release review. No remote weather, downloaded art, fluid solver or incidental wind-control redesign. This task remains unstarted until selected after the current queue.
+
+## Relationship to wind cues
+
+WEB-017 owns the common propagation direction and seeded variation of wave
+sets; WEB-019 owns flags, visible wind effects and spray. The requests are
+related but retain separate IDs and acceptance criteria. Use the same direction
+convention and shared simulation clock across both when selected. The reminder
+is not authorization to change the live scene or reorder the next phase.

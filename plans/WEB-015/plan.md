@@ -5,8 +5,10 @@
 Let visitors read resume and portfolio content while still seeing the boat
 sail toward the selected harbour. Use lightly transparent content blocks so
 the world remains part of the interaction, while maintaining readable
-contrast, predictable focus, and comfortable scrolling. This is a future
-follow-up after the WEB-011 storm release; its order remains provisional.
+contrast, predictable focus, and comfortable scrolling. On 2026-09-24 the
+user authorized proceeding with the next task at root discretion. WEB-015 is
+active Phase 10, followed by WEB-016 after review. New sailing ideas remain
+Backlog. Continue the established build, publish and public-review workflow.
 
 ## Dependencies and exclusions
 
@@ -89,3 +91,18 @@ Deliver the popup treatment for visual and accessibility review after its
 navigation dependency is stable. Stop before adding local harbour zoom or
 submenu-specific scene changes; those belong to WEB-016.
 
+
+## Phase 10 ownership and release checklist
+
+- Luna CSS owner changes only the existing drawer surface and readability fallbacks.
+- Luna independent reviewer checks visibility, scroll/focus and mobile risks.
+- Root owns canonical planning, measured contrast, real boat-through-drawer
+  captures, six-layout interaction checks, the production build and release.
+- Do not add a new animation loop, blur, runtime dependencies, content data or
+  physics changes. Use opaque text over translucent paper, with solid surfaces
+  for greater contrast, reduced transparency and missing WebGL.
+- Validate body, metadata, links and control/focus colors against worst-case
+  black/white underlays, plus actual calm/dark water. Exercise overflow with
+  temporary long mock content, not extra shipped filler.
+- Publish generated `docs/` with the custom domain preserved; confirm exact-SHA
+  Pages success and byte-identical public assets before marking Done.

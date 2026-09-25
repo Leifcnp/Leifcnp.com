@@ -136,6 +136,9 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
   drawerHeader.append(drawerHeading, closeButton)
   const drawerBody = document.createElement('div')
   drawerBody.className = 'content-drawer__body'
+  drawerBody.tabIndex = 0
+  drawerBody.setAttribute('role', 'region')
+  drawerBody.setAttribute('aria-labelledby', drawerHeading.id)
   drawer.setAttribute('aria-labelledby', drawerHeading.id)
   drawer.append(drawerHeader, drawerBody)
 

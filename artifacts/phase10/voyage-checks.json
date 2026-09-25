@@ -1,0 +1,105 @@
+{
+  "checks": [
+    "Boat advances during mobile drawer reading and remains framed above the sheet.",
+    "Actual source world at storm edge keeps drawer readable; temporary QA instrumentation is not shipped.",
+    "Projected custom-boat bounds stay clear of drawer on desktop/mobile/small phone; short landscape keeps boat center outside side panel."
+  ],
+  "samples": [
+    {
+      "name": "desktop",
+      "boat": {
+        "left": 682.2332191386963,
+        "right": 759.1932027894316,
+        "top": 371.49820474681286,
+        "bottom": 472.06610651219626
+      },
+      "drawer": {
+        "left": 996,
+        "right": 1416,
+        "top": 128,
+        "bottom": 876
+      },
+      "state": {
+        "x": 0.7827556734586866,
+        "z": -1.17413351018803,
+        "velocityX": 7.219673058124498,
+        "velocityZ": -10.82950958718678,
+        "heading": 1.7253943858342602,
+        "yawRate": 0
+      },
+      "status": "Assisted passage to Shipyard"
+    },
+    {
+      "name": "mobile",
+      "boat": {
+        "left": 170.4515924401526,
+        "right": 220.4755818131305,
+        "top": 370.97383308542834,
+        "bottom": 436.34296923292754
+      },
+      "drawer": {
+        "left": 16,
+        "right": 374,
+        "top": 502.328125,
+        "bottom": 828
+      },
+      "state": {
+        "x": 0.7827556734586866,
+        "z": -1.17413351018803,
+        "velocityX": 7.219673058124498,
+        "velocityZ": -10.82950958718678,
+        "heading": 1.7253943858342602,
+        "yawRate": 0
+      },
+      "status": "Assisted passage to Shipyard"
+    },
+    {
+      "name": "small",
+      "boat": {
+        "left": 139.85771687397136,
+        "right": 180.90304148769684,
+        "top": 242.13237586496686,
+        "bottom": 295.768590139838
+      },
+      "drawer": {
+        "left": 16.0070858001709,
+        "right": 304.0070858001709,
+        "top": 302.09375,
+        "bottom": 552
+      },
+      "state": {
+        "x": 0.7827556734586866,
+        "z": -1.17413351018803,
+        "velocityX": 7.219673058124498,
+        "velocityZ": -10.82950958718678,
+        "heading": 1.7253943858342602,
+        "yawRate": 0
+      },
+      "status": "Assisted passage to Shipyard"
+    },
+    {
+      "name": "landscape",
+      "boat": {
+        "left": 397.4515924401526,
+        "right": 447.47558181313053,
+        "top": 143.97383308542837,
+        "bottom": 209.34296923292754
+      },
+      "drawer": {
+        "left": 454,
+        "right": 828,
+        "top": 88,
+        "bottom": 374
+      },
+      "state": {
+        "x": 0.7827556734586866,
+        "z": -1.17413351018803,
+        "velocityX": 7.219673058124498,
+        "velocityZ": -10.82950958718678,
+        "heading": 1.7253943858342602,
+        "yawRate": 0
+      },
+      "status": "Assisted passage to Shipyard"
+    }
+  ]
+}

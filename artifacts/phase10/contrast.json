@@ -1,0 +1,37 @@
+{
+  "surface": "rgba(244,239,228,.84)",
+  "underlays": [
+    "#000000",
+    "#ffffff"
+  ],
+  "colors": {
+    "heading/close": {
+      "color": "#102f38",
+      "minimumContrast": 8.537070551520735
+    },
+    "description": {
+      "color": "#3b5960",
+      "minimumContrast": 4.556292093669547
+    },
+    "body/placeholder": {
+      "color": "#3c565b",
+      "minimumContrast": 4.74285848409464
+    },
+    "metadata": {
+      "color": "#40595c",
+      "minimumContrast": 4.527550503928534
+    },
+    "link": {
+      "color": "#085e67",
+      "minimumContrast": 4.518244255070789
+    },
+    "border": {
+      "color": "#45666a",
+      "minimumContrast": 3.7730449930543952
+    },
+    "focus": {
+      "color": "#0b6871",
+      "minimumContrast": 3.9234921758639754
+    }
+  }
+}

@@ -15,30 +15,52 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
 
 
-- [ ] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
-  - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
-  - Acceptance criteria: The scene and boat remain visible through the open content drawer while text, links, focus, and controls retain readable contrast. Preserve persistent scanner access, independent scrolling, close/focus behavior, touch targets, reduced motion, and WebGL fallback. Check every category at desktop/mobile sizes and against bright/dark water; avoid costly effects by default.
-  - Progress: Backlog only; no opacity or interface changes in the current release. Keep the current storm queue ahead of this future polish.
-  - Next step: Compare a small range of translucent surface treatments against sailing footage and long content, then choose a readable version for review.
-  - Plan: [plans/WEB-015/plan.md](plans/WEB-015/plan.md).
-
 - [ ] WEB-016 — Zoom into manually reached islands and reveal dockable submenu harbours.
   - Requested (2026-09-24): Brainstorming note: when a visitor manually navigates to an island, zoom in and show each section submenu as a smaller dockable harbour.
   - Acceptance criteria: Manual island arrival transitions smoothly to a useful local view, with data-driven smaller harbours for content subsections. Each harbour has legible identity, a safe reachable docking area, and the appropriate submenu content. Define entering/leaving, zoom-out/reset, and switching islands without camera thrashing; preserve scanner/direct-content access, collision safety, mobile framing, and instant reduced-motion alternatives.
-  - Progress: Backlog exploration only. This extends island data, camera/proximity, shoreline geometry, and content navigation; it does not belong in the current wave release or displace WEB-011.
+  - Progress: Backlog exploration only, queued after WEB-015. This extends island data, camera/proximity, shoreline geometry, and content navigation; start with one island after a separate phase selection.
   - Next step: Design one island/subsection prototype after the queued phases, resolve camera/trigger and safe harbour-route contracts, and review it before applying the pattern to all islands.
   - Plan: [plans/WEB-016/plan.md](plans/WEB-016/plan.md).
 
 - [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
   - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
-  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with WEB-012 wind design when that is scoped.
-  - Progress: Low-priority Backlog only. Preserve the reviewed calm wave pattern during WEB-011; this request does not jump the current queue.
+  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with the published WEB-012 wind field and future WEB-019 wind cues, without confusing wave propagation with the storm’s inward recovery current.
+  - Reaffirmed (2026-09-24): User again requested clearer wave direction and more randomness, explicitly as a to-do only. Update this existing task rather than creating a duplicate.
+  - Progress: Low-priority Backlog only. Preserve the reviewed Phase 9 water until selected; this reminder does not jump WEB-015/WEB-016 or authorize implementation.
   - Next step: After queued phase reviews, compare seeded wave packets/envelopes along one direction at normal desktop/mobile camera scale and choose the smallest convincing model.
   - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
 
+- [ ] WEB-019 — Make wind direction visible through flags, wind effects and spray.
+  - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
+  - Acceptance criteria: Original code-built flags/pennants, translucent stylized breeze streams across the water, and restrained wind/spray cues communicate the same direction as the sailing model. Fixed landmarks follow true wind; boat-mounted cues account for apparent wind. Flags/spray trail downwind while the HUD indicates where wind comes from. Spray responds to wave/hull encounters and drifts coherently. Preserve readable navigation/content, existing physics and artwork ownership, calm/storm behavior, pause/reset/hidden-tab/reduced motion, disposal and bounded mobile rendering cost.
+  - Expanded request (2026-09-24): Visible breeze streams should make wind direction intuitive from the scene, without requiring visitors to calculate from the compass.
+  - Progress: Backlog only. Coordinate visual direction with WEB-017 common-direction, varied incoming wave sets; neither task displaces WEB-015 translucent drawers or WEB-016 submenu harbours.
+  - Next step: When selected, prototype one readable flag and a small shared-clock spray/wind effect at ordinary desktop/mobile camera scale, verify direction against the wind model, then review before expanding.
+  - Plan: [plans/WEB-019/plan.md](plans/WEB-019/plan.md).
+
+- [ ] WEB-020 — Add automatic sail trim with a rewarding manual sweet spot.
+  - Requested (2026-09-24): Auto-trim to roughly 70–80% efficiency as the boat turns so simple WASD steering is approachable. Manually finding the ideal sheet angle earns a speed surge, white foam burst and audible wind rush.
+  - Acceptance criteria: Automatic trim follows heading smoothly at 70–80% of available sailing drive; manual trim can reach a readable ideal pocket and trigger a bounded boost with coherent wake/audio feedback. Preserve upwind tacking and no-go behavior, clear keyboard/touch modes and manual/automatic handoff, safe scanner routes, user-controlled sound, pause/reset/hidden-tab/reduced motion and bounded resource use. Do not silently reinterpret wind sailing as motor propulsion.
+  - Progress: Saved as future work; does not interrupt Phase 10 or the next queued WEB-016 prototype. Coordinate wake/spray with WEB-019 and heeling with WEB-021.
+  - Next step: When selected, define the simplest WASD/touch steering and trim-mode contract, prototype the automatic efficiency target and manual boost envelope, then review sailing feel before adding sound/effect polish.
+  - Plan: [plans/WEB-020/plan.md](plans/WEB-020/plan.md).
+
+- [ ] WEB-021 — Exaggerate reach heeling with a dipping leeward rail and bow spray.
+  - Requested (2026-09-24): Lean the hull 15–20° on beam/broad reaches, submerge the leeward rail slightly and shoot spray from the bow.
+  - Acceptance criteria: Wind loading visibly rolls the custom hull 15–20° on powered beam/broad reaches, changes side naturally across tacks and settles when spilling wind. Allow a controlled shallow leeward-rail dip while keeping buoyancy/wave contact credible and navigation safe; tie original pooled bow spray to actual water contact and wind. Preserve pause/reset/reduced motion, scanner access and finite mobile-friendly state.
+  - Progress: Future refinement of completed WEB-018, whose Phase 9 behavior/evidence remains preserved. Share spray ownership with WEB-019; do not implement ahead of the current drawer/harbour queue.
+  - Next step: When selected, compare stronger reach-load curves and rail-contact poses using the existing shared wave sampler, then review visible heel/spray before final tuning.
+  - Plan: [plans/WEB-021/plan.md](plans/WEB-021/plan.md).
+
 ## In progress
 
-No tasks in progress. Phase 9 is published and awaiting sailing-feel review.
+- [ ] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
+  - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
+  - Acceptance criteria: The scene and boat remain visible through the open content drawer while text, links, focus, and controls retain readable contrast. Preserve persistent scanner access, independent scrolling, close/focus behavior, touch targets, reduced motion, and WebGL fallback. Check every category at desktop/mobile sizes and against bright/dark water; avoid costly effects by default.
+  - Authorization (2026-09-24): User requested adding further sailing ideas, then proceeding with the next task at root discretion. WEB-015 is selected as Phase 10, using the established publish-and-review workflow.
+  - Progress: Luna implementation and independent review are complete. Root verified the strict build, 101 native tests, six layouts, long-content keyboard/touch scrolling, contrast fallbacks and visible scanner voyages. New sailing ideas remain Backlog.
+  - Next step: Publish the reviewed build, verify exact-SHA Pages/public assets and interactions, then record completion and stop for review.
+  - Plan: [plans/WEB-015/plan.md](plans/WEB-015/plan.md).
 
 ## Blocked
 
