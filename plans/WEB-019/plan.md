@@ -4,9 +4,7 @@
 
 The user requested a future clarity pass: show wind direction with flags,
 make wind effects visible, add wind-carried spray, and later improve wave
-direction and randomness. This task is planning only. On 2026-09-25 the user deferred WEB-016 harbours
-and zoom to prioritize boat feel. WEB-020 controls is recommended first;
-these visible wind cues are part of the following feedback work.
+direction and randomness. This is active Phase 13. On 2026-09-25, after WEB-020 controls and WEB-021 heel/contact were published, the user requested “ok next go ahead”. Harbours/zoom stay deferred. Complete one bounded wind-cue pass and publish through master/docs for review.
 
 Wave-direction and common seeded randomness belong to WEB-017 and must be
 coordinated separately. They are not a reason to change the existing sailing
@@ -60,8 +58,9 @@ without interpreting the compass.
 - Translucent breeze streams cross the water toward the true-wind direction,
   stay visible at the normal isometric camera scale, and do not obscure text
   or resemble waves travelling in a contradictory direction.
-- Bow/hull spray and crest spray are restrained, wind-carried, deterministic,
-  pooled, and visibly tied to water contact and motion.
+- The completed bow/hull spray remains restrained, wind-carried, deterministic,
+  pooled and tied to contact. Reuse its existing wind drift; no second spray
+  pool or crest emitter is needed for this first wind-direction pass.
 - Calm idle water remains visually quiet; sailing, turning, tacking, and storm
   exposure produce readable changes without lightning, rain, or new textures.
 - Pause/resume, reset, hidden-tab, reduced-motion, scanner/autopilot,
@@ -75,7 +74,7 @@ without interpreting the compass.
 ## Review gate
 
 The 2026-09-25 queue review places boat control/feedback ahead of deferred
-harbours. This task remains unstarted until selected. When selected, deliver one bounded visual pass and stop
+harbours. The user has selected this task. Deliver one bounded visual pass and stop
 for review. Wave changes stay in WEB-017 rather than being silently included.
 
 ## Coordination with new sailing ideas
@@ -85,3 +84,57 @@ reward. Its white-foam burst should reuse the existing wake/effect lifecycle.
 WEB-021 owns stronger 15–20 degree reach heel and controlled leeward rail dip;
 coordinate bow/rail spray here rather than adding two competing particle
 systems. These later tasks do not authorize implementation during Phase 10.
+
+
+## Phase 13 concrete implementation contract
+
+1. `effects/createWindStreams.ts` owns one original fixed buffer/instance mesh,
+   no more than 32 sparse translucent tapered strokes within about 58 world
+   units of the vessel. World-anchored seeded placement and wrap fades avoid
+   camera-attached motion. Motion follows the true wind velocity from `wind.ts`;
+   faceted water height supplies altitude. Suppress the whole stroke over land
+   plus a margin. No textures, runtime geometry creation, RAF or random clock.
+2. `effects/createWindFlags.ts` owns one original fixed Shipyard flag/pole and
+   one masthead pennant. Root supplies the reviewed island ground anchor; the
+   boat anchor is the actual transformed local masthead (0, 5.87, −0.34),
+   including hull pitch/heel/yaw. True wind sets land direction; subtract vessel
+   velocity for apparent boat wind. Meshes extend downwind, never toward the
+   HUD's wind-from bearing. Use bounded segmented flutter and fixed buffers.
+3. Root updates both after vessel pose using the shared `elapsed` and `delta`.
+   Pause/hidden/offscreen stops clocks. Reset is deterministic. Scanner travel
+   may retain true-wind cues and an apparent-wind pennant; content remains
+   readable. Reduced motion hides moving streams and retains unfluttering
+   directional flags, including instant scanner placement. Dispose all owned
+   resources without touching vessel/landmark ownership.
+4. Reuse the now-published WEB-021 48-particle contact spray and wind drift.
+   No added spray pool, foam, forces, wind variation, wave variation, boat
+   scaling, steering changes, HUD expansion or harbour/zoom work.
+5. Test direction signs, apparent-wind velocity subtraction, transformed
+   anchors, full-stroke land exclusion, stable budgets, deterministic timing,
+   pause/reset/reduced mode and disposal. Root checks normal-camera readability
+   while idle, sailing both tacks, offshore and reading scanner content; six
+   desktop/mobile layouts and public behavior must remain sound.
+6. Compare against Phase 12 resources (55 calls, 34,920 triangles, 40 geometries,
+   zero textures). Keep added cues within roughly five calls / 500 triangles
+   and no textures, subject to measured review. Land-flag placement stays
+   inside current island framing bounds; add only the minimum required bound
+   metadata if actual geometry proves otherwise.
+
+Owner split: Luna breeze and flag agents own only their new helper and test
+files. Luna review is read-only. Root owns all existing files, plans/docs, QA,
+generated output and publication. Stop after exact-SHA Pages/public checks.
+
+Phone visual review narrowed the visible field to a 58-unit radius, using 32
+streams in a 128-unit periodic pattern. The 44–58 rim fades to zero before
+64-unit wrapping. This keeps breeze visible within compact camera framing
+without increasing draw calls or covering islands.
+
+## Candidate verification
+
+True/apparent direction, actual masthead and land support, deterministic shared
+time, camera-crossing continuity, resource ownership and reduced motion have
+focused native coverage. Root world checks exercise sailing, scanner, storm,
+pause/hidden, reset and static reduced cues. Production and public verification
+are recorded in [the Phase 13 evidence](../../artifacts/phase13/VERIFICATION.md).
+No changes to sailing forces, waves, trim/boost, original boat geometry or
+existing contact spray belong to this release.

@@ -15,6 +15,8 @@ export interface LandmarkBounds {
 export interface LandmarksController {
   readonly group: THREE.Group;
   readonly anchors: readonly LandmarkProjectionAnchor[];
+  /** Ground-supported positions for the initial true-wind flag. */
+  readonly windFlagAnchors: readonly { x: number; y: number; z: number }[];
   /** Per-island world-space bounds, preserving the empty space between islands. */
   readonly landmarkBounds: readonly LandmarkBounds[];
   dispose(): void;
@@ -38,12 +40,23 @@ export function createLandmarks(
 
   const resources: Array<THREE.BufferGeometry | THREE.Material> = [];
   const anchors: LandmarkProjectionAnchor[] = [];
+  const windFlagAnchors: Array<{ x: number; y: number; z: number }> = [];
   const landmarkGroups: Array<{ id: string; group: THREE.Group }> = [];
 
   islands.forEach((island, index) => {
     const landmark = createIsland(island, index, resources);
     group.add(landmark.group);
     landmarkGroups.push({ id: island.id, group: landmark.group });
+    if (island.id === 'island-projects') {
+      // Camera-facing mesa edge, clear of the shoreline dock. Ground the
+      // pole on the actual land surface rather than the lower label anchor.
+      const local = island.landCollisionRadius * (2.8 / 6) / Math.SQRT2;
+      windFlagAnchors.push({
+        x: island.position.x + local,
+        y: findSupportY(landmark.group, local, local),
+        z: island.position.z + local,
+      });
+    }
     anchors.push({
       id: island.id,
       position: landmark.anchor.clone().add(
@@ -65,6 +78,7 @@ export function createLandmarks(
   return {
     group,
     anchors,
+    windFlagAnchors,
     landmarkBounds,
     dispose: (): void => {
       if (disposed) return;

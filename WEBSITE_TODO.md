@@ -8,16 +8,9 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is now completed Phase 12 and awaits review.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is active Phase 13 after the user requested the next step.
 Other entries remain Backlog and harbours remain deferred.
 
-- [ ] WEB-019 — Make wind direction visible through flags, wind effects and spray.
-  - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
-  - Acceptance criteria: Original code-built flags/pennants, translucent stylized breeze streams across the water, and restrained wind/spray cues communicate the same direction as the sailing model. Fixed landmarks follow true wind; boat-mounted cues account for apparent wind. Flags/spray trail downwind while the HUD indicates where wind comes from. Spray responds to wave/hull encounters and drifts coherently. Preserve readable navigation/content, existing physics and artwork ownership, calm/storm behavior, pause/reset/hidden-tab/reduced motion, disposal and bounded mobile rendering cost.
-  - Expanded request (2026-09-24): Visible breeze streams should make wind direction intuitive from the scene, without requiring visitors to calculate from the compass.
-  - Progress: Backlog within the boat-feel group, ahead of deferred harbours. Coordinate visual direction with WEB-017 common-direction, varied incoming wave sets and share spray with WEB-021.
-  - Next step: When selected, prototype one readable flag and a small shared-clock spray/wind effect at ordinary desktop/mobile camera scale, verify direction against the wind model, then review before expanding.
-  - Plan: [plans/WEB-019/plan.md](plans/WEB-019/plan.md).
 
 - [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
   - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
@@ -51,7 +44,14 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-No active implementation; awaiting Phase 12 review.
+- [ ] WEB-019 — Make wind direction visible through flags, wind effects and spray.
+  - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
+  - Acceptance criteria: Original code-built flags/pennants, translucent stylized breeze streams across the water, and restrained wind/spray cues communicate the same direction as the sailing model. Fixed landmarks follow true wind; boat-mounted cues account for apparent wind. Flags/spray trail downwind while the HUD indicates where wind comes from. Spray responds to wave/hull encounters and drifts coherently. Preserve readable navigation/content, existing physics and artwork ownership, calm/storm behavior, pause/reset/hidden-tab/reduced motion, disposal and bounded mobile rendering cost.
+  - Expanded request (2026-09-24): Visible breeze streams should make wind direction intuitive from the scene, without requiring visitors to calculate from the compass.
+  - Authorization (2026-09-25): User requested “ok next go ahead” while the successful Phase 12 public verification was finishing. WEB-019 is Phase 13, through the same verified master/docs publication workflow.
+  - Progress: Luna implementation/review and root integration are complete: 32 seeded world-space breeze strokes, a ground-supported Shipyard flag and an apparent-wind masthead pennant. 148 tests, shared-clock world/lifecycle checks and desktop/mobile visual review pass; existing physics, waves and contact spray remain unchanged.
+  - Next step: Finish final production layout checks, publish the tested master/docs build, verify exact-SHA Pages and public desktop/mobile behavior, then stop for review.
+  - Plan: [plans/WEB-019/plan.md](plans/WEB-019/plan.md).
 
 ## Blocked
 

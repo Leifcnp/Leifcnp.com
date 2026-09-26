@@ -177,3 +177,20 @@ test('disposes every unique geometry and material once, including on repeated di
     void resource
   }
 })
+
+test('the initial Shipyard flag anchor sits on actual land and clears the dock', () => {
+  const scene = new THREE.Scene()
+  const landmarks = createLandmarks(scene, portfolioIslands)
+  assert.equal(landmarks.windFlagAnchors.length, 1)
+  const anchor = landmarks.windFlagAnchors[0]
+  const island = islandGroup(scene, 'island-projects')
+  const ray = new THREE.Raycaster(new THREE.Vector3(anchor.x, 20, anchor.z), new THREE.Vector3(0, -1, 0))
+  const hit = ray.intersectObjects(island.children.filter(o => o.name.startsWith('landform-') || o.name === 'sand-shelf'), false)[0]
+  assert.ok(hit)
+  assert.ok(Math.abs(anchor.y - hit.point.y) < EPSILON)
+  const dock = island.getObjectByName('shipyard-dock')!
+  const dockPosition = dock.getWorldPosition(new THREE.Vector3())
+  assert.ok(Math.hypot(anchor.x - dockPosition.x, anchor.z - dockPosition.z) > 2)
+  assert.ok(Math.hypot(anchor.x - island.position.x, anchor.z - island.position.z) < 6)
+  landmarks.dispose()
+})

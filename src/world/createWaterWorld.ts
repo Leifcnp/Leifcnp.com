@@ -13,6 +13,8 @@ import { createCameraRig } from './createCameraRig';
 import { createVessel } from './createVessel';
 import { createWake } from './effects/createWake';
 import { createHullSpray } from './effects/createHullSpray';
+import { createWindStreams } from './effects/createWindStreams';
+import { createWindFlags } from './effects/createWindFlags';
 import { planSafeDockingRoute } from '../navigation/routePlanner';
 import {
   advanceScan as advanceScannerScan,
@@ -166,10 +168,14 @@ export function createWaterWorld(
   const vessel = createVessel(scene);
   const wake = createWake(scene);
   const hullSpray = createHullSpray(scene);
+  const windStreams = createWindStreams(scene, options.islands ?? []);
+  const windFlags = createWindFlags(scene, vessel.group, landmarks.windFlagAnchors);
   let reducedMotion = Boolean(initialReducedMotion);
   vessel.setReducedMotion(reducedMotion);
   wake.setReducedMotion(reducedMotion);
   hullSpray.setReducedMotion(reducedMotion);
+  windStreams.setReducedMotion(reducedMotion);
+  windFlags.setReducedMotion(reducedMotion);
   // Keep a scanner arrival alongside its island while the visitor reads.
   // Helm input releases the mooring; ordinary free sailing still feels swell.
   let horizontallyMoored = false;
@@ -245,6 +251,8 @@ export function createWaterWorld(
     hullSpray.reset();
     updateSailing(true);
     vessel.resetPose(vesselState, elapsed);
+    windStreams.update(vesselState, elapsed, 0);
+    windFlags.update(vesselState, elapsed, 0);
     cameraRig.snapTo(vesselState.x, vesselState.z);
     ocean.update(elapsed);
     options.onVesselUpdate?.(toVesselTelemetry(vesselState));
@@ -347,6 +355,8 @@ export function createWaterWorld(
       cameraRig.update(vesselState.x, vesselState.z, delta);
       updateSailing();
       vessel.update(vesselState, elapsed, delta);
+      windStreams.update(vesselState, elapsed, delta);
+      windFlags.update(vesselState, elapsed, delta);
       wake.setTrimBoost(scannerIsActive(scannerState) || horizontallyMoored ? 0 : trimAssist.boost);
       wake.update(vesselState, elapsed, delta);
       if (scannerIsActive(scannerState) || horizontallyMoored) {
@@ -454,6 +464,8 @@ export function createWaterWorld(
   resize();
   updateSailing(true);
   vessel.resetPose(vesselState, elapsed);
+  windStreams.update(vesselState, elapsed, 0);
+  windFlags.update(vesselState, elapsed, 0);
   cameraRig.snapTo(vesselState.x, vesselState.z);
   options.onVesselUpdate?.(toVesselTelemetry(vesselState));
   options.onScanUpdate?.(scanTelemetry);
@@ -475,6 +487,10 @@ export function createWaterWorld(
       vessel.setReducedMotion(reduced);
       wake.setReducedMotion(reduced);
       hullSpray.setReducedMotion(reduced);
+      windStreams.setReducedMotion(reduced);
+      windFlags.setReducedMotion(reduced);
+      windStreams.update(vesselState, elapsed, 0);
+      windFlags.update(vesselState, elapsed, 0);
       if (isMotionPaused()) renderer.render(scene, camera);
     },
     setInput: (input): void => {
@@ -522,6 +538,8 @@ export function createWaterWorld(
       if (disposed) return;
       wake.reset();
       hullSpray.reset();
+      windStreams.reset();
+      windFlags.reset();
       horizontallyMoored = false;
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
@@ -535,6 +553,8 @@ export function createWaterWorld(
       trimAssist = createTrimAssistState();
       updateSailing(true);
       vessel.resetPose(vesselState, elapsed);
+      windStreams.update(vesselState, elapsed, 0);
+      windFlags.update(vesselState, elapsed, 0);
       cameraRig.snapTo(vesselState.x, vesselState.z);
       ocean.update(elapsed);
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
@@ -603,6 +623,8 @@ export function createWaterWorld(
       vessel.dispose();
       wake.dispose();
       hullSpray.dispose();
+      windStreams.dispose();
+      windFlags.dispose();
       cameraRig.dispose();
       ocean.dispose();
       renderer.dispose();

@@ -41,7 +41,7 @@ app.innerHTML = `
 
     <aside class="vessel-model-note" aria-label="Visible sail trim">
       <span class="vessel-model-note__swatch" aria-hidden="true"></span>
-      <span>Coral boom shows sail trim.</span>
+      <span>Coral boom shows trim. Pennants trail downwind.</span>
     </aside>
 
     <section class="sailing-hud" data-sailing-hud aria-label="Wind and sail trim">
