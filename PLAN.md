@@ -2,11 +2,11 @@
 
 ## Current delivery
 
-**WEB-017 correction is published: earlier water character with smooth structured variation.**
+**WEB-017 reopened: break visible repetition at wider viewing scales.**
 The user requested “ok go for next todo” on 2026-09-25 after the verified
 Phase 13 wind-cue release. Preserve the current custom boat, controls and
 wind model. User review rejected the over-aligned bands: restore the original
-overlapping swells with a subtle fixed-seed spatial layer.
+overlapping swells. The first subtle variation still repeats visibly when zoomed out; use independent wave groups and compare both viewing scales.
 
 Luna agents own the deterministic sampler, coupled crest rendering and an
 independent baseline/consumer audit. Root owns integration, plan/status updates,
@@ -55,7 +55,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-015 | Published Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
-| WEB-017 | Published correction | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
+| WEB-017 | In progress correction | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Published Phase 13 | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |

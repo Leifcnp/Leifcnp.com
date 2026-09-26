@@ -1,0 +1,15 @@
+{
+  "source": "/tmp/phase14-pattern-before/createOceanSurface.ts",
+  "waterPositionCount": 14641,
+  "crestRibbonCount": 726,
+  "updateMedianMs": 5.679358000000093,
+  "updateP95Ms": 15.212293999999929,
+  "updateMaxMs": 43.13243599999987,
+  "activeSamples": 73482,
+  "crestSupported": 73482,
+  "crestSupportRatio": 1,
+  "calmFrames": 200,
+  "calmActiveSamples": 7439,
+  "maxVisibleStep": 1.4503812544728374,
+  "teleportCount": 0
+}

@@ -1,0 +1,150 @@
+[
+  {
+    "label": "before",
+    "maximumRecurrence": {
+      "time": 83,
+      "deg": 130,
+      "distance": 100,
+      "correlation": 0.8906261839808594
+    },
+    "top10": [
+      {
+        "time": 83,
+        "deg": 130,
+        "distance": 100,
+        "correlation": 0.8906261839808594
+      },
+      {
+        "time": 17,
+        "deg": 80,
+        "distance": 56,
+        "correlation": 0.8847628446829394
+      },
+      {
+        "time": 83,
+        "deg": 50,
+        "distance": 100,
+        "correlation": 0.873431468147952
+      },
+      {
+        "time": 41,
+        "deg": 130,
+        "distance": 100,
+        "correlation": 0.8730675547331679
+      },
+      {
+        "time": 0,
+        "deg": 80,
+        "distance": 56,
+        "correlation": 0.8722642855234412
+      },
+      {
+        "time": 83,
+        "deg": 80,
+        "distance": 56,
+        "correlation": 0.8703567344417346
+      },
+      {
+        "time": 121,
+        "deg": 160,
+        "distance": 40,
+        "correlation": 0.8679384819806207
+      },
+      {
+        "time": 83,
+        "deg": 60,
+        "distance": 38,
+        "correlation": 0.8611781004653319
+      },
+      {
+        "time": 83,
+        "deg": 160,
+        "distance": 40,
+        "correlation": 0.8590567745456062
+      },
+      {
+        "time": 121,
+        "deg": 130,
+        "distance": 100,
+        "correlation": 0.8578256769591889
+      }
+    ],
+    "overPoint7": 253,
+    "crosswindEnergy": 0.35662081159754333,
+    "rms": 0.7852081090642191
+  },
+  {
+    "label": "after",
+    "maximumRecurrence": {
+      "time": 121,
+      "deg": 20,
+      "distance": 26,
+      "correlation": 0.33208701280245073
+    },
+    "top10": [
+      {
+        "time": 121,
+        "deg": 20,
+        "distance": 26,
+        "correlation": 0.33208701280245073
+      },
+      {
+        "time": 121,
+        "deg": 20,
+        "distance": 28,
+        "correlation": 0.3281325297100535
+      },
+      {
+        "time": 83,
+        "deg": 30,
+        "distance": 30,
+        "correlation": 0.3057865335747571
+      },
+      {
+        "time": 83,
+        "deg": 80,
+        "distance": 54,
+        "correlation": 0.2959490974209125
+      },
+      {
+        "time": 83,
+        "deg": 30,
+        "distance": 28,
+        "correlation": 0.2952673997206484
+      },
+      {
+        "time": 83,
+        "deg": 80,
+        "distance": 56,
+        "correlation": 0.28718361185244556
+      },
+      {
+        "time": 121,
+        "deg": 30,
+        "distance": 26,
+        "correlation": 0.2843708150411607
+      },
+      {
+        "time": 121,
+        "deg": 30,
+        "distance": 28,
+        "correlation": 0.28319836065225823
+      },
+      {
+        "time": 83,
+        "deg": 40,
+        "distance": 32,
+        "correlation": 0.282229521305813
+      },
+      {
+        "time": 121,
+        "deg": 20,
+        "distance": 24,
+        "correlation": 0.2813294860506683
+      }
+    ],
+    "overPoint7": 0,
+    "crosswindEnergy": 0.41753862467051034,
+    "rms": 0.6854553275285118
+  }
+]

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { MAX_WAVE_HEIGHT, WAVE_COMPONENTS, WAVE_VARIATION, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
+import { MAX_WAVE_HEIGHT, PACKET_DETAIL, PACKET_MACRO, WAVE_COMPONENTS, WAVE_VARIATION, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
 
 test('surface velocityY agrees with temporal derivatives at multiple samples', () => {
   const delta = 1e-5
@@ -62,14 +62,11 @@ test('storm-aware slopes agree with finite differences through the transition', 
   }
 })
 
-test('original overlapping swell mix keeps bounded positive packet weights', () => {
-  assert.equal(WAVE_COMPONENTS.length, 4)
-  for (const packet of [-1, -0.5, 0, 0.5, 1]) {
-    const amplitudes = WAVE_COMPONENTS.map(c => c.amplitude + c.amplitudeVariation * packet)
+test('all independent packet combinations keep positive weights and the same height bound', () => {
+  for (const packet of [-1, 1]) for (const detail of [-1, 1]) for (const macro of [-1, 1]) {
+    const amplitudes = WAVE_COMPONENTS.map((c, i) => c.amplitude + c.amplitudeVariation * packet + PACKET_DETAIL[i] * detail + PACKET_MACRO[i] * macro)
     assert.ok(amplitudes.every(a => a > 0))
     assert.ok(Math.abs(amplitudes.reduce((sum, a) => sum + a, 0) - MAX_WAVE_HEIGHT) < 1e-12)
-    assert.ok(amplitudes[0] ** 2 / amplitudes.reduce((sum, a) => sum + a ** 2, 0) > 0.5,
-      'The original main swell remains dominant while smaller waves overlap it')
   }
 })
 
@@ -87,6 +84,23 @@ test('overlapping water retains crosswind relief rather than parallel bands', ()
   }
   assert.ok(crossEnergy / totalEnergy > 0.2, 'Crosswind shape was flattened into stripes')
   assert.ok(crossEnergy / totalEnergy < 0.6, 'The primary swell lost its prevailing direction')
+})
+
+test('wide water avoids strongly repeating translations across directions and scales', () => {
+  // The previous surface recurred at 30, 40, 56 and 100-unit translations.
+  // Probe many angles/distances: a seed change or one decorrelated offset is insufficient.
+  for (const time of [0, 41, 121]) for (let angle = 0; angle < Math.PI; angle += Math.PI / 12) {
+    for (const distance of [22, 30, 38, 46, 56, 68, 82, 100]) {
+      const dx = Math.cos(angle) * distance, dz = Math.sin(angle) * distance
+      let a = 0, b = 0, aa = 0, bb = 0, ab = 0, count = 0
+      for (let x = -64; x <= 64; x += 16) for (let z = -64; z <= 64; z += 16) {
+        const first = sampleWaterHeight(x, z, time), second = sampleWaterHeight(x + dx, z + dz, time)
+        a += first; b += second; aa += first * first; bb += second * second; ab += first * second; count++
+      }
+      const r = (ab - a * b / count) / Math.sqrt((aa - a * a / count) * (bb - b * b / count))
+      assert.ok(r < 0.65, `Repeated surface at t=${time}, angle=${angle}, distance=${distance}: r=${r}`)
+    }
+  }
 })
 
 test('seeded layer changes the real surface while reset and evaluation order repeat exactly', () => {

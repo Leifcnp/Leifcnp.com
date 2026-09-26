@@ -37,7 +37,7 @@
 - Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
 - Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
 - Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 162 individual data, geometry, wind/trim/boost, steering, audio/wake, hull-contact, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
+- Tests: `pnpm test` (Node 24 native TypeScript; 165 individual data, geometry, wind/trim/boost, steering, audio/wake, hull-contact, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
 - Production build: `pnpm run build` (includes type checking), generating `docs/`.
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
@@ -92,3 +92,5 @@
 - Corrected wave model: four original carrier shapes plus two deterministic C2 value-noise lookups advected in world space. Phase warps and zero-sum packet weights preserve the 1.8 height bound. `sampleWaterSurface` returns full analytic phase/envelope/storm derivatives by default; an explicit positive distance returns exact finite differences. Hulls/foam still follow rendered triangles. No Math.random, new clock, texture or growing cache.
 
 - WEB-017 correction release: [artifacts/phase14-refinement/VERIFICATION.md](artifacts/phase14-refinement/VERIFICATION.md). 162 tests, strict build, six production layouts, exact-SHA Pages and matching public assets plus public desktop/mobile checks pass. Original overlapping water character restored with smooth seeded variation. Stop for user review; do not advance to shorelines/harbours.
+
+- Current second WEB-017 correction (2026-09-25): The first correction still repeated visibly from farther out. Eight overlapping carriers now have stronger independent broad/detail/macro phase bending and zero-sum packet weights. Four fixed-seed smooth fields share one clock; test all independent envelope extrema for positive weights and the unchanged 1.8/2.52 bound. Keep analytical derivatives synchronized. Crest spacing/origins are irregular; the mesh and both triangle samplers use `waterSurfaceCellUsesTopRightDiagonal` for a fixed hashed diagonal pattern. Never change topology in only one path. Evidence is `artifacts/phase14-pattern/VERIFICATION.md`; publish and stop for review, without beginning shoreline/harbour work.

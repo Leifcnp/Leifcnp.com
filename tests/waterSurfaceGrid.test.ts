@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as THREE from 'three'
 import { createOceanSurface } from '../src/world/createOceanSurface.ts'
-import { createWaterSurfaceAxis, OCEAN_SURFACE_TUNING, sampleFacetedWaterHeight, sampleRenderedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
+import { createWaterSurfaceAxis, OCEAN_SURFACE_TUNING, sampleFacetedWaterHeight, sampleRenderedWaterHeight, waterSurfaceCellUsesTopRightDiagonal } from '../src/world/waterSurfaceGrid.ts'
 import { sampleWaterHeight } from '../src/world/waves.ts'
 
 function triangleHeight(mesh: THREE.Mesh, x: number, z: number, time: number): number {
@@ -15,7 +15,9 @@ function triangleHeight(mesh: THREE.Mesh, x: number, z: number, time: number): n
   const cell = row * (side - 1) + column
   const u = (x - axis[column]) / (axis[column + 1] - axis[column])
   const v = (z - axis[row]) / (axis[row + 1] - axis[row])
-  const firstTriangle = (row + column) % 2 === 0 ? u + v <= 1 : v >= u
+  // Read the actual mesh indices: the oracle must not reuse the sampler's decision.
+  const topRightDiagonal = index.getX(cell * 6 + 2) === row * side + column + 1
+  const firstTriangle = topRightDiagonal ? u + v <= 1 : v >= u
   const triangle = cell * 2 + (firstTriangle ? 0 : 1)
   const a = index.getX(triangle * 3); const b = index.getX(triangle * 3 + 1); const c = index.getX(triangle * 3 + 2)
   const pa = new THREE.Vector3().fromBufferAttribute(position, a); const pb = new THREE.Vector3().fromBufferAttribute(position, b); const pc = new THREE.Vector3().fromBufferAttribute(position, c)
@@ -32,6 +34,20 @@ test('shared axis preserves central and outer lattice spacing', () => {
   const central = axis.indexOf(-180)
   assert.equal(axis[central + 1] - axis[central], OCEAN_SURFACE_TUNING.centralStep)
   assert.equal(axis[central] - axis[central - 1], OCEAN_SURFACE_TUNING.outerStep)
+})
+
+test('cell diagonals use both orientations and break row-column parity repetition', () => {
+  let topRightCount = 0
+  let otherCount = 0
+  let parityBreaks = 0
+  for (let row = 0; row < 90; row += 1) for (let column = 0; column < 90; column += 1) {
+    const topRight = waterSurfaceCellUsesTopRightDiagonal(row, column)
+    if (topRight) topRightCount += 1
+    else otherCount += 1
+    if (topRight !== ((row + column) % 2 === 0)) parityBreaks += 1
+  }
+  assert.ok(topRightCount > 1_000 && otherCount > 1_000)
+  assert.ok(parityBreaks > 1_000, 'diagonal choices should not collapse to checkerboard parity')
 })
 
 test('faceted sampler matches actual rendered triangles in calm and storm cells', () => {

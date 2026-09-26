@@ -1,0 +1,19 @@
+{
+  "method": "400 alternating before/after updates in the same Node process, after 40 warmups each; VM wall-clock timing",
+  "results": [
+    {
+      "variant": "before",
+      "medianMs": 7.139894000000822,
+      "p95Ms": 11.8132370000003,
+      "vertices": 14641,
+      "crestQuads": 726
+    },
+    {
+      "variant": "after",
+      "medianMs": 11.887480999999752,
+      "p95Ms": 19.09990400000015,
+      "vertices": 14641,
+      "crestQuads": 687
+    }
+  ]
+}

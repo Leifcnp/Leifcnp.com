@@ -1,6 +1,43 @@
 # WEB-017 — Varied incoming wave sets with a common direction
 
-## Current correction — 2026-09-25
+## Current second correction — wider-view repetition (2026-09-25)
+
+The first correction restored overlapping waves but kept the same four narrow
+carrier frequencies with one shared phase bend. The user can still see a clear
+pattern when zoomed out. Reopen WEB-017; improve the water at both normal and
+wide scale without advancing the queue.
+
+1. Diagnose height-pattern repetition separately from repeated crest placement
+   and regular triangle shading. Capture identical timestamps at normal view
+   and 0.55 camera zoom as inspection-only evidence; do not ship camera changes.
+2. Luna sampler task: use independent directional/frequency groups and smooth
+   seeded phase/packet variation to avoid one dominant repeating carrier. Keep
+   readable travelling swells, overlapping shape, 1.8/2.52 height bounds and
+   exact analytical derivatives. No frame-random values or growing allocation.
+3. Luna audit task: independently compare spatial translation recurrence over
+   multiple directions/distances, inspect crest layout and measure cost. Check
+   candidate against the actual published b5b619a surface, not only seed changes.
+4. Root integration: ensure sparse crests follow real compound peaks without
+   adding a second visible grid; inspect both scales over several times, plus
+   motion, boat contact and phone composition. Adjust only necessary renderer
+   details; keep the existing mesh/contact authority and custom boat.
+5. Verify finite/deterministic derivatives, spatial variety and long-time
+   bounds, all hull/rail/steering/spray tests, pause/reset/reduced motion, buffer
+   budgets and measured CPU cost. Build and test production/public controls.
+6. Publish through the same master/docs workflow, confirm exact deployed assets,
+   record results and stop for user review. Do not begin shoreline/harbour work.
+
+Implementation details: eight carriers span 11–67 world units. Stronger phase
+bends combine independent broad, rotated detail and macro fields; packet weights
+stay positive at every combination of envelope extrema and sum to 1.8. Each
+crest row has an independent stagger, variable 32–58-unit gaps and a fixed
+normal offset. The triangle mesh and both water samplers share stable hashed
+cell diagonals. The viewport/camera behavior shipped to visitors is unchanged.
+
+Prior acceptance evidence records correctness, not user acceptance of the look.
+The previous correction details and release remain below as history.
+
+## First correction — 2026-09-25
 
 The user rejected the Phase 14 banding and lack of natural variation. The
 earlier water felt more real. Follow-up clarification asks for the old
@@ -153,3 +190,12 @@ for user review. [Evidence](../../artifacts/phase14-refinement/VERIFICATION.md).
 ## Correction release
 
 Application commit `b5b619a5` is published on `origin/master`; [Pages run 36221055155](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36221055155) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match byte for byte, and unmodified public desktop/mobile interactions pass. WEB-017 is Done and awaits review; shoreline/harbour work has not started.
+
+## Second correction local verification
+
+165 native tests, strict build, stronger multi-angle recurrence checks, matched
+normal/wide/phone visual review, independent mesh contact, source-world lifecycle
+and six production layouts pass. The extra smooth fields have measured CPU cost;
+mesh size is unchanged and crest quads decrease. See
+[verification](../../artifacts/phase14-pattern/VERIFICATION.md). Publish and verify
+the exact release, then stop for user review before advancing the queue.

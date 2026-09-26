@@ -6,7 +6,7 @@ import {
   createOceanSurface,
   OCEAN_SURFACE_TUNING,
 } from '../src/world/createOceanSurface.ts'
-import { sampleFacetedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
+import { createWaterSurfaceAxis, sampleFacetedWaterHeight, waterSurfaceCellUsesTopRightDiagonal } from '../src/world/waterSurfaceGrid.ts'
 import { sampleStormField } from '../src/world/stormField.ts'
 import { PRIMARY_WAVE, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
 
@@ -36,6 +36,32 @@ test('ocean surface keeps dense playable water and bounded outer geometry', () =
     .findIndex((x) => x === -OCEAN_SURFACE_TUNING.centralLimit)
   assert.ok(firstCentral > 0)
   assert.equal(position.getX(firstCentral + 1) - position.getX(firstCentral), OCEAN_SURFACE_TUNING.centralStep)
+  ocean.dispose()
+})
+
+test('indexed ocean triangles honor both shared diagonal orientations', () => {
+  const ocean = createOceanSurface(new THREE.Scene())
+  const index = ocean.mesh.geometry.getIndex()!
+  const side = createWaterSurfaceAxis().length
+  let checkedTopRight = false
+  let checkedBottomRight = false
+  for (let row = 0; row < side - 1 && (!checkedTopRight || !checkedBottomRight); row += 1) {
+    for (let column = 0; column < side - 1 && (!checkedTopRight || !checkedBottomRight); column += 1) {
+      const cell = row * (side - 1) + column
+      const first = index.getX(cell * 6)
+      const second = index.getX(cell * 6 + 1)
+      const third = index.getX(cell * 6 + 2)
+      const expectedTopRight = row * side + column + 1
+      const expectedBottomLeft = row * side + column + side
+      const expectedBottomRight = expectedBottomLeft + 1
+      const usesTopRight = first === row * side + column && second === expectedBottomLeft && third === expectedTopRight
+      assert.ok(first === row * side + column && second === expectedBottomLeft && (third === expectedTopRight || third === expectedBottomRight))
+      assert.equal(usesTopRight, waterSurfaceCellUsesTopRightDiagonal(row, column))
+      checkedTopRight ||= usesTopRight
+      checkedBottomRight ||= !usesTopRight
+    }
+  }
+  assert.ok(checkedTopRight && checkedBottomRight)
   ocean.dispose()
 })
 

@@ -4,6 +4,7 @@ import {
   OCEAN_SURFACE_TUNING,
   createWaterSurfaceAxis,
   sampleRenderedWaterHeight,
+  waterSurfaceCellUsesTopRightDiagonal,
 } from './waterSurfaceGrid.ts';
 export { OCEAN_SURFACE_TUNING } from './waterSurfaceGrid.ts';
 import {
@@ -63,7 +64,7 @@ export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
       const topRight = topLeft + 1;
       const bottomLeft = topLeft + side;
       const bottomRight = bottomLeft + 1;
-      if ((row + column) % 2 === 0) {
+      if (waterSurfaceCellUsesTopRightDiagonal(row, column)) {
         indices.push(topLeft, bottomLeft, topRight, topRight, bottomLeft, bottomRight);
       } else {
         indices.push(topLeft, bottomLeft, bottomRight, topLeft, bottomRight, topRight);
@@ -136,9 +137,9 @@ interface CrestRibbonController {
 
 interface CrestRibbonDescriptor {
   readonly normalIndex: number;
+  readonly normalOffset: number;
   readonly tangentCenter: number;
   readonly activity: number;
-  readonly tangentOffset: number;
   readonly halfLength: number;
   readonly halfWidth: number;
 }
@@ -157,7 +158,6 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
   const tangentZ = normalX;
   const normalScale = 1 / (normalX * normalX + normalZ * normalZ);
   const tangentScale = 1 / (tangentX * tangentX + tangentZ * tangentZ);
-  const tangentStep = 44;
   const tangentExtent = OCEAN_SURFACE_TUNING.outerLimit * (Math.abs(tangentX) + Math.abs(tangentZ));
   const normalExtent = OCEAN_SURFACE_TUNING.outerLimit * (Math.abs(normalX) + Math.abs(normalZ));
   const primaryCrestPhase = Math.PI * 0.5 - PRIMARY_WAVE.phase;
@@ -175,15 +175,19 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
   const descriptors: CrestRibbonDescriptor[] = [];
   for (let normalIndex = minimumNormalIndex; normalIndex <= maximumNormalIndex; normalIndex += 1) {
     let segmentIndex = 0;
-    for (let tangentCenter = -tangentExtent; tangentCenter <= tangentExtent; tangentCenter += tangentStep) {
+    // Independently stagger each row and vary every gap. A repeating 30×44
+    // carrier lattice remained visible from farther out, even with short dashes.
+    let tangentCenter = -tangentExtent + hash2d(normalIndex + 821, 431) * 44;
+    while (tangentCenter <= tangentExtent) {
       descriptors.push({
         normalIndex,
+        normalOffset: (hash2d(normalIndex * 43 + segmentIndex * 23 + 149, normalIndex * 11 + segmentIndex * 37 + 337) - 0.5) * crestWavelength * 0.9,
         tangentCenter,
         activity: hash2d(normalIndex * 31 + segmentIndex * 17 + 401, normalIndex * 13 + segmentIndex * 7 + 911),
-        tangentOffset: (hash2d(normalIndex * 19 + segmentIndex * 29 + 71, normalIndex * 23 + segmentIndex * 11 + 173) - 0.5) * 14,
         halfLength: 3 + hash2d(normalIndex * 37 + segmentIndex * 13 + 211, normalIndex * 7 + segmentIndex * 31 + 263) * 2.5,
         halfWidth: 0.18 + hash2d(normalIndex * 41 + segmentIndex * 17 + 307, normalIndex * 5 + segmentIndex * 43 + 359) * 0.16,
       });
+      tangentCenter += 32 + hash2d(normalIndex * 19 + segmentIndex * 29 + 71, normalIndex * 23 + segmentIndex * 11 + 173) * 26;
       segmentIndex += 1;
     }
   }
@@ -257,7 +261,7 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
       const descriptor = descriptors[descriptorIndex];
       const baseNormal = (
         primaryCrestPhase + descriptor.normalIndex * Math.PI * 2
-      ) / PRIMARY_WAVE.waveNumber;
+      ) / PRIMARY_WAVE.waveNumber + descriptor.normalOffset;
       // Recycle only after the whole visible crest band has crossed the
       // boundary. Individual lines therefore travel continuously through a
       // primary-wave period instead of all jumping by one wavelength together.
@@ -265,7 +269,7 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
         baseNormal - travel - crestBandStart,
         crestBandSpan,
       );
-      const tangentCenter = descriptor.tangentCenter + descriptor.tangentOffset;
+      const tangentCenter = descriptor.tangentCenter;
       const centerX = normalX * recycledNormal * normalScale + tangentX * tangentCenter * tangentScale;
       const centerZ = normalZ * recycledNormal * normalScale + tangentZ * tangentCenter * tangentScale;
       const active = descriptor.activity > 0.48;

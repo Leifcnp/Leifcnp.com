@@ -45,9 +45,23 @@ function lowerCellIndex(axis: readonly number[], value: number): number {
 const WATER_SURFACE_AXIS = createWaterSurfaceAxis()
 
 /**
+ * Choose the cell's diagonal from a stable world-lattice hash.  The mesh and
+ * the triangle samplers must make the same choice, but a parity pattern makes
+ * the low-poly surface read as a repeating checkerboard at a distance.
+ */
+export function waterSurfaceCellUsesTopRightDiagonal(row: number, column: number): boolean {
+  let hash = Math.imul((column | 0) ^ 0x7f4a7c15, 0x45d9f3b)
+  hash = Math.imul(hash ^ ((row | 0) ^ 0x6a09e667), 0x45d9f3b)
+  hash ^= hash >>> 16
+  hash = Math.imul(hash, 0x45d9f3b)
+  hash ^= hash >>> 16
+  return (hash & 1) === 0
+}
+
+/**
  * Sample the rendered low-poly surface rather than the continuous wave field.
- * The mesh uses the same alternating diagonals in every cell, so vessel
- * contacts agree with the visible triangle at the point being sampled.
+ * The mesh uses the same hashed diagonal in every cell, so vessel contacts
+ * agree with the visible triangle at the point being sampled.
  */
 export function sampleFacetedWaterHeight(x: number, z: number, timeSeconds = 0): number {
   return sampleSurfaceHeight(x, z, timeSeconds)
@@ -75,7 +89,7 @@ function sampleSurfaceHeight(x: number, z: number, timeSeconds: number, position
   const topRight = positions ? positions[(vertex + 1) * 3 + 1] : sampleWaterHeight(x1, z0, timeSeconds)
   const bottomLeft = positions ? positions[(vertex + axis.length) * 3 + 1] : sampleWaterHeight(x0, z1, timeSeconds)
   const bottomRight = positions ? positions[(vertex + axis.length + 1) * 3 + 1] : sampleWaterHeight(x1, z1, timeSeconds)
-  if ((row + column) % 2 === 0) {
+  if (waterSurfaceCellUsesTopRightDiagonal(row, column)) {
     if (u + v <= 1) return topLeft + v * (bottomLeft - topLeft) + u * (topRight - topLeft)
     return bottomRight + (1 - u) * (bottomLeft - bottomRight) + (1 - v) * (topRight - bottomRight)
   }
