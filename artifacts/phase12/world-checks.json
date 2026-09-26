@@ -1,0 +1,247 @@
+{
+  "checks": [
+    "Opening waits for helm intent; no implicit target heading starts the boat.",
+    "Real W key turns toward screen up; released direction retains sailing and auto trim settles at70–80% available power.",
+    "Real Q/E reaches the ideal pocket; stable manual trim triggers a bounded speed/wake reward.",
+    "Manual angle remains latched while turning; M explicitly returns to automatic trim.",
+    "Spill wind removes drive/reward; release retains engaged automatic trim.",
+    "Fixed-step wind/auto/heading integration agrees at30/60/120Hz.",
+    "Opening/reading/closing drawers preserves scanner travel; steering after closing takes over.",
+    "Pause/hidden clocks discard wall time and release held trim; optional reward clears.",
+    "Explicitly resumed reduced-motion sailing keeps controls/drive while foam remains suppressed.",
+    "Actual transformed hull encounters emit bounded spray; pause/scanner/reset/reduced motion clear it without time catch-up.",
+    "Bounded renderer/resources, no shader/runtime errors, idempotent disposal."
+  ],
+  "idle": {
+    "vessel": {
+      "x": -0.17409700732382724,
+      "z": 0.32187643746618644,
+      "velocityX": 0.015946346633056732,
+      "velocityZ": 0.3669068981219665,
+      "heading": 0,
+      "yawRate": 0
+    },
+    "sail": {
+      "sailAngle": 1.4835298641951802,
+      "suggestedAngle": 0.7650617206649254,
+      "signedSailAngle": 1.4835298641951802,
+      "relativeWindAngle": 1.5301234413298506,
+      "power": 0,
+      "noGo": false,
+      "windSpeed": 9.023408956556022,
+      "luffing": false,
+      "moored": false,
+      "assisted": false,
+      "trimMode": "auto",
+      "trimEngaged": false,
+      "trimEfficiency": 0,
+      "sweetSpot": false,
+      "trimBoost": 0,
+      "boostSerial": 0
+    }
+  },
+  "auto": {
+    "vessel": {
+      "x": -33.86337587763991,
+      "z": -11.34381441615319,
+      "velocityX": -3.7034695108262876,
+      "velocityZ": -3.4072447237222874,
+      "heading": -2.347817022350672,
+      "yawRate": -1.1335930589508103e-12
+    },
+    "sail": {
+      "sailAngle": 1.0499129670959375,
+      "suggestedAngle": 0.8964614826677897,
+      "signedSailAngle": -1.0499129670959375,
+      "relativeWindAngle": -1.7929229653355794,
+      "power": 0.515608503743083,
+      "noGo": false,
+      "windSpeed": 6.297821197055383,
+      "luffing": false,
+      "moored": false,
+      "assisted": false,
+      "trimMode": "auto",
+      "trimEngaged": true,
+      "trimEfficiency": 0.7487965023499902,
+      "sweetSpot": false,
+      "trimBoost": 0,
+      "boostSerial": 0
+    }
+  },
+  "pocket": {
+    "vessel": {
+      "x": -36.12382226474943,
+      "z": -13.454870464014256,
+      "velocityX": -4.550647472197612,
+      "velocityZ": -4.265430362658989,
+      "heading": -2.347817022350837,
+      "yawRate": -3.1758092201209473e-14
+    },
+    "sail": {
+      "sailAngle": 0.8099301949467185,
+      "suggestedAngle": 0.8001376401271957,
+      "signedSailAngle": -0.8099301949467184,
+      "relativeWindAngle": -1.6002752802543914,
+      "power": 0.6736815844604753,
+      "noGo": false,
+      "windSpeed": 6.16365428097283,
+      "luffing": false,
+      "moored": false,
+      "assisted": false,
+      "trimMode": "manual",
+      "trimEngaged": true,
+      "trimEfficiency": 0.9839693696625957,
+      "sweetSpot": true,
+      "trimBoost": 0,
+      "boostSerial": 0
+    }
+  },
+  "boosted": {
+    "vessel": {
+      "x": -38.65322213048287,
+      "z": -15.828722851245482,
+      "velocityX": -5.533564684124164,
+      "velocityZ": -5.203409552781298,
+      "heading": -2.347817022350838,
+      "yawRate": -1.2313948673486858e-15
+    },
+    "sail": {
+      "sailAngle": 0.8099301949467185,
+      "suggestedAngle": 0.6907224775368639,
+      "signedSailAngle": -0.8099301949467184,
+      "relativeWindAngle": -1.3814449550737278,
+      "power": 0.5526391803035573,
+      "noGo": false,
+      "windSpeed": 6.252331147110402,
+      "luffing": false,
+      "moored": false,
+      "assisted": false,
+      "trimMode": "manual",
+      "trimEngaged": true,
+      "trimEfficiency": 0.804854311629347,
+      "sweetSpot": true,
+      "trimBoost": 0.738095238095239,
+      "boostSerial": 1
+    }
+  },
+  "held": {
+    "vessel": {
+      "x": -44.49709432524729,
+      "z": -28.284669586268883,
+      "velocityX": 0.8118726063894763,
+      "velocityZ": -5.6662088896145,
+      "heading": 2.7927314428322934,
+      "yawRate": -0.4297587433566905
+    },
+    "sail": {
+      "sailAngle": 0.8099301949467185,
+      "suggestedAngle": 0.3491176629654897,
+      "signedSailAngle": -0.8099301949467184,
+      "relativeWindAngle": -0.6982353259309795,
+      "power": 0.11886110651273443,
+      "noGo": false,
+      "windSpeed": 11.330435438444658,
+      "luffing": false,
+      "moored": false,
+      "assisted": false,
+      "trimMode": "manual",
+      "trimEngaged": true,
+      "trimEfficiency": 0.2456396220210948,
+      "sweetSpot": false,
+      "trimBoost": 0,
+      "boostSerial": 1
+    }
+  },
+  "fixed": [
+    {
+      "vessel": {
+        "x": -24.256878788760986,
+        "z": -7.175424506744458,
+        "velocityX": -3.8974270209697846,
+        "velocityZ": -3.844810074722765,
+        "heading": -2.347611252710215,
+        "yawRate": -0.00044897652056641085
+      },
+      "sail": {
+        "sailAngle": 1.0118921723769487,
+        "suggestedAngle": 0.8595188562492168,
+        "signedSailAngle": -1.0118921723769487,
+        "relativeWindAngle": -1.7190377124984335,
+        "power": 0.5290135607793877,
+        "noGo": false,
+        "windSpeed": 6.388960441027864,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": true,
+        "trimEfficiency": 0.7505614878705222,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "vessel": {
+        "x": -24.256878788760986,
+        "z": -7.175424506744458,
+        "velocityX": -3.8974270209697846,
+        "velocityZ": -3.844810074722765,
+        "heading": -2.347611252710215,
+        "yawRate": -0.00044897652056641085
+      },
+      "sail": {
+        "sailAngle": 1.0118921723769487,
+        "suggestedAngle": 0.8595188562492168,
+        "signedSailAngle": -1.0118921723769487,
+        "relativeWindAngle": -1.7190377124984335,
+        "power": 0.5290135607793877,
+        "noGo": false,
+        "windSpeed": 6.388960441027864,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": true,
+        "trimEfficiency": 0.7505614878705222,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "vessel": {
+        "x": -24.256878788760986,
+        "z": -7.175424506744458,
+        "velocityX": -3.8974270209697846,
+        "velocityZ": -3.844810074722765,
+        "heading": -2.347611252710215,
+        "yawRate": -0.00044897652056641085
+      },
+      "sail": {
+        "sailAngle": 1.0118921723769487,
+        "suggestedAngle": 0.8595188562492168,
+        "signedSailAngle": -1.0118921723769487,
+        "relativeWindAngle": -1.7190377124984335,
+        "power": 0.5290135607793877,
+        "noGo": false,
+        "windSpeed": 6.388960441027864,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": true,
+        "trimEfficiency": 0.7505614878705222,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    }
+  ],
+  "renderer": {
+    "calls": 55,
+    "triangles": 34920,
+    "geometries": 40,
+    "textures": 0
+  }
+}

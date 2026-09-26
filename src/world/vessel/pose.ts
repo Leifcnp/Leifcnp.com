@@ -51,7 +51,7 @@ export interface SampledWaterSurface {
 
 export type VesselWaterSampler = (x: number, z: number) => SampledWaterSurface
 
-/** Visual response tuning. These values intentionally stay below a dramatic arcade tilt. */
+/** Visual response tuning with a 20-degree sail-only and 0.4-radian combined roll cap. */
 export const VESSEL_POSE_TUNING = {
   // The storm scales the authored 1.8-unit sum up to 2.52. Keep the support
   // cap at that shared bound so a full storm crest does not flatten the hull;
@@ -62,7 +62,7 @@ export const VESSEL_POSE_TUNING = {
   maxSpeedLift: 0.065,
   maxTurnHeel: 0.12,
   /** Beam-wind sail loading produces a readable but comfortable heel. */
-  maxWindHeel: 0.26,
+  maxWindHeel: Math.PI / 9,
   /** Small buoyancy correction preserves leeward freeboard under combined load. */
   maxWindHeelLift: 0.1,
   /** Fast enough to keep hull freeboard close to shorter encounter waves. */
@@ -211,7 +211,14 @@ export function calculateVesselPose(
   // Positive local +X apparent wind (the repository's port side) rolls the
   // vessel toward -X, represented by positive Z rotation. The crosswind
   // component therefore mirrors cleanly across tacks and fades downwind.
-  const windHeel = Math.sin(relativeWindAngle) * sailPower * VESSEL_POSE_TUNING.maxWindHeel * dynamicScale
+  // Give ordinary powered reaches a readable lean without treating the
+  // auto-trim efficiency percentage as sail power. The response tapers at
+  // head-to-wind and dead downwind and mirrors across both tacks.
+  const sine = Math.sin(relativeWindAngle)
+  const crosswind = Math.abs(sine) < 1e-6 ? 0 : sine
+  const effectiveSailLoad = Math.pow(sailPower, 0.35)
+  const windHeel = Math.sign(crosswind) * Math.pow(Math.abs(crosswind), 0.65)
+    * effectiveSailLoad * VESSEL_POSE_TUNING.maxWindHeel * dynamicScale
 
   const heelLift = Math.abs(windHeel) / VESSEL_POSE_TUNING.maxWindHeel * VESSEL_POSE_TUNING.maxWindHeelLift
 

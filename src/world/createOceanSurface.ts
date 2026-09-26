@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { sampleStormField, STORM_TUNING } from './stormField.ts';
+import { OCEAN_SURFACE_TUNING, createWaterSurfaceAxis } from './waterSurfaceGrid.ts';
+export { OCEAN_SURFACE_TUNING } from './waterSurfaceGrid.ts';
 import {
   MAX_WAVE_HEIGHT,
   PRIMARY_WAVE,
@@ -21,13 +23,6 @@ export interface OceanSurfaceController {
  * three broad outer bands keep the water visible around the camera footprint
  * without paying central-grid density across the full 720-unit field.
  */
-export const OCEAN_SURFACE_TUNING = {
-  centralLimit: 180,
-  outerLimit: 360,
-  centralStep: 4,
-  outerStep: 12,
-} as const;
-
 const TROUGHS = [0.012, 0.16, 0.23] as const;
 const MID_WATER = [0.018, 0.31, 0.4] as const;
 const CRESTS = [0.045, 0.43, 0.5] as const;
@@ -39,7 +34,7 @@ const STORM_FOAM = [0.28, 0.34, 0.36] as const;
 
 /** Create and own the shared animated low-poly water mesh. */
 export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
-  const axes = createAdaptiveAxis();
+  const axes = createWaterSurfaceAxis();
   const vertexCount = axes.length * axes.length;
   const positions = new Float32Array(vertexCount * 3);
   const colors = new Float32Array(vertexCount * 3);
@@ -311,20 +306,6 @@ function setCrestVertex(
   stormIntensity = 0,
 ): void {
   position.setXYZ(index, x, sampleWaterHeight(x, z, timeSeconds) + 0.045 + stormIntensity * 0.018, z);
-}
-
-function createAdaptiveAxis(): number[] {
-  const values: number[] = [];
-  for (let value = -OCEAN_SURFACE_TUNING.outerLimit; value < -OCEAN_SURFACE_TUNING.centralLimit; value += OCEAN_SURFACE_TUNING.outerStep) {
-    values.push(value);
-  }
-  for (let value = -OCEAN_SURFACE_TUNING.centralLimit; value <= OCEAN_SURFACE_TUNING.centralLimit; value += OCEAN_SURFACE_TUNING.centralStep) {
-    values.push(value);
-  }
-  for (let value = OCEAN_SURFACE_TUNING.centralLimit + OCEAN_SURFACE_TUNING.outerStep; value <= OCEAN_SURFACE_TUNING.outerLimit; value += OCEAN_SURFACE_TUNING.outerStep) {
-    values.push(value);
-  }
-  return values;
 }
 
 function setWaterColor(

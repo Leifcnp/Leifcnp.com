@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-09-25",
+  "source": "current shared checkout before WEB-021 edits",
+  "harness": "/tmp/leifcnp-phase12-contact.mjs",
+  "coverage": {
+    "rows": 288,
+    "radii": [0, 185],
+    "headings": [0, 1.5707963267948966, 3.141592653589793, -1.5707963267948966],
+    "times": [0, 3.7, 11.3],
+    "yawRates": [-1.1, 0, 1.1],
+    "windAngles": [-1.5707963267948966, 1.5707963267948966],
+    "states": ["loaded", "reduced-motion"]
+  },
+  "flatBeamAndBroadHeel": [
+    { "relativeWindAngle": -1.5707963267948966, "heave": 0.1, "pitch": 0, "roll": -0.26 },
+    { "relativeWindAngle": 0, "heave": 0, "pitch": 0, "roll": 0 },
+    { "relativeWindAngle": 1.5707963267948966, "heave": 0.1, "pitch": 0, "roll": 0.26 },
+    { "relativeWindAngle": 3.141592653589793, "heave": 0, "pitch": 0, "roll": 0 }
+  ],
+  "clearance": {
+    "finite": true,
+    "minimumDeckVertexClearance": 0.1343113466886977,
+    "minimumCenterDeckClearance": 0.5149765213583144,
+    "minimumHullVertexClearance": -0.6595308880964132,
+    "maximumHullVertexClearance": 1.2902925771151983
+  },
+  "interpretation": {
+    "deck": "All sampled deck vertices remain above sampled water; the central deck has substantially more freeboard than the most exposed deck vertex.",
+    "hull": "The hull crosses the waterline in every sampled state; bottom hull vertices are expected to be wet.",
+    "heel": "The current 0.26 rad beam heel is visible in the flat pose. The leeward edge can approach the water before the central deck does, so future rail/bow-spray work should inspect edge contact rather than reacting to the center deck alone.",
+    "frameRates": "This baseline uses reset poses across the requested state/time matrix; final dynamic 30/60/120 Hz trajectories should be compared against it after WEB-021 changes."
+  }
+}

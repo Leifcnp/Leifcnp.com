@@ -2,20 +2,19 @@
 
 ## Current delivery
 
-**Phase 11 is published and publicly verified: WEB-020 auto-trim and the manual sweet spot.**
-On 2026-09-25 the user accepted the boat-feel recommendation. Luna agents
-implemented mechanics, controls/HUD and feedback; root integrated and verified
-application commit `e2f8f4f`, deployed by Pages run 36215620598. See
-[release evidence](artifacts/phase11/VERIFICATION.md). Stop for user review.
+**Phase 12 is active: WEB-021 stronger reach heel, shallow rail wash and bow spray.**
+The user accepted proceeding after Phase 11 on 2026-09-25. Luna agents own
+pose/contact, a shared bounded spray pool, and independent contact measurements;
+root integrates, visually reviews, verifies and publishes the phase.
 
-Screen-relative WASD/arrows and matching touch directions command a heading;
-the boat turns smoothly using its existing rudder authority. Q/E manually
-trim the sail; M/Auto trim returns assistance. A first steering gesture engages
-75% automatic trim, while deliberate manual trim keeps ownership until the
-visitor returns to auto. Accurate trim earns a bounded surge, white foam and
-optional synthesized wind rush. Preserve tacking, safe scanner routes and
-pause/reduced-motion access. Harbours/zoom, stronger heel and new weather cues
-remain separate future work; stop after Phase 11 for review.
+Target readable 15–20° heel on loaded reaches, mirrored smoothly across tacks.
+A shallow leeward rail dip may wet the outer margin while the central working
+deck, cockpit and mast stay visible. Original spray starts at actual transformed
+hull/water encounters and drifts with the existing wind. Preserve Phase 11
+steering/trim/boost, shared waves/storm, safe scanner routes and motion controls.
+Stop after this phase for review; harbours/zoom and wind streams remain deferred.
+
+Phase 11 is preserved in [its verification record](artifacts/phase11/VERIFICATION.md).
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -33,7 +32,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-020 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for sailing-feel review before another backlog phase.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-021 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for sailing-feel review before another backlog phase.
 
 ## Work packages and review gates
 
@@ -59,15 +58,15 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Backlog | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
-| WEB-021 | Backlog | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
+| WEB-021 | Active Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
 
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna physics agent: pure trim-assist state, target-heading rudder, boost forces and tests.
-- Luna controls agent: directional keyboard/touch, manual/auto mode, readable HUD and input tests.
-- Luna feedback agent: pooled boost foam and optional synthesized wind audio with lifecycle tests.
+- Luna physics agent: pure heel/load response, transformed rail/deck/bow contact, vessel pose and contact tests.
+- Luna audit agent: independent baseline and final contact measurements across real sailing scenarios.
+- Luna feedback agent: one reusable contact-driven bow/rail spray pool, deterministic lifecycle and effects tests.
 - Root: world integration, queue/docs, quantitative sailing and browser checks, release verification.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
@@ -82,7 +81,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-020 improves sailing controls and feedback while preserving shared waves/storm, wind sailing, content access, safe assisted scanner routes and custom artwork. Stop for Phase 11 sailing-feel review before another backlog phase. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-021 improves hull heel and water contact while preserving shared waves/storm, wind sailing, content access, safe assisted scanner routes and custom artwork. Stop for Phase 12 heel/contact review before another backlog phase. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
 
 
 ## Brainstorming intake — 2026-09-24
@@ -102,3 +101,5 @@ Phase 10 authorization: user requested the next task after saving new sailing id
 Priority update (2026-09-25): User deferred harbours/zoom and requested a review of boat-feel todos. Recommend WEB-020 first; WEB-021, WEB-019, WEB-017 and WEB-022 remain related backlog work. No new phase started.
 
 Phase 11 authorization (2026-09-25): User accepted WEB-020. Complete one assist/control/feedback phase and stop; WEB-016 remains deferred.
+
+Phase 12 authorization (2026-09-25): User requested the next task after Phase 11. WEB-021 is selected; preserve the deferred harbour/zoom boundary and stop for review after publishing.

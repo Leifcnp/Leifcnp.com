@@ -1,6 +1,6 @@
 # Leif Pedersen — Under way
 
-The portfolio uses Vite, TypeScript and Three.js. Phase 11 adds screen-relative steering, 75% auto-trim and a manual sweet-spot surge with white foam and optional synthesized wind rush. Phase 10 adds translucent content drawers and a compact phone reading sheet, keeping the boat visible during scanner voyages. Phase 9 combines wind-driven sailing (WEB-012), tighter turns (WEB-014) and wind-load heel (WEB-018). Trim the larger original mainsail, steer across the wind and tack to make progress upwind. The shared swells, curved wake, offshore storm and accessible scanner remain. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land/docking radii and content references independently of rendering.
+The portfolio uses Vite, TypeScript and Three.js. Phase 12 adds nonlinear wind-load heel up to 20 degrees, authored top-rail and deck contact checks, and a shared rendered-triangle water sampler; it keeps the original hull, wave field and water geometry. Phase 11 adds screen-relative steering, 75% auto-trim and a manual sweet-spot surge with white foam and optional synthesized wind rush. Phase 10 adds translucent content drawers and a compact phone reading sheet, keeping the boat visible during scanner voyages. Phase 9 combines wind-driven sailing (WEB-012), tighter turns (WEB-014) and wind-load heel (WEB-018). Trim the larger original mainsail, steer across the wind and tack to make progress upwind. The shared swells, curved wake, offshore storm and accessible scanner remain. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land/docking radii and content references independently of rendering.
 
 The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after the Phase 1 archival checks. The old version remains recoverable in Git history at commit `863b788`; it is not part of the current build or deployment path.
 
@@ -73,10 +73,20 @@ Pause cancels scanner travel at the current position. Category navigation while 
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop after Phase 11 for sailing-feel review. On 2026-09-25 the user deferred WEB-016 harbours/zoom to prioritize boat feel. WEB-020 is complete; stronger reach heel/railwash (WEB-021), wind streams/flags/spray (WEB-019), incoming-wave variation/direction (WEB-017) and shoreline interaction (WEB-022) are related backlog tasks.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop after Phase 12 for review; local browser verification passes and publication is pending. On 2026-09-25 the user deferred WEB-016 harbours/zoom to prioritize boat feel. WEB-021 is implemented locally; the next candidate is WEB-019 wind cues, flags and spray. WEB-016 harbours, WEB-017 incoming-wave variation/direction and WEB-022 shoreline interaction remain deferred.
 
 
 ## Verification and VM graphics
+
+Phase 12 passes 137 native cases, typecheck and production build. It verifies
+bounded nonlinear sail heel up to 20 degrees with combined roll capped at 0.4
+radians, authored rail/deck clearances, and the shared faceted-water sampler
+over the existing grid without changing geometry or wave forces. The working
+deck, cockpit and mast retain at least 0.12 units of dry clearance; outer-edge
+rail wash is limited to 0.06 units. Pause/reset/hidden/reduced-motion cleanup
+and the original fixed spray pool are covered. Six production layouts, actual keyboard/touch/scanner/lifecycle behavior and
+normal-camera hull-contact scenes pass. Publication remains pending. See
+[Phase 12 verification](artifacts/phase12/VERIFICATION.md).
 
 Phase 11 passes 120 native cases, strict build, deterministic auto/manual/tack
 and lifecycle checks, six local/production layouts and public desktop/mobile

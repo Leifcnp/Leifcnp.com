@@ -4,15 +4,14 @@
 
 The user requested a future visual/physical refinement after WEB-018: make a
 loaded beam or broad reach heel to roughly 15–20 degrees, let the leeward rail
-sit slightly into the water, and show bow spray. This is planning only. The
-2026-09-25 queue review defers WEB-016 harbours/zoom to focus on boat feel.
-WEB-020 controls is recommended first; stronger heel/contact is part of the
-following feedback work and remains unstarted until selected.
+sit slightly into the water, and show bow spray. This is active Phase 12:
+on 2026-09-25 the user requested the next task after the published WEB-020
+controls phase. Harbours/zoom remain deferred. Complete and publish this
+bounded hull-contact phase through the existing master/docs workflow, then stop.
 
 WEB-018 already supplies bounded wind heel, shared pose smoothing, a small
 heel-related buoyancy correction, and 6,528 actual hull-contact samples. This
-plan supersedes any future “dry rail” visual-only idea only when WEB-021 is
-later selected. It must preserve the completed WEB-018 zero-load, reduced
+authorized plan supersedes the earlier completely dry outer-rail constraint. It must preserve the completed WEB-018 zero-load, reduced
 motion, storm, scanner, and contact evidence.
 
 ## Goal and boundaries
@@ -127,3 +126,57 @@ WEB-019 spray pool or introduce a new animation loop.
 Deliver one bounded heel/contact candidate with before/after evidence at normal
 camera scale, then stop for user review before changing wave direction,
 weather, sound, or geometry proportions.
+
+## Active implementation contract
+
+- Pose/contact owns the actual Three.js-transformed bow and leeward-rail points,
+  water heights/clearances and relative closing speed against the shared sampler.
+  Contact records are refreshed after the smoothed visible pose, never inferred
+  from a second flat boat or independent clock. Reset drops derivative history.
+- Distinguish the shallow outer leeward margin from the central working deck.
+  Quantify any relaxed outer-edge bound; retain dry central deck/cockpit/mast
+  checks and continuous hull/water intersection across thousands of frames.
+- Extend heel based on real automatic/manual sailing loads, not only an
+  artificial full-power fixture. Preserve a 0.4-radian combined roll cap and
+  smooth changes through tacks/spill. No horizontal dynamics or hull scaling.
+- The spray helper owns one fixed pool, initially 48 particles and one original
+  instanced mesh, shared by airborne bow accents and rail wash. Existing 96
+  wake particles and boost feedback remain. No textures, new RAF or audio.
+- Root calls spray after vessel/contact updates with the same elapsed time;
+  clears it on scanner takeover/arrival/reset, and freezes or clears it during
+  pause/hidden/reduced-motion lifecycle. No emission at idle/reverse or without
+  the corresponding hull/water contact. Browser review decides final size/count.
+- Root owns createWaterWorld.ts and documentation. Physics owns pose.ts,
+  createVessel.ts, contact helper and pose/contact tests. Feedback owns the new
+  createHullSpray.ts and its tests. Audit owns temporary QA harness/evidence.
+
+## Contact sampling correction found during integration
+
+The original analytic height can differ substantially from the rendered
+triangles in the twelve-unit offshore grid. A measured case at (−185, 0), time 25.5
+had positive analytic central-deck clearance yet intersected the visible
+water. Share the existing grid axis/tuning and alternating triangle layout
+between the renderer and a pure faceted-height sampler. The hull pose, contact
+and spray re-entry use this same visible surface. Wave components, vertex
+positions, water geometry budgets, horizontal forces and storm current stay
+unchanged. Compare sampler output against actual rendered triangle vertices
+before re-running contact and visual tests.
+
+## Implemented candidate and local evidence
+
+The original geometry remains. Sail-only heel now caps at 20° with a nonlinear
+load/crosswind response and the existing 0.4-radian total cap. The actual top
+rail midpoint can dip to −0.055 units; outer deck guards limit wash to −0.06
+and working deck/cockpit/mast guards retain +0.12. Support is calculated from
+the current target base and constrained after smoothing. All visible contacts
+and spray use the shared rendered-triangle sampler; horizontal forces and
+water mesh geometry remain unchanged.
+
+The 48-particle pool renders in two transparent passes. Forward closing bow
+contact emits droplets; steady moving loaded rail contact can sustain wash.
+No extra RAF/audio/assets. Review of real auto/manual loads, 137 native tests,
+9,968 contact frames, independent actual-ocean triangle checks, world lifecycle,
+six production layouts and normal-camera desktop/mobile storm/tack scenes is
+recorded in [verification](../../artifacts/phase12/VERIFICATION.md). Publish
+through master/docs, verify exact-SHA/public resources and interactions, then
+stop for user review.

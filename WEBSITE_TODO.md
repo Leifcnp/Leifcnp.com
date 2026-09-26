@@ -8,15 +8,8 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; the next candidate is WEB-021 after review.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is now active Phase 12 after user review.
 Other entries remain Backlog and harbours remain deferred.
-
-- [ ] WEB-021 — Exaggerate reach heeling with a dipping leeward rail and bow spray.
-  - Requested (2026-09-24): Lean the hull 15–20° on beam/broad reaches, submerge the leeward rail slightly and shoot spray from the bow.
-  - Acceptance criteria: Wind loading visibly rolls the custom hull 15–20° on powered beam/broad reaches, changes side naturally across tacks and settles when spilling wind. Allow a controlled shallow leeward-rail dip while keeping buoyancy/wave contact credible and navigation safe; tie original pooled bow spray to actual water contact and wind. Preserve pause/reset/reduced motion, scanner access and finite mobile-friendly state.
-  - Progress: Future refinement of completed WEB-018, whose Phase 9 behavior/evidence remains preserved. Prioritize within the boat-feel group ahead of deferred harbours. Share spray ownership with WEB-019; implementation remains unstarted.
-  - Next step: When selected, compare stronger reach-load curves and rail-contact poses using the existing shared wave sampler, then review visible heel/spray before final tuning.
-  - Plan: [plans/WEB-021/plan.md](plans/WEB-021/plan.md).
 
 - [ ] WEB-019 — Make wind direction visible through flags, wind effects and spray.
   - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
@@ -58,7 +51,13 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-No tasks in progress. Phase 11 is published; waiting for user review.
+- [ ] WEB-021 — Exaggerate reach heeling with a dipping leeward rail and bow spray.
+  - Requested (2026-09-24): Lean the hull 15–20° on beam/broad reaches, submerge the leeward rail slightly and shoot spray from the bow.
+  - Acceptance criteria: Wind loading visibly rolls the custom hull 15–20° on powered beam/broad reaches, changes side naturally across tacks and settles when spilling wind. Allow a controlled shallow leeward-rail dip while keeping buoyancy/wave contact credible and navigation safe; tie original pooled bow spray to actual water contact and wind. Preserve pause/reset/reduced motion, scanner access and finite mobile-friendly state.
+  - Authorization (2026-09-25): After the published Phase 11 review, the user requested “ok next task”. WEB-021 is selected as Phase 12, continuing the verified publication workflow.
+  - Progress: Implementation and local verification pass: stronger mirrored heel, actual rail/deck support, shared rendered-water contact and bounded bow/rail spray. Luna implementation/review and root integration preserve custom geometry, steering, trim and the wave field. See Phase 12 verification.
+  - Next step: Publish the verified build through master/docs, check exact-SHA Pages and public desktop/mobile assets/interactions, then stop for review.
+  - Plan: [plans/WEB-021/plan.md](plans/WEB-021/plan.md).
 
 ## Blocked
 

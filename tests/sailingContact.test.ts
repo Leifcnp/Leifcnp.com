@@ -5,7 +5,8 @@ import * as THREE from 'three'
 import { createVessel } from '../src/world/createVessel.ts'
 import { createVesselState, stepVessel } from '../src/world/vessel/kinematics.ts'
 import { calculateSailResponse } from '../src/world/vessel/sailResponse.ts'
-import { sampleWaterHeight } from '../src/world/waves.ts'
+import { sampleFacetedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
+import { sampleVesselWaterContact, VESSEL_CONTACT_POINTS } from '../src/world/vessel/hullContact.ts'
 
 interface ContactSummary {
   frames: number
@@ -22,7 +23,7 @@ function clearance(mesh: THREE.Mesh, time: number): { minimum: number; maximum: 
   let maximum = -Infinity
   for (let index = 0; index < positions.count; index++) {
     point.fromBufferAttribute(positions, index).applyMatrix4(mesh.matrixWorld)
-    const distance = point.y - sampleWaterHeight(point.x, point.z, time)
+    const distance = point.y - sampleFacetedWaterHeight(point.x, point.z, time)
     minimum = Math.min(minimum, distance)
     maximum = Math.max(maximum, distance)
   }
@@ -39,8 +40,12 @@ function fixture() {
     scene.updateMatrixWorld(true)
     const d = clearance(deck, time)
     const h = clearance(hull, time)
-    assert.ok(d.minimum > 0, `Deck under water in ${context}: ${d.minimum}`)
+    assert.ok(d.minimum >= -0.060001, `Outer deck wash too deep in ${context}: ${d.minimum}`)
     assert.ok(h.minimum < 0 && h.maximum > 0, `Hull lost water contact in ${context}: ${JSON.stringify(h)}`)
+    for (const local of [[0, 0.47, -0.18], [0, 0.465, -0.34], [-0.51, 0.47, -1.24], [0.51, 0.47, -1.24], [-0.51, 0.47, -0.4], [0.51, 0.47, -0.4]]) {
+      const p = new THREE.Vector3(...local).applyMatrix4(vessel.group.matrixWorld)
+      assert.ok(p.y - sampleFacetedWaterHeight(p.x, p.z, time) >= 0.119999, `Working deck wet in ${context}`)
+    }
     summary.frames++
     summary.minDeckClearance = Math.min(summary.minDeckClearance, d.minimum)
     summary.maxDeckClearance = Math.max(summary.maxDeckClearance, d.maximum)
@@ -104,4 +109,104 @@ test('each loaded, spilled and reduced-motion frame retains actual hull/water co
 
 test('live wind-driven tight turns and spill recovery preserve contact through pose smoothing', () => {
   assert.equal(measureTrajectories().frames, 1920)
+})
+
+test('contact points match actual Three.js YXZ hull transform on both tacks', () => {
+  for (const heading of [-2.4, 0.9]) for (const roll of [-0.34, 0.3]) {
+    const pose = { heave: 0.2, pitch: -0.17, roll }
+    const result = sampleVesselWaterContact(4, -3, heading, pose, 5.2, 2.6, 0.2, 3, 1, () => 0, undefined, 0.8, Math.sign(roll) * Math.PI / 2)
+    const group = new THREE.Group()
+    group.position.set(4, 0.4, -3)
+    group.rotation.set(pose.pitch, heading, roll, 'YXZ')
+    group.updateMatrixWorld(true)
+    const points = [[VESSEL_CONTACT_POINTS.bowPort, result.contact.bowPort], [VESSEL_CONTACT_POINTS.bowStarboard, result.contact.bowStarboard]] as const
+    for (const [local, actual] of points) {
+      const expected = new THREE.Vector3(local.x, local.y, local.z).applyMatrix4(group.matrixWorld)
+      assert.ok(expected.distanceTo(new THREE.Vector3(actual.x, actual.y, actual.z)) < 1e-9)
+    }
+    const side = roll > 0 ? -1 : 1
+    const expectedRail = new THREE.Vector3(side * 1.235, 0.45, -0.494).applyMatrix4(group.matrixWorld)
+    const rail = result.contact.leewardRail
+    assert.ok(expectedRail.distanceTo(new THREE.Vector3(rail.x, rail.y, rail.z)) < 1e-9)
+    assert.equal(result.contact.heelLoad, 0.8)
+  }
+})
+
+test('loaded support allows actual rail wash while preserving working deck clearance', () => {
+  const { vessel, record } = fixture()
+  const state = createVesselState(-30, -30)
+  vessel.setSailLoad(0.75, Math.PI / 2)
+  let dips = 0
+  for (let time = 0; time < 20; time += 0.25) {
+    vessel.resetPose(state, time)
+    record(time, `rail wash at ${time}`)
+    const contact = vessel.getWaterContact()
+    if (contact.leewardRail.clearance < 0) dips++
+    assert.ok(contact.leewardRail.clearance >= -0.055001)
+  }
+  assert.ok(dips > 0, 'The authored top rail must actually dip, not a lower proxy point')
+  vessel.dispose()
+})
+
+test('live support stays continuous across 30, 60 and 120 Hz tack and spill transitions', () => {
+  const environment = { worldLimit: 220, obstacles: [], sailingEnabled: true, stormEnabled: true }
+  for (const rate of [30, 60, 120]) {
+    for (const [initialX, initialZ] of [[-18, -22], [185, 0]]) {
+      const { vessel, record } = fixture()
+      const dt = 1 / rate
+      let state = { ...createVesselState(initialX, initialZ), heading: 0 }
+      vessel.resetPose(state, 0)
+      let previousPose = vessel.getPose()
+      let maximumHeaveStep = 0
+      let maximumRollStep = 0
+      for (let frame = 0; frame < rate * 8; frame += 1) {
+        const time = (frame + 1) * dt
+        const segment = Math.floor(time / 2) % 4
+        vessel.setReducedMotion(segment === 3)
+        vessel.setSailLoad(segment === 1 ? 0 : 0.75, segment === 2 ? -Math.PI / 2 : Math.PI / 2)
+        state = stepVessel(
+          state,
+          { throttle: 0, rudder: segment === 2 ? -0.7 : 0.7, brake: segment === 1, sailAngle: Math.PI / 4 },
+          dt,
+          environment,
+          frame * dt,
+        )
+        vessel.update(state, time, dt)
+        record(time, `support continuity ${rate}Hz frame ${frame}`)
+        const pose = vessel.getPose()
+        maximumHeaveStep = Math.max(maximumHeaveStep, Math.abs(pose.heave - previousPose.heave))
+        maximumRollStep = Math.max(maximumRollStep, Math.abs(pose.roll - previousPose.roll))
+        assert.ok(Object.values(pose).every(Number.isFinite))
+        const contact = vessel.getWaterContact()
+        const contactNumbers = [
+          contact.heelLoad,
+          contact.forwardSpeed,
+          contact.sailPower,
+          contact.relativeWindAngle,
+          contact.bowPort.x,
+          contact.bowPort.y,
+          contact.bowPort.z,
+          contact.bowPort.clearance,
+          contact.bowPort.closingSpeed,
+          contact.bowStarboard.x,
+          contact.bowStarboard.y,
+          contact.bowStarboard.z,
+          contact.bowStarboard.clearance,
+          contact.bowStarboard.closingSpeed,
+          contact.leewardRail.clearance,
+          contact.leewardRail.closingSpeed,
+        ]
+        assert.ok(contactNumbers.every(Number.isFinite))
+        previousPose = pose
+      }
+      // The support interval is bounded and filtered; no frame may jump by a
+      // visible hull height; the bound tightens with smaller frame durations.
+      assert.ok(maximumHeaveStep < 8.5 / rate, `${rate}Hz ${initialX},${initialZ} heave step ${maximumHeaveStep}`)
+      assert.ok(maximumRollStep < 3.1 / rate, `${rate}Hz ${initialX},${initialZ} roll step ${maximumRollStep}`)
+      vessel.resetPose(state, 12)
+      assert.equal(vessel.getWaterContact().bowPort.closingSpeed, 0)
+      assert.equal(vessel.getWaterContact().bowStarboard.closingSpeed, 0)
+      vessel.dispose()
+    }
+  }
 })

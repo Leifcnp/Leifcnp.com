@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-09-25",
+  "source": "git e2f8f4f snapshot",
+  "harness": "/tmp/leifcnp-phase12-real-sailing-v2.mjs",
+  "durationSeconds": 12,
+  "sampleRateHz": 120,
+  "environment": "Pinned git e2f8f4f; sailingEnabled=true, stormEnabled=false; manual controller follows calculateSailResponse suggestedAngle via signed trim input",
+  "scenarios": [
+    {
+      "mode": "auto",
+      "heading": 0,
+      "headingDegrees": 0,
+      "peakRollDegrees": 18.1319,
+      "meanAbsRollDegrees": 9.1848,
+      "maxPower": 0.7534,
+      "meanPower": 0.6019,
+      "meanRelativeWindAngleDegrees": 42.8194,
+      "maxSpeed": 9.8337,
+      "meanSpeed": 9.5444,
+      "minDeckClearance": 0.2918,
+      "tailMinDeckClearance": 0.312,
+      "boostFrames": 0
+    },
+    {
+      "mode": "auto",
+      "heading": 3.141592653589793,
+      "headingDegrees": 180,
+      "peakRollDegrees": 14.4914,
+      "meanAbsRollDegrees": 12.2284,
+      "maxPower": 0.7534,
+      "meanPower": 0.555,
+      "meanRelativeWindAngleDegrees": -42.1573,
+      "maxSpeed": 9.8689,
+      "meanSpeed": 9.6998,
+      "minDeckClearance": 0.4601,
+      "tailMinDeckClearance": 0.4649,
+      "boostFrames": 0
+    },
+    {
+      "mode": "auto",
+      "heading": 0.7853981633974483,
+      "headingDegrees": 45,
+      "peakRollDegrees": 10.9111,
+      "meanAbsRollDegrees": 6.6989,
+      "maxPower": 0.2978,
+      "meanPower": 0.1433,
+      "meanRelativeWindAngleDegrees": 36.8171,
+      "maxSpeed": 2.5341,
+      "meanSpeed": 2.1886,
+      "minDeckClearance": 0.5023,
+      "tailMinDeckClearance": 0.5689,
+      "boostFrames": 0
+    },
+    {
+      "mode": "auto",
+      "heading": -0.7853981633974483,
+      "headingDegrees": -45,
+      "peakRollDegrees": 20.818,
+      "meanAbsRollDegrees": 16.2979,
+      "maxPower": 0.5658,
+      "meanPower": 0.5184,
+      "meanRelativeWindAngleDegrees": 72.6044,
+      "maxSpeed": 8.478,
+      "meanSpeed": 8.2864,
+      "minDeckClearance": 0.4193,
+      "tailMinDeckClearance": 0.4193,
+      "boostFrames": 0
+    },
+    {
+      "mode": "auto",
+      "heading": 2.356194490192345,
+      "headingDegrees": 135,
+      "peakRollDegrees": 13.7535,
+      "meanAbsRollDegrees": 7.8321,
+      "maxPower": 0.3681,
+      "meanPower": 0.1302,
+      "meanRelativeWindAngleDegrees": -36.6092,
+      "maxSpeed": 2.5053,
+      "meanSpeed": 2.0846,
+      "minDeckClearance": 0.5156,
+      "tailMinDeckClearance": 0.5473,
+      "boostFrames": 0
+    },
+    {
+      "mode": "auto",
+      "heading": -2.356194490192345,
+      "headingDegrees": -135,
+      "peakRollDegrees": 17.2632,
+      "meanAbsRollDegrees": 7.0085,
+      "maxPower": 0.5648,
+      "meanPower": 0.5243,
+      "meanRelativeWindAngleDegrees": -82.7578,
+      "maxSpeed": 9.495,
+      "meanSpeed": 7.1671,
+      "minDeckClearance": 0.4528,
+      "tailMinDeckClearance": 0.5324,
+      "boostFrames": 0
+    },
+    {
+      "mode": "manual",
+      "heading": 0,
+      "headingDegrees": 0,
+      "peakRollDegrees": 19.5433,
+      "meanAbsRollDegrees": 9.5587,
+      "maxPower": 1,
+      "meanPower": 0.667,
+      "meanRelativeWindAngleDegrees": 41.4588,
+      "maxSpeed": 10.3922,
+      "meanSpeed": 10.0005,
+      "minDeckClearance": 0.2693,
+      "tailMinDeckClearance": 0.29,
+      "boostFrames": 169
+    },
+    {
+      "mode": "manual",
+      "heading": 3.141592653589793,
+      "headingDegrees": 180,
+      "peakRollDegrees": 14.4914,
+      "meanAbsRollDegrees": 9.0582,
+      "maxPower": 1,
+      "meanPower": 0.7615,
+      "meanRelativeWindAngleDegrees": -42.3981,
+      "maxSpeed": 10.3803,
+      "meanSpeed": 9.6559,
+      "minDeckClearance": 0.4057,
+      "tailMinDeckClearance": 0.415,
+      "boostFrames": 169
+    },
+    {
+      "mode": "manual",
+      "heading": 0.7853981633974483,
+      "headingDegrees": 45,
+      "peakRollDegrees": 10.8319,
+      "meanAbsRollDegrees": 6.4854,
+      "maxPower": 0.3007,
+      "meanPower": 0.1501,
+      "meanRelativeWindAngleDegrees": 36.1908,
+      "maxSpeed": 2.7092,
+      "meanSpeed": 2.3949,
+      "minDeckClearance": 0.4936,
+      "tailMinDeckClearance": 0.5173,
+      "boostFrames": 0
+    },
+    {
+      "mode": "manual",
+      "heading": -0.7853981633974483,
+      "headingDegrees": -45,
+      "peakRollDegrees": 13.6412,
+      "meanAbsRollDegrees": 10.685,
+      "maxPower": 0.74,
+      "meanPower": 0.7165,
+      "meanRelativeWindAngleDegrees": 63.1373,
+      "maxSpeed": 10.6511,
+      "meanSpeed": 9.5259,
+      "minDeckClearance": 0.3831,
+      "tailMinDeckClearance": 0.4053,
+      "boostFrames": 169
+    },
+    {
+      "mode": "manual",
+      "heading": 2.356194490192345,
+      "headingDegrees": 135,
+      "peakRollDegrees": 13.6419,
+      "meanAbsRollDegrees": 7.5522,
+      "maxPower": 0.3681,
+      "meanPower": 0.1497,
+      "meanRelativeWindAngleDegrees": -36.233,
+      "maxSpeed": 2.6546,
+      "meanSpeed": 2.212,
+      "minDeckClearance": 0.5132,
+      "tailMinDeckClearance": 0.5444,
+      "boostFrames": 0
+    },
+    {
+      "mode": "manual",
+      "heading": -2.356194490192345,
+      "headingDegrees": -135,
+      "peakRollDegrees": 19.53,
+      "meanAbsRollDegrees": 6.5773,
+      "maxPower": 0.7747,
+      "meanPower": 0.7502,
+      "meanRelativeWindAngleDegrees": -53.8097,
+      "maxSpeed": 12.1762,
+      "meanSpeed": 10.9796,
+      "minDeckClearance": 0.3635,
+      "tailMinDeckClearance": 0.4036,
+      "boostFrames": 169
+    }
+  ],
+  "finding": "With a 12-second run and ideal manual controller, auto sustained mean absolute heel is 7.0–16.3 degrees and manual is 6.6–10.7 degrees across sampled headings; auto peak heel reaches 20.8 degrees and manual 19.5 degrees. Auto/manual power and apparent-angle metrics are recorded per scenario. Flat wind-only beam heel remains ±0.26 rad (±14.9 degrees), with head/downwind near zero. Actual authored hull-top, outer-deck, and center-deck points all retain positive clearance in the 96-case audit; minimum outer deck clearance is 0.1601 and center deck 0.5139. The lower synthetic hullContact rail support intentionally sits below these authored rail/deck surfaces for shallow wash.",
+  "sustainedAverageFromSeconds": 9,
+  "flatWindOnly": [
+    {
+      "relativeWindAngle": -1.5707963267948966,
+      "roll": -0.26,
+      "rollDegrees": -14.896902673401405,
+      "heave": 0.1
+    },
+    {
+      "relativeWindAngle": 0,
+      "roll": 0,
+      "rollDegrees": 0,
+      "heave": 0
+    },
+    {
+      "relativeWindAngle": 1.5707963267948966,
+      "roll": 0.26,
+      "rollDegrees": 14.896902673401405,
+      "heave": 0.1
+    },
+    {
+      "relativeWindAngle": 3.141592653589793,
+      "roll": 3.1840816777831187e-17,
+      "rollDegrees": 1.8243444176190683e-15,
+      "heave": 1.2246467991473533e-17
+    }
+  ],
+  "railAudit": {
+    "source": "/tmp/leifcnp-phase12-rail-audit.mjs",
+    "rowCount": 96,
+    "coverage": {
+      "radii": [
+        0,
+        185
+      ],
+      "headings": [
+        0,
+        1.5707963267948966,
+        3.141592653589793,
+        -1.5707963267948966
+      ],
+      "times": [
+        0,
+        3.7,
+        11.3
+      ],
+      "loaded": [
+        false,
+        true
+      ],
+      "reduced": [
+        false,
+        true
+      ]
+    },
+    "minimumAuthoredHullTopClearance": 0.09108975536389063,
+    "minimumAuthoredOuterDeckClearance": 0.16011669959427094,
+    "minimumAuthoredCenterDeckClearance": 0.5139461914901529,
+    "outerDeckBelowMinus008": 0,
+    "centerDeckBelowZero": 0
+  }
+}

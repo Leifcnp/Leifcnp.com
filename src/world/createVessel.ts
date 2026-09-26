@@ -1,11 +1,17 @@
 import * as THREE from 'three';
-import { sampleWaterHeight } from './waves.ts';
+import { sampleFacetedWaterHeight } from './waterSurfaceGrid.ts';
 import { VESSEL_TUNING, type VesselState } from './vessel/kinematics.ts';
 import {
   calculateVesselPose,
   sampleVesselSurface,
   VESSEL_POSE_TUNING,
 } from './vessel/pose.ts';
+import {
+  calculateHullSupport,
+  sampleVesselWaterContact,
+  type VesselContactHistory,
+  type VesselWaterContact,
+} from './vessel/hullContact.ts';
 
 export interface VesselPose {
   readonly heave: number;
@@ -20,6 +26,7 @@ export interface VesselController {
   setReducedMotion(reduced: boolean): void;
   setSailAngle(signedRadians: number, snap?: boolean): void;
   setSailLoad(power: number, relativeWindAngle: number): void;
+  getWaterContact(): Readonly<VesselWaterContact>;
   getSailAngle(): number;
   getPose(): Readonly<VesselPose>;
   dispose(): void;
@@ -208,6 +215,17 @@ export function createVessel(scene: THREE.Scene): VesselController {
   let sailAngleTarget = SAIL_MAX_ANGLE;
   let sailPower = 0;
   let relativeWindAngle = 0;
+  let contact: VesselWaterContact = {
+    bowPort: { x: 0, y: 0, z: 0, waterHeight: 0, clearance: 0, closingSpeed: 0 },
+    bowStarboard: { x: 0, y: 0, z: 0, waterHeight: 0, clearance: 0, closingSpeed: 0 },
+    leewardRail: { x: 0, y: 0, z: 0, waterHeight: 0, clearance: 0, closingSpeed: 0 },
+    leewardSide: 'starboard',
+    heelLoad: 0,
+    sailPower: 0,
+    relativeWindAngle: 0,
+    forwardSpeed: 0,
+  };
+  let contactHistory: VesselContactHistory | undefined;
   let disposed = false;
 
   const normalizeSailAngle = (signedRadians: number): number => {
@@ -244,7 +262,7 @@ export function createVessel(scene: THREE.Scene): VesselController {
       state.heading,
       VESSEL_LENGTH,
       VESSEL_WIDTH,
-      (worldX, worldZ) => ({ height: sampleWaterHeight(worldX, worldZ, safeTime) }),
+      (worldX, worldZ) => ({ height: sampleFacetedWaterHeight(worldX, worldZ, safeTime) }),
     );
     const forwardSpeed = state.velocityX * Math.sin(state.heading) + state.velocityZ * Math.cos(state.heading);
     const target = calculateVesselPose(
@@ -260,9 +278,55 @@ export function createVessel(scene: THREE.Scene): VesselController {
     const validDelta = Number.isFinite(deltaSeconds) && deltaSeconds > 0 ? Math.min(deltaSeconds, 0.25) : 0;
     const heaveSmoothing = snap ? 1 : 1 - Math.exp(-validDelta * VESSEL_POSE_TUNING.heaveResponseRate);
     const tiltSmoothing = snap ? 1 : 1 - Math.exp(-validDelta * VESSEL_POSE_TUNING.tiltResponseRate);
-    pose.heave = approach(pose.heave, target.heave, heaveSmoothing);
     pose.pitch = approach(pose.pitch, target.pitch, tiltSmoothing);
     pose.roll = approach(pose.roll, target.roll, tiltSmoothing);
+    const basePose = { ...pose, heave: target.heave };
+    const effectiveSailPower = reducedMotion ? 0 : sailPower;
+    const preliminaryContact = sampleVesselWaterContact(
+      state.x,
+      state.z,
+      state.heading,
+      basePose,
+      VESSEL_LENGTH,
+      VESSEL_WIDTH,
+      WATER_CLEARANCE,
+      forwardSpeed,
+      safeTime,
+      (worldX, worldZ) => sampleFacetedWaterHeight(worldX, worldZ, safeTime),
+      snap ? undefined : contactHistory,
+      effectiveSailPower,
+      relativeWindAngle,
+    );
+    const support = calculateHullSupport(
+      preliminaryContact.contact,
+      basePose,
+      WATER_CLEARANCE,
+      (worldX, worldZ) => sampleFacetedWaterHeight(worldX, worldZ, safeTime),
+      state.x,
+      state.z,
+      state.heading,
+    );
+    pose.heave = Math.min(support.maximumHeave, Math.max(
+      support.minimumHeave,
+      approach(pose.heave, support.targetHeave, heaveSmoothing),
+    ));
+    const waterContact = sampleVesselWaterContact(
+      state.x,
+      state.z,
+      state.heading,
+      pose,
+      VESSEL_LENGTH,
+      VESSEL_WIDTH,
+      WATER_CLEARANCE,
+      forwardSpeed,
+      safeTime,
+      (worldX, worldZ) => sampleFacetedWaterHeight(worldX, worldZ, safeTime),
+      snap ? undefined : contactHistory,
+      effectiveSailPower,
+      relativeWindAngle,
+    );
+    contact = waterContact.contact;
+    contactHistory = waterContact.history;
     group.position.set(
       Number.isFinite(state.x) ? state.x : 0,
       pose.heave + WATER_CLEARANCE,
@@ -283,6 +347,7 @@ export function createVessel(scene: THREE.Scene): VesselController {
     },
     resetPose: (state, timeSeconds = 0): void => {
       if (disposed) return;
+      contactHistory = undefined;
       updatePose(state, timeSeconds, 0, true);
     },
     setReducedMotion: (reduced): void => {
@@ -301,6 +366,12 @@ export function createVessel(scene: THREE.Scene): VesselController {
       relativeWindAngle = Number.isFinite(windAngle) ? windAngle : 0;
     },
     getSailAngle: (): number => sailAngle,
+    getWaterContact: (): Readonly<VesselWaterContact> => ({
+      ...contact,
+      bowPort: { ...contact.bowPort },
+      bowStarboard: { ...contact.bowStarboard },
+      leewardRail: { ...contact.leewardRail },
+    }),
     getPose: (): Readonly<VesselPose> => ({ ...pose }),
     dispose: (): void => {
       if (disposed) return;

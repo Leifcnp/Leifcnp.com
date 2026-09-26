@@ -122,6 +122,16 @@ test('wind heel responds to power, spills to upright, and respects reduced motio
   assert.equal(reduced.roll, 0)
 })
 
+test('ordinary powered reach loads reach 15–20 degrees and mirror across tacks', () => {
+  const loaded = calculateVesselPose(FLAT_SURFACE, { sailPower: 0.52, relativeWindAngle: Math.PI / 2 })
+  const mirrored = calculateVesselPose(FLAT_SURFACE, { sailPower: 0.52, relativeWindAngle: -Math.PI / 2 })
+  assert.ok(Math.abs(loaded.roll) >= 0.26, `loaded roll ${loaded.roll}`)
+  assert.ok(Math.abs(loaded.roll) <= Math.PI / 9)
+  const broad = calculateVesselPose(FLAT_SURFACE, { sailPower: 0.85, relativeWindAngle: 3 * Math.PI / 4 })
+  assert.ok(broad.roll >= Math.PI / 12 && broad.roll <= Math.PI / 9)
+  assert.ok(Math.abs(loaded.roll + mirrored.roll) < 1e-12)
+})
+
 test('wind heel remains bounded with invalid or combined loading', () => {
   const combined = calculateVesselPose(
     {

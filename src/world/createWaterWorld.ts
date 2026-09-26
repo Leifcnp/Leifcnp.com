@@ -12,6 +12,7 @@ import {
 import { createCameraRig } from './createCameraRig';
 import { createVessel } from './createVessel';
 import { createWake } from './effects/createWake';
+import { createHullSpray } from './effects/createHullSpray';
 import { planSafeDockingRoute } from '../navigation/routePlanner';
 import {
   advanceScan as advanceScannerScan,
@@ -164,9 +165,11 @@ export function createWaterWorld(
   const landmarks = createLandmarks(scene, options.islands ?? []);
   const vessel = createVessel(scene);
   const wake = createWake(scene);
+  const hullSpray = createHullSpray(scene);
   let reducedMotion = Boolean(initialReducedMotion);
   vessel.setReducedMotion(reducedMotion);
   wake.setReducedMotion(reducedMotion);
+  hullSpray.setReducedMotion(reducedMotion);
   // Keep a scanner arrival alongside its island while the visitor reads.
   // Helm input releases the mooring; ordinary free sailing still feels swell.
   let horizontallyMoored = false;
@@ -239,6 +242,7 @@ export function createWaterWorld(
 
   const refreshStaticFrame = (): void => {
     wake.reset();
+    hullSpray.reset();
     updateSailing(true);
     vessel.resetPose(vesselState, elapsed);
     cameraRig.snapTo(vesselState.x, vesselState.z);
@@ -345,6 +349,11 @@ export function createWaterWorld(
       vessel.update(vesselState, elapsed, delta);
       wake.setTrimBoost(scannerIsActive(scannerState) || horizontallyMoored ? 0 : trimAssist.boost);
       wake.update(vesselState, elapsed, delta);
+      if (scannerIsActive(scannerState) || horizontallyMoored) {
+        hullSpray.reset();
+      } else {
+        hullSpray.update(vessel.getWaterContact(), elapsed, delta);
+      }
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
     }
 
@@ -393,6 +402,7 @@ export function createWaterWorld(
       vesselInput = { throttle: 0, rudder: 0, brake: false };
       trimAssist = clearTrimBoost(trimAssist);
       wake.setTrimBoost(0);
+      hullSpray.reset();
       renderer.render(scene, camera);
     } else {
       startRendering();
@@ -409,6 +419,7 @@ export function createWaterWorld(
       vesselInput = { throttle: 0, rudder: 0, brake: false };
       trimAssist = clearTrimBoost(trimAssist);
       wake.setTrimBoost(0);
+      hullSpray.reset();
       renderer.render(scene, camera);
     } else {
       startRendering();
@@ -427,6 +438,7 @@ export function createWaterWorld(
               vesselInput = { throttle: 0, rudder: 0, brake: false };
               trimAssist = clearTrimBoost(trimAssist);
               wake.setTrimBoost(0);
+              hullSpray.reset();
               renderer.render(scene, camera);
             } else {
               startRendering();
@@ -462,6 +474,7 @@ export function createWaterWorld(
       reducedMotion = reduced;
       vessel.setReducedMotion(reduced);
       wake.setReducedMotion(reduced);
+      hullSpray.setReducedMotion(reduced);
       if (isMotionPaused()) renderer.render(scene, camera);
     },
     setInput: (input): void => {
@@ -487,6 +500,7 @@ export function createWaterWorld(
       if (nextInput.brake) {
         trimAssist = clearTrimBoost(trimAssist);
         wake.setTrimBoost(0);
+        hullSpray.reset();
       }
       options.onSailingUpdate?.(getSailingState());
     },
@@ -507,6 +521,7 @@ export function createWaterWorld(
     resetVessel: (): void => {
       if (disposed) return;
       wake.reset();
+      hullSpray.reset();
       horizontallyMoored = false;
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
@@ -544,6 +559,7 @@ export function createWaterWorld(
         vesselInput = { throttle: 0, rudder: 0, brake: false };
         trimAssist = clearTrimBoost(trimAssist);
         wake.setTrimBoost(0);
+        hullSpray.reset();
         publishScan('failed', islandId, route.message);
         return;
       }
@@ -551,6 +567,7 @@ export function createWaterWorld(
       vesselInput = { throttle: 0, rudder: 0, brake: false };
       trimAssist = clearTrimBoost(trimAssist);
       wake.setTrimBoost(0);
+      hullSpray.reset();
       horizontallyMoored = false;
       const current = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
       applyScannerState(startScannerScan(current, { islandId, route: route.points }));
@@ -585,6 +602,7 @@ export function createWaterWorld(
       landmarks.dispose();
       vessel.dispose();
       wake.dispose();
+      hullSpray.dispose();
       cameraRig.dispose();
       ocean.dispose();
       renderer.dispose();

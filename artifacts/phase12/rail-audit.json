@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-09-25",
+  "source": "current shared checkout, read-only WEB-021 audit",
+  "harness": "/tmp/leifcnp-phase12-rail-audit.mjs",
+  "rowCount": 96,
+  "coverage": {"radii":[0,185],"headings":[0,1.5707963267948966,3.141592653589793,-1.5707963267948966],"times":[0,3.7,11.3],"loaded":[false,true],"reduced":[false,true]},
+  "minimumAuthoredHullTopClearance": 0.0910897554,
+  "minimumAuthoredOuterDeckClearance": 0.1601166996,
+  "minimumAuthoredCenterDeckClearance": 0.5139461915,
+  "outerDeckBelowMinus008": 0,
+  "centerDeckBelowZero": 0,
+  "interpretation": "Authored hull top and deck vertices remain above sampled water in all cases. Lower hullContact rail points are deliberate wash sensors below deck geometry and should not be treated as the authored rail surface."
+}
