@@ -1,6 +1,6 @@
 # WEB-017 — Wider-view wave pattern correction
 
-2026-09-25. Local verification complete; public deployment pending.
+2026-09-25. Published and publicly verified.
 
 The user still saw repetition in the first correction (`b5b619a`) when viewing
 more water. This reopens WEB-017 and stops before shoreline or harbour work.
@@ -68,7 +68,4 @@ and visually reviewed both scales, and verified the complete sailing site.
 
 ## Publication
 
-Pending the exact application commit's successful Pages run, matching public
-HTML/JS/CSS/favicon and public desktop/mobile interaction check. Keep WEB-017
-In progress until verified. Then stop for the user's visual/feel review.
-WEB-022 remains queued; WEB-016 harbours/zoom remains deferred.
+Application commit `2061e581` is published on `origin/master`; [Pages run 36222447849](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36222447849) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build and public desktop/mobile interactions pass. See `public-assets.json` and `public/checks.json`. WEB-017 is Done and awaits user review. WEB-022 stays queued; WEB-016 harbours/zoom stays deferred.

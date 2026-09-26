@@ -8,7 +8,7 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; WEB-017 is reopened after wider-view repetition feedback; complete this correction before advancing.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; WEB-017’s wider-view correction is published and awaits user review.
 Other entries remain Backlog and harbours remain deferred.
 
 
@@ -36,7 +36,15 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-- [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
+No active implementation; awaiting wider-view wave review.
+
+## Blocked
+
+No blocked tasks.
+
+## Done
+
+- [x] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
   - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
   - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with the published WEB-012 wind field and published WEB-019 wind cues, without confusing wave propagation with the storm’s inward recovery current.
   - Reaffirmed (2026-09-24): User again requested clearer wave direction and more randomness, explicitly as a to-do only. Update this existing task rather than creating a duplicate.
@@ -47,16 +55,10 @@ Other entries remain Backlog and harbours remain deferred.
   - Correction completed (2026-09-25): Application commit `b5b619a5` is published on `origin/master`; [Pages run 36221055155](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36221055155) succeeded for the exact SHA.
   - Correction verification: 162 native tests, strict build, actual hull/contact/gradient and seeded spatial checks pass. Six final production layouts and public desktop/mobile controls/content/touch/fallbacks pass; public assets match. See [correction evidence](artifacts/phase14-refinement/VERIFICATION.md).
   - Second review (2026-09-25): The user still sees an obvious repeating pattern when zoomed out; subtle shared variation was insufficient.
-  - Progress: Reopened for wider-scale variety. Luna owns a broader deterministic wave mix; a second Luna audits pattern sources and cost. Root owns wide-view comparison, crest integration, full contact/lifecycle checks and publication.
   - Local verification: 165 native tests, strict build, normal/wide/phone visual comparison, spatial recurrence reduction, independent rendered contact, lifecycle and six production layouts pass. See [wider-view evidence](artifacts/phase14-pattern/VERIFICATION.md).
-  - Next step: Publish the tested wider-view correction, verify exact public assets and desktop/mobile interactions, then stop for review.
+  - Wider-view correction completed (2026-09-25): Application commit `2061e581` is published on `origin/master`; [Pages run 36222447849](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36222447849) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build and public desktop/mobile interactions pass.
+  - Review gate: Stop for user review of wave appearance/feel. WEB-022 stays queued and WEB-016 harbours/zoom stays deferred.
   - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
-
-## Blocked
-
-No blocked tasks.
-
-## Done
 
 
 - [x] WEB-019 — Make wind direction visible through flags, wind effects and spray.

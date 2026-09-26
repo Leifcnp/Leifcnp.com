@@ -199,3 +199,7 @@ and six production layouts pass. The extra smooth fields have measured CPU cost;
 mesh size is unchanged and crest quads decrease. See
 [verification](../../artifacts/phase14-pattern/VERIFICATION.md). Publish and verify
 the exact release, then stop for user review before advancing the queue.
+
+## Second correction release
+
+Application commit `2061e581` is published on `origin/master`; [Pages run 36222447849](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36222447849) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build and public desktop/mobile interactions pass. WEB-017 is Done; stop for visual/feel review. Shorelines and harbours remain untouched.

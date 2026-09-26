@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**WEB-017 reopened: break visible repetition at wider viewing scales.**
+**WEB-017 wider-view correction is published and awaits review.**
 The user requested “ok go for next todo” on 2026-09-25 after the verified
 Phase 13 wind-cue release. Preserve the current custom boat, controls and
 wind model. User review rejected the over-aligned bands: restore the original
@@ -55,7 +55,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-015 | Published Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
-| WEB-017 | In progress correction | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
+| WEB-017 | Published wider-view correction | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Published Phase 13 | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
@@ -117,3 +117,5 @@ Phase 14 release (2026-09-25): Application commit `cb100d62` is published on `or
 WEB-017 review correction (2026-09-25): User prefers the earlier interference pattern with added smooth complexity. Reopen this task, remove the five-degree direction restriction, and restore the original dominant swell and smaller crossing detail. No new phase or shoreline work.
 
 WEB-017 correction release (2026-09-25): Application commit `b5b619a5` is published on `origin/master`; [Pages run 36221055155](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36221055155) succeeded for the exact SHA. Exact public assets and public desktop/mobile checks pass. Stop for corrected-wave review.
+
+WEB-017 wider-view release (2026-09-25): Application commit `2061e581` is published on `origin/master`; [Pages run 36222447849](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36222447849) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build and public desktop/mobile interactions pass. Stop before any next phase.
