@@ -1,6 +1,6 @@
 import type { VesselInput } from '../world/vessel/kinematics'
 
-export type VesselControl = 'trimIn' | 'trimOut' | 'left' | 'right' | 'brake'
+export type VesselControl = 'up' | 'down' | 'left' | 'right' | 'trimIn' | 'trimOut' | 'brake'
 
 export interface VesselInputControllerOptions {
   /** Element containing buttons with `data-vessel-control` actions. */
@@ -9,6 +9,7 @@ export interface VesselInputControllerOptions {
   readonly onInput: (input: VesselInput) => void
   /** Optional callback for a separate reset button. */
   readonly onReset?: () => void
+  readonly onAutoTrim?: () => void
 }
 
 interface PointerIntent {
@@ -18,6 +19,8 @@ interface PointerIntent {
 }
 
 const CONTROL_NAMES: readonly VesselControl[] = [
+  'up',
+  'down',
   'trimIn',
   'trimOut',
   'left',
@@ -26,14 +29,16 @@ const CONTROL_NAMES: readonly VesselControl[] = [
 ]
 
 const KEY_CONTROLS: ReadonlyMap<string, VesselControl> = new Map([
-  ['w', 'trimIn'],
-  ['arrowup', 'trimIn'],
-  ['s', 'trimOut'],
-  ['arrowdown', 'trimOut'],
+  ['w', 'up'],
+  ['arrowup', 'up'],
+  ['s', 'down'],
+  ['arrowdown', 'down'],
   ['a', 'left'],
   ['arrowleft', 'left'],
   ['d', 'right'],
   ['arrowright', 'right'],
+  ['q', 'trimIn'],
+  ['e', 'trimOut'],
   [' ', 'brake'],
 ])
 
@@ -42,15 +47,21 @@ const EMPTY_INPUT: VesselInput = { throttle: 0, sheet: 0, rudder: 0, brake: fals
 /** Reduce any set of concurrently held controls to the shared physics intent. */
 export function vesselInputFromControls(activeControls: Iterable<VesselControl>): VesselInput {
   const controls = new Set(activeControls)
+  const screenX = Number(controls.has('right')) - Number(controls.has('left'))
+  const screenY = Number(controls.has('down')) - Number(controls.has('up'))
+  // The fixed isometric camera maps screen right to (+X, -Z), down to (+X, +Z).
+  // atan2 normalizes diagonal intent; no direction means no steering command.
+  const targetHeading = screenX || screenY
+    ? Math.atan2(screenX + screenY, screenY - screenX)
+    : undefined
   return {
     throttle: 0,
     sheet: controls.has('trimIn') === controls.has('trimOut')
       ? 0
       : controls.has('trimIn') ? -1 : 1,
-    rudder: controls.has('left') === controls.has('right')
-      ? 0
-      : controls.has('left') ? -1 : 1,
+    rudder: 0,
     brake: controls.has('brake'),
+    ...(targetHeading === undefined ? {} : { targetHeading }),
   }
 }
 
@@ -65,8 +76,10 @@ export class VesselInputController {
   private readonly root: HTMLElement
   private readonly onInput: (input: VesselInput) => void
   private readonly onReset?: () => void
+  private readonly onAutoTrim?: () => void
   private readonly buttons = new Map<VesselControl, HTMLButtonElement[]>()
   private resetButton?: HTMLButtonElement
+  private autoTrimButton?: HTMLButtonElement
   private readonly pressedKeys = new Map<string, VesselControl>()
   private readonly pressedButtons = new Map<HTMLButtonElement, VesselControl>()
   private readonly pointers = new Map<number, PointerIntent>()
@@ -85,6 +98,7 @@ export class VesselInputController {
     this.root = options.root
     this.onInput = options.onInput
     this.onReset = options.onReset
+    this.onAutoTrim = options.onAutoTrim
 
     for (const control of CONTROL_NAMES) {
       const buttons = Array.from(
@@ -117,6 +131,17 @@ export class VesselInputController {
       this.buttonHandlers.push({ button: resetButton, type: 'click', handler })
     }
 
+    const autoTrimButton = this.root.querySelector<HTMLButtonElement>('[data-vessel-auto-trim]')
+    this.autoTrimButton = autoTrimButton ?? undefined
+    if (autoTrimButton && this.onAutoTrim) {
+      const handler = () => {
+        this.releaseAll()
+        this.onAutoTrim?.()
+      }
+      autoTrimButton.addEventListener('click', handler)
+      this.buttonHandlers.push({ button: autoTrimButton, type: 'click', handler })
+    }
+
     this.emitIfChanged()
   }
 
@@ -135,6 +160,10 @@ export class VesselInputController {
     if (this.resetButton) {
       this.resetButton.disabled = !resetEnabled
       this.resetButton.setAttribute('aria-disabled', String(!resetEnabled))
+    }
+    if (this.autoTrimButton) {
+      this.autoTrimButton.disabled = !enabled
+      this.autoTrimButton.setAttribute('aria-disabled', String(!enabled))
     }
     this.root.toggleAttribute('data-controls-disabled', !enabled)
   }
@@ -264,6 +293,13 @@ export class VesselInputController {
       return
     }
     if (!this.enabled) return
+    if (key === 'm') {
+      if (event.repeat) return
+      event.preventDefault()
+      this.releaseAll()
+      this.onAutoTrim?.()
+      return
+    }
     const control = KEY_CONTROLS.get(key)
     if (!control) return
     event.preventDefault()
@@ -326,5 +362,5 @@ function isPortfolioUiTarget(target: EventTarget | null): boolean {
 }
 
 function sameInput(a: VesselInput, b: VesselInput): boolean {
-  return a.throttle === b.throttle && a.sheet === b.sheet && a.rudder === b.rudder && a.brake === b.brake && a.sailAngle === b.sailAngle
+  return a.throttle === b.throttle && a.sheet === b.sheet && a.rudder === b.rudder && a.brake === b.brake && a.sailAngle === b.sailAngle && a.targetHeading === b.targetHeading
 }

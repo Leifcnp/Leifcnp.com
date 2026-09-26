@@ -6,11 +6,11 @@ The user requested a future sailing-feel pass with two related goals: while
 turning, the boat should auto-trim into roughly 70–80% of available sail
 efficiency; a visitor who finds and holds the ideal manual trim should receive
 a noticeable but bounded speed surge, white foam, and wind-rush sound. This is
-planning only. WEB-015 translucent drawers remains the next selected task and
-WEB-016 local harbours follows it. Do not implement WEB-020 until it is
-explicitly selected for a review-gated phase.
+active Phase 11. On 2026-09-25 the user deferred harbours/zoom, reviewed the
+boat-feel queue and accepted WEB-020: “yes lets do that”. Continue the existing
+verified build/publication workflow and stop for review afterward.
 
-WEB-012/014/018 are completed history. The current controls are A/D (or left /
+WEB-012/014/018 are completed history. Before Phase 11 the controls were A/D (or left /
 right) for rudder and W/S (or up / down) for trim, with touch equivalents.
 The user also wants simple WASD to steer directly toward a desired heading.
 The first prototype must compare direct-heading WASD steering with the
@@ -24,7 +24,7 @@ freeze the existing bindings at the expense of the requested simple steering.
 Make ordinary steering forgiving without removing the value of learning trim.
 When a visitor steers into a new reach, a gentle assist may move the sail
 toward a target that delivers 70–80% of the reachable sail efficiency. Manual
-trim remains authoritative while the selected keyboard/touch trim control is held. Accurate manual
+trim remains authoritative until the visitor explicitly restores auto mode. Accurate manual
 trim should be the fastest and most expressive state, with matching visual and
 audio feedback.
 
@@ -39,11 +39,10 @@ audio feedback.
    active trim intent. Do not move a sail merely because the boat is idle.
    Scanner travel may use its existing assisted trim path and should not be
    relabeled as manual auto-trim.
-3. Apply the assist through the existing sail target/smoothing API. A held
-   trim command cancels assist immediately; releasing the command retains the
-   chosen manual angle for a short, readable handoff before assist may resume
-   on the next meaningful turn. No abrupt boom snap, force discontinuity, or
-   input lockout is allowed.
+3. Apply the assist through the existing sail target/smoothing API. Manual
+   input immediately latches manual mode and release retains that angle until
+   M/Auto trim is selected. Smooth automatic movement avoids boom snaps;
+   manual ownership prevents assist from fighting deliberate trim.
 4. Preserve the soft no-go zone. Auto-trim may optimize a reach and help a tack
    settle, but it must not create drive inside the no-go zone or steer the
    vessel. Rudder input and tacking remain the visitor's responsibility.
@@ -68,8 +67,8 @@ audio feedback.
 
 ## Dependencies and ownership
 
-- `src/world/vessel/sailResponse.ts` owns the efficiency/assist calculation
-  and named bounds. `kinematics.ts` owns any bounded manual boost and retains
+- `src/world/vessel/sailResponse.ts` owns the sailing polar and drive bounds;
+  `trimAssist.ts` owns normalized quality, smooth auto targets and boost state. `kinematics.ts` owns any bounded manual boost and retains
   no-go, speed, collision, and fixed-step contracts.
 - `createWaterWorld.ts` owns steering/trim state transitions, scanner and
   mooring exclusions, and the shared fixed simulation clock.
@@ -89,7 +88,10 @@ audio feedback.
 
 1. Capture baseline routes at idle, beam reach, broad reach, close reach, tack,
    scanner travel, and spilled wind. Record power, trim error, speed, foam
-   count, and input state at 30/60/120 Hz.
+   count, and input state at 30/60/120 Hz. Also baseline rudder response,
+   turning radius, acceleration/coasting and stall/tack recovery with keyboard
+   and touch. WEB-014 tighter turns is completed history; assess how the new
+   assist affects that tuning rather than reopening it as an unfinished task.
 2. Add a pure assist/quality function with finite invalid-input behavior,
    explicit no-go handling, and deterministic partition tests. Compare its
    target against the existing suggested angle across both tacks.
@@ -137,3 +139,42 @@ a particle budget expansion.
 Deliver one deterministic assist/feedback candidate for sailing-feel review,
 record speed and effect budgets, and stop before adding weather variation or
 new control modes.
+
+## Phase 11 implementation decision
+
+- WASD/arrows command screen-relative heading, including diagonal combinations;
+  the heading controller uses bounded rudder authority, never heading snaps.
+  Q/E trim in/out, M restores auto, Space spills wind, R resets, F explores.
+  Touch exposes the same directional and trim/mode actions at 44px or larger.
+- Opening/reset remains still with the main eased. First steering or explicit
+  Auto trim engages sailing. Thereafter automatic trim follows the wind as the
+  boat turns, targeting 75% of attainable power for that heading/velocity.
+- Manual trim is latched until M/Auto trim. This supersedes the earlier proposal
+  to resume assist automatically after a turn: explicit ownership prevents the
+  sail from fighting a visitor who is finding or holding the sweet spot.
+- A stable, powered manual sweet spot earns one short surge; cooldown and
+  exit/re-entry hysteresis prevent farming it by jittering keys. Spilling,
+  no-go, scanner takeover, pause, hiding and reset clear transient feedback.
+- Root owns `createWaterWorld.ts`; Luna physics owns pure helpers/kinematics;
+  Luna controls owns input/main/CSS; Luna feedback owns wake and audio. Content,
+  model geometry, wave field and island routes retain their existing contracts.
+- Validate assist efficiency, speed/acceleration/coasting and heading/tacks,
+  manual precedence, bounded boosts, scanner/mooring, pause/hidden/reset and
+  six desktop/mobile layouts. Sound starts muted and only explicit sound input
+  may create/resume its audio context; physical-device performance stays an
+  external review item.
+
+## Selected tuning and local evidence
+
+- Auto target: 75% of the peak from the same apparent-wind polar, approached
+  at 25°/second. Manual pocket enters at 90% and retains down to 78%.
+- Reward: at least 1.5 forward units/second, 0.35-second dwell, up to 45% extra
+  drive decaying over 1.4 seconds, then five-second cooldown and pocket re-entry.
+- Screen-heading controller: gain 2.5 and yaw damping 1.0 inside the existing
+  1.1 radian/second maximum yaw bound. No heading snap or new motor drive.
+- Twelve-second fixture distance: auto 92.04, ideal manual 99.63, manual with
+  reward 101.07 world units. Both auto-trim tacks make net upwind progress.
+- Resources remain 96 pooled foam particles / 32 wake history samples; audio
+  uses one lazy context, one looped noise source, low-pass filter and gain.
+- Integration/production/public verification is recorded in
+  [Phase 11 evidence](../../artifacts/phase11/VERIFICATION.md).

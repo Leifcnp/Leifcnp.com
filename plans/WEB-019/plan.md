@@ -4,9 +4,9 @@
 
 The user requested a future clarity pass: show wind direction with flags,
 make wind effects visible, add wind-carried spray, and later improve wave
-direction and randomness. This task is planning only. The next queued work
-remains WEB-015 translucent content drawers, followed by WEB-016 local
-harbour submenus; do not implement WEB-019 ahead of those review gates.
+direction and randomness. This task is planning only. On 2026-09-25 the user deferred WEB-016 harbours
+and zoom to prioritize boat feel. WEB-020 controls is recommended first;
+these visible wind cues are part of the following feedback work.
 
 Wave-direction and common seeded randomness belong to WEB-017 and must be
 coordinated separately. They are not a reason to change the existing sailing
@@ -74,8 +74,8 @@ without interpreting the compass.
 
 ## Review gate
 
-The current queue places this after WEB-015/WEB-016, unless the user explicitly
-reprioritizes it later. When selected, deliver one bounded visual pass and stop
+The 2026-09-25 queue review places boat control/feedback ahead of deferred
+harbours. This task remains unstarted until selected. When selected, deliver one bounded visual pass and stop
 for review. Wave changes stay in WEB-017 rather than being silently included.
 
 ## Coordination with new sailing ideas

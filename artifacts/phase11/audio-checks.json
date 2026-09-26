@@ -1,0 +1,106 @@
+{
+  "checks": [
+    "No AudioContext or audio graph exists before an explicit Sound click.",
+    "Explicit Sound click creates exactly one resumed context/source/gain and updates the button to Sound on.",
+    "Boost state produces a bounded positive gain target in the live synthesized graph.",
+    "Paused and reduced-motion states drive the live gain target to zero.",
+    "Visibility hiding silences audio and visibility restoration allows the current boost state to ramp back in.",
+    "Rapid on/off/on toggles retain one context and settle to the latest Sound on state.",
+    "Dispose closes the single context exactly once.",
+    "When AudioContext is unavailable, the Sound control degrades to disabled Sound unavailable feedback."
+  ],
+  "supported": true,
+  "errors": [],
+  "observations": {
+    "initial": {
+      "contexts": 0,
+      "text": "♪ Sound off",
+      "pressed": "false",
+      "disabled": false
+    },
+    "enabled": {
+      "contexts": 1,
+      "sources": 1,
+      "gains": 1,
+      "state": "running",
+      "text": "♪ Sound on",
+      "pressed": "true",
+      "targets": [
+        {
+          "value": 0,
+          "when": 0,
+          "timeConstant": 0.035
+        },
+        {
+          "value": 0,
+          "when": 0.14933333333333335,
+          "timeConstant": 0.035
+        }
+      ]
+    },
+    "boosted": {
+      "targets": [
+        {
+          "value": 0,
+          "when": 0,
+          "timeConstant": 0.035
+        },
+        {
+          "value": 0,
+          "when": 0.14933333333333335,
+          "timeConstant": 0.035
+        },
+        {
+          "value": 0.075,
+          "when": 0.192,
+          "timeConstant": 0.065
+        }
+      ],
+      "latest": {
+        "value": 0.075,
+        "when": 0.192,
+        "timeConstant": 0.065
+      }
+    },
+    "paused": {
+      "value": 0,
+      "when": 0.4053333333333333,
+      "timeConstant": 0.035
+    },
+    "reduced": {
+      "value": 0,
+      "when": 0.4266666666666667,
+      "timeConstant": 0.035
+    },
+    "hidden": {
+      "value": 0,
+      "when": 0.512,
+      "timeConstant": 0.035
+    },
+    "visibleAgain": {
+      "value": 0.075,
+      "when": 0.576,
+      "timeConstant": 0.065
+    },
+    "rapid": {
+      "contexts": 1,
+      "pressed": "true",
+      "text": "♪ Sound on"
+    },
+    "disposed": {
+      "closes": 1,
+      "contexts": 1
+    },
+    "fallback": {
+      "initial": {
+        "disabled": false,
+        "text": "♪ Sound off"
+      },
+      "afterClick": {
+        "disabled": true,
+        "text": "♪ Sound unavailable",
+        "pressed": "false"
+      }
+    }
+  }
+}

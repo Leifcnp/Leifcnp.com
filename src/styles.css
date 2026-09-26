@@ -84,6 +84,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
 .sailing-hud__eyebrow, .sailing-hud__trim, .sailing-hud__guidance { margin: 0; }
 .sailing-hud__eyebrow { color: #c4d8d6; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
 .sailing-hud__trim { margin-top: 3px; overflow: hidden; font: 12px Georgia, serif; text-overflow: ellipsis; white-space: nowrap; }
+.sailing-hud__efficiency { margin: 4px 0 0; color: #c4d8d6; font-size: 9px; }
+.sailing-hud__meter { display: inline-block; width: 54px; height: 5px; margin: 0 3px; overflow: hidden; vertical-align: middle; border: 1px solid #77989c; border-radius: 999px; }
+.sailing-hud__meter > span { display: block; width: 0; height: 100%; background: #f0ad83; }
 .sailing-hud__guidance { margin-top: 4px; color: #c4d8d6; font-size: 9px; line-height: 1.25; }
 .sailing-hud[data-no-go] { border-color: #f0ad83; }
 .sailing-hud[data-luffing] .sailing-hud__guidance { color: #f0ad83; }
@@ -128,10 +131,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
 .helm-button > span:first-child { color: #f0ad83; font-size: 14px; }
 .helm-button:hover, .helm-button[data-active='true'] { border-color: #f4efe4; background: #285662; }
 .helm-button:disabled { cursor: not-allowed; opacity: .5; }
-.helm-button--brake, .helm-button--reset { grid-column: span 2; }
+.helm-button--reset, .helm-button--sound { grid-column: span 2; }
 .scene-legend { display: none; }
 .explore-prompt {
-  position: absolute; z-index: 5; bottom: 182px; left: 50%; transform: translateX(-50%);
+  position: absolute; z-index: 5; bottom: 225px; left: 50%; transform: translateX(-50%);
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   width: min(340px,calc(100% - 32px)); padding: 10px;
   border: 1px solid #a5bebc; border-radius: 8px; background: #103b48;
@@ -214,7 +217,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
   .content-drawer__title { font-size: 32px; }
   .is-reading .vessel-model-note { display: none; }
   .helm-panel { right: 16px; bottom: 12px; left: 16px; padding: 9px; }
-  .explore-prompt { bottom: 163px; }
+  .explore-prompt { bottom: 215px; }
 }
 @media (max-width: 540px) {
   .site-header__title { font-size: 32px; }
@@ -245,8 +248,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f4efe4; outline-offs
   .content-drawer__title { font-size: 30px; }
   .helm-panel { left: auto; width: min(496px,calc(100% - 32px)); }
   .helm-controls { grid-template-columns: repeat(6,minmax(0,1fr)); }
-  .helm-button--brake, .helm-button--reset { grid-column: auto; }
-  .explore-prompt { bottom: 104px; padding: 8px; }
+  .helm-button--brake, .helm-button--reset, .helm-button--sound { grid-column: auto; }
+  .explore-prompt { top: 84px; bottom: auto; left: 16px; width: min(270px,calc(50vw - 48px)); padding: 8px; transform: none; }
   .webgl-fallback { top: 112px; max-height: calc(100% - 130px); }
 }
 @media (prefers-reduced-motion: reduce) {

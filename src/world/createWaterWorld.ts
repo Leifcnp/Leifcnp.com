@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { VESSEL_SPAWN } from '../content/islands';
 import { STORM_TUNING } from './stormField';
 import { calculateApparentWind, sampleWind } from './wind';
-import { calculateSailResponse, SAIL_TUNING } from './vessel/sailResponse';
+import { calculateSailResponse } from './vessel/sailResponse';
+import { createTrimAssistState, stepTrimAssist, clearTrimBoost } from './vessel/trimAssist';
 import {
   createLandmarks,
   type IslandDefinition,
@@ -81,6 +82,12 @@ export interface SailingTelemetry {
   readonly luffing: boolean;
   readonly moored: boolean;
   readonly assisted: boolean;
+  readonly trimMode: 'auto' | 'manual';
+  readonly trimEngaged: boolean;
+  readonly trimEfficiency: number;
+  readonly sweetSpot: boolean;
+  readonly trimBoost: number;
+  readonly boostSerial: number;
 }
 
 export type ScanStatus = 'idle' | 'travelling' | 'arrived' | 'cancelled' | 'failed';
@@ -101,6 +108,7 @@ export interface WaterWorldController {
   setReducedMotion(reduced: boolean): void;
   setInput(input: VesselInput): void;
   resetVessel(): void;
+  setAutoTrim(): void;
   getVesselState(): Readonly<VesselState>;
   getSailingState(): SailingTelemetry;
   startScan(islandId: string, options?: ScanStartOptions): void;
@@ -165,7 +173,7 @@ export function createWaterWorld(
   const vesselSpawn = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
   let vesselState: VesselState = vesselSpawn;
   let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
-  let sailAngle: number = SAIL_TUNING.defaultAngle;
+  let trimAssist = createTrimAssistState();
   const vesselEnvironment = {
     sailingEnabled: true,
     worldLimit: STORM_TUNING.worldLimit,
@@ -187,9 +195,10 @@ export function createWaterWorld(
   const getSailingState = (): SailingTelemetry => {
     const assisted = scannerIsActive(scannerState);
     const luffing = vesselInput.brake || horizontallyMoored;
-    const reference = calculateSailResponse(vesselState, sailAngle, luffing ? 1 : 0);
-    const displayedAngle = assisted ? reference.suggestedAngle : sailAngle;
+    const reference = calculateSailResponse(vesselState, trimAssist.sailAngle, luffing ? 1 : 0);
+    const displayedAngle = assisted ? reference.suggestedAngle : trimAssist.sailAngle;
     const response = assisted ? calculateSailResponse(vesselState, displayedAngle) : reference;
+    const availablePower = calculateSailResponse(vesselState, reference.suggestedAngle).power;
     return {
       sailAngle: displayedAngle,
       suggestedAngle: response.suggestedAngle,
@@ -201,6 +210,12 @@ export function createWaterWorld(
       luffing,
       moored: horizontallyMoored,
       assisted,
+      trimMode: trimAssist.mode,
+      trimEngaged: trimAssist.engaged,
+      trimEfficiency: availablePower > 1e-6 ? clamp(response.power / availablePower, 0, 1) : 0,
+      sweetSpot: !assisted && !luffing && !response.noGo && trimAssist.sweetSpot,
+      trimBoost: assisted || luffing || response.noGo ? 0 : trimAssist.boost,
+      boostSerial: trimAssist.boostSerial,
     };
   };
 
@@ -308,10 +323,15 @@ export function createWaterWorld(
         if (scannerIsActive(scannerState)) {
           advanceScan(FIXED_STEP);
         } else if (!horizontallyMoored) {
-          sailAngle = clamp(sailAngle + (vesselInput.sheet ?? 0) * SAIL_TUNING.trimRate * FIXED_STEP, SAIL_TUNING.minAngle, SAIL_TUNING.maxAngle);
+          trimAssist = stepTrimAssist(trimAssist, vesselState, {
+            sheet: vesselInput.sheet ?? 0,
+            engage: vesselInput.targetHeading !== undefined || Math.abs(vesselInput.rudder) > 1e-6,
+            resumeAuto: false,
+            suppressed: vesselInput.brake,
+          }, FIXED_STEP);
           vesselState = stepVessel(
-            vesselState, { ...vesselInput, sailAngle }, FIXED_STEP, vesselEnvironment,
-            reducedMotion ? undefined : elapsed,
+            vesselState, { ...vesselInput, sailAngle: trimAssist.sailAngle, trimBoost: trimAssist.boost },
+            FIXED_STEP, vesselEnvironment, reducedMotion ? undefined : elapsed,
           );
         }
         // Water and forces share active simulation time. Discarded frames and
@@ -323,6 +343,7 @@ export function createWaterWorld(
       cameraRig.update(vesselState.x, vesselState.z, delta);
       updateSailing();
       vessel.update(vesselState, elapsed, delta);
+      wake.setTrimBoost(scannerIsActive(scannerState) || horizontallyMoored ? 0 : trimAssist.boost);
       wake.update(vesselState, elapsed, delta);
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
     }
@@ -370,6 +391,8 @@ export function createWaterWorld(
       fixedAccumulator = 0;
       lastTime = 0;
       vesselInput = { throttle: 0, rudder: 0, brake: false };
+      trimAssist = clearTrimBoost(trimAssist);
+      wake.setTrimBoost(0);
       renderer.render(scene, camera);
     } else {
       startRendering();
@@ -384,6 +407,8 @@ export function createWaterWorld(
       fixedAccumulator = 0;
       lastTime = 0;
       vesselInput = { throttle: 0, rudder: 0, brake: false };
+      trimAssist = clearTrimBoost(trimAssist);
+      wake.setTrimBoost(0);
       renderer.render(scene, camera);
     } else {
       startRendering();
@@ -400,6 +425,8 @@ export function createWaterWorld(
               fixedAccumulator = 0;
               lastTime = 0;
               vesselInput = { throttle: 0, rudder: 0, brake: false };
+              trimAssist = clearTrimBoost(trimAssist);
+              wake.setTrimBoost(0);
               renderer.render(scene, camera);
             } else {
               startRendering();
@@ -445,8 +472,9 @@ export function createWaterWorld(
         sheet: clamp(input.sheet ?? 0, -1, 1),
         rudder: clamp(input.rudder, -1, 1),
         brake: Boolean(input.brake),
+        targetHeading: Number.isFinite(input.targetHeading) ? input.targetHeading : undefined,
       };
-      if (Math.abs(nextInput.sheet) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake) {
+      if (nextInput.targetHeading !== undefined || Math.abs(nextInput.sheet) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake) {
         horizontallyMoored = false;
         cancelScanInternal('Scanner navigation cancelled by helm input.');
         if (scannerState.status === 'arrived') {
@@ -455,6 +483,25 @@ export function createWaterWorld(
         }
       }
       vesselInput = nextInput;
+      // A cancelled route must not retain a reward from before the voyage.
+      if (nextInput.brake) {
+        trimAssist = clearTrimBoost(trimAssist);
+        wake.setTrimBoost(0);
+      }
+      options.onSailingUpdate?.(getSailingState());
+    },
+    setAutoTrim: (): void => {
+      if (disposed || isMotionPaused()) return;
+      vesselInput = { throttle: 0, rudder: 0, brake: false };
+      horizontallyMoored = false;
+      cancelScanInternal('Scanner navigation cancelled by helm input.');
+      if (scannerState.status === 'arrived') {
+        scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
+        publishScannerState(scannerState);
+      }
+      trimAssist = stepTrimAssist(clearTrimBoost(trimAssist), vesselState, {
+        sheet: 0, engage: true, resumeAuto: true, suppressed: false,
+      }, 0);
       options.onSailingUpdate?.(getSailingState());
     },
     resetVessel: (): void => {
@@ -465,10 +512,12 @@ export function createWaterWorld(
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
       publishScannerState(scannerState);
       vesselInput = { throttle: 0, rudder: 0, brake: false };
+      trimAssist = clearTrimBoost(trimAssist);
+      wake.setTrimBoost(0);
       fixedAccumulator = 0;
       lastTime = 0;
       elapsed = 0;
-      sailAngle = SAIL_TUNING.defaultAngle;
+      trimAssist = createTrimAssistState();
       updateSailing(true);
       vessel.resetPose(vesselState, elapsed);
       cameraRig.snapTo(vesselState.x, vesselState.z);
@@ -493,11 +542,15 @@ export function createWaterWorld(
       if (!route.ok) {
         cancelScanInternal('Scanner navigation replaced by an invalid route.');
         vesselInput = { throttle: 0, rudder: 0, brake: false };
+        trimAssist = clearTrimBoost(trimAssist);
+        wake.setTrimBoost(0);
         publishScan('failed', islandId, route.message);
         return;
       }
 
       vesselInput = { throttle: 0, rudder: 0, brake: false };
+      trimAssist = clearTrimBoost(trimAssist);
+      wake.setTrimBoost(0);
       horizontallyMoored = false;
       const current = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
       applyScannerState(startScannerScan(current, { islandId, route: route.points }));

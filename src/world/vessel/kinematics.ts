@@ -10,6 +10,7 @@
 import { sampleWaterSurface } from '../waves.ts'
 import { sampleStormField } from '../stormField.ts'
 import { calculateSailResponse, SAIL_TUNING } from './sailResponse.ts'
+import { calculateHeadingRudder } from './headingSteering.ts'
 import { calculateUphillResistance, calculateWaveResponse } from './waveResponse.ts'
 
 export interface VesselInput {
@@ -22,6 +23,9 @@ export interface VesselInput {
   readonly sheet?: number
   /** Absolute mainsail angle in radians, supplied by the world/controller. */
   readonly sailAngle?: number
+  readonly targetHeading?: number
+  /** Normalized manual-trim boost supplied by trimAssist. */
+  readonly trimBoost?: number
 }
 
 export interface VesselState {
@@ -93,6 +97,8 @@ function safeInput(input: VesselInput): VesselInput {
     brake: input?.brake === true,
     sheet: clamp(finiteOr(input?.sheet ?? 0, 0), -1, 1),
     sailAngle: finiteOr(input?.sailAngle ?? SAIL_TUNING.defaultAngle, SAIL_TUNING.defaultAngle),
+    targetHeading: Number.isFinite(input?.targetHeading) ? input.targetHeading : undefined,
+    trimBoost: clamp(finiteOr(input?.trimBoost ?? 0, 0), 0, 1),
   }
 }
 
@@ -241,8 +247,11 @@ function integrateSubstep(
   const sailResponse = sailing
     ? calculateSailResponse(state, input.sailAngle, input.brake ? 1 : 0)
     : undefined
+  const trimBoost = sailing && !input.brake && sailResponse?.noGo !== true
+    ? 1 + (input.trimBoost ?? 0) * SAIL_TUNING.manualBoostFraction
+    : 1
   const thrust = sailing
-    ? (input.brake ? 0 : sailResponse?.driveAcceleration ?? 0)
+    ? (input.brake ? 0 : (sailResponse?.driveAcceleration ?? 0) * trimBoost)
     : input.throttle >= 0
       ? input.throttle * VESSEL_TUNING.forwardAcceleration
       : input.throttle * VESSEL_TUNING.reverseAcceleration
@@ -332,7 +341,10 @@ function integrateSubstep(
   const lowSpeedAuthority = sailing
     ? Math.max(SAIL_TUNING.stallYawRate / maxYawRate, 0.12 + speedResponse * 0.88)
     : travelDirection === 0 ? 0 : 0.12 + speedResponse * 0.88
-  const targetYawRate = -input.rudder * travelDirection * maxYawRate * lowSpeedAuthority
+  const rudder = sailing && input.targetHeading !== undefined
+    ? calculateHeadingRudder(state, input.targetHeading)
+    : input.rudder
+  const targetYawRate = -rudder * travelDirection * maxYawRate * lowSpeedAuthority
   const yawBlend = 1 - Math.exp(-(sailing ? SAIL_TUNING.sailingYawResponse : VESSEL_TUNING.yawResponse) * dt)
   const yawRate = clamp(
     state.yawRate + (targetYawRate - state.yawRate) * yawBlend,

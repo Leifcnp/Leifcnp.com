@@ -1,10 +1,11 @@
 import * as THREE from 'three'
-import { sampleWaterHeight, sampleWaterSurface } from '../waves'
-import { VESSEL_TUNING, type VesselState } from '../vessel/kinematics'
+import { sampleWaterHeight, sampleWaterSurface } from '../waves.ts'
+import { VESSEL_TUNING, type VesselState } from '../vessel/kinematics.ts'
 
 export interface WakeController {
   update(state: Readonly<VesselState>, timeSeconds: number, deltaSeconds: number): void
   reset(): void
+  setTrimBoost(amount: number): void
   setReducedMotion(reduced: boolean): void
   dispose(): void
 }
@@ -25,6 +26,8 @@ interface WakeParticle {
   side: number
   /** Bounded multiplier for the local wave-slope response. */
   waveResponse: number
+  /** Manual trim reward captured when this wake element was emitted. */
+  trimBoost: number
   active: boolean
 }
 
@@ -47,6 +50,7 @@ const BOW_ARC_SURFACE_OFFSET = 0.27
 // The water uses a faceted grid, so lift foam above the sampled surface to avoid z-fighting and
 // triangle-edge flicker as the boat crosses the low-poly field.
 const SURFACE_OFFSET = 0.2
+const MAX_TRIM_BOOST = 1
 
 /**
  * Pooled stern foam, travelled-path ribbons, and wave-sensitive hull contact.
@@ -163,6 +167,7 @@ export function createWake(scene: THREE.Scene): WakeController {
     kind: 0,
     side: 0,
     waveResponse: 0,
+    trimBoost: 0,
     active: false,
   }))
   const dummy = new THREE.Object3D()
@@ -173,6 +178,7 @@ export function createWake(scene: THREE.Scene): WakeController {
     heading: number
     speed: number
     yawRate: number
+    trimBoost: number
     active: boolean
   }
   const history: HistoryPoint[] = Array.from({ length: HISTORY_POINTS }, () => ({
@@ -182,6 +188,7 @@ export function createWake(scene: THREE.Scene): WakeController {
     heading: 0,
     speed: 0,
     yawRate: 0,
+    trimBoost: 0,
     active: false,
   }))
   let wakeCursor = 0
@@ -191,10 +198,16 @@ export function createWake(scene: THREE.Scene): WakeController {
   let historyHead = 0
   let historyCount = 0
   let historyAccumulator = 0
+  let trimBoost = 0
   let reducedMotion = false
   let disposed = false
 
-  const writeParticle = (index: number, particle: WakeParticle, timeSeconds: number): void => {
+  const writeParticle = (
+    index: number,
+    particle: WakeParticle,
+    timeSeconds: number,
+    boostEnabled: boolean,
+  ): void => {
     if (!particle.active || particle.age >= particle.life) {
       particle.active = false
       dummy.scale.setScalar(0)
@@ -207,7 +220,8 @@ export function createWake(scene: THREE.Scene): WakeController {
     // Shrinking provides a quiet fade without requiring a per-instance alpha
     // attribute or a second transparent material.
     const fade = progress < 0.16 ? progress / 0.16 : 1 - (progress - 0.16) / 0.84
-    const size = particle.size * Math.max(0, fade)
+    const boost = boostEnabled ? Math.min(particle.trimBoost, trimBoost) : 0
+    const size = particle.size * (1 + boost * 0.85) * Math.max(0, fade)
     // Contact pieces sample the shared water slope,
     // so a bow hit on a rising wave gets a restrained, coherent swell. The
     // longer wake ribbon uses the cheaper height-only sample for the same
@@ -225,7 +239,11 @@ export function createWake(scene: THREE.Scene): WakeController {
     // with the boat so the side wake follows the vessel instead of remaining
     // aligned to world X after a turn.
     dummy.rotation.set(0, particle.heading, 0)
-    dummy.scale.set(size * particle.elongation * waveScale, 1, size * waveScale)
+    dummy.scale.set(
+      size * particle.elongation * (1 + boost * 0.24) * waveScale,
+      1,
+      size * (1 + boost * 0.12) * waveScale,
+    )
     dummy.updateMatrix()
     mesh.setMatrixAt(index, dummy.matrix)
   }
@@ -236,6 +254,7 @@ export function createWake(scene: THREE.Scene): WakeController {
     particle.kind = 0
     particle.side = 0
     particle.waveResponse = 0
+    particle.trimBoost = 0
   }
 
   const emitWake = (state: Readonly<VesselState>, speed: number): void => {
@@ -265,6 +284,7 @@ export function createWake(scene: THREE.Scene): WakeController {
       particle.kind = 0
       particle.side = side
       particle.waveResponse = 0.45
+      particle.trimBoost = trimBoost
       particle.active = true
     }
   }
@@ -359,12 +379,13 @@ export function createWake(scene: THREE.Scene): WakeController {
     point.heading = Number.isFinite(state.heading) ? state.heading : 0
     point.speed = speed
     point.yawRate = Number.isFinite(state.yawRate) ? state.yawRate : 0
+    point.trimBoost = trimBoost
     point.active = true
     historyHead = (historyHead + 1) % HISTORY_POINTS
     historyCount = Math.min(HISTORY_POINTS, historyCount + 1)
   }
 
-  const writeRibbon = (timeSeconds: number): void => {
+  const writeRibbon = (timeSeconds: number, boostEnabled: boolean): void => {
     const activeStart = HISTORY_POINTS - historyCount
     for (let sideIndex = 0; sideIndex < 2; sideIndex += 1) {
       const side = sideIndex === 0 ? -1 : 1
@@ -403,13 +424,14 @@ export function createWake(scene: THREE.Scene): WakeController {
         }
 
         const ageFade = Math.max(0, 1 - point.age / HISTORY_LIFETIME)
+        const boost = boostEnabled ? Math.min(point.trimBoost, trimBoost) : 0
         const speedRatio = Math.min(1, Math.max(0, point.speed / VESSEL_TUNING.maxForwardSpeed))
         const trailProgress = historyCount > 1 ? historyOffset / (historyCount - 1) : 1
         // Taper the fresh end behind the stern as well as the aged end. This
         // prevents a hard rectangular cut where the continuous strip meets
         // the hull and lets the foam accents carry the immediate contact cue.
         const endpointTaper = 0.18 + Math.min(1, Math.max(0, 1 - trailProgress) * 5) * 0.82
-        const visualFade = ageFade * ageFade * (0.72 + speedRatio * 0.28) * (0.55 + endpointTaper * 0.45)
+        const visualFade = ageFade * ageFade * (0.72 + speedRatio * 0.28) * (0.55 + endpointTaper * 0.45) * (1 + boost * 0.16)
         const forwardX = Math.sin(point.heading)
         const forwardZ = Math.cos(point.heading)
         const sideX = Math.cos(point.heading)
@@ -417,8 +439,8 @@ export function createWake(scene: THREE.Scene): WakeController {
         const sternDistance = VESSEL_TUNING.length * (0.52 + speedRatio * 0.08)
         const baseX = point.x - forwardX * sternDistance
         const baseZ = point.z - forwardZ * sternDistance
-        const innerWidth = VESSEL_TUNING.width * (0.34 + speedRatio * 0.1) * endpointTaper
-        const outerWidth = innerWidth + (0.62 + speedRatio * 1.05 + Math.min(0.45, Math.abs(point.yawRate) * 0.72)) * (0.32 + ageFade * 0.68) * endpointTaper
+        const innerWidth = VESSEL_TUNING.width * (0.34 + speedRatio * 0.1) * (1 + boost * 0.2) * endpointTaper
+        const outerWidth = innerWidth + (0.62 + speedRatio * 1.05 + Math.min(0.45, Math.abs(point.yawRate) * 0.72)) * (0.32 + ageFade * 0.68) * (1 + boost * 0.82) * endpointTaper
         const innerX = baseX + sideX * side * innerWidth
         const innerZ = baseZ + sideZ * side * innerWidth
         const outerX = baseX + sideX * side * outerWidth
@@ -556,10 +578,14 @@ export function createWake(scene: THREE.Scene): WakeController {
     historyHead = 0
     historyCount = 0
     historyAccumulator = 0
+    trimBoost = 0
     for (const particle of particles) clearParticle(particle)
-    for (const point of history) point.active = false
-    for (let index = 0; index < POOL_SIZE; index += 1) writeParticle(index, particles[index], 0)
-    writeRibbon(0)
+    for (const point of history) {
+      point.trimBoost = 0
+      point.active = false
+    }
+    for (let index = 0; index < POOL_SIZE; index += 1) writeParticle(index, particles[index], 0, false)
+    writeRibbon(0, false)
     writeBowArc({ x: 0, z: 0, velocityX: 0, velocityZ: 0, heading: 0, yawRate: 0 }, 0, 0, false)
     mesh.instanceMatrix.needsUpdate = true
   }
@@ -620,16 +646,31 @@ export function createWake(scene: THREE.Scene): WakeController {
         historyAccumulator = 0
       }
 
-      for (let index = 0; index < POOL_SIZE; index += 1) writeParticle(index, particles[index], time)
-      writeRibbon(time)
+      const boostEnabled = movingForward && trimBoost > 0
+      for (let index = 0; index < POOL_SIZE; index += 1) writeParticle(index, particles[index], time, boostEnabled)
+      writeRibbon(time, boostEnabled)
       writeBowArc(state, speed, time, movingForward)
       mesh.instanceMatrix.needsUpdate = true
     },
     reset,
+    setTrimBoost: (amount): void => {
+      if (disposed) return
+      trimBoost = Number.isFinite(amount) ? Math.min(MAX_TRIM_BOOST, Math.max(0, amount)) : 0
+      if (trimBoost === 0) {
+        // A consumed boost is transient. Prevent already emitted pieces from
+        // regaining the old multiplier if a later boost is engaged.
+        for (const particle of particles) particle.trimBoost = 0
+        for (const point of history) point.trimBoost = 0
+      }
+      if (reducedMotion) trimBoost = 0
+    },
     setReducedMotion: (reduced): void => {
       if (disposed || reducedMotion === reduced) return
       reducedMotion = reduced
-      if (reduced) reset()
+      if (reduced) {
+        trimBoost = 0
+        reset()
+      }
     },
     dispose: (): void => {
       if (disposed) return

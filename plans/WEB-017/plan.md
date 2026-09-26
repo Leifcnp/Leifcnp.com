@@ -2,7 +2,7 @@
 
 ## Intent and priority
 
-The user likes Phase 7 swells, and requested less repetitive incoming waves that travel from the same direction. The user reaffirmed wave direction and randomness after Phase 9, explicitly as a to-do-list update only. This remains low-priority Backlog; WEB-015 and WEB-016 stay ahead, and implementation needs a later phase selection.
+The user likes Phase 7 swells, and requested less repetitive incoming waves that travel from the same direction. The user reaffirmed wave direction and randomness after Phase 9, explicitly as a to-do-list update only. On 2026-09-25 the user deferred harbours/zoom to prioritize boat feel. This remains low-priority Backlog behind the core control/feedback tasks; implementation needs a later phase selection.
 
 ## Design
 

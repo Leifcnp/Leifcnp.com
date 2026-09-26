@@ -2,19 +2,19 @@
 
 ## Current delivery
 
-**Phase 10 is published and awaiting review: WEB-015 translucent drawers.**
-The reading surface reveals the world behind it; compact phone sheets and
-narrower landscape panels keep the boat in view. Opaque text, solid preference
-fallbacks and a labelled keyboard-scroll region preserve content access.
-Luna implementation/planning/review and root integration delivered this phase.
-[Local and public evidence](artifacts/phase10/VERIFICATION.md) verifies the
-release. Stop here for review before WEB-016.
+**Phase 11 is in progress: WEB-020 automatic trim and the manual sweet spot.**
+On 2026-09-25 the user accepted the boat-feel recommendation. Luna agents own
+pure sailing mechanics, controls/HUD and feedback effects; root integrates,
+reviews sailing feel, verifies and publishes the completed phase.
 
-**Next queued after review:** WEB-016 manual-arrival zoom and submenu harbours.
-WEB-017 wave variation/direction stays low priority. WEB-019 now includes
-translucent wind streams, flags and spray; WEB-020 captures auto-trim with a
-manual sweet-spot boost, and WEB-021 stronger reach heel/railwash. Those ideas
-remain Backlog and do not expand Phase 10.
+Screen-relative WASD/arrows and matching touch directions command a heading;
+the boat turns smoothly using its existing rudder authority. Q/E manually
+trim the sail; M/Auto trim returns assistance. A first steering gesture engages
+75% automatic trim, while deliberate manual trim keeps ownership until the
+visitor returns to auto. Accurate trim earns a bounded surge, white foam and
+optional synthesized wind rush. Preserve tacking, safe scanner routes and
+pause/reduced-motion access. Harbours/zoom, stronger heel and new weather cues
+remain separate future work; stop after Phase 11 for review.
 
 Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
 
@@ -32,7 +32,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-015 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for drawer review before another backlog phase.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-020 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for sailing-feel review before another backlog phase.
 
 ## Work packages and review gates
 
@@ -53,21 +53,21 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-013 | Published Phase 7 | Clearly moving waves, continuous wake, and stronger hull response | User reprioritized before WEB-011; compare WEB-010 baseline | [plan](plans/WEB-013/plan.md) |
 | WEB-014 | Published Phase 9 | Tighter turns and harbour manoeuvring | Existing queue; coordinate WEB-012 | [plan](plans/WEB-014/plan.md) |
 | WEB-015 | Published Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
-| WEB-016 | Queued after WEB-015 | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
+| WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Backlog | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
-| WEB-020 | Backlog | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
+| WEB-020 | Active Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Backlog | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
 
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna drawer agent: translucent CSS, measured contrast and solid readability fallbacks.
-- Luna future-sailing planner: detailed WEB-020/WEB-021 plans, no runtime changes.
-- Luna independent reviewer: drawer visibility, accessibility and meaningful QA gaps.
-- Root: canonical queue, integration, browser checks, build and publication.
+- Luna physics agent: pure trim-assist state, target-heading rudder, boost forces and tests.
+- Luna controls agent: directional keyboard/touch, manual/auto mode, readable HUD and input tests.
+- Luna feedback agent: pooled boost foam and optional synthesized wind audio with lifecycle tests.
+- Root: world integration, queue/docs, quantitative sailing and browser checks, release verification.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
 ## Phase 1 completion evidence
@@ -81,7 +81,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-015 changes the content surface while preserving shared waves/storm, wind sailing, content access, safe assisted scanner routes and custom artwork. Stop for Phase 10 drawer review before another backlog phase. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-020 improves sailing controls and feedback while preserving shared waves/storm, wind sailing, content access, safe assisted scanner routes and custom artwork. Stop for Phase 11 sailing-feel review before another backlog phase. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
 
 
 ## Brainstorming intake — 2026-09-24
@@ -97,3 +97,7 @@ Phase 8 authorization: after accepting the new swells, the user requested the ne
 Phase 9 authorization: the user requested the next phase after storm publication. WEB-012 replaces manual thrust with wind and trim; scanner access remains assisted.
 
 Phase 10 authorization: user requested the next task after saving new sailing ideas; root selected WEB-015. WEB-020/WEB-021 and expanded WEB-019 remain Backlog.
+
+Priority update (2026-09-25): User deferred harbours/zoom and requested a review of boat-feel todos. Recommend WEB-020 first; WEB-021, WEB-019, WEB-017 and WEB-022 remain related backlog work. No new phase started.
+
+Phase 11 authorization (2026-09-25): User accepted WEB-020. Complete one assist/control/feedback phase and stop; WEB-016 remains deferred.

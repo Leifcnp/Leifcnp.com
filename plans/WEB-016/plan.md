@@ -6,8 +6,9 @@ When a visitor manually reaches an island, reveal a closer local view with
 smaller dockable harbours for submenu or content subsections. Use a smooth
 camera zoom and clear exit hysteresis so the local map feels discoverable
 without trapping the vessel or breaking the broader sailing view. This is a
-future follow-up after WEB-011; its provisional order should be reconciled
-with WEB-014 and WEB-015.
+deferred follow-up: on 2026-09-25 the user explicitly put harbours and zoom
+aside to focus on boat feel. It is no longer the next task after WEB-015.
+Revisit after sailing controls/feedback are reviewed and the user restores it.
 
 ## Dependencies and exclusions
 

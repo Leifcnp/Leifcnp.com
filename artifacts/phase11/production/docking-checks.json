@@ -1,0 +1,140 @@
+[
+  {
+    "width": 844,
+    "height": 390,
+    "rects": {
+      ".explore-prompt": {
+        "x": 16,
+        "y": 84,
+        "width": 270,
+        "height": 62,
+        "top": 84,
+        "right": 286,
+        "bottom": 146,
+        "left": 16
+      },
+      ".sailing-hud": {
+        "x": 558,
+        "y": 84,
+        "width": 270,
+        "height": 75.25,
+        "top": 84,
+        "right": 828,
+        "bottom": 159.25,
+        "left": 558
+      },
+      ".helm-panel": {
+        "x": 348,
+        "y": 239,
+        "width": 480,
+        "height": 139,
+        "top": 239,
+        "right": 828,
+        "bottom": 378,
+        "left": 348
+      },
+      ".scanner-hud": {
+        "x": 218,
+        "y": 8,
+        "width": 474,
+        "height": 66,
+        "top": 8,
+        "right": 692,
+        "bottom": 74,
+        "left": 218
+      }
+    }
+  },
+  {
+    "width": 640,
+    "height": 360,
+    "rects": {
+      ".explore-prompt": {
+        "x": 16,
+        "y": 84,
+        "width": 270,
+        "height": 62,
+        "top": 84,
+        "right": 286,
+        "bottom": 146,
+        "left": 16
+      },
+      ".sailing-hud": {
+        "x": 354,
+        "y": 84,
+        "width": 270,
+        "height": 75.25,
+        "top": 84,
+        "right": 624,
+        "bottom": 159.25,
+        "left": 354
+      },
+      ".helm-panel": {
+        "x": 144,
+        "y": 209,
+        "width": 480,
+        "height": 139,
+        "top": 209,
+        "right": 624,
+        "bottom": 348,
+        "left": 144
+      },
+      ".scanner-hud": {
+        "x": 218,
+        "y": 8,
+        "width": 270,
+        "height": 66,
+        "top": 8,
+        "right": 488,
+        "bottom": 74,
+        "left": 218
+      }
+    }
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "rects": {
+      ".explore-prompt": {
+        "x": 16,
+        "y": 84,
+        "width": 236,
+        "height": 62,
+        "top": 84,
+        "right": 252,
+        "bottom": 146,
+        "left": 16
+      },
+      ".sailing-hud": {
+        "x": 282,
+        "y": 84,
+        "width": 270,
+        "height": 75.25,
+        "top": 84,
+        "right": 552,
+        "bottom": 159.25,
+        "left": 282
+      },
+      ".helm-panel": {
+        "x": 72,
+        "y": 169,
+        "width": 480,
+        "height": 139,
+        "top": 169,
+        "right": 552,
+        "bottom": 308,
+        "left": 72
+      },
+      ".scanner-hud": {
+        "x": 218,
+        "y": 8,
+        "width": 198,
+        "height": 66,
+        "top": 8,
+        "right": 416,
+        "bottom": 74,
+        "left": 218
+      }
+    }
+  }
+]

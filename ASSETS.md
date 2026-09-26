@@ -18,3 +18,5 @@ WEB-011 / Phase 8 changes only mathematical storm intensity/forces, existing wav
 WEB-012 / Phase 9 enlarges the original main by 68%, removes the jib/bowsprit and pivots the main, shade, coral clew panel and coral boom around a taller original mast. The wind dial is DOM/CSS geometry. No boat art, textures, models or dependencies were imported.
 
 WEB-018 wind-driven heel uses the same original hull, shared water samples and bounded pose math. No artwork was imported.
+
+WEB-020 / Phase 11 reuses the original wake geometry with a bounded white-foam surge. The optional wind rush is generated in `src/audio/createWindRush.ts` from deterministic noise through Web Audio; no sound recordings, samples, sprites, textures, models or dependencies were imported. The custom boat remains unchanged.

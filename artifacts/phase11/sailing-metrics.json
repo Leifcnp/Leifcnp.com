@@ -1,0 +1,306 @@
+{
+  "auto": {
+    "mode": "auto",
+    "heading": 0,
+    "distance": 92.04042488677605,
+    "peakSpeed": 9.659240132781013,
+    "boostSeconds": 0,
+    "serial": 0,
+    "samples": [
+      {
+        "seconds": 0,
+        "speed": 0,
+        "efficiency": 0,
+        "boost": 0
+      },
+      {
+        "seconds": 1,
+        "speed": 1.091653086794631,
+        "efficiency": 0.479548804372664,
+        "boost": 0
+      },
+      {
+        "seconds": 2,
+        "speed": 4.102220125444571,
+        "efficiency": 0.7518853984249803,
+        "boost": 0
+      },
+      {
+        "seconds": 3,
+        "speed": 6.568558524966881,
+        "efficiency": 0.7496959446675481,
+        "boost": 0
+      },
+      {
+        "seconds": 4,
+        "speed": 8.30514425228563,
+        "efficiency": 0.7490964463735483,
+        "boost": 0
+      },
+      {
+        "seconds": 5,
+        "speed": 9.332649599584165,
+        "efficiency": 0.7493283476583666,
+        "boost": 0
+      },
+      {
+        "seconds": 6,
+        "speed": 9.588306465308639,
+        "efficiency": 0.7478928845906858,
+        "boost": 0
+      },
+      {
+        "seconds": 7,
+        "speed": 9.643818886574799,
+        "efficiency": 0.7475913660795043,
+        "boost": 0
+      },
+      {
+        "seconds": 8,
+        "speed": 9.655891703083743,
+        "efficiency": 0.7475261842126841,
+        "boost": 0
+      },
+      {
+        "seconds": 9,
+        "speed": 9.658517756614794,
+        "efficiency": 0.7475120222367542,
+        "boost": 0
+      },
+      {
+        "seconds": 10,
+        "speed": 9.659088960752694,
+        "efficiency": 0.7475089425193441,
+        "boost": 0
+      },
+      {
+        "seconds": 11,
+        "speed": 9.659213204477643,
+        "efficiency": 0.7475082726765963,
+        "boost": 0
+      }
+    ]
+  },
+  "manual": {
+    "mode": "manual",
+    "heading": 0,
+    "distance": 99.63230687807467,
+    "peakSpeed": 10.20659645197963,
+    "boostSeconds": 0,
+    "serial": 1,
+    "samples": [
+      {
+        "seconds": 0,
+        "speed": 0,
+        "efficiency": 0,
+        "boost": 0
+      },
+      {
+        "seconds": 1,
+        "speed": 1.091653086794631,
+        "efficiency": 0.479548804372664,
+        "boost": 0
+      },
+      {
+        "seconds": 2,
+        "speed": 4.31723456404516,
+        "efficiency": 0.9375586259096991,
+        "boost": 0
+      },
+      {
+        "seconds": 3,
+        "speed": 7.927316093419606,
+        "efficiency": 1,
+        "boost": 0
+      },
+      {
+        "seconds": 4,
+        "speed": 9.826791262623702,
+        "efficiency": 0.9975448913154225,
+        "boost": 0
+      },
+      {
+        "seconds": 5,
+        "speed": 10.14673808021254,
+        "efficiency": 0.9978174872837174,
+        "boost": 0
+      },
+      {
+        "seconds": 6,
+        "speed": 10.196653616029131,
+        "efficiency": 0.9960831419083858,
+        "boost": 0
+      },
+      {
+        "seconds": 7,
+        "speed": 10.2049200316123,
+        "efficiency": 0.9957954763027196,
+        "boost": 0
+      },
+      {
+        "seconds": 8,
+        "speed": 10.20628715183194,
+        "efficiency": 0.9957478933433186,
+        "boost": 0
+      },
+      {
+        "seconds": 9,
+        "speed": 10.206513210670122,
+        "efficiency": 0.9957400251547004,
+        "boost": 0
+      },
+      {
+        "seconds": 10,
+        "speed": 10.20655058953595,
+        "efficiency": 0.9957387241453994,
+        "boost": 0
+      },
+      {
+        "seconds": 11,
+        "speed": 10.20655677011691,
+        "efficiency": 0.9957385090239554,
+        "boost": 0
+      }
+    ]
+  },
+  "boost": {
+    "mode": "boost",
+    "heading": 0,
+    "distance": 101.0701118764401,
+    "peakSpeed": 10.206596602909032,
+    "boostSeconds": 1.4083333333333332,
+    "serial": 1,
+    "samples": [
+      {
+        "seconds": 0,
+        "speed": 0,
+        "efficiency": 0,
+        "boost": 0
+      },
+      {
+        "seconds": 1,
+        "speed": 1.091653086794631,
+        "efficiency": 0.479548804372664,
+        "boost": 0
+      },
+      {
+        "seconds": 2,
+        "speed": 4.31723456404516,
+        "efficiency": 0.9375586259096991,
+        "boost": 0
+      },
+      {
+        "seconds": 3,
+        "speed": 9.130914047179676,
+        "efficiency": 0.996728775382089,
+        "boost": 0.47619047619047805
+      },
+      {
+        "seconds": 4,
+        "speed": 10.112243965240268,
+        "efficiency": 0.9989549998795397,
+        "boost": 0
+      },
+      {
+        "seconds": 5,
+        "speed": 10.190888090638355,
+        "efficiency": 0.9977633069311413,
+        "boost": 0
+      },
+      {
+        "seconds": 6,
+        "speed": 10.203995193698601,
+        "efficiency": 0.9982170658566407,
+        "boost": 0
+      },
+      {
+        "seconds": 7,
+        "speed": 10.206166430248413,
+        "efficiency": 0.9982924324329001,
+        "boost": 0
+      },
+      {
+        "seconds": 8,
+        "speed": 10.20652551832726,
+        "efficiency": 0.9983049005126488,
+        "boost": 0
+      },
+      {
+        "seconds": 9,
+        "speed": 10.206584894814307,
+        "efficiency": 0.9983069622208288,
+        "boost": 0
+      },
+      {
+        "seconds": 10,
+        "speed": 10.206594712716221,
+        "efficiency": 0.998307303125509,
+        "boost": 0
+      },
+      {
+        "seconds": 11,
+        "speed": 10.20659633610213,
+        "efficiency": 0.9983073594939761,
+        "boost": 0
+      }
+    ]
+  },
+  "turns": [
+    {
+      "initialSpeed": 0.6,
+      "secondsToWithin5Degrees": 3.8333333333333224,
+      "arcLength": 19.52031006254183,
+      "heading": -1.4835488372319505
+    },
+    {
+      "initialSpeed": 8,
+      "secondsToWithin5Degrees": 3.3083333333333242,
+      "arcLength": 25.923535857909528,
+      "heading": -1.4835425193090834
+    }
+  ],
+  "tacks": [
+    {
+      "targetHeading": 0.7853981633974483,
+      "start": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 0,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "end": {
+        "x": 20.109301306942534,
+        "z": 21.593206613825256,
+        "velocityX": 1.610069349403517,
+        "velocityZ": 1.6377294250033565,
+        "heading": 0.7768818085352533,
+        "yawRate": 4.4251342595210054e-29
+      },
+      "netUpwind": 20.109301306942534,
+      "efficiency": 0.7508311244012031
+    },
+    {
+      "targetHeading": 2.356194490192345,
+      "start": {
+        "x": 20.109301306942534,
+        "z": 21.593206613825256,
+        "velocityX": 1.610069349403517,
+        "velocityZ": 1.6377294250033565,
+        "heading": 0.7768818085352533,
+        "yawRate": 4.4251342595210054e-29
+      },
+      "end": {
+        "x": 38.26467579392663,
+        "z": 8.978398231393076,
+        "velocityX": 1.499288300823719,
+        "velocityZ": -1.4740701308305555,
+        "heading": 2.3477133178346055,
+        "yawRate": 5.462030029440625e-25
+      },
+      "netUpwind": 18.155374486984094,
+      "efficiency": 0.7504738634421547
+    }
+  ]
+}

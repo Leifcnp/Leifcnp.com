@@ -14,6 +14,7 @@ export const SAIL_TUNING = {
   sailingMaxYawRate: 1.1,
   sailingYawResponse: 6.5,
   stallYawRate: 0.55,
+  manualBoostFraction: 0.45,
 } as const
 
 export interface SailResponse {

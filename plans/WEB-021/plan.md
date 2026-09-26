@@ -5,8 +5,9 @@
 The user requested a future visual/physical refinement after WEB-018: make a
 loaded beam or broad reach heel to roughly 15–20 degrees, let the leeward rail
 sit slightly into the water, and show bow spray. This is planning only. The
-current queue remains WEB-015 translucent drawers followed by WEB-016 local
-harbours; WEB-021 must not reorder or implement either task.
+2026-09-25 queue review defers WEB-016 harbours/zoom to focus on boat feel.
+WEB-020 controls is recommended first; stronger heel/contact is part of the
+following feedback work and remains unstarted until selected.
 
 WEB-018 already supplies bounded wind heel, shared pose smoothing, a small
 heel-related buoyancy correction, and 6,528 actual hull-contact samples. This
