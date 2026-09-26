@@ -8,7 +8,7 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; WEB-017 is reopened after the user rejected Phase 14’s regular bands; correct it before advancing.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; WEB-017’s water-pattern correction is published and awaits user review.
 Other entries remain Backlog and harbours remain deferred.
 
 
@@ -36,23 +36,26 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-- [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
-  - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
-  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with the published WEB-012 wind field and published WEB-019 wind cues, without confusing wave propagation with the storm’s inward recovery current.
-  - Reaffirmed (2026-09-24): User again requested clearer wave direction and more randomness, explicitly as a to-do only. Update this existing task rather than creating a duplicate.
-  - Authorization (2026-09-25): User requested “ok go for next todo” after Phase 13. Selected as Phase 14 through the existing verified master/docs publication workflow.
-  - Initial release (2026-09-25): Application commit `cb100d62` is published on `origin/master`; [Pages run 36220109782](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782) succeeded for the exact SHA.
-  - Verification: 153 native tests and strict build pass. Three-minute crest/direction checks, original hull/contact limits, fixed-step sailing and wave lifecycle pass; six production layouts and public desktop/mobile controls/content/fallbacks pass. Public assets match the build. See [verification](artifacts/phase14/VERIFICATION.md) and [deployment evidence](artifacts/phase14/public-assets.json).
-  - Review feedback (2026-09-25): User rejected the regular parallel bands and lack of natural variation. The earlier overlapping water looked/felt more real. They clarified that some linearity is fine: restore the old interference pattern and layer smooth complexity on top rather than expensive fresh randomness every frame.
-  - Progress: Reopened as a correction to WEB-017, not a new phase. Restore the original four swell components, add small fixed-seed spatial phase bends and amplitude variation, preserve shared hull/foam sampling and resource limits. Luna agents own smooth noise, crest accents and independent spatial/cost review; root owns integration and release.
-  - Next step: Compare against both Phase 13 and rejected Phase 14 at ordinary camera scale, verify derivatives/contact/lifecycle and CPU cost, then publish the correction and stop for review.
-  - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
+No active implementation; awaiting corrected water review.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
+  - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
+  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with the published WEB-012 wind field and published WEB-019 wind cues, without confusing wave propagation with the storm’s inward recovery current.
+  - Reaffirmed (2026-09-24): User again requested clearer wave direction and more randomness, explicitly as a to-do only. Update this existing task rather than creating a duplicate.
+  - Authorization (2026-09-25): User requested “ok go for next todo” after Phase 13. Selected as Phase 14 through the existing verified master/docs publication workflow.
+  - Initial release (2026-09-25): Application commit `cb100d62` is published on `origin/master`; [Pages run 36220109782](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782) succeeded for the exact SHA.
+  - Initial verification: 153 native tests and strict build pass. Three-minute crest/direction checks, original hull/contact limits, fixed-step sailing and wave lifecycle pass; six production layouts and public desktop/mobile controls/content/fallbacks pass. Public assets match the build. See [verification](artifacts/phase14/VERIFICATION.md) and [deployment evidence](artifacts/phase14/public-assets.json).
+  - Review feedback (2026-09-25): User rejected the regular parallel bands and lack of natural variation. The earlier overlapping water looked/felt more real. They clarified that some linearity is fine: restore the old interference pattern and layer smooth complexity on top rather than expensive fresh randomness every frame.
+  - Correction completed (2026-09-25): Application commit `b5b619a5` is published on `origin/master`; [Pages run 36221055155](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36221055155) succeeded for the exact SHA.
+  - Correction verification: 162 native tests, strict build, actual hull/contact/gradient and seeded spatial checks pass. Six final production layouts and public desktop/mobile controls/content/touch/fallbacks pass; public assets match. See [correction evidence](artifacts/phase14-refinement/VERIFICATION.md).
+  - Review gate: Stop for user review of the corrected wave feel. WEB-022 remains queued and WEB-016 harbours/zoom remains deferred.
+  - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
 
 - [x] WEB-019 — Make wind direction visible through flags, wind effects and spray.
   - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.

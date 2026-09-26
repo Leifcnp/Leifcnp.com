@@ -1,6 +1,6 @@
 # WEB-017 correction — Earlier water character with smooth variation
 
-Date: 2026-09-25. Local verification complete; publication pending.
+Date: 2026-09-25. Published and publicly verified.
 
 ## User feedback and delivered correction
 
@@ -77,10 +77,7 @@ motion every frame. This corrects WEB-017; it does not advance to shorelines.
 
 ## Publication and review boundary
 
-Pending final six-layout production checks, exact-SHA successful Pages run,
-matching public HTML/JS/CSS/favicon and public desktop/mobile controls. Keep
-WEB-017 In progress until complete, then stop for user review. WEB-022 stays
-queued; WEB-016 harbours/zoom stays deferred.
+Application commit `b5b619a5` is published on `origin/master`; [Pages run 36221055155](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36221055155) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build (`public-assets.json`). Six final production viewports and the unmodified public desktop/mobile site pass sailing/trim, scanner travel/arrival, content/focus, simultaneous touch, reduced motion and WebGL fallback without script/console errors (`checks.json`, `public/checks.json`). WEB-017 is Done. Stop for user review; WEB-022 stays queued and WEB-016 harbours/zoom stays deferred.
 
 Browser evidence uses Chromium/SwiftShader in the Ubuntu VM. Layout and touch
 coverage does not replace performance/feel testing on a physical phone.

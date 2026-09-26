@@ -146,6 +146,10 @@ and rail now assign both coordinates before sampling. The reentry test uses an
 observed trough/rising surface and a new pool-reuse test covers launch heights.
 No boat geometry or horizontal control/force tuning changed.
 
-162 native tests and the strict build pass. Current next step: finish final
-production/public browser verification and publish the correction through the
-same master/docs workflow, then stop. [Evidence](../../artifacts/phase14-refinement/VERIFICATION.md).
+162 native tests, strict build, final production and public browser checks
+pass. The correction is published through the same master/docs workflow; stop
+for user review. [Evidence](../../artifacts/phase14-refinement/VERIFICATION.md).
+
+## Correction release
+
+Application commit `b5b619a5` is published on `origin/master`; [Pages run 36221055155](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36221055155) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match byte for byte, and unmodified public desktop/mobile interactions pass. WEB-017 is Done and awaits review; shoreline/harbour work has not started.
