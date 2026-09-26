@@ -1,0 +1,15 @@
+{
+  "source": "/home/codex-account/Leifcnp.com/src/world/createOceanSurface.ts",
+  "waterPositionCount": 14641,
+  "crestRibbonCount": 726,
+  "updateMedianMs": 5.474371000000019,
+  "updateP95Ms": 6.067166999999927,
+  "updateMaxMs": 7.94954400000006,
+  "activeSamples": 73482,
+  "crestSupported": 73482,
+  "crestSupportRatio": 1,
+  "calmFrames": 200,
+  "calmActiveSamples": 7439,
+  "maxVisibleStep": 1.4503812544728374,
+  "teleportCount": 0
+}

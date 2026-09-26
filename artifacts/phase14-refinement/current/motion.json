@@ -1,0 +1,244 @@
+{
+  "variant": "current",
+  "baselineCommit": null,
+  "rows": [
+    {
+      "name": "desktop-0",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "desktop-2",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "desktop-4",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "desktop-27",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "phone-0",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "phone-2",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "phone-4",
+      "vessel": {
+        "x": 0,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    },
+    {
+      "name": "storm",
+      "vessel": {
+        "x": 185,
+        "z": 0,
+        "velocityX": 0,
+        "velocityZ": 6,
+        "heading": 0,
+        "yawRate": 0
+      },
+      "sail": {
+        "sailAngle": 1.4835298641951802,
+        "suggestedAngle": 0.4913968616236645,
+        "signedSailAngle": 1.4835298641951802,
+        "relativeWindAngle": 0.9827937232473287,
+        "power": 0,
+        "noGo": false,
+        "windSpeed": 10.816653826391969,
+        "luffing": false,
+        "moored": false,
+        "assisted": false,
+        "trimMode": "auto",
+        "trimEngaged": false,
+        "trimEfficiency": 0,
+        "sweetSpot": false,
+        "trimBoost": 0,
+        "boostSerial": 0
+      }
+    }
+  ],
+  "renderer": {
+    "calls": 59,
+    "triangles": 35056,
+    "geometries": 44,
+    "textures": 0
+  }
+}

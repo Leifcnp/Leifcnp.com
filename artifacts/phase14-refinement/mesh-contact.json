@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "frames": 1536,
+    "minEdge": -1.311037456370968,
+    "renderedEdge": -0.06000004532462477,
+    "minCentral": -0.9199898377662885,
+    "renderedCentral": 0.17448332387451104,
+    "railDipFrames": 937,
+    "worst": {
+      "radius": 0,
+      "heading": 3.141592653589793,
+      "time": 0,
+      "wind": -1.5707963267948966,
+      "yaw": 1.1,
+      "minEdge": -0.011505741283432736,
+      "renderedEdge": 0.12542244342897596,
+      "minCentral": 0.1479042737883589,
+      "renderedCentral": 0.17448332387451104,
+      "rail": 0.01211288231616059
+    }
+  }
+}

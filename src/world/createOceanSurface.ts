@@ -138,6 +138,9 @@ interface CrestRibbonDescriptor {
   readonly normalIndex: number;
   readonly tangentCenter: number;
   readonly activity: number;
+  readonly tangentOffset: number;
+  readonly halfLength: number;
+  readonly halfWidth: number;
 }
 
 /**
@@ -154,8 +157,6 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
   const tangentZ = normalX;
   const normalScale = 1 / (normalX * normalX + normalZ * normalZ);
   const tangentScale = 1 / (tangentX * tangentX + tangentZ * tangentZ);
-  const halfLength = 4;
-  const halfWidth = 0.24;
   const tangentStep = 44;
   const tangentExtent = OCEAN_SURFACE_TUNING.outerLimit * (Math.abs(tangentX) + Math.abs(tangentZ));
   const normalExtent = OCEAN_SURFACE_TUNING.outerLimit * (Math.abs(normalX) + Math.abs(normalZ));
@@ -179,6 +180,9 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
         normalIndex,
         tangentCenter,
         activity: hash2d(normalIndex * 31 + segmentIndex * 17 + 401, normalIndex * 13 + segmentIndex * 7 + 911),
+        tangentOffset: (hash2d(normalIndex * 19 + segmentIndex * 29 + 71, normalIndex * 23 + segmentIndex * 11 + 173) - 0.5) * 14,
+        halfLength: 3 + hash2d(normalIndex * 37 + segmentIndex * 13 + 211, normalIndex * 7 + segmentIndex * 31 + 263) * 2.5,
+        halfWidth: 0.18 + hash2d(normalIndex * 41 + segmentIndex * 17 + 307, normalIndex * 5 + segmentIndex * 43 + 359) * 0.16,
       });
       segmentIndex += 1;
     }
@@ -261,8 +265,9 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
         baseNormal - travel - crestBandStart,
         crestBandSpan,
       );
-      const centerX = normalX * recycledNormal * normalScale + tangentX * descriptor.tangentCenter * tangentScale;
-      const centerZ = normalZ * recycledNormal * normalScale + tangentZ * descriptor.tangentCenter * tangentScale;
+      const tangentCenter = descriptor.tangentCenter + descriptor.tangentOffset;
+      const centerX = normalX * recycledNormal * normalScale + tangentX * tangentCenter * tangentScale;
+      const centerZ = normalZ * recycledNormal * normalScale + tangentZ * tangentCenter * tangentScale;
       const active = descriptor.activity > 0.48;
       crestResult.x = centerX;
       crestResult.z = centerZ;
@@ -280,10 +285,10 @@ function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController
       const crestZ = crest.z;
       const stormIntensity = sampleStormIntensity(crestX, crestZ);
       const strength = crest.support * (0.3 + stormIntensity * 0.18);
-      const tangentStartX = tangentX * halfLength;
-      const tangentStartZ = tangentZ * halfLength;
-      const normalOffsetX = normalX * halfWidth;
-      const normalOffsetZ = normalZ * halfWidth;
+      const tangentStartX = tangentX * descriptor.halfLength;
+      const tangentStartZ = tangentZ * descriptor.halfLength;
+      const normalOffsetX = normalX * descriptor.halfWidth;
+      const normalOffsetZ = normalZ * descriptor.halfWidth;
       const vertexBase = descriptorIndex * 4;
       setCrestVertex(position, vertexBase, crestX - tangentStartX - normalOffsetX, crestZ - tangentStartZ - normalOffsetZ, waterPositions);
       setCrestVertex(position, vertexBase + 1, crestX + tangentStartX - normalOffsetX, crestZ + tangentStartZ - normalOffsetZ, waterPositions);

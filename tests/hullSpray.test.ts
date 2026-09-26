@@ -180,13 +180,27 @@ test('fixed elapsed time keeps partitioned emission counts close', () => {
 test('spray reentry follows the moving visible water surface', () => {
   const scene = new THREE.Scene()
   const spray = createHullSpray(scene)
-  spray.update(contact({}, 0), 0, 0.1)
-  spray.update(contact({}, 0), 0, 1 / 60)
-  assert.ok(activeMatrices(scene).length > 0)
-  // At this point the authored faceted surface has risen substantially at
-  // the launch coordinates. Keep the hull idle so no fresh droplets mask the
-  // reentry result, then let the effect sample the current surface.
-  spray.update(contact({ forwardSpeed: 0 }, 0.5), 0.5, 1 / 60)
+  // Launch in an observed trough, rather than assuming a particular waveform
+  // is rising at a hard-coded absolute time. Keep only bow emission enabled.
+  let launchTime = 0
+  for (let time = 0; time < 12; time += 0.05) {
+    if (sampleFacetedWaterHeight(-0.5, 2.6, time) < sampleFacetedWaterHeight(-0.5, 2.6, launchTime)) launchTime = time
+  }
+  spray.update(contact({ heelLoad: 0 }, launchTime), launchTime, 0.1)
+  spray.update(contact({ heelLoad: 0 }, launchTime), launchTime, 1 / 60)
+  const launched = activeMatrices(scene)
+  assert.ok(launched.length > 0)
+  let risingTime: number | undefined
+  for (let time = launchTime + 0.05; time < launchTime + 6; time += 0.05) {
+    if (launched.every(([x, y, z]) => sampleFacetedWaterHeight(x, z, time) > y + 0.08)) {
+      risingTime = time
+      break
+    }
+  }
+  assert.ok(risingTime !== undefined, 'Fixture needs a rising wave above the actual droplets')
+  // Advance the sampled surface while holding particle age near launch: this
+  // specifically tests current-water collision, not natural lifetime expiry.
+  spray.update(contact({ forwardSpeed: 0 }, risingTime), risingTime, 1 / 60)
   assert.equal(activeMatrices(scene).length, 0)
   spray.dispose()
 })
@@ -210,4 +224,33 @@ test('pool reuse remains finite for long bounded contact sequences and disposal 
   spray.dispose()
   spray.dispose()
   assert.equal(scene.getObjectByName('phase-twelve-hull-spray'), undefined)
+})
+
+test('bow and rail launch heights sample their assigned world coordinates before pool reuse', () => {
+  const scene = new THREE.Scene()
+  const spray = createHullSpray(scene)
+  for (const z of [70, -65]) {
+    // More than one pool cycle makes stale coordinates from earlier emissions
+    // different from both zero and the next contact location.
+    for (let frame = 0; frame < 30; frame++) {
+      spray.update(contact({
+        bowPort: point(-0.5, z + 2.6, -0.1, 0.8),
+        bowStarboard: point(0.5, z + 2.6, -0.1, 0.7),
+        leewardRail: point(-1.3, z, -0.1, 0.2),
+      }), 0, 0.1)
+      const data = sprayMesh(scene).instanceMatrix.array
+      let checked = 0
+      for (let i = 0; i < 48; i++) {
+        const offset = i * 16
+        // Newly emitted droplets have age zero/zero fade but valid positions.
+        if (data[offset] !== 0 || Math.abs(data[offset + 14] - z) > 4) continue
+        const x = data[offset + 12], y = data[offset + 13], worldZ = data[offset + 14]
+        if (Math.abs(worldZ) < 1) continue
+        assert.ok(Math.abs(y - sampleFacetedWaterHeight(x, worldZ, 0) - 0.035) < 1e-5)
+        checked++
+      }
+      assert.ok(checked > 0)
+    }
+  }
+  spray.dispose()
 })

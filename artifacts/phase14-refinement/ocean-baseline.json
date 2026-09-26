@@ -1,0 +1,15 @@
+{
+  "source": "/tmp/leifcnp-wave-baseline/src/world/createOceanSurface.ts",
+  "waterPositionCount": 14641,
+  "crestRibbonCount": 726,
+  "updateMedianMs": 3.89453500000036,
+  "updateP95Ms": 4.276093999999944,
+  "updateMaxMs": 6.512319000000161,
+  "activeSamples": 34383,
+  "crestSupported": 34383,
+  "crestSupportRatio": 1,
+  "calmFrames": 200,
+  "calmActiveSamples": 3429,
+  "maxVisibleStep": 0.517635190630521,
+  "teleportCount": 0
+}

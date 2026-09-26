@@ -37,7 +37,7 @@
 - Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
 - Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
 - Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 153 individual data, geometry, wind/trim/boost, steering, audio/wake, hull-contact, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
+- Tests: `pnpm test` (Node 24 native TypeScript; 162 individual data, geometry, wind/trim/boost, steering, audio/wake, hull-contact, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
 - Production build: `pnpm run build` (includes type checking), generating `docs/`.
 - Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
 - Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
@@ -86,3 +86,7 @@
 - Phase 14 crest rendering samples the ocean’s already-updated position buffer with `sampleRenderedWaterHeight`; analytic/faceted time-based sampling remains for forces and hulls. Keep ocean update before crest update. Compound crest search uses fixed scratch storage and fades unsupported/search-edge candidates. Tilt filtering additionally caps pitch/roll velocity at 3 rad/s, preserving angle/contact limits and avoiding abrupt offshore tack transitions.
 
 - Phase 14 evidence: [artifacts/phase14/VERIFICATION.md](artifacts/phase14/VERIFICATION.md). 153 native tests, strict build, six production layouts, exact-SHA Pages/public assets and public desktop/mobile interactions pass. Stop for review before WEB-022 or deferred harbours.
+
+- Current review correction (2026-09-25): User rejected WEB-017 / Phase 14 parallel bands. Reopen WEB-017; restore the earlier four-component water character, with subtle smooth deterministic phase/amplitude variation. The original dominant direction and smaller crossing detail take precedence over the previous five-degree constraint. Do not advance the queue. Check analytic derivatives, rendered contact, both old/rejected visual baselines and CPU cost, then publish through the existing workflow.
+
+- Corrected wave model: four original carrier shapes plus two deterministic C2 value-noise lookups advected in world space. Phase warps and zero-sum packet weights preserve the 1.8 height bound. `sampleWaterSurface` returns full analytic phase/envelope/storm derivatives by default; an explicit positive distance returns exact finite differences. Hulls/foam still follow rendered triangles. No Math.random, new clock, texture or growing cache.

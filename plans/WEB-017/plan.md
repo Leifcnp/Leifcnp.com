@@ -1,5 +1,13 @@
 # WEB-017 — Varied incoming wave sets with a common direction
 
+## Current correction — 2026-09-25
+
+The user rejected the Phase 14 banding and lack of natural variation. The
+earlier water felt more real. Follow-up clarification asks for the old
+overlapping pattern plus a modest structured layer; some linearity is good,
+and fresh random motion every frame is not the goal. Reopen WEB-017, retain
+the initial release record below, and stop before any next phase.
+
 ## Authorization and result
 
 Selected as Phase 14 on 2026-09-25: “ok go for next todo” after the verified
@@ -13,11 +21,17 @@ foam on that same surface. Variety must remain smooth and repeatable.
 
 ## Model and contracts
 
-- Prefer a small fixed-seed spectral sum over a new fluid solver or stateful
-  random spawner. Approximately six incommensurate components create varying
-  set heights, spacing and arrival times. All propagate toward world −X,
-  aligned with true wind, with at most five degrees of lateral spread to
-  retain natural faceting. No crossing/opposing swell trains or frame noise.
+- Restore the exact four Phase 13 wave shapes, amplitudes and carrier periods.
+  Retain the dominant original swell and smaller oblique detail. The rejected
+  five-degree alignment constraint is superseded by the user’s visual feedback.
+- Layer two small deterministic smooth spatial patterns over that mix: a crest
+  bend and slower packet-weight variation. Integer hashing fixes every lattice
+  value; quintic interpolation keeps cell transitions smooth. Patterns travel
+  with the water, with no fresh random draws or stateful reseeding per frame.
+- Redistribute amplitudes between components with zero-sum variations, so all
+  remain positive and their sum stays 1.8. Include every phase/amplitude
+  derivative in slopes/vertical velocity. Use analytic derivatives by default
+  to keep mesh cost low; explicit sampling distances return exact secants.
 - Keep the theoretical height bound at 1.8 world units, 2.52 in full storm.
   Preserve height, finite-difference slope, analytic vertical-velocity and
   storm-gradient contracts. Derivatives must describe the same height field.
@@ -33,10 +47,9 @@ foam on that same surface. Variety must remain smooth and repeatable.
 
 ## Team and bounded deliverables
 
-1. Luna wave-model agent owns `src/world/waves.ts` and `tests/waves.test.ts`:
-   deterministic components, shared direction/phase API, multi-minute
-   variation and derivative/direction/bound checks. Coordinate the crest API
-   before removing any exported function.
+1. Luna noise agent owns `src/world/waveNoise.ts` and its tests: stable seed,
+   quintic interpolation, analytic gradients and boundary continuity. Root
+   owns wave sampler integration and derivative/variance regressions.
 2. Luna crest agent owns `src/world/createOceanSurface.ts` and
    `tests/oceanSurface.test.ts`: shared compound-crest support/placement,
    fixed buffers and continuity/long-time/visible-surface checks.
@@ -75,7 +88,7 @@ unbounded force or resource growth. The original boat and existing sailing,
 calm/storm, contact, navigation and accessibility contracts remain credible.
 Stop after this release for user review.
 
-## Local implementation and evidence
+## Initial Phase 14 implementation and evidence (review rejected)
 
 Six fixed-phase components preserve the primary 30-unit/5.8-second swell, with
 secondary periods 4.6, 6.8, 3.5, 2.7 and 8.9 seconds and direction spread within
@@ -99,3 +112,40 @@ See [Phase 14 verification](../../artifacts/phase14/VERIFICATION.md).
 ## Release
 
 Application commit `cb100d62` is published on `origin/master`; [Pages run 36220109782](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build, and public desktop/mobile sailing/scanner/content/fallback checks pass. Stop for user review; shoreline work remains queued and harbours remain deferred.
+
+## Correction acceptance and next step
+
+Compare the original Phase 13, rejected Phase 14 and corrected field on desktop
+and phone. Restore crosswind relief and broken/intersecting crests without
+turning the scene into jitter. Measure crosswind slope energy and spatial
+correlation as regression evidence, not as proof that users will like the look.
+Check multiple times/seeds, noise-cell boundaries, field derivatives, original
+hull/contact/steering/storm tests, shared clocks and resource/per-frame cost.
+Publish and verify exact public assets and browser controls, then stop for user
+review. Harbours/zoom and shoreline interaction remain deferred/queued.
+
+## Correction implementation and local verification
+
+The original four carrier directions/wavelengths/periods are restored exactly.
+Two small smooth fields travel through world space: a 44×27-unit crest bend
+and a slower 72×48-unit packet-weight pattern. Fixed integer hashes and quintic
+interpolation provide stable values/derivatives; no RNG is called per frame.
+The main swell keeps at least half the component energy. Positive amplitude
+variations sum to zero, retaining the 1.8 / 2.52 calm/storm bounds.
+
+Spatial slope energy across the wind is 0.3534 versus 0.3519 in the old water
+and 0.00134 in the rejected bands. This guards the restored overlapping shape;
+normal desktop/phone images are reviewed separately. Wave CPU updates measured
+5.47 ms median / 6.07 ms p95 versus 3.90 / 4.28 for the original in Node/VM.
+Original renderer counts are restored: 59 calls, 35,056 triangles, 44 geometries,
+zero textures. Physical-phone performance remains for external testing.
+
+The new field exposed a spray fixture tied to an old absolute timestamp and a
+real stale-coordinate bug: launch water was sampled before assigning Z. Bow
+and rail now assign both coordinates before sampling. The reentry test uses an
+observed trough/rising surface and a new pool-reuse test covers launch heights.
+No boat geometry or horizontal control/force tuning changed.
+
+162 native tests and the strict build pass. Current next step: finish final
+production/public browser verification and publish the correction through the
+same master/docs workflow, then stop. [Evidence](../../artifacts/phase14-refinement/VERIFICATION.md).

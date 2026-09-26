@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { MAX_WAVE_HEIGHT, WAVE_COMPONENTS, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
+import { MAX_WAVE_HEIGHT, WAVE_COMPONENTS, WAVE_VARIATION, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
 
 test('surface velocityY agrees with temporal derivatives at multiple samples', () => {
   const delta = 1e-5
@@ -62,12 +62,59 @@ test('storm-aware slopes agree with finite differences through the transition', 
   }
 })
 
-test('wave components form one coherent incoming direction', () => {
-  assert.equal(WAVE_COMPONENTS.length, 6)
-  assert.ok(Math.abs(WAVE_COMPONENTS.reduce((sum, component) => sum + component.amplitude, 0) - 1.8) < 1e-12)
-  for (const component of WAVE_COMPONENTS) {
-    assert.ok(component.directionX > 0.99)
-    assert.ok(Math.abs(component.directionZ) < 0.09)
+test('original overlapping swell mix keeps bounded positive packet weights', () => {
+  assert.equal(WAVE_COMPONENTS.length, 4)
+  for (const packet of [-1, -0.5, 0, 0.5, 1]) {
+    const amplitudes = WAVE_COMPONENTS.map(c => c.amplitude + c.amplitudeVariation * packet)
+    assert.ok(amplitudes.every(a => a > 0))
+    assert.ok(Math.abs(amplitudes.reduce((sum, a) => sum + a, 0) - MAX_WAVE_HEIGHT) < 1e-12)
+    assert.ok(amplitudes[0] ** 2 / amplitudes.reduce((sum, a) => sum + a ** 2, 0) > 0.5,
+      'The original main swell remains dominant while smaller waves overlap it')
+  }
+})
+
+// Phase 14's +/-5-degree fan passed temporal variance tests but became stripes.
+// Check actual spatial relief, not just different heights at different times.
+test('overlapping water retains crosswind relief rather than parallel bands', () => {
+  let crossEnergy = 0
+  let totalEnergy = 0
+  for (const time of [0, 17, 41, 83, 121]) {
+    for (let x = -80; x <= 80; x += 10) for (let z = -80; z <= 80; z += 10) {
+      const sample = sampleWaterSurface(x, z, time)
+      crossEnergy += sample.slopeZ ** 2
+      totalEnergy += sample.slopeX ** 2 + sample.slopeZ ** 2
+    }
+  }
+  assert.ok(crossEnergy / totalEnergy > 0.2, 'Crosswind shape was flattened into stripes')
+  assert.ok(crossEnergy / totalEnergy < 0.6, 'The primary swell lost its prevailing direction')
+})
+
+test('seeded layer changes the real surface while reset and evaluation order repeat exactly', () => {
+  const points = [[-70, -21, 0], [0, 0, 12.3], [32, -43, 97.1], [166, 12, 180]]
+  const sample = (seed: number) => points.map(([x, z, time]) => sampleWaterHeight(x, z, time, seed))
+  const first = sample(WAVE_VARIATION.seed)
+  const alternate = sample(WAVE_VARIATION.seed + 1)
+  assert.ok(first.some((value, i) => Math.abs(value - alternate[i]) > 0.05))
+  const reverse = points.toReversed().map(([x, z, time]) => sampleWaterHeight(x, z, time)).toReversed()
+  assert.deepEqual(reverse, first)
+  assert.deepEqual(sample(WAVE_VARIATION.seed), first)
+})
+
+test('phase and packet derivatives match the same surface across noise-cell and storm boundaries', () => {
+  const epsilon = 1e-5
+  const times = [0, 7.1, 29.3, 91]
+  for (const time of times) {
+    const cellX = (3 - 2.731) * WAVE_VARIATION.phaseLength - time * WAVE_VARIATION.phaseSpeed
+    const cellZ = (2 + 4.193) * WAVE_VARIATION.phaseWidth
+    for (const [x, z] of [[-70, -31], [0, 0], [154, 36], [172, 0], [cellX - epsilon, cellZ], [cellX + epsilon, cellZ]]) {
+      const surface = sampleWaterSurface(x, z, time)
+      const dx = (sampleWaterHeight(x + epsilon, z, time) - sampleWaterHeight(x - epsilon, z, time)) / (2 * epsilon)
+      const dz = (sampleWaterHeight(x, z + epsilon, time) - sampleWaterHeight(x, z - epsilon, time)) / (2 * epsilon)
+      const dt = (sampleWaterHeight(x, z, time + epsilon) - sampleWaterHeight(x, z, time - epsilon)) / (2 * epsilon)
+      assert.ok(Math.abs(surface.slopeX - dx) < 1e-7)
+      assert.ok(Math.abs(surface.slopeZ - dz) < 1e-7)
+      assert.ok(Math.abs(surface.velocityY - dt) < 1e-7)
+    }
   }
 })
 

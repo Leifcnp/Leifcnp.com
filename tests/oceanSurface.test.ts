@@ -8,7 +8,7 @@ import {
 } from '../src/world/createOceanSurface.ts'
 import { sampleFacetedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
 import { sampleStormField } from '../src/world/stormField.ts'
-import { sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
+import { PRIMARY_WAVE, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
 
 test('ocean surface keeps dense playable water and bounded outer geometry', () => {
   const scene = new THREE.Scene()
@@ -144,6 +144,8 @@ test('visible compound crests stay on maxima and move continuously through varie
   const ocean = createOceanSurface(new THREE.Scene())
   const positions = ocean.crestMesh.geometry.getAttribute('position') as THREE.BufferAttribute
   const opacity = ocean.crestMesh.geometry.getAttribute('crestOpacity') as THREE.BufferAttribute
+  const normalX = PRIMARY_WAVE.directionX
+  const normalZ = PRIMARY_WAVE.directionZ
   let reviewed = 0
   for (const time of [0, 2.4, 5.79, 12, 27, 37.25, 61, 92, 121, 179, 3600]) {
     ocean.update(time)
@@ -156,9 +158,10 @@ test('visible compound crests stay on maxima and move continuously through varie
       if (Math.abs(x) > 95 || Math.abs(z) > 95 || opacity.getX(vertex) < 0.1) continue
       reviewed++
       const height = sampleWaterHeight(x, z, time + 0.05)
-      assert.ok(height > sampleWaterHeight(x - 3.5, z, time + 0.05))
-      assert.ok(height > sampleWaterHeight(x + 3.5, z, time + 0.05))
-      assert.ok(Math.abs(sampleWaterSurface(x, z, time + 0.05, 0.01).slopeX) < 0.018)
+      assert.ok(height > sampleWaterHeight(x - normalX * 3.5, z - normalZ * 3.5, time + 0.05))
+      assert.ok(height > sampleWaterHeight(x + normalX * 3.5, z + normalZ * 3.5, time + 0.05))
+      const surface = sampleWaterSurface(x, z, time + 0.05, 0.01)
+      assert.ok(Math.abs(surface.slopeX * normalX + surface.slopeZ * normalZ) < 0.018)
       if (beforeOpacity[vertex] >= 0.1) {
         const oldX = (before[vertex * 3] + before[(vertex + 2) * 3]) / 2
         const oldZ = (before[vertex * 3 + 2] + before[(vertex + 2) * 3 + 2]) / 2

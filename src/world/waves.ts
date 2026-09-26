@@ -1,86 +1,77 @@
 /**
- * The deterministic travelling water field shared by the renderer and vessel
- * buoyancy. All callers use world-space X/Z coordinates and seconds for time.
- *
- * Six small, fixed-phase components make recognisable wave sets without
- * introducing a second swell direction.  Every phase travels toward -X
- * (the phase convention is `k·x + omega*t`) and is within five degrees of
- * that heading.  Offshore storm intensity scales this authored sum in place
- * so every consumer sees the same water field.
+ * The original overlapping swell shapes, gently warped by two fixed seeded
+ * patterns. Noise is a smooth spatial lookup advected with the water, never a
+ * new random draw per frame. Every consumer shares this world-space field.
  */
 import { sampleStormField, STORM_TUNING } from './stormField.ts';
+import { DEFAULT_WAVE_NOISE_SEED, sampleWaveNoise } from './waveNoise.ts';
+
 export const PRIMARY_WAVE = {
-  amplitude: 0.96,
-  waveNumber: (Math.PI * 2) / 30,
-  directionX: 1,
-  directionZ: 0,
-  angularSpeed: (Math.PI * 2) / 5.8,
-  phase: 0.35,
-  kind: 'sine',
+  amplitude: 0.96, waveNumber: (Math.PI * 2) / 30,
+  directionX: 0.92, directionZ: 0.39, angularSpeed: (Math.PI * 2) / 5.8,
+  phase: 0, kind: 'sine', phaseWarp: 0.8, amplitudeVariation: 0.18,
 } as const;
 export const SECONDARY_SWELL = {
-  amplitude: 0.42,
-  waveNumber: (Math.PI * 2) / 24,
-  directionX: 0.998,
-  directionZ: -0.063,
-  angularSpeed: (Math.PI * 2) / 4.6,
-  phase: 2.1,
-  kind: 'cosine',
+  amplitude: 0.46, waveNumber: (Math.PI * 2) / 24,
+  directionX: -0.38, directionZ: 0.925, angularSpeed: (Math.PI * 2) / 4.6,
+  phase: 0, kind: 'cosine', phaseWarp: 0.55, amplitudeVariation: -0.09,
 } as const;
 export const WAVE_COMPONENTS = [
   PRIMARY_WAVE,
   SECONDARY_SWELL,
-  { amplitude: 0.18, waveNumber: (Math.PI * 2) / 34, directionX: 0.999, directionZ: 0.045, angularSpeed: (Math.PI * 2) / 6.8, phase: 4.7, kind: 'sine' },
-  { amplitude: 0.16, waveNumber: (Math.PI * 2) / 20, directionX: 0.997, directionZ: -0.077, angularSpeed: (Math.PI * 2) / 3.5, phase: 1.25, kind: 'cosine' },
-  { amplitude: 0.04, waveNumber: (Math.PI * 2) / 14, directionX: 0.999, directionZ: 0.045, angularSpeed: (Math.PI * 2) / 2.7, phase: 5.4, kind: 'sine' },
-  { amplitude: 0.04, waveNumber: (Math.PI * 2) / 42, directionX: 0.999, directionZ: -0.045, angularSpeed: (Math.PI * 2) / 8.9, phase: 3.05, kind: 'cosine' },
+  { amplitude: 0.28, waveNumber: (Math.PI * 2) / 34, directionX: 0.74, directionZ: -0.673, angularSpeed: (Math.PI * 2) / 6.8, phase: 0, kind: 'sine', phaseWarp: -0.65, amplitudeVariation: -0.06 },
+  { amplitude: 0.1, waveNumber: (Math.PI * 2) / 11, directionX: 0.707, directionZ: 0.707, angularSpeed: (Math.PI * 2) / 3.5, phase: 0, kind: 'cosine', phaseWarp: 0.35, amplitudeVariation: -0.03 },
 ] as const;
-const DEFAULT_SAMPLE_DISTANCE = 0.35;
-const DEFAULT_SLOPE_FACTORS_X = WAVE_COMPONENTS.map(
-  (component) => Math.sin(component.waveNumber * component.directionX * DEFAULT_SAMPLE_DISTANCE) / DEFAULT_SAMPLE_DISTANCE,
-);
-const DEFAULT_SLOPE_FACTORS_Z = WAVE_COMPONENTS.map(
-  (component) => Math.sin(component.waveNumber * component.directionZ * DEFAULT_SAMPLE_DISTANCE) / DEFAULT_SAMPLE_DISTANCE,
-);
 
-/** The largest possible absolute height of the authored wave sum. */
-export const MAX_WAVE_HEIGHT = WAVE_COMPONENTS.reduce(
-  (sum, component) => sum + component.amplitude,
-  0,
-);
+export const WAVE_VARIATION = {
+  seed: DEFAULT_WAVE_NOISE_SEED,
+  phaseLength: 44, phaseWidth: 27, phaseSpeed: 5.1,
+  packetLength: 72, packetWidth: 48, packetSpeed: 4.6,
+} as const;
+
+// Packet weights trade energy between long swells and smaller cross waves.
+// Their variations sum to zero and all remain positive: the old bound holds.
+export const MAX_WAVE_HEIGHT = 1.8;
+
+// Reused only inside synchronous sampling; callers receive independent values.
+const phaseNoise = { value: 0, derivativeU: 0, derivativeV: 0 };
+const packetNoise = { value: 0, derivativeU: 0, derivativeV: 0 };
 
 function finiteOr(value: number, fallback: number): number {
   return Number.isFinite(value) ? value : fallback;
 }
 
-/** Return the phase used by the primary travelling swell. */
-export function samplePrimaryWavePhase(x: number, z: number, timeSeconds = 0): number {
-  return (
-    finiteOr(x, 0) * PRIMARY_WAVE.directionX + finiteOr(z, 0) * PRIMARY_WAVE.directionZ
-  ) * PRIMARY_WAVE.waveNumber + finiteOr(timeSeconds, 0) * PRIMARY_WAVE.angularSpeed + PRIMARY_WAVE.phase;
+function sampleVariation(x: number, z: number, time: number, seed: number): void {
+  sampleWaveNoise(
+    (x + time * WAVE_VARIATION.phaseSpeed) / WAVE_VARIATION.phaseLength + 2.731,
+    z / WAVE_VARIATION.phaseWidth - 4.193, seed, phaseNoise,
+  );
+  sampleWaveNoise(
+    (x + time * WAVE_VARIATION.packetSpeed) / WAVE_VARIATION.packetLength - 7.217,
+    z / WAVE_VARIATION.packetWidth + 9.431, seed ^ 0x6a09e667, packetNoise,
+  );
 }
 
-/** Return the phase used by the secondary incoming swell. */
-export function sampleSecondaryWavePhase(x: number, z: number, timeSeconds = 0): number {
-  return (
-    finiteOr(x, 0) * SECONDARY_SWELL.directionX + finiteOr(z, 0) * SECONDARY_SWELL.directionZ
-  ) * SECONDARY_SWELL.waveNumber + finiteOr(timeSeconds, 0) * SECONDARY_SWELL.angularSpeed + SECONDARY_SWELL.phase;
+/** Actual phase, including the advected bend of the main swell. */
+export function samplePrimaryWavePhase(x: number, z: number, timeSeconds = 0, seed = WAVE_VARIATION.seed): number {
+  const worldX = finiteOr(x, 0), worldZ = finiteOr(z, 0), time = finiteOr(timeSeconds, 0);
+  sampleVariation(worldX, worldZ, time, seed);
+  return (worldX * PRIMARY_WAVE.directionX + worldZ * PRIMARY_WAVE.directionZ) * PRIMARY_WAVE.waveNumber +
+    time * PRIMARY_WAVE.angularSpeed + PRIMARY_WAVE.phaseWarp * phaseNoise.value;
 }
 
-/** Sample the same travelling swell used by the water mesh and vessel. */
-export function sampleWaterHeight(x: number, z: number, timeSeconds = 0): number {
-  const worldX = finiteOr(x, 0);
-  const worldZ = finiteOr(z, 0);
-  const time = finiteOr(timeSeconds, 0);
+/** Sample the water shared by visible mesh, hull, spray and wake. */
+export function sampleWaterHeight(x: number, z: number, timeSeconds = 0, seed = WAVE_VARIATION.seed): number {
+  const worldX = finiteOr(x, 0), worldZ = finiteOr(z, 0), time = finiteOr(timeSeconds, 0);
+  sampleVariation(worldX, worldZ, time, seed);
   let height = 0;
   for (const component of WAVE_COMPONENTS) {
-    const phase =
-      (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
-      time * component.angularSpeed + component.phase;
-    height += component.amplitude * (component.kind === 'sine' ? Math.sin(phase) : Math.cos(phase));
+    const phase = (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
+      time * component.angularSpeed + component.phase + component.phaseWarp * phaseNoise.value;
+    const amplitude = component.amplitude + component.amplitudeVariation * packetNoise.value;
+    height += amplitude * (component.kind === 'sine' ? Math.sin(phase) : Math.cos(phase));
   }
-  const storm = sampleStormField(worldX, worldZ);
-  const intensity = clamp01(finiteOr(storm.intensity, 0));
+  const intensity = sampleStormField(worldX, worldZ).intensity;
   return height * (1 + intensity * (STORM_TUNING.maxWaveScale - 1));
 }
 
@@ -88,74 +79,58 @@ export interface WaterSample {
   readonly height: number;
   readonly slopeX: number;
   readonly slopeZ: number;
-  /** Vertical surface velocity, in world units per second. */
   readonly velocityY: number;
-  /** Position-only offshore storm intensity, clamped to [0, 1]. */
   readonly stormIntensity: number;
 }
 
-/** Sample height and finite-difference slopes from the same wave function. */
+/**
+ * Analytic gradients include phase bending, packet weights and storm scaling.
+ * An explicit positive sampleDistance requests exact finite-difference slopes;
+ * the default analytic path avoids four extra height evaluations per vertex.
+ */
 export function sampleWaterSurface(
   x: number,
   z: number,
   timeSeconds = 0,
-  sampleDistance = 0.35,
+  sampleDistance = 0,
+  seed = WAVE_VARIATION.seed,
 ): WaterSample {
-  const worldX = finiteOr(x, 0);
-  const worldZ = finiteOr(z, 0);
-  const time = finiteOr(timeSeconds, 0);
-  const distance = Number.isFinite(sampleDistance)
-    ? Math.max(0.01, sampleDistance)
-    : DEFAULT_SAMPLE_DISTANCE;
-  const useDefaultSlopeFactors = distance === DEFAULT_SAMPLE_DISTANCE;
-  let height = 0;
-  let slopeX = 0;
-  let slopeZ = 0;
-  let velocityY = 0;
-  for (let componentIndex = 0; componentIndex < WAVE_COMPONENTS.length; componentIndex += 1) {
-    const component = WAVE_COMPONENTS[componentIndex];
-    const phase =
-      (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
-      time * component.angularSpeed + component.phase;
-    const sine = Math.sin(phase);
-    const cosine = Math.cos(phase);
+  const worldX = finiteOr(x, 0), worldZ = finiteOr(z, 0), time = finiteOr(timeSeconds, 0);
+  sampleVariation(worldX, worldZ, time, seed);
+  const phaseDx = phaseNoise.derivativeU / WAVE_VARIATION.phaseLength;
+  const phaseDz = phaseNoise.derivativeV / WAVE_VARIATION.phaseWidth;
+  const phaseDt = phaseDx * WAVE_VARIATION.phaseSpeed;
+  const packetDx = packetNoise.derivativeU / WAVE_VARIATION.packetLength;
+  const packetDz = packetNoise.derivativeV / WAVE_VARIATION.packetWidth;
+  const packetDt = packetDx * WAVE_VARIATION.packetSpeed;
+  let height = 0, slopeX = 0, slopeZ = 0, velocityY = 0;
+  for (const component of WAVE_COMPONENTS) {
+    const phase = (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
+      time * component.angularSpeed + component.phase + component.phaseWarp * phaseNoise.value;
+    const sine = Math.sin(phase), cosine = Math.cos(phase);
     const basis = component.kind === 'sine' ? sine : cosine;
-    // Derivative of the component basis with respect to phase. The
-    // finite-difference factor below preserves the historical sampler
-    // contract while avoiding four additional height evaluations.
-    const phaseDerivative = component.kind === 'sine' ? cosine : -sine;
-    height += component.amplitude * basis;
-    const slopeFactorX = useDefaultSlopeFactors
-      ? DEFAULT_SLOPE_FACTORS_X[componentIndex]
-      : Math.sin(component.waveNumber * component.directionX * distance) / distance;
-    const slopeFactorZ = useDefaultSlopeFactors
-      ? DEFAULT_SLOPE_FACTORS_Z[componentIndex]
-      : Math.sin(component.waveNumber * component.directionZ * distance) / distance;
-    slopeX += component.amplitude * phaseDerivative * slopeFactorX;
-    slopeZ += component.amplitude * phaseDerivative * slopeFactorZ;
-    velocityY += component.amplitude * component.angularSpeed * phaseDerivative;
+    const derivative = component.kind === 'sine' ? cosine : -sine;
+    const amplitude = component.amplitude + component.amplitudeVariation * packetNoise.value;
+    const envelopeDerivative = component.amplitudeVariation * basis;
+    height += amplitude * basis;
+    slopeX += envelopeDerivative * packetDx + amplitude * derivative *
+      (component.waveNumber * component.directionX + component.phaseWarp * phaseDx);
+    slopeZ += envelopeDerivative * packetDz + amplitude * derivative *
+      (component.waveNumber * component.directionZ + component.phaseWarp * phaseDz);
+    velocityY += envelopeDerivative * packetDt + amplitude * derivative *
+      (component.angularSpeed + component.phaseWarp * phaseDt);
   }
   const storm = sampleStormField(worldX, worldZ);
-  const intensity = clamp01(finiteOr(storm.intensity, 0));
-  const waveScale = 1 + intensity * (STORM_TUNING.maxWaveScale - 1);
-  // Scale the same travelling shape and include the intensity derivative in
-  // the gradient. This keeps visible facets, hull contact, and wave response
-  // coherent across the soft offshore transition.
-  const baseHeight = height;
-  height = baseHeight * waveScale;
-  const stormScaleDelta = STORM_TUNING.maxWaveScale - 1;
-  slopeX = slopeX * waveScale + baseHeight * stormScaleDelta * finiteOr(storm.gradientX, 0);
-  slopeZ = slopeZ * waveScale + baseHeight * stormScaleDelta * finiteOr(storm.gradientZ, 0);
-  velocityY *= waveScale;
-  return {
-    height,
-    slopeX,
-    slopeZ,
-    velocityY,
-    stormIntensity: intensity,
-  };
-}
-
-function clamp01(value: number): number {
-  return Math.min(1, Math.max(0, value));
+  const delta = STORM_TUNING.maxWaveScale - 1;
+  const scale = 1 + storm.intensity * delta;
+  slopeX = slopeX * scale + height * delta * storm.gradientX;
+  slopeZ = slopeZ * scale + height * delta * storm.gradientZ;
+  velocityY *= scale;
+  height *= scale;
+  if (Number.isFinite(sampleDistance) && sampleDistance > 0) {
+    const distance = Math.max(0.0001, sampleDistance);
+    slopeX = (sampleWaterHeight(worldX + distance, worldZ, time, seed) - sampleWaterHeight(worldX - distance, worldZ, time, seed)) / (2 * distance);
+    slopeZ = (sampleWaterHeight(worldX, worldZ + distance, time, seed) - sampleWaterHeight(worldX, worldZ - distance, time, seed)) / (2 * distance);
+  }
+  return { height, slopeX, slopeZ, velocityY, stormIntensity: storm.intensity };
 }

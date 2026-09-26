@@ -1,0 +1,91 @@
+[
+  {
+    "label": "baseline",
+    "components": null,
+    "amplitudeSum": null,
+    "min": -2.3540186368391627,
+    "max": 2.3679294029647338,
+    "maxSlope": 0.4067963914287013,
+    "maxVelocity": 2.694930790214164,
+    "crosswindSlopeEnergyRatio": 0.3519329349996789,
+    "coherence": {
+      "20": {
+        "alongX": -0.7010034128449529,
+        "crossZ": -0.07638774446410856
+      },
+      "30": {
+        "alongX": 0.4634535896758396,
+        "crossZ": -0.5272226731356414
+      },
+      "40": {
+        "alongX": 0.030969291451436332,
+        "crossZ": -0.9030194240624456
+      }
+    },
+    "frontCrossingCount": 22,
+    "medianFrontSpacing": 17,
+    "temporalPulseCount": 30,
+    "temporalPulseSpacingMedian": 5.600000000000001,
+    "seedSymbols": []
+  },
+  {
+    "label": "rejected",
+    "components": 6,
+    "amplitudeSum": 1.7999999999999998,
+    "min": -2.2899773628815243,
+    "max": 2.1814187713223427,
+    "maxSlope": 0.5276685174706557,
+    "maxVelocity": 2.7803941887709853,
+    "crosswindSlopeEnergyRatio": 0.0013409054977658636,
+    "coherence": {
+      "20": {
+        "alongX": -0.3270298429046331,
+        "crossZ": 0.9871789219855917
+      },
+      "30": {
+        "alongX": 0.7721985971090362,
+        "crossZ": 0.9688233438166212
+      },
+      "40": {
+        "alongX": -0.41609665806437635,
+        "crossZ": 0.9460739208995577
+      }
+    },
+    "frontCrossingCount": 24,
+    "medianFrontSpacing": 14,
+    "temporalPulseCount": 31,
+    "temporalPulseSpacingMedian": 5.6000000000000085,
+    "seedSymbols": []
+  },
+  {
+    "label": "refined",
+    "components": 4,
+    "amplitudeSum": 1.8,
+    "min": -2.358776143345242,
+    "max": 2.3428545221960855,
+    "maxSlope": 0.44413498460982775,
+    "maxVelocity": 2.8283677431157956,
+    "crosswindSlopeEnergyRatio": 0.35338202641683764,
+    "coherence": {
+      "20": {
+        "alongX": -0.685100166689497,
+        "crossZ": -0.051280599896405835
+      },
+      "30": {
+        "alongX": 0.4292934255375263,
+        "crossZ": -0.4569075026577305
+      },
+      "40": {
+        "alongX": 0.0633349114730722,
+        "crossZ": -0.817985238108438
+      }
+    },
+    "frontCrossingCount": 22,
+    "medianFrontSpacing": 17,
+    "temporalPulseCount": 32,
+    "temporalPulseSpacingMedian": 5.600000000000001,
+    "seedSymbols": [
+      "seed"
+    ]
+  }
+]

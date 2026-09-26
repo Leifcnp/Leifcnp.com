@@ -157,9 +157,9 @@ export function createHullSpray(scene: THREE.Scene): HullSprayController {
     const particle = nextParticle(0)
     const spread = 0.18 + random() * 0.42
     particle.x = finiteOr(point.x, 0) + sideX * sideSign * spread
+    particle.z = finiteOr(point.z, 0) + sideZ * sideSign * spread
     const launchWaterY = sampleFacetedWaterHeight(particle.x, particle.z, timeSeconds) + SURFACE_OFFSET
     particle.y = Math.max(finiteOr(point.y, 0), launchWaterY)
-    particle.z = finiteOr(point.z, 0) + sideZ * sideSign * spread
     particle.velocityX = forwardX * (0.2 + speed * 0.035) + sideX * sideSign * (0.12 + random() * 0.18) + wind.x * 0.025
     particle.velocityZ = forwardZ * (0.2 + speed * 0.035) + sideZ * sideSign * (0.12 + random() * 0.18) + wind.z * 0.025
     particle.velocityY = 0.62 + random() * 0.65 + closing * 0.22
@@ -182,9 +182,9 @@ export function createHullSpray(scene: THREE.Scene): HullSprayController {
     const wind = sampleWind(timeSeconds)
     const particle = nextParticle(1)
     particle.x = finiteOr(point.x, 0)
+    particle.z = finiteOr(point.z, 0)
     const launchWaterY = sampleFacetedWaterHeight(particle.x, particle.z, timeSeconds) + SURFACE_OFFSET
     particle.y = Math.max(finiteOr(point.y, 0), launchWaterY)
-    particle.z = finiteOr(point.z, 0)
     particle.velocityX = forwardX * (0.12 + speed * 0.018) + sideX * sideSign * (0.16 + load * 0.18) + wind.x * 0.018
     particle.velocityZ = forwardZ * (0.12 + speed * 0.018) + sideZ * sideSign * (0.16 + load * 0.18) + wind.z * 0.018
     particle.velocityY = 0.22 + random() * 0.3 + load * 0.25
