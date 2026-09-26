@@ -1,6 +1,6 @@
 # WEB-019 review — remove white wind streams
 
-2026-09-25. Local verification complete; public release pending.
+2026-09-25. Published and publicly verified.
 
 ## Requested and delivered
 
@@ -52,6 +52,4 @@ fixed). The scene/waves shown are actual Three.js output, not a generated mockup
 
 ## Publication
 
-Pending exact-SHA Pages success, matching public files and public desktop/mobile
-interaction checks. WEB-019 stays In progress until verified, then stop for
-review. WEB-017 water is unchanged; shorelines and harbours remain deferred.
+Application commit `9a156695` is published on `origin/master`; [Pages run 36223010394](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36223010394) succeeded for the exact SHA. Public files match the tested build, and public desktop/mobile interactions pass. See `public-assets.json` and `public/checks.json`. WEB-019 is Done. Stop for user review; water settings, shorelines and harbours are unchanged.

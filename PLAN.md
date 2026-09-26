@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**WEB-019 review correction: remove white wind streams and explain water rendering cost.**
+**WEB-019 wind-stream removal is published; triangle comparison and CPU explanation delivered.**
 The user requested “ok go for next todo” on 2026-09-25 after the verified
 Phase 13 wind-cue release. Preserve the current custom boat, controls and
 wind model. User review rejected the over-aligned bands: restore the original
@@ -56,7 +56,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
 | WEB-017 | Published wider-view correction | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
-| WEB-019 | In progress review correction | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
+| WEB-019 | Published review correction | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
@@ -121,3 +121,5 @@ WEB-017 correction release (2026-09-25): Application commit `b5b619a5` is publis
 WEB-017 wider-view release (2026-09-25): Application commit `2061e581` is published on `origin/master`; [Pages run 36222447849](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36222447849) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build and public desktop/mobile interactions pass. Stop before any next phase.
 
 Current correction: User requests removing the over-water wind streams because they resemble wave crests, and asks for CPU numbers and a controlled triangle comparison. Preserve all wave settings and other wind cues; publish this removal and stop.
+
+WEB-019 removal release: Application commit `9a156695` is published on `origin/master`; [Pages run 36223010394](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36223010394) succeeded for the exact SHA. Public files match the tested build, and public desktop/mobile interactions pass. Stop for user review.

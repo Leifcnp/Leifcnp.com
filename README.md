@@ -115,4 +115,4 @@ See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mob
 
 The screenshot tests cover mobile layouts, not performance on physical mobile hardware. No DNS or certificate settings were changed during publication.
 
-WEB-019 review correction: remove the white wind streams that resembled wave crests. The five tests solely for the deleted effect were removed; remaining behavior and wave tuning are unchanged. See [wind-stream removal evidence](artifacts/water-clarity/VERIFICATION.md).
+WEB-019 review correction is published and publicly verified: the white wind streams that resembled wave crests are removed. The five tests solely for the deleted effect were removed; remaining behavior and wave tuning are unchanged. See [wind-stream removal evidence](artifacts/water-clarity/VERIFICATION.md).

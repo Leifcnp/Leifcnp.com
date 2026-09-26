@@ -167,3 +167,7 @@ existing contact spray belong to this release.
 Application commit `72a9d476` is published on `origin/master`. [Pages run 36218780257](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36218780257) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build byte for byte (`public-assets.json`). The unmodified public bundle passes desktop/mobile sailing controls, auto/manual trim, all categories, scanner travel/arrival, touch, reduced motion and WebGL fallback (`public/checks.json`) without console or script errors. WEB-019 is Done and awaits user review.
 
 Stop here; WEB-017, WEB-022 and deferred WEB-016 remain unstarted.
+
+## Wind-stream removal release
+
+Application commit `9a156695` is published on `origin/master`; [Pages run 36223010394](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36223010394) succeeded for the exact SHA. Public files match the tested build, and public desktop/mobile interactions pass. 160 remaining native tests, strict build, scene absence/retained cues and lifecycle checks pass. Controlled triangle comparison and prior CPU timing explanation are in [the review evidence](../../artifacts/water-clarity/VERIFICATION.md). WEB-019 is Done; stop for review.

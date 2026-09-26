@@ -36,7 +36,15 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-- [ ] WEB-019 — Make wind direction visible through flags, wind effects and spray.
+No active implementation; awaiting wind-cue and water review.
+
+## Blocked
+
+No blocked tasks.
+
+## Done
+
+- [x] WEB-019 — Make wind direction visible through flags, wind effects and spray.
   - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
   - Acceptance criteria: Original code-built flags/pennants, translucent stylized breeze streams across the water, and restrained wind/spray cues communicate the same direction as the sailing model. Fixed landmarks follow true wind; boat-mounted cues account for apparent wind. Flags/spray trail downwind while the HUD indicates where wind comes from. Spray responds to wave/hull encounters and drifts coherently. Preserve readable navigation/content, existing physics and artwork ownership, calm/storm behavior, pause/reset/hidden-tab/reduced motion, disposal and bounded mobile rendering cost.
   - Expanded request (2026-09-24): Visible breeze streams should make wind direction intuitive from the scene, without requiring visitors to calculate from the compass.
@@ -44,16 +52,10 @@ Other entries remain Backlog and harbours remain deferred.
   - Completed: 2026-09-25. Application commit `72a9d476` is published on `origin/master`; [Pages run 36218780257](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36218780257) succeeded for the exact SHA.
   - Verification: Strict build, 148 native tests, true/apparent-wind direction and transformed anchors, stable world-space streams, reduced-motion/lifecycle checks, six production layouts and public desktop/mobile controls/content/fallbacks pass. Public assets match the build. See [verification](artifacts/phase13/VERIFICATION.md) and [deployment evidence](artifacts/phase13/public-assets.json).
   - Review correction (2026-09-25): User requests removing white wind streams over the water because they resemble wave crest effects. Also explain the measured CPU increase and show identical waves with/without the alternating triangle layout.
-  - Progress: Reopened for stream removal only; keep flags, HUD, wave crests, spray and wind sailing. Luna owns removal; root owns matched comparison, performance explanation, verification and publication.
   - Local verification: 160 remaining tests, strict build, desktop/phone scene checks and a controlled triangle comparison pass; one draw call and 96 triangles removed. See [evidence](artifacts/water-clarity/VERIFICATION.md).
-  - Next step: Publish the stream removal, verify exact public assets and desktop/mobile controls, then stop for review.
+  - Removal completed (2026-09-25): Application commit `9a156695` is published on `origin/master`; [Pages run 36223010394](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36223010394) succeeded for the exact SHA. Public files match the tested build, and public desktop/mobile interactions pass.
+  - Review gate: Stop for review. Flags/HUD, wave crests, wake/spray and wind physics remain; no new shoreline/harbour work.
   - Plan: [plans/WEB-019/plan.md](plans/WEB-019/plan.md).
-
-## Blocked
-
-No blocked tasks.
-
-## Done
 
 - [x] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
   - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.

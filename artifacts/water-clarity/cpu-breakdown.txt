@@ -1,0 +1,36 @@
+Water sampler CPU diagnostic (2026-09-25)
+
+Scope: temporary Node benchmark only; no repository files changed. Each sample is
+sampleWaterSurface-equivalent analytic work over a 121x121 = 14,641 point lattice,
+including storm sampling, but excluding renderer/crest work. Four variants were
+interleaved, with 3 warmups and 7 measured repetitions; each measured repetition
+ran 6 lattices and reports the median divided by 6. process.cpuUsage is the main
+metric; wall time is also recorded in the JSON. Browser QA may have been running
+concurrently, so VM contention/GC can affect absolute values.
+
+Median per lattice:
+
+  variant   CPU ms   wall ms
+  4 carriers / 2 noise fields   3.350   3.351
+  4 carriers / 4 noise fields   4.322   4.323
+  8 carriers / 2 noise fields   5.435   5.437
+  8 carriers / 4 noise fields   6.695   6.696
+
+The 4x2 baseline uses the historical four carrier definitions and the two old
+phase/packet fields. 4x4 uses the first four current carriers with all four
+current fields; 8x2 uses all current carriers but only the two old fields; 8x4
+is the current sampler shape. Thus the factorial CPU deltas are:
+
+  extra four carriers: +2.085 ms/lattice (~62% of the +3.345 ms baseline-to-current increase)
+  extra two noise fields plus their derivative/envelope arithmetic: +0.972 ms (~29%)
+  interaction between the two changes: +0.288 ms (~9%)
+
+These percentages describe this isolated sampler benchmark, not the previously
+observed whole-browser water-update increase. They show why adding frequencies
+costs materially: over the main lattice, four extra carriers add 14,641*4*2 =
+117,128 sin/cos calls per update, plus per-carrier phase, amplitude, and analytic
+slope/velocity arithmetic. The two extra seeded fields add 14,641*2 = 29,282
+noise lookups per update and their gradients feed every carrier's analytic
+derivatives. The benchmark cannot attribute the prior browser-load increase
+exactly because renderer uploads, crest sampling, browser scheduling, and GC are
+outside this measurement.
