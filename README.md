@@ -42,9 +42,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user accepted WEB-020 auto-trim/manual boost as Phase 11 through this external-testing workflow. Future phases still require review.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user accepted Phase 11 and authorized WEB-021 heel/contact as Phase 12 through this external-testing workflow. Future phases still require review.
 
-Phase 11 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 11 release evidence](artifacts/phase11/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
+Phase 12 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 12 release evidence](artifacts/phase12/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
 
 ## Phase boundary and review
 
@@ -73,7 +73,7 @@ Pause cancels scanner travel at the current position. Category navigation while 
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop after Phase 12 for review; local browser verification passes and publication is pending. On 2026-09-25 the user deferred WEB-016 harbours/zoom to prioritize boat feel. WEB-021 is implemented locally; the next candidate is WEB-019 wind cues, flags and spray. WEB-016 harbours, WEB-017 incoming-wave variation/direction and WEB-022 shoreline interaction remain deferred.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Stop after Phase 12 for review; local and public browser verification passes. On 2026-09-25 the user deferred WEB-016 harbours/zoom to prioritize boat feel. WEB-021 is complete; the next candidate is WEB-019 wind cues, flags and spray. WEB-016 harbours, WEB-017 incoming-wave variation/direction and WEB-022 shoreline interaction remain deferred.
 
 
 ## Verification and VM graphics
@@ -85,7 +85,8 @@ over the existing grid without changing geometry or wave forces. The working
 deck, cockpit and mast retain at least 0.12 units of dry clearance; outer-edge
 rail wash is limited to 0.06 units. Pause/reset/hidden/reduced-motion cleanup
 and the original fixed spray pool are covered. Six production layouts, actual keyboard/touch/scanner/lifecycle behavior and
-normal-camera hull-contact scenes pass. Publication remains pending. See
+normal-camera hull-contact scenes pass. Exact-SHA Pages, matching public assets
+and public desktop/mobile interactions are verified. See
 [Phase 12 verification](artifacts/phase12/VERIFICATION.md).
 
 Phase 11 passes 120 native cases, strict build, deterministic auto/manual/tack

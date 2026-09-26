@@ -2,10 +2,11 @@
 
 ## Current delivery
 
-**Phase 12 is active: WEB-021 stronger reach heel, shallow rail wash and bow spray.**
+**Phase 12 is published and verified: WEB-021 stronger reach heel, shallow rail wash and bow spray.**
 The user accepted proceeding after Phase 11 on 2026-09-25. Luna agents own
 pose/contact, a shared bounded spray pool, and independent contact measurements;
-root integrates, visually reviews, verifies and publishes the phase.
+root integrated, visually reviewed, verified and published the phase. See
+[Phase 12 evidence](artifacts/phase12/VERIFICATION.md). Await user review.
 
 Target readable 15–20° heel on loaded reaches, mirrored smoothly across tacks.
 A shallow leeward rail dip may wet the outer margin while the central working
@@ -58,7 +59,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Backlog | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
-| WEB-021 | Active Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
+| WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
 
 ## Team and integration ownership
@@ -103,3 +104,5 @@ Priority update (2026-09-25): User deferred harbours/zoom and requested a review
 Phase 11 authorization (2026-09-25): User accepted WEB-020. Complete one assist/control/feedback phase and stop; WEB-016 remains deferred.
 
 Phase 12 authorization (2026-09-25): User requested the next task after Phase 11. WEB-021 is selected; preserve the deferred harbour/zoom boundary and stop for review after publishing.
+
+Phase 12 release (2026-09-25): `d7dac1c`, exact-SHA Pages and matching public assets verified; public desktop/mobile checks pass. WEB-021 is Done. Stop for review before WEB-019 or other backlog work.

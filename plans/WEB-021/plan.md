@@ -180,3 +180,9 @@ six production layouts and normal-camera desktop/mobile storm/tack scenes is
 recorded in [verification](../../artifacts/phase12/VERIFICATION.md). Publish
 through master/docs, verify exact-SHA/public resources and interactions, then
 stop for user review.
+
+## Release and review gate
+
+Application commit `d7dac1c` is published on `origin/master`. [Pages run 36217578595](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36217578595) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build byte for byte (`public-assets.json`). The unmodified public bundle passes desktop/mobile controls, auto/manual trim, sound toggling, all categories, scanner travel/arrival, touch, reduced motion and WebGL fallback (`public/checks.json`) without console or script errors. WEB-021 is Done and awaits user review.
+
+Stop here; WEB-019 and all other backlog tasks remain unstarted.

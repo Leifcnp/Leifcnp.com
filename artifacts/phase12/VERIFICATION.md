@@ -1,6 +1,6 @@
 # Phase 12 — Reach heel and hull-contact spray
 
-Date: 2026-09-25. Task: WEB-021. Local verification complete; publication pending.
+Date: 2026-09-25. Task: WEB-021. Published and publicly verified.
 
 ## Delivered behavior
 
@@ -67,6 +67,9 @@ Date: 2026-09-25. Task: WEB-021. Local verification complete; publication pendin
   844×390 and 2560×1080 (`checks.json`). All four categories, focus/reading,
   44px touch targets, scanner replacement/arrival, F/Explore, simultaneous
   touches, reduced motion and WebGL fallback pass with no runtime errors.
+- The public key check waits for the visible Manual state while Q is held.
+  An initial fixed 250 ms sleep missed a frame in software rendering; the
+  state-based retry acknowledged Q in 297 ms. No application change was needed.
 - Measured resources: 55 calls, 34,920 triangles, 40 geometries, zero textures
   versus 53/33,000/39/0 previously. The transparent double-sided spray adds
   two bounded passes, one geometry and no textures. No extra animation loop.
@@ -76,8 +79,9 @@ Date: 2026-09-25. Task: WEB-021. Local verification complete; publication pendin
 
 ## Publication
 
-Pending the existing master/docs GitHub Pages release and exact-SHA/public
-asset checks. The domain metadata remains `leifcnp.com`; no DNS/TLS changes.
+Application commit `d7dac1c` is published on `origin/master`. [Pages run 36217578595](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36217578595) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build byte for byte (`public-assets.json`). The unmodified public bundle passes desktop/mobile controls, auto/manual trim, sound toggling, all categories, scanner travel/arrival, touch, reduced motion and WebGL fallback (`public/checks.json`) without console or script errors. WEB-021 is Done and awaits user review.
+
+Domain metadata remains `leifcnp.com`; no DNS/TLS changes.
 
 ## Review boundary and limits
 
