@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 13 is active: WEB-019 visible wind streams and original flags.**
+**Phase 13 is published and verified: WEB-019 visible wind streams and original flags.**
 The user requested the next step on 2026-09-25 as Phase 12 public verification
 finished. Phase 12 is published and verified; see [its evidence](artifacts/phase12/VERIFICATION.md).
 
@@ -56,7 +56,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
 | WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
-| WEB-019 | Active Phase 13 | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
+| WEB-019 | Published Phase 13 | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
@@ -107,3 +107,5 @@ Phase 12 authorization (2026-09-25): User requested the next task after Phase 11
 Phase 12 release (2026-09-25): `d7dac1c`, exact-SHA Pages and matching public assets verified; public desktop/mobile checks pass. WEB-021 is Done. Stop for review before WEB-019 or other backlog work.
 
 Phase 13 authorization (2026-09-25): “ok next go ahead”. WEB-019 selected after the successful Phase 12 release; complete only this wind-cue pass and stop for review.
+
+Phase 13 release (2026-09-25): `72a9d476`, exact-SHA Pages and matching public resources verified; public desktop/mobile checks pass. WEB-019 is Done. Stop for wind-cue review.

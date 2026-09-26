@@ -4,7 +4,7 @@
 
 The user requested a future clarity pass: show wind direction with flags,
 make wind effects visible, add wind-carried spray, and later improve wave
-direction and randomness. This is active Phase 13. On 2026-09-25, after WEB-020 controls and WEB-021 heel/contact were published, the user requested “ok next go ahead”. Harbours/zoom stay deferred. Complete one bounded wind-cue pass and publish through master/docs for review.
+direction and randomness. This is completed Phase 13. On 2026-09-25, after WEB-020 controls and WEB-021 heel/contact were published, the user requested “ok next go ahead”. Harbours/zoom stay deferred. Complete one bounded wind-cue pass and publish through master/docs for review.
 
 Wave-direction and common seeded randomness belong to WEB-017 and must be
 coordinated separately. They are not a reason to change the existing sailing
@@ -138,3 +138,9 @@ pause/hidden, reset and static reduced cues. Production and public verification
 are recorded in [the Phase 13 evidence](../../artifacts/phase13/VERIFICATION.md).
 No changes to sailing forces, waves, trim/boost, original boat geometry or
 existing contact spray belong to this release.
+
+## Release and review gate
+
+Application commit `72a9d476` is published on `origin/master`. [Pages run 36218780257](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36218780257) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build byte for byte (`public-assets.json`). The unmodified public bundle passes desktop/mobile sailing controls, auto/manual trim, all categories, scanner travel/arrival, touch, reduced motion and WebGL fallback (`public/checks.json`) without console or script errors. WEB-019 is Done and awaits user review.
+
+Stop here; WEB-017, WEB-022 and deferred WEB-016 remain unstarted.

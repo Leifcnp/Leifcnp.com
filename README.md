@@ -42,9 +42,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user accepted Phase 11 and authorized WEB-021 heel/contact as Phase 12 through this external-testing workflow. Future phases still require review.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user authorized WEB-019 wind cues as Phase 13 after the successful Phase 12 heel/contact release through this external-testing workflow. Future phases still require review.
 
-Phase 12 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 12 release evidence](artifacts/phase12/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
+Phase 13 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 13 release evidence](artifacts/phase13/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
 
 ## Phase boundary and review
 
@@ -75,12 +75,12 @@ Read wind directly from the scene: the Shipyard flag and faint moving breeze str
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. WEB-019 is the active Phase 13 after the user requested the next step on 2026-09-25. Stop after this wind-cue phase for review. WEB-017 incoming-wave variation/direction and WEB-022 shoreline interaction remain queued; WEB-016 harbours/zoom remains deferred.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. WEB-019 is completed Phase 13, published after the user requested the next step on 2026-09-25. Stop after this wind-cue phase for review. WEB-017 incoming-wave variation/direction and WEB-022 shoreline interaction remain queued; WEB-016 harbours/zoom remains deferred.
 
 
 ## Verification and VM graphics
 
-Phase 13 verification is recorded in [artifacts/phase13/VERIFICATION.md](artifacts/phase13/VERIFICATION.md). The original boat and all physics/wave tuning remain unchanged. Publication is pending.
+Phase 13 verification is recorded in [artifacts/phase13/VERIFICATION.md](artifacts/phase13/VERIFICATION.md). The original boat and all physics/wave tuning remain unchanged. Publication, exact-SHA Pages, matching public assets and desktop/mobile interactions are verified.
 
 Phase 12 passes 137 native cases, typecheck and production build. It verifies
 bounded nonlinear sail heel up to 20 degrees with combined roll capped at 0.4

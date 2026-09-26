@@ -8,7 +8,7 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is active Phase 13 after the user requested the next step.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13 and awaits review.
 Other entries remain Backlog and harbours remain deferred.
 
 
@@ -44,20 +44,23 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-- [ ] WEB-019 — Make wind direction visible through flags, wind effects and spray.
-  - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
-  - Acceptance criteria: Original code-built flags/pennants, translucent stylized breeze streams across the water, and restrained wind/spray cues communicate the same direction as the sailing model. Fixed landmarks follow true wind; boat-mounted cues account for apparent wind. Flags/spray trail downwind while the HUD indicates where wind comes from. Spray responds to wave/hull encounters and drifts coherently. Preserve readable navigation/content, existing physics and artwork ownership, calm/storm behavior, pause/reset/hidden-tab/reduced motion, disposal and bounded mobile rendering cost.
-  - Expanded request (2026-09-24): Visible breeze streams should make wind direction intuitive from the scene, without requiring visitors to calculate from the compass.
-  - Authorization (2026-09-25): User requested “ok next go ahead” while the successful Phase 12 public verification was finishing. WEB-019 is Phase 13, through the same verified master/docs publication workflow.
-  - Progress: Luna implementation/review and root integration are complete: 32 seeded world-space breeze strokes, a ground-supported Shipyard flag and an apparent-wind masthead pennant. 148 tests, shared-clock world/lifecycle checks and desktop/mobile visual review pass; existing physics, waves and contact spray remain unchanged.
-  - Next step: Finish final production layout checks, publish the tested master/docs build, verify exact-SHA Pages and public desktop/mobile behavior, then stop for review.
-  - Plan: [plans/WEB-019/plan.md](plans/WEB-019/plan.md).
+No active implementation; awaiting Phase 13 review.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-019 — Make wind direction visible through flags, wind effects and spray.
+  - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.
+  - Acceptance criteria: Original code-built flags/pennants, translucent stylized breeze streams across the water, and restrained wind/spray cues communicate the same direction as the sailing model. Fixed landmarks follow true wind; boat-mounted cues account for apparent wind. Flags/spray trail downwind while the HUD indicates where wind comes from. Spray responds to wave/hull encounters and drifts coherently. Preserve readable navigation/content, existing physics and artwork ownership, calm/storm behavior, pause/reset/hidden-tab/reduced motion, disposal and bounded mobile rendering cost.
+  - Expanded request (2026-09-24): Visible breeze streams should make wind direction intuitive from the scene, without requiring visitors to calculate from the compass.
+  - Authorization (2026-09-25): User requested “ok next go ahead” while the successful Phase 12 public verification was finishing. WEB-019 is Phase 13, through the same verified master/docs publication workflow.
+  - Completed: 2026-09-25. Application commit `72a9d476` is published on `origin/master`; [Pages run 36218780257](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36218780257) succeeded for the exact SHA.
+  - Verification: Strict build, 148 native tests, true/apparent-wind direction and transformed anchors, stable world-space streams, reduced-motion/lifecycle checks, six production layouts and public desktop/mobile controls/content/fallbacks pass. Public assets match the build. See [verification](artifacts/phase13/VERIFICATION.md) and [deployment evidence](artifacts/phase13/public-assets.json).
+  - Review gate: Stop for wind-cue review. WEB-017 wave variation/direction and WEB-022 shoreline response remain queued; WEB-016 harbours/zoom remains deferred.
+  - Plan: [plans/WEB-019/plan.md](plans/WEB-019/plan.md).
 
 - [x] WEB-021 — Exaggerate reach heeling with a dipping leeward rail and bow spray.
   - Requested (2026-09-24): Lean the hull 15–20° on beam/broad reaches, submerge the leeward rail slightly and shoot spray from the bow.

@@ -1,6 +1,6 @@
 # Phase 13 — Visible wind streams and flags
 
-Date: 2026-09-25. Task: WEB-019. Publication pending.
+Date: 2026-09-25. Task: WEB-019. Published and publicly verified.
 
 ## Delivered behavior
 
@@ -49,16 +49,16 @@ Date: 2026-09-25. Task: WEB-019. Publication pending.
 - Six final production layouts pass: 1440×900, 390×844, 320×568, 360×915,
   844×390 and 2560×1080 (`checks.json`). All categories, 44px targets, focus,
   scanner arrival/replacement, touch, reduced motion and WebGL fallback pass
-  without console/runtime errors. Public desktop/mobile checks remain the
-  last release gate (`public/checks.json` after publication).
+  without console/runtime errors. Public desktop/mobile checks also pass (`public/checks.json`).
 - Luna agents implemented flags/streams and reviewed direction/placement.
   Root replaced camera-dependent draft placement with stable periodic world
   positions, tuned phone density, integrated lifecycle and performed QA.
 
 ## Publication and boundary
 
-Pending master/docs publication, exact-SHA Pages success and byte-identical
-public HTML/assets. Domain configuration is preserved. Stop after this one
+Application commit `72a9d476` is published on `origin/master`. [Pages run 36218780257](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36218780257) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build byte for byte (`public-assets.json`). The unmodified public bundle passes desktop/mobile sailing controls, auto/manual trim, all categories, scanner travel/arrival, touch, reduced motion and WebGL fallback (`public/checks.json`) without console or script errors. WEB-019 is Done and awaits user review.
+
+Domain configuration is preserved. Stop after this one
 wind-cue phase for review; wave variation/direction and shoreline response
 remain queued, and harbours/zoom remains deferred.
 
