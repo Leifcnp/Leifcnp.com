@@ -6,7 +6,7 @@ The user requested a future sailing-feel pass with two related goals: while
 turning, the boat should auto-trim into roughly 70–80% of available sail
 efficiency; a visitor who finds and holds the ideal manual trim should receive
 a noticeable but bounded speed surge, white foam, and wind-rush sound. This is
-active Phase 11. On 2026-09-25 the user deferred harbours/zoom, reviewed the
+completed Phase 11. On 2026-09-25 the user deferred harbours/zoom, reviewed the
 boat-feel queue and accepted WEB-020: “yes lets do that”. Continue the existing
 verified build/publication workflow and stop for review afterward.
 
@@ -178,3 +178,12 @@ new control modes.
   uses one lazy context, one looped noise source, low-pass filter and gain.
 - Integration/production/public verification is recorded in
   [Phase 11 evidence](../../artifacts/phase11/VERIFICATION.md).
+
+## Completion — 2026-09-25
+
+Application commit `e2f8f4f` is published; exact-SHA Pages run 36215620598
+succeeded and public files match the verified build. All 120 native cases, strict
+build, integrated wind/trim/boost/lifecycle checks, six local/production
+layouts, actual Web Audio probes and public desktop/mobile interactions pass.
+See [verification](../../artifacts/phase11/VERIFICATION.md). Stop for user
+review before WEB-021 or any other backlog phase; harbours/zoom stay deferred.

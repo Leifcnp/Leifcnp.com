@@ -66,9 +66,17 @@ Date: 2026-09-25. Task: WEB-020.
 ## Publication
 
 The production-preview six-layout suite passes (`production/checks.json`).
-A targeted landscape docking check covers 844/640/568px widths, ensuring the
-prompt clears the boat, helm, wind display and navigation. Exact-SHA
-Pages/public asset verification is pending; WEB-020 remains In progress.
+The targeted landscape docking check covers 844/640/568px widths, ensuring
+the prompt clears the boat, helm, wind display and navigation.
+
+Application commit `e2f8f4f` is published on `origin/master`.
+[Pages run 36215620598](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36215620598)
+succeeded for the exact SHA. HTTP HTML, JS, CSS and favicon match the verified
+build byte for byte (`public-assets.json`). The unmodified public bundle
+passes W/Q/M mode transitions, 75% auto trim, sound on/off, desktop/mobile
+layouts, all categories, scanner arrival/cancellation, simultaneous touch,
+reduced motion and WebGL fallback (`public/checks.json`). No script or console
+errors were observed. WEB-020 is Done and awaits user sailing-feel review.
 
 ## Limits and review boundary
 

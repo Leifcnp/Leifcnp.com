@@ -8,8 +8,8 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. The user subsequently selected WEB-020 as active Phase 11; other entries
-remain Backlog and harbours remain deferred.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; the next candidate is WEB-021 after review.
+Other entries remain Backlog and harbours remain deferred.
 
 - [ ] WEB-021 — Exaggerate reach heeling with a dipping leeward rail and bow spray.
   - Requested (2026-09-24): Lean the hull 15–20° on beam/broad reaches, submerge the leeward rail slightly and shoot spray from the bow.
@@ -58,19 +58,22 @@ remain Backlog and harbours remain deferred.
 
 ## In progress
 
-- [ ] WEB-020 — Add automatic sail trim with a rewarding manual sweet spot.
-  - Requested (2026-09-24): Auto-trim to roughly 70–80% efficiency as the boat turns so simple WASD steering is approachable. Manually finding the ideal sheet angle earns a speed surge, white foam burst and audible wind rush.
-  - Acceptance criteria: Automatic trim follows heading smoothly at 70–80% of available sailing drive; manual trim can reach a readable ideal pocket and trigger a bounded boost with coherent wake/audio feedback. Preserve upwind tacking and no-go behavior, clear keyboard/touch modes and manual/automatic handoff, safe scanner routes, user-controlled sound, pause/reset/hidden-tab/reduced motion and bounded resource use. Do not silently reinterpret wind sailing as motor propulsion.
-  - Authorization (2026-09-25): User accepted the WEB-020 recommendation: “yes lets do that”. This is Phase 11, continuing the established external-testing publication workflow.
-  - Progress: Luna implementation and root integration are complete. Strict build, 120 native cases, measured turns/tacks/boost, integrated lifecycle checks, six desktop/mobile layouts and actual Web Audio probes pass; landscape docking placement also clears the boat and controls at 844/640/568px.
-  - Next step: Publish the reviewed production build through master/docs, confirm exact-SHA Pages success and matching public assets, then stop for sailing-feel review.
-  - Plan: [plans/WEB-020/plan.md](plans/WEB-020/plan.md).
+No tasks in progress. Phase 11 is published; waiting for user review.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-020 — Add automatic sail trim with a rewarding manual sweet spot.
+  - Requested (2026-09-24): Auto-trim to roughly 70–80% efficiency as the boat turns so simple WASD steering is approachable. Manually finding the ideal sheet angle earns a speed surge, white foam burst and audible wind rush.
+  - Acceptance criteria: Automatic trim follows heading smoothly at 70–80% of available sailing drive; manual trim can reach a readable ideal pocket and trigger a bounded boost with coherent wake/audio feedback. Preserve upwind tacking and no-go behavior, clear keyboard/touch modes and manual/automatic handoff, safe scanner routes, user-controlled sound, pause/reset/hidden-tab/reduced motion and bounded resource use. Do not silently reinterpret wind sailing as motor propulsion.
+  - Authorization (2026-09-25): User accepted the WEB-020 recommendation: “yes lets do that”. This is Phase 11, continuing the established external-testing publication workflow.
+  - Completed: 2026-09-25. Application commit `e2f8f4f` is published on `origin/master`; [Pages run 36215620598](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36215620598) succeeded for the exact SHA.
+  - Verification: Strict build, 120 native tests, measured steering/tacks/boost, frame-stable world integration, actual Web Audio probes, six local/production layouts and public desktop/mobile controls/content/touch/fallbacks pass. Public files match the build. See [verification](artifacts/phase11/VERIFICATION.md), [public checks](artifacts/phase11/public/checks.json) and [deployment evidence](artifacts/phase11/public-assets.json).
+  - Review gate: Stop for sailing-feel review. WEB-021 stronger reach heel is the next candidate; WEB-019 wind cues, WEB-017 wave sets and WEB-022 shoreline response remain Backlog. WEB-016 harbours/zoom stays deferred.
+  - Plan: [plans/WEB-020/plan.md](plans/WEB-020/plan.md).
 
 - [x] WEB-015 — Make résumé/content drawers slightly transparent so the voyage remains visible.
   - Requested (2026-09-24): Brainstorming note: make the résumé/popup blocks slightly transparent so visitors can see the boat sail to the selected island harbour when using automatic navigation.
