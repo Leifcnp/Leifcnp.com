@@ -1,5 +1,28 @@
 # WEB-019 — Wind effects, flags, and wind-carried spray
 
+## Current correction — remove confusing water-level wind streams
+
+2026-09-25: The user finds white wind streams too similar to wave crests and
+explicitly requests removal. This supersedes the original breeze-stream
+acceptance criterion; keep the earlier release record below as history.
+
+1. Luna removes stream creation, all lifecycle calls, the unused implementation
+   and its five dedicated tests. Keep physical wind, flags/pennants, HUD,
+   wave crests, wake and hull spray unchanged. Do not replace the effect.
+2. Root explains prior measured water-only CPU cost (7.14 to 11.89 ms median,
+   +4.75 ms / +66.5% in the VM under browser-check load). Separate this from
+   overall FPS, phone performance and the triangle pattern itself.
+3. Build a matched visual comparison: identical current waves, timestamp,
+   camera and lighting; only the triangle diagonal pattern changes. Include
+   a wireframe/diagram view so the term “checkerboard” is concrete. This is
+   an inspection artifact, not a new website control or camera feature.
+4. Verify removal in live scene, retained flags/crest/wake/spray, motion and
+   reset/disposal behavior. Run existing native tests and strict production
+   build; check desktop/mobile public interactions and exact published assets.
+5. Update current documentation, preserve historical evidence and publish the
+   requested removal through master/docs. Stop for review; no shoreline or
+   harbour work and no further wave tuning in this task.
+
 ## Request and scheduling
 
 The user requested a future clarity pass: show wind direction with flags,

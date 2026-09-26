@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.svg"><title>Water triangles — controlled comparison</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#ecf1ed;color:#193b42;font:16px system-ui,sans-serif}.page{max-width:1280px;margin:auto;padding:28px}h1{font-size:28px;margin:0 0 8px}.intro{margin:0 0 22px;color:#41636a}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}section{background:white;border:1px solid #c6d7d3;border-radius:12px;overflow:hidden}header{padding:16px 20px}h2{font-size:20px;margin:0 0 4px}p{margin:0}.water{display:block;width:100%;height:355px}.diagram{display:block;width:100%;height:168px;background:#f6f9f6}.caption{padding:12px 20px 16px;font-size:14px;color:#41636a}.note{font-size:14px;margin-top:18px}.controls{margin-top:18px;display:flex;gap:8px}button{padding:9px 15px;border:1px solid #73948b;border-radius:6px;background:white;color:#193b42;font:inherit;cursor:pointer}.controls button[aria-pressed=true]{background:#193b42;color:white}.screenshot .controls{display:none}
+</style>
+<div class="page"><h1>What changed in the water mesh?</h1><p class="intro">Same waves, time, camera, colours and light. Only the triangle diagonals differ.</p><div class="grid">
+<section><header><h2>With alternating diagonals</h2><p>Previous “checkerboard” arrangement</p></header><canvas class="water" id="before"></canvas><canvas class="diagram" id="before-grid"></canvas><p class="caption">The same diagonal sequence repeats across the mesh.</p></section>
+<section><header><h2>Without alternating diagonals</h2><p>Current fixed irregular arrangement</p></header><canvas class="water" id="after"></canvas><canvas class="diagram" id="after-grid"></canvas><p class="caption">A fixed seeded choice breaks the repeated sequence.</p></section></div><p class="note">The diagrams show the mesh viewed from above. There is no checkerboard texture: the visible shading comes from these triangular faces. Both versions use the same number of triangles.</p><div class="controls"><button data-time="0" aria-pressed="true">Time 0 s</button><button data-time="2" aria-pressed="false">Time 2 s</button><button data-time="27" aria-pressed="false">Time 27 s</button></div></div>
+<script type="module">
+import * as THREE from 'three';
+import {createOceanSurface} from '/src/world/createOceanSurface.ts';
+import {waterSurfaceCellUsesTopRightDiagonal} from '/src/world/waterSurfaceGrid.ts';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x082f3d);
+scene.add(new THREE.HemisphereLight(0xa7d7d0,0x073340,1.65));const sun=new THREE.DirectionalLight(0xffe2bb,2.35);sun.position.set(-55,80,42);scene.add(sun);const fill=new THREE.DirectionalLight(0x5ebfc9,.48);fill.position.set(75,42,-65);scene.add(fill);
+const ocean=createOceanSurface(scene);ocean.crestMesh.visible=false;
+const original=Array.from(ocean.mesh.geometry.index.array);const checker=[];const side=Math.sqrt(ocean.mesh.geometry.attributes.position.count);for(let r=0;r<side-1;r++)for(let c=0;c<side-1;c++){const a=r*side+c,b=a+1,d=a+side,e=d+1;if((r+c)%2===0)checker.push(a,d,b,b,d,e);else checker.push(a,d,e,a,e,b);}
+const width=600,height=355,halfHeight=49;const camera=new THREE.OrthographicCamera(-halfHeight*width/height,halfHeight*width/height,halfHeight,-halfHeight,.1,1200);camera.position.set(220,220,220);camera.lookAt(0,0,0);
+const renderers=['before','after'].map(id=>{const renderer=new THREE.WebGLRenderer({canvas:document.getElementById(id),antialias:true,preserveDrawingBuffer:true});renderer.setSize(width,height,false);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;return renderer;});
+function draw(time){ocean.update(time);for(let i=0;i<2;i++){ocean.mesh.geometry.setIndex(i?original:checker);renderers[i].render(scene,camera);}window.comparisonReady=true;}
+for(let variant=0;variant<2;variant++){const canvas=document.getElementById(variant?'after-grid':'before-grid');canvas.width=600;canvas.height=168;const ctx=canvas.getContext('2d'),size=28,ox=76,oy=14;for(let r=0;r<5;r++)for(let c=0;c<16;c++){const x=ox+c*size,y=oy+r*size,diag=variant?waterSurfaceCellUsesTopRightDiagonal(r+48,c+48):(r+c)%2===0;ctx.fillStyle='#e2ece6';ctx.fillRect(x,y,size,size);ctx.fillStyle='#a9c9bd';ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+size);ctx.lineTo(x+size,diag?y:y+size);ctx.closePath();ctx.fill();ctx.strokeStyle='#577e75';ctx.lineWidth=.8;ctx.strokeRect(x,y,size,size);ctx.beginPath();ctx.moveTo(diag?x+size:x,y);ctx.lineTo(diag?x:x+size,y+size);ctx.stroke();}}
+for(const button of document.querySelectorAll('button'))button.onclick=()=>{for(const b of document.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b===button));draw(Number(button.dataset.time));};draw(0);
+if(new URLSearchParams(location.search).has('capture'))document.body.classList.add('screenshot');
+window.addEventListener('pagehide',()=>{ocean.dispose();for(const r of renderers)r.dispose();},{once:true});
+</script></html>
