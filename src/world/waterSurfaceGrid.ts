@@ -50,6 +50,15 @@ const WATER_SURFACE_AXIS = createWaterSurfaceAxis()
  * contacts agree with the visible triangle at the point being sampled.
  */
 export function sampleFacetedWaterHeight(x: number, z: number, timeSeconds = 0): number {
+  return sampleSurfaceHeight(x, z, timeSeconds)
+}
+
+/** Read already-updated interleaved XYZ vertices, using the same triangles. */
+export function sampleRenderedWaterHeight(x: number, z: number, positions: ArrayLike<number>): number {
+  return sampleSurfaceHeight(x, z, 0, positions)
+}
+
+function sampleSurfaceHeight(x: number, z: number, timeSeconds: number, positions?: ArrayLike<number>): number {
   const axis = WATER_SURFACE_AXIS
   const worldX = clamp(finiteOr(x, 0), -OCEAN_SURFACE_TUNING.outerLimit, OCEAN_SURFACE_TUNING.outerLimit)
   const worldZ = clamp(finiteOr(z, 0), -OCEAN_SURFACE_TUNING.outerLimit, OCEAN_SURFACE_TUNING.outerLimit)
@@ -61,10 +70,11 @@ export function sampleFacetedWaterHeight(x: number, z: number, timeSeconds = 0):
   const z1 = axis[row + 1]
   const u = x1 > x0 ? (worldX - x0) / (x1 - x0) : 0
   const v = z1 > z0 ? (worldZ - z0) / (z1 - z0) : 0
-  const topLeft = sampleWaterHeight(x0, z0, timeSeconds)
-  const topRight = sampleWaterHeight(x1, z0, timeSeconds)
-  const bottomLeft = sampleWaterHeight(x0, z1, timeSeconds)
-  const bottomRight = sampleWaterHeight(x1, z1, timeSeconds)
+  const vertex = row * axis.length + column
+  const topLeft = positions ? positions[vertex * 3 + 1] : sampleWaterHeight(x0, z0, timeSeconds)
+  const topRight = positions ? positions[(vertex + 1) * 3 + 1] : sampleWaterHeight(x1, z0, timeSeconds)
+  const bottomLeft = positions ? positions[(vertex + axis.length) * 3 + 1] : sampleWaterHeight(x0, z1, timeSeconds)
+  const bottomRight = positions ? positions[(vertex + axis.length + 1) * 3 + 1] : sampleWaterHeight(x1, z1, timeSeconds)
   if ((row + column) % 2 === 0) {
     if (u + v <= 1) return topLeft + v * (bottomLeft - topLeft) + u * (topRight - topLeft)
     return bottomRight + (1 - u) * (bottomLeft - bottomRight) + (1 - v) * (topRight - bottomRight)

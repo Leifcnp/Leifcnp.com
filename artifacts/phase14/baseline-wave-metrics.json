@@ -1,0 +1,80 @@
+{
+  "source": "/tmp/leifcnp-wave-baseline/src/world/waves.ts",
+  "grid": "961 points × 91 times over 180s",
+  "min": -2.5114914210445223,
+  "max": 2.5019543022208177,
+  "maxAbs": 2.5114914210445223,
+  "mean": 0.008422237245399254,
+  "rms": 0.852555572591485,
+  "maxSlope": 0.42544543056480516,
+  "maxVelocity": 2.9019262890854898,
+  "maxTemporalDerivative": 2.901853050670569,
+  "timingPeaks": [
+    {
+      "lagSeconds": 6,
+      "normalized": 0.7168026167138472
+    },
+    {
+      "lagSeconds": 12,
+      "normalized": 0.520325488867331
+    },
+    {
+      "lagSeconds": 18,
+      "normalized": 0.6363599541590229
+    },
+    {
+      "lagSeconds": 24,
+      "normalized": 0.4117128385070133
+    },
+    {
+      "lagSeconds": 28,
+      "normalized": 0.47480366278624314
+    },
+    {
+      "lagSeconds": 40,
+      "normalized": 0.459345735615912
+    },
+    {
+      "lagSeconds": 46,
+      "normalized": 0.6445887275706844
+    },
+    {
+      "lagSeconds": 52,
+      "normalized": 0.47225762590055187
+    }
+  ],
+  "components": [
+    {
+      "amplitude": 0.96,
+      "direction": [
+        0.92,
+        0.39
+      ],
+      "periodSeconds": 5.8
+    },
+    {
+      "amplitude": 0.46,
+      "direction": [
+        -0.38,
+        0.925
+      ],
+      "periodSeconds": 4.6
+    },
+    {
+      "amplitude": 0.28,
+      "direction": [
+        0.74,
+        -0.673
+      ],
+      "periodSeconds": 6.8
+    },
+    {
+      "amplitude": 0.1,
+      "direction": [
+        0.707,
+        0.707
+      ],
+      "periodSeconds": 3.5
+    }
+  ]
+}

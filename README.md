@@ -1,6 +1,6 @@
 # Leif Pedersen — Under way
 
-The portfolio uses Vite, TypeScript and Three.js. Phase 13 adds visible true-wind breeze streams, an original Shipyard flag and an apparent-wind masthead pennant. Phase 12 adds nonlinear wind-load heel up to 20 degrees, authored top-rail and deck contact checks, and a shared rendered-triangle water sampler; it keeps the original hull, wave field and water geometry. Phase 11 adds screen-relative steering, 75% auto-trim and a manual sweet-spot surge with white foam and optional synthesized wind rush. Phase 10 adds translucent content drawers and a compact phone reading sheet, keeping the boat visible during scanner voyages. Phase 9 combines wind-driven sailing (WEB-012), tighter turns (WEB-014) and wind-load heel (WEB-018). Trim the larger original mainsail, steer across the wind and tack to make progress upwind. The shared swells, curved wake, offshore storm and accessible scanner remain. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land/docking radii and content references independently of rendering.
+The portfolio uses Vite, TypeScript and Three.js. Phase 14 aligns incoming swells with the wind and varies set size, spacing and timing using six deterministic components. Crest accents follow the combined waves and the rendered water triangles; hull response retains its contact safeguards. Phase 13 adds visible true-wind breeze streams, an original Shipyard flag and an apparent-wind masthead pennant. Phase 12 adds nonlinear wind-load heel up to 20 degrees, authored top-rail and deck contact checks, and a shared rendered-triangle water sampler; it keeps the original hull, wave field and water geometry. Phase 11 adds screen-relative steering, 75% auto-trim and a manual sweet-spot surge with white foam and optional synthesized wind rush. Phase 10 adds translucent content drawers and a compact phone reading sheet, keeping the boat visible during scanner voyages. Phase 9 combines wind-driven sailing (WEB-012), tighter turns (WEB-014) and wind-load heel (WEB-018). Trim the larger original mainsail, steer across the wind and tack to make progress upwind. The shared swells, curved wake, offshore storm and accessible scanner remain. Content lives in `src/content/portfolio.ts`; `src/content/islands.ts` defines island coordinates, land/docking radii and content references independently of rendering.
 
 The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after the Phase 1 archival checks. The old version remains recoverable in Git history at commit `863b788`; it is not part of the current build or deployment path.
 
@@ -42,9 +42,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user authorized WEB-019 wind cues as Phase 13 after the successful Phase 12 heel/contact release through this external-testing workflow. Future phases still require review.
+The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user authorized WEB-017 incoming wave sets as Phase 14 after the successful Phase 13 wind-cue release through this external-testing workflow. Future phases still require review.
 
-Phase 13 is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 13 release evidence](artifacts/phase13/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
+Phase 14 is verified locally and awaiting publication at [http://leifcnp.com/](http://leifcnp.com/). See [Phase 14 release evidence](artifacts/phase14/VERIFICATION.md). Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
 
 ## Phase boundary and review
 
@@ -75,10 +75,12 @@ Read wind directly from the scene: the Shipyard flag and faint moving breeze str
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. WEB-019 is completed Phase 13, published after the user requested the next step on 2026-09-25. Stop after this wind-cue phase for review. WEB-017 incoming-wave variation/direction and WEB-022 shoreline interaction remain queued; WEB-016 harbours/zoom remains deferred.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. WEB-017 is the authorized Phase 14. Stop after publishing this wave phase for review. WEB-022 shoreline interaction remains queued; WEB-016 harbours/zoom remains deferred.
 
 
 ## Verification and VM graphics
+
+Phase 14 passes 153 native cases and the strict production build. Verification includes three-minute crest variation/continuity, shared wave derivatives, actual hull/triangle contact, fixed-step sailing, wave lifecycle and responsive content. See [artifacts/phase14/VERIFICATION.md](artifacts/phase14/VERIFICATION.md); public verification is pending.
 
 Phase 13 verification is recorded in [artifacts/phase13/VERIFICATION.md](artifacts/phase13/VERIFICATION.md). The original boat and all physics/wave tuning remain unchanged. Publication, exact-SHA Pages, matching public assets and desktop/mobile interactions are verified.
 

@@ -2,17 +2,16 @@
 
 ## Current delivery
 
-**Phase 13 is published and verified: WEB-019 visible wind streams and original flags.**
-The user requested the next step on 2026-09-25 as Phase 12 public verification
-finished. Phase 12 is published and verified; see [its evidence](artifacts/phase12/VERIFICATION.md).
+**Phase 14 is in progress: WEB-017 varied incoming wave sets with a common direction.**
+The user requested “ok go for next todo” on 2026-09-25 after the verified
+Phase 13 wind-cue release. Preserve the current custom boat, controls and
+wind model while aligning incoming swells with the prevailing wind.
 
-Luna agents own bounded wind streams, original flags and independent direction/
-placement review. Root owns the shared-clock/lifecycle integration, framing,
-normal-camera and mobile review, regression checks and publication. Show true
-wind flowing across water and at one Shipyard flag, with apparent wind at the
-boat masthead. Reuse existing contact spray. Preserve all sailing/wave forces,
-custom boat geometry, HUD, routes and accessibility. Stop after Phase 13 for
-review; wave variation, shorelines and harbours/zoom remain deferred.
+Luna agents own the deterministic sampler, coupled crest rendering and an
+independent baseline/consumer audit. Root owns integration, plan/status updates,
+actual hull-contact and normal-camera desktop/mobile review, regression checks
+and publication. Complete this wave phase and stop for review. Shoreline work
+remains queued; harbours/zoom remain deferred.
 
 Phase 11 is preserved in [its verification record](artifacts/phase11/VERIFICATION.md).
 
@@ -32,7 +31,7 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-019 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for sailing-feel review before another backlog phase.
+GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-017 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for sailing-feel review before another backlog phase.
 
 ## Work packages and review gates
 
@@ -55,7 +54,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-015 | Published Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
-| WEB-017 | Low priority | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
+| WEB-017 | In progress Phase 14 | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Published Phase 13 | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
@@ -64,9 +63,9 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 ## Team and integration ownership
 
 - Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna breeze agent: original bounded wind-stream helper and direction/lifecycle tests.
-- Luna review agent: independent true/apparent-wind semantics, land placement, camera continuity and lifecycle review.
-- Luna flag agent: original land/boat pennants, transformed anchors and resource/direction tests.
+- Luna wave-model agent: seeded directional swell components and sampler invariants.
+- Luna audit agent: pinned Phase 13 baseline, wave variation/direction and consumer regression review.
+- Luna crest agent: bounded ribbons coupled to actual compound swells and rendered triangles.
 - Root: world integration, queue/docs, quantitative sailing and browser checks, release verification.
 - Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
 
@@ -81,7 +80,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 
 ## Change discipline
 
-Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-021 improves hull heel and water contact while preserving shared waves/storm, wind sailing, content access, safe assisted scanner routes and custom artwork. WEB-019 is the current authorized Phase 13; stop for review afterward. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
+Suggestions from agents are evaluated against the current phase's acceptance criteria. WEB-021 improves hull heel and water contact while preserving shared waves/storm, wind sailing, content access, safe assisted scanner routes and custom artwork. WEB-017 is the current authorized Phase 14; stop for review afterward. No all-in-one templates, remote content services, model downloads, analytics, or backend are needed for this prototype.
 
 
 ## Brainstorming intake — 2026-09-24
@@ -109,3 +108,5 @@ Phase 12 release (2026-09-25): `d7dac1c`, exact-SHA Pages and matching public as
 Phase 13 authorization (2026-09-25): “ok next go ahead”. WEB-019 selected after the successful Phase 12 release; complete only this wind-cue pass and stop for review.
 
 Phase 13 release (2026-09-25): `72a9d476`, exact-SHA Pages and matching public resources verified; public desktop/mobile checks pass. WEB-019 is Done. Stop for wind-cue review.
+
+Phase 14 authorization (2026-09-25): “ok go for next todo”. WEB-017 selected after Phase 13; complete varied, directionally coherent incoming sets and stop for review.

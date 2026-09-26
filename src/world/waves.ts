@@ -2,35 +2,38 @@
  * The deterministic travelling water field shared by the renderer and vessel
  * buoyancy. All callers use world-space X/Z coordinates and seconds for time.
  *
- * The first two components are deliberately broad enough to read from the
- * isometric camera: their wavelengths are 30 and 24 world units and their
- * periods are 5.8 and 4.6 seconds. A smaller crossing swell and ripple keep
- * the surface from looking like one translating sine sheet. Offshore storm
- * intensity scales this authored sum in place so every consumer sees the
- * same water field.
+ * Six small, fixed-phase components make recognisable wave sets without
+ * introducing a second swell direction.  Every phase travels toward -X
+ * (the phase convention is `k·x + omega*t`) and is within five degrees of
+ * that heading.  Offshore storm intensity scales this authored sum in place
+ * so every consumer sees the same water field.
  */
 import { sampleStormField, STORM_TUNING } from './stormField.ts';
 export const PRIMARY_WAVE = {
   amplitude: 0.96,
   waveNumber: (Math.PI * 2) / 30,
-  directionX: 0.92,
-  directionZ: 0.39,
+  directionX: 1,
+  directionZ: 0,
   angularSpeed: (Math.PI * 2) / 5.8,
+  phase: 0.35,
   kind: 'sine',
 } as const;
-export const CROSSING_WAVE = {
-  amplitude: 0.46,
+export const SECONDARY_SWELL = {
+  amplitude: 0.42,
   waveNumber: (Math.PI * 2) / 24,
-  directionX: -0.38,
-  directionZ: 0.925,
+  directionX: 0.998,
+  directionZ: -0.063,
   angularSpeed: (Math.PI * 2) / 4.6,
+  phase: 2.1,
   kind: 'cosine',
 } as const;
-const WAVE_COMPONENTS = [
+export const WAVE_COMPONENTS = [
   PRIMARY_WAVE,
-  CROSSING_WAVE,
-  { amplitude: 0.28, waveNumber: (Math.PI * 2) / 34, directionX: 0.74, directionZ: -0.673, angularSpeed: (Math.PI * 2) / 6.8, kind: 'sine' },
-  { amplitude: 0.1, waveNumber: (Math.PI * 2) / 11, directionX: 0.707, directionZ: 0.707, angularSpeed: (Math.PI * 2) / 3.5, kind: 'cosine' },
+  SECONDARY_SWELL,
+  { amplitude: 0.18, waveNumber: (Math.PI * 2) / 34, directionX: 0.999, directionZ: 0.045, angularSpeed: (Math.PI * 2) / 6.8, phase: 4.7, kind: 'sine' },
+  { amplitude: 0.16, waveNumber: (Math.PI * 2) / 20, directionX: 0.997, directionZ: -0.077, angularSpeed: (Math.PI * 2) / 3.5, phase: 1.25, kind: 'cosine' },
+  { amplitude: 0.04, waveNumber: (Math.PI * 2) / 14, directionX: 0.999, directionZ: 0.045, angularSpeed: (Math.PI * 2) / 2.7, phase: 5.4, kind: 'sine' },
+  { amplitude: 0.04, waveNumber: (Math.PI * 2) / 42, directionX: 0.999, directionZ: -0.045, angularSpeed: (Math.PI * 2) / 8.9, phase: 3.05, kind: 'cosine' },
 ] as const;
 const DEFAULT_SAMPLE_DISTANCE = 0.35;
 const DEFAULT_SLOPE_FACTORS_X = WAVE_COMPONENTS.map(
@@ -54,14 +57,14 @@ function finiteOr(value: number, fallback: number): number {
 export function samplePrimaryWavePhase(x: number, z: number, timeSeconds = 0): number {
   return (
     finiteOr(x, 0) * PRIMARY_WAVE.directionX + finiteOr(z, 0) * PRIMARY_WAVE.directionZ
-  ) * PRIMARY_WAVE.waveNumber + finiteOr(timeSeconds, 0) * PRIMARY_WAVE.angularSpeed;
+  ) * PRIMARY_WAVE.waveNumber + finiteOr(timeSeconds, 0) * PRIMARY_WAVE.angularSpeed + PRIMARY_WAVE.phase;
 }
 
-/** Return the phase used by the crossing swell. */
-export function sampleCrossingWavePhase(x: number, z: number, timeSeconds = 0): number {
+/** Return the phase used by the secondary incoming swell. */
+export function sampleSecondaryWavePhase(x: number, z: number, timeSeconds = 0): number {
   return (
-    finiteOr(x, 0) * CROSSING_WAVE.directionX + finiteOr(z, 0) * CROSSING_WAVE.directionZ
-  ) * CROSSING_WAVE.waveNumber + finiteOr(timeSeconds, 0) * CROSSING_WAVE.angularSpeed;
+    finiteOr(x, 0) * SECONDARY_SWELL.directionX + finiteOr(z, 0) * SECONDARY_SWELL.directionZ
+  ) * SECONDARY_SWELL.waveNumber + finiteOr(timeSeconds, 0) * SECONDARY_SWELL.angularSpeed + SECONDARY_SWELL.phase;
 }
 
 /** Sample the same travelling swell used by the water mesh and vessel. */
@@ -73,7 +76,7 @@ export function sampleWaterHeight(x: number, z: number, timeSeconds = 0): number
   for (const component of WAVE_COMPONENTS) {
     const phase =
       (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
-      time * component.angularSpeed;
+      time * component.angularSpeed + component.phase;
     height += component.amplitude * (component.kind === 'sine' ? Math.sin(phase) : Math.cos(phase));
   }
   const storm = sampleStormField(worldX, worldZ);
@@ -113,7 +116,7 @@ export function sampleWaterSurface(
     const component = WAVE_COMPONENTS[componentIndex];
     const phase =
       (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
-      time * component.angularSpeed;
+      time * component.angularSpeed + component.phase;
     const sine = Math.sin(phase);
     const cosine = Math.cos(phase);
     const basis = component.kind === 'sine' ? sine : cosine;

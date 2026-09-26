@@ -15,6 +15,8 @@ import {
   WAVE_RESPONSE_TUNING,
 } from '../src/world/vessel/waveResponse.ts'
 
+import { PRIMARY_WAVE } from '../src/world/waves.ts'
+
 const EMPTY_WATER: VesselEnvironment = { worldLimit: 180, obstacles: [] }
 const NEUTRAL: VesselInput = { throttle: 0, rudder: 0, brake: false }
 
@@ -95,23 +97,29 @@ test('powered sailing speed varies with wave faces after settling', () => {
   const collectSpeeds = (initial: VesselState): number[] => {
     let state = initial
     const speeds: number[] = []
-    for (let frame = 0; frame < 8 * 60; frame += 1) {
+    for (let frame = 0; frame < 18 * 60; frame += 1) {
       const time = frame / 60
       state = stepVessel(state, { throttle: 1, rudder: 0, brake: false }, 1 / 60, EMPTY_WATER, time)
+      assert.ok(Math.abs(state.x) < EMPTY_WATER.worldLimit - VESSEL_TUNING.collisionRadius - 1,
+        'Speed variation must come from waves, not the world boundary')
       if (frame >= 6 * 60) speeds.push(forwardSpeed(state))
     }
     return speeds
   }
 
-  const defaultHeading = collectSpeeds(createVesselState())
-  const primaryWaveHeading = collectSpeeds({ ...createVesselState(), heading: Math.atan2(-0.92, -0.39) })
-  for (const speeds of [defaultHeading, primaryWaveHeading]) {
+  // Across aligned fronts there is little longitudinal slope. Exercise both
+  // following and opposing the actual incoming direction, instead of the old
+  // crossing-wave fixture's world +Z heading.
+  const incoming = Math.atan2(-PRIMARY_WAVE.directionX, -PRIMARY_WAVE.directionZ)
+  const following = collectSpeeds({ ...createVesselState(80, 0), heading: incoming })
+  const opposing = collectSpeeds({ ...createVesselState(-80, 0), heading: incoming + Math.PI })
+  for (const speeds of [following, opposing]) {
     assert.ok(Math.max(...speeds) - Math.min(...speeds) > 0.35, 'wave faces should produce a measurable settled speed range')
     assert.ok(Math.max(...speeds) <= VESSEL_TUNING.maxForwardSpeed + 1e-9)
     assert.ok(speeds.every(Number.isFinite))
   }
-  assert.ok(Math.min(...defaultHeading) < 13.8, 'default full throttle should slow on an uphill wave face')
-  assert.ok(Math.min(...primaryWaveHeading) < 13.6, 'heading into the primary swell should slow more visibly')
+  assert.ok(Math.min(...following) < 13.8, 'following seas should still change powered speed')
+  assert.ok(Math.min(...opposing) < 13.6, 'heading into the primary swell should slow visibly')
 })
 
 test('long and invalid wave frames preserve finite collision-safe state', () => {

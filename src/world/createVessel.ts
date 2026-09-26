@@ -39,6 +39,8 @@ const SAIL_MIN_ANGLE = 8 * Math.PI / 180;
 const SAIL_MAX_ANGLE = 85 * Math.PI / 180;
 const SAIL_SMOOTHING_RATE = 9;
 const SAIL_RIG_PIVOT_Z = -0.34;
+// Bound sudden tack/wave combinations without slowing ordinary water response.
+const MAX_TILT_RATE = 3;
 
 /** Build the owned low-poly Phase 5 sailboat. Local +Z remains the bow. */
 export function createVessel(scene: THREE.Scene): VesselController {
@@ -278,8 +280,15 @@ export function createVessel(scene: THREE.Scene): VesselController {
     const validDelta = Number.isFinite(deltaSeconds) && deltaSeconds > 0 ? Math.min(deltaSeconds, 0.25) : 0;
     const heaveSmoothing = snap ? 1 : 1 - Math.exp(-validDelta * VESSEL_POSE_TUNING.heaveResponseRate);
     const tiltSmoothing = snap ? 1 : 1 - Math.exp(-validDelta * VESSEL_POSE_TUNING.tiltResponseRate);
-    pose.pitch = approach(pose.pitch, target.pitch, tiltSmoothing);
-    pose.roll = approach(pose.roll, target.roll, tiltSmoothing);
+    const tilt = (current: number, destination: number): number => {
+      const filtered = approach(current, destination, tiltSmoothing);
+      if (snap) return filtered;
+      return current + Math.max(-MAX_TILT_RATE * validDelta, Math.min(
+        MAX_TILT_RATE * validDelta, filtered - current,
+      ));
+    };
+    pose.pitch = tilt(pose.pitch, target.pitch);
+    pose.roll = tilt(pose.roll, target.roll);
     const basePose = { ...pose, heave: target.heave };
     const effectiveSailPower = reducedMotion ? 0 : sailPower;
     const preliminaryContact = sampleVesselWaterContact(

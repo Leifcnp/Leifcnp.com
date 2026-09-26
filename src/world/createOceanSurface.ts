@@ -1,12 +1,14 @@
 import * as THREE from 'three';
 import { sampleStormField, STORM_TUNING } from './stormField.ts';
-import { OCEAN_SURFACE_TUNING, createWaterSurfaceAxis } from './waterSurfaceGrid.ts';
+import {
+  OCEAN_SURFACE_TUNING,
+  createWaterSurfaceAxis,
+  sampleRenderedWaterHeight,
+} from './waterSurfaceGrid.ts';
 export { OCEAN_SURFACE_TUNING } from './waterSurfaceGrid.ts';
 import {
   MAX_WAVE_HEIGHT,
   PRIMARY_WAVE,
-  sampleCrossingWavePhase,
-  samplePrimaryWavePhase,
   sampleWaterHeight,
   sampleWaterSurface,
 } from './waves.ts';
@@ -90,7 +92,7 @@ export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
   mesh.name = 'phase-one-water-field';
   scene.add(mesh);
 
-  const crestRibbons = createCrestRibbons();
+  const crestRibbons = createCrestRibbons(positions);
   scene.add(crestRibbons.mesh);
 
   let disposed = false;
@@ -139,12 +141,13 @@ interface CrestRibbonDescriptor {
 }
 
 /**
- * A single pooled draw of short primary-crest ribbons. Their normal position
- * is solved from the same travelling-wave phase as the water sampler, so they
- * cannot drift into a second animation. Inactive descriptors remain in the
- * fixed pool with zero opacity, preserving bounded buffers and draw cost.
+ * A single pooled draw of short crest ribbons. Each carrier follows the
+ * primary travelling direction, then performs a small deterministic search
+ * along that normal to find the nearby maximum of the complete shared water
+ * field. This keeps the sparse foam on the rendered wave sets as the other
+ * components vary, without adding objects or a second animation clock.
  */
-function createCrestRibbons(): CrestRibbonController {
+function createCrestRibbons(waterPositions: Float32Array): CrestRibbonController {
   const normalX = PRIMARY_WAVE.directionX;
   const normalZ = PRIMARY_WAVE.directionZ;
   const tangentX = -normalZ;
@@ -156,15 +159,16 @@ function createCrestRibbons(): CrestRibbonController {
   const tangentStep = 44;
   const tangentExtent = OCEAN_SURFACE_TUNING.outerLimit * (Math.abs(tangentX) + Math.abs(tangentZ));
   const normalExtent = OCEAN_SURFACE_TUNING.outerLimit * (Math.abs(normalX) + Math.abs(normalZ));
+  const primaryCrestPhase = Math.PI * 0.5 - PRIMARY_WAVE.phase;
   const minimumNormalIndex = Math.ceil((-
-    normalExtent * PRIMARY_WAVE.waveNumber - Math.PI * 0.5
+    normalExtent * PRIMARY_WAVE.waveNumber - primaryCrestPhase
   ) / (Math.PI * 2)) - 1;
   const maximumNormalIndex = Math.floor((
-    normalExtent * PRIMARY_WAVE.waveNumber - Math.PI * 0.5
+    normalExtent * PRIMARY_WAVE.waveNumber - primaryCrestPhase
   ) / (Math.PI * 2)) + 1;
   const crestWavelength = (Math.PI * 2) / PRIMARY_WAVE.waveNumber;
   const crestBandStart = (
-    Math.PI * 0.5 + minimumNormalIndex * Math.PI * 2
+    primaryCrestPhase + minimumNormalIndex * Math.PI * 2
   ) / PRIMARY_WAVE.waveNumber;
   const crestBandSpan = (maximumNormalIndex - minimumNormalIndex + 1) * crestWavelength;
   const descriptors: CrestRibbonDescriptor[] = [];
@@ -238,6 +242,8 @@ function createCrestRibbons(): CrestRibbonController {
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = 'phase-one-water-crest-ribbons';
 
+  const crestSamples = new Float64Array(9);
+  const crestResult = { x: 0, z: 0, support: 0 };
   let disposed = false;
   const update = (timeSeconds: number): void => {
     if (disposed) return;
@@ -246,7 +252,7 @@ function createCrestRibbons(): CrestRibbonController {
     for (let descriptorIndex = 0; descriptorIndex < descriptors.length; descriptorIndex += 1) {
       const descriptor = descriptors[descriptorIndex];
       const baseNormal = (
-        Math.PI * 0.5 + descriptor.normalIndex * Math.PI * 2
+        primaryCrestPhase + descriptor.normalIndex * Math.PI * 2
       ) / PRIMARY_WAVE.waveNumber;
       // Recycle only after the whole visible crest band has crossed the
       // boundary. Individual lines therefore travel continuously through a
@@ -257,24 +263,32 @@ function createCrestRibbons(): CrestRibbonController {
       );
       const centerX = normalX * recycledNormal * normalScale + tangentX * descriptor.tangentCenter * tangentScale;
       const centerZ = normalZ * recycledNormal * normalScale + tangentZ * descriptor.tangentCenter * tangentScale;
-      const primaryCrest = Math.max(0, Math.sin(samplePrimaryWavePhase(centerX, centerZ, time)));
-      const crossingSupport = smoothstep(
-        0.42,
-        0.9,
-        0.5 + 0.5 * Math.cos(sampleCrossingWavePhase(centerX, centerZ, time)),
-      );
-      const active = descriptor.activity > 0.48 ? 1 : 0;
-      const stormIntensity = sampleStormIntensity(centerX, centerZ);
-      const strength = active * primaryCrest * crossingSupport * (0.3 + stormIntensity * 0.18);
+      const active = descriptor.activity > 0.48;
+      crestResult.x = centerX;
+      crestResult.z = centerZ;
+      crestResult.support = 0;
+      const crest = active ? findTotalWaterCrest(
+        centerX,
+        centerZ,
+        normalX,
+        normalZ,
+        time,
+        crestSamples,
+        crestResult,
+      ) : crestResult;
+      const crestX = crest.x;
+      const crestZ = crest.z;
+      const stormIntensity = sampleStormIntensity(crestX, crestZ);
+      const strength = crest.support * (0.3 + stormIntensity * 0.18);
       const tangentStartX = tangentX * halfLength;
       const tangentStartZ = tangentZ * halfLength;
       const normalOffsetX = normalX * halfWidth;
       const normalOffsetZ = normalZ * halfWidth;
       const vertexBase = descriptorIndex * 4;
-      setCrestVertex(position, vertexBase, centerX - tangentStartX - normalOffsetX, centerZ - tangentStartZ - normalOffsetZ, time, stormIntensity);
-      setCrestVertex(position, vertexBase + 1, centerX + tangentStartX - normalOffsetX, centerZ + tangentStartZ - normalOffsetZ, time, stormIntensity);
-      setCrestVertex(position, vertexBase + 2, centerX + tangentStartX + normalOffsetX, centerZ + tangentStartZ + normalOffsetZ, time, stormIntensity);
-      setCrestVertex(position, vertexBase + 3, centerX - tangentStartX + normalOffsetX, centerZ - tangentStartZ + normalOffsetZ, time, stormIntensity);
+      setCrestVertex(position, vertexBase, crestX - tangentStartX - normalOffsetX, crestZ - tangentStartZ - normalOffsetZ, waterPositions);
+      setCrestVertex(position, vertexBase + 1, crestX + tangentStartX - normalOffsetX, crestZ + tangentStartZ - normalOffsetZ, waterPositions);
+      setCrestVertex(position, vertexBase + 2, crestX + tangentStartX + normalOffsetX, crestZ + tangentStartZ + normalOffsetZ, waterPositions);
+      setCrestVertex(position, vertexBase + 3, crestX - tangentStartX + normalOffsetX, crestZ - tangentStartZ + normalOffsetZ, waterPositions);
       opacity.setX(vertexBase, strength);
       opacity.setX(vertexBase + 1, strength);
       opacity.setX(vertexBase + 2, strength);
@@ -302,10 +316,62 @@ function setCrestVertex(
   index: number,
   x: number,
   z: number,
-  timeSeconds: number,
-  stormIntensity = 0,
+  waterPositions: Float32Array,
 ): void {
-  position.setXYZ(index, x, sampleWaterHeight(x, z, timeSeconds) + 0.045 + stormIntensity * 0.018, z);
+  // Sample at each corner: the ribbon can span a storm-field gradient, and
+  // the rendered surface must remain the source of truth at every vertex.
+  const localStormIntensity = sampleStormIntensity(x, z);
+  position.setXYZ(index, x, sampleRenderedWaterHeight(x, z, waterPositions) + 0.045 + localStormIntensity * 0.018, z);
+}
+
+interface TotalWaterCrest {
+  x: number;
+  z: number;
+  support: number;
+}
+
+/** Find a nearby compound crest. Scratch storage belongs to the fixed pool. */
+function findTotalWaterCrest(
+  carrierX: number,
+  carrierZ: number,
+  normalX: number,
+  normalZ: number,
+  timeSeconds: number,
+  samples: Float64Array,
+  result: TotalWaterCrest,
+): TotalWaterCrest {
+  const step = 1.5;
+  const radius = 6;
+  let best = 0;
+  for (let index = 0; index < samples.length; index += 1) {
+    const offset = index * step - radius;
+    samples[index] = sampleWaterHeight(
+      carrierX + normalX * offset, carrierZ + normalZ * offset, timeSeconds,
+    );
+    if (samples[index] > samples[best]) best = index;
+  }
+  // An endpoint is only a rising/falling face, not a crest. Fade before the
+  // search edge so changing peak identity never shows a snapping ribbon.
+  let correction = 0;
+  if (best > 0 && best < samples.length - 1) {
+    const curvature = samples[best - 1] - 2 * samples[best] + samples[best + 1];
+    if (curvature < -1e-5) {
+      correction = Math.max(-0.5, Math.min(0.5,
+        0.5 * (samples[best - 1] - samples[best + 1]) / curvature,
+      ));
+    }
+  }
+  const offset = (best + correction) * step - radius;
+  result.x = carrierX + normalX * offset;
+  result.z = carrierZ + normalZ * offset;
+  const height = sampleWaterHeight(result.x, result.z, timeSeconds);
+  const left = sampleWaterHeight(result.x - normalX * 3.5, result.z - normalZ * 3.5, timeSeconds);
+  const right = sampleWaterHeight(result.x + normalX * 3.5, result.z + normalZ * 3.5, timeSeconds);
+  // Both shoulders must fall away. Low/cancelling sets carry less foam.
+  const prominence = height - Math.max(left, right);
+  result.support = smoothstep(0.025, 0.19, prominence) *
+    (1 - smoothstep(3.5, radius, Math.abs(offset))) * smoothstep(0, 0.4, height);
+  return result;
 }
 
 function setWaterColor(

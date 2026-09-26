@@ -8,17 +8,9 @@ Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for complet
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
-wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13 and awaits review.
+wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; the user has authorized WEB-017 as Phase 14.
 Other entries remain Backlog and harbours remain deferred.
 
-
-- [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
-  - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
-  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with the published WEB-012 wind field and future WEB-019 wind cues, without confusing wave propagation with the storm’s inward recovery current.
-  - Reaffirmed (2026-09-24): User again requested clearer wave direction and more randomness, explicitly as a to-do only. Update this existing task rather than creating a duplicate.
-  - Progress: Low-priority Backlog within the boat-feel group. Preserve the reviewed water until selected; harbours are deferred, but wave variation remains behind the primary control/feedback work.
-  - Next step: After queued phase reviews, compare seeded wave packets/envelopes along one direction at normal desktop/mobile camera scale and choose the smallest convincing model.
-  - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
 
 - [ ] WEB-022 — Make waves visibly interact with islands and shorelines.
   - Requested (2026-09-24): Add wave interaction at the islands so incoming water visibly reaches, breaks against, and wraps around the land instead of passing through it as an unrelated background layer.
@@ -44,7 +36,14 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-No active implementation; awaiting Phase 13 review.
+- [ ] WEB-017 — Vary incoming wave sets while keeping a consistent travel direction.
+  - Requested (2026-09-24): The swells look nice, but incoming waves need more randomness and should come from the same direction; explicitly not high priority.
+  - Acceptance criteria: Add bounded variation in wave-set spacing, amplitude and timing so repetition is less obvious while a coherent prevailing direction remains readable. Keep renderer, hull, foam and force sampling synchronized and deterministic; avoid frame-by-frame jitter. Preserve calm/storm transitions, navigation safety, pause/reset/reduced motion and resource budgets. Coordinate the prevailing direction with the published WEB-012 wind field and published WEB-019 wind cues, without confusing wave propagation with the storm’s inward recovery current.
+  - Reaffirmed (2026-09-24): User again requested clearer wave direction and more randomness, explicitly as a to-do only. Update this existing task rather than creating a duplicate.
+  - Authorization (2026-09-25): User requested “ok go for next todo” after Phase 13. Selected as Phase 14 through the existing verified master/docs publication workflow.
+  - Progress: In progress. Luna agents own the deterministic directional sampler, coupled crest rendering, and independent baseline/consumer audit. Root owns integration, visible motion review, regression checks and publication.
+  - Next step: Complete final production preview and exact-SHA Pages/public asset and interaction checks, then mark Done and stop for review. Local sampler, crest, original hull-contact and sailing checks pass.
+  - Plan: [plans/WEB-017/plan.md](plans/WEB-017/plan.md).
 
 ## Blocked
 

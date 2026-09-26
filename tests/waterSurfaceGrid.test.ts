@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as THREE from 'three'
 import { createOceanSurface } from '../src/world/createOceanSurface.ts'
-import { createWaterSurfaceAxis, OCEAN_SURFACE_TUNING, sampleFacetedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
+import { createWaterSurfaceAxis, OCEAN_SURFACE_TUNING, sampleFacetedWaterHeight, sampleRenderedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
 import { sampleWaterHeight } from '../src/world/waves.ts'
 
 function triangleHeight(mesh: THREE.Mesh, x: number, z: number, time: number): number {
@@ -40,7 +40,9 @@ test('faceted sampler matches actual rendered triangles in calm and storm cells'
     surface.update(time)
     for (const point of [[-179.2, -178.4], [-176.1, -172.7], [-185, 0], [185, 0], [359.1, -352.4]] as const) {
       const [x, z] = point
-      assert.ok(Math.abs(sampleFacetedWaterHeight(x, z, time) - triangleHeight(surface.mesh, x, z, time)) < 1e-6)
+      const expected = triangleHeight(surface.mesh, x, z, time)
+      assert.ok(Math.abs(sampleFacetedWaterHeight(x, z, time) - expected) < 1e-6)
+      assert.ok(Math.abs(sampleRenderedWaterHeight(x, z, surface.mesh.geometry.getAttribute('position').array) - expected) < 1e-12)
     }
   }
   surface.dispose()

@@ -1,0 +1,96 @@
+{
+  "source": "/home/codex-account/Leifcnp.com/src/world/waves.ts",
+  "grid": "961 points × 91 times over 180s",
+  "min": -2.384936189351051,
+  "max": 2.293257906691853,
+  "maxAbs": 2.384936189351051,
+  "mean": -0.00007980336535516928,
+  "rms": 0.8318110226553027,
+  "maxSlope": 0.5708017276141136,
+  "maxVelocity": 2.9912041164560503,
+  "maxTemporalDerivative": 2.991115972041325,
+  "timingPeaks": [
+    {
+      "lagSeconds": 6,
+      "normalized": 0.7024347833565499
+    },
+    {
+      "lagSeconds": 12,
+      "normalized": 0.49877496916118524
+    },
+    {
+      "lagSeconds": 18,
+      "normalized": 0.6742119220205925
+    },
+    {
+      "lagSeconds": 24,
+      "normalized": 0.4694412958527191
+    },
+    {
+      "lagSeconds": 28,
+      "normalized": 0.49280584484201945
+    },
+    {
+      "lagSeconds": 40,
+      "normalized": 0.42050590726786014
+    },
+    {
+      "lagSeconds": 46,
+      "normalized": 0.6764814920172136
+    },
+    {
+      "lagSeconds": 52,
+      "normalized": 0.5278124436014632
+    }
+  ],
+  "components": [
+    {
+      "amplitude": 0.96,
+      "direction": [
+        1,
+        0
+      ],
+      "periodSeconds": 5.8
+    },
+    {
+      "amplitude": 0.42,
+      "direction": [
+        0.998,
+        -0.063
+      ],
+      "periodSeconds": 4.6
+    },
+    {
+      "amplitude": 0.18,
+      "direction": [
+        0.999,
+        0.045
+      ],
+      "periodSeconds": 6.8
+    },
+    {
+      "amplitude": 0.16,
+      "direction": [
+        0.997,
+        -0.077
+      ],
+      "periodSeconds": 3.5
+    },
+    {
+      "amplitude": 0.04,
+      "direction": [
+        0.999,
+        0.045
+      ],
+      "periodSeconds": 2.7
+    },
+    {
+      "amplitude": 0.04,
+      "direction": [
+        0.999,
+        -0.045
+      ],
+      "periodSeconds": 8.9
+    }
+  ]
+}

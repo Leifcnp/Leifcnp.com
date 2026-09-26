@@ -6,6 +6,9 @@ import {
   createOceanSurface,
   OCEAN_SURFACE_TUNING,
 } from '../src/world/createOceanSurface.ts'
+import { sampleFacetedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
+import { sampleStormField } from '../src/world/stormField.ts'
+import { sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
 
 test('ocean surface keeps dense playable water and bounded outer geometry', () => {
   const scene = new THREE.Scene()
@@ -54,6 +57,26 @@ test('crest ribbons share the animated surface and remain sparse/tapered', () =>
   assert.notDeepEqual(Array.from(opacity.array), Array.from(initialOpacity))
   ocean.dispose()
   assert.equal(ocean.crestMesh.parent, null)
+})
+
+test('crest vertices follow the rendered faceted water and reuse their pool', () => {
+  const scene = new THREE.Scene()
+  const ocean = createOceanSurface(scene)
+  const geometry = ocean.crestMesh.geometry as THREE.BufferGeometry
+  const position = geometry.getAttribute('position') as THREE.BufferAttribute
+  const positionArray = position.array
+
+  ocean.update(37.25)
+  for (let vertex = 0; vertex < Math.min(position.count, 32); vertex += 1) {
+    const x = position.getX(vertex)
+    const y = position.getY(vertex)
+    const z = position.getZ(vertex)
+    const storm = Math.min(1, Math.max(0, sampleStormField(x, z).intensity))
+    const expected = sampleFacetedWaterHeight(x, z, 37.25) + 0.045 + storm * 0.018
+    assert.ok(Math.abs(y - expected) < 0.00001, `crest vertex ${vertex} left the rendered surface`)
+  }
+  assert.equal(position.array, positionArray)
+  ocean.dispose()
 })
 
 test('recycled crest lines remain visible after long elapsed times', () => {
@@ -115,4 +138,34 @@ test('ocean update reuses buffers and animates both heights and crest colors', (
   ocean.dispose()
   assert.equal(ocean.mesh.parent, null)
   ocean.update(8)
+})
+
+test('visible compound crests stay on maxima and move continuously through varied sets', () => {
+  const ocean = createOceanSurface(new THREE.Scene())
+  const positions = ocean.crestMesh.geometry.getAttribute('position') as THREE.BufferAttribute
+  const opacity = ocean.crestMesh.geometry.getAttribute('crestOpacity') as THREE.BufferAttribute
+  let reviewed = 0
+  for (const time of [0, 2.4, 5.79, 12, 27, 37.25, 61, 92, 121, 179, 3600]) {
+    ocean.update(time)
+    const before = Array.from(positions.array)
+    const beforeOpacity = Array.from(opacity.array)
+    ocean.update(time + 0.05)
+    for (let vertex = 0; vertex < positions.count; vertex += 4) {
+      const x = (positions.getX(vertex) + positions.getX(vertex + 2)) / 2
+      const z = (positions.getZ(vertex) + positions.getZ(vertex + 2)) / 2
+      if (Math.abs(x) > 95 || Math.abs(z) > 95 || opacity.getX(vertex) < 0.1) continue
+      reviewed++
+      const height = sampleWaterHeight(x, z, time + 0.05)
+      assert.ok(height > sampleWaterHeight(x - 3.5, z, time + 0.05))
+      assert.ok(height > sampleWaterHeight(x + 3.5, z, time + 0.05))
+      assert.ok(Math.abs(sampleWaterSurface(x, z, time + 0.05, 0.01).slopeX) < 0.018)
+      if (beforeOpacity[vertex] >= 0.1) {
+        const oldX = (before[vertex * 3] + before[(vertex + 2) * 3]) / 2
+        const oldZ = (before[vertex * 3 + 2] + before[(vertex + 2) * 3 + 2]) / 2
+        assert.ok(Math.hypot(x - oldX, z - oldZ) < 0.8, 'Visible foam jumped between crests')
+      }
+    }
+  }
+  assert.ok(reviewed > 20, 'Calm water must retain readable compound crest accents')
+  ocean.dispose()
 })
