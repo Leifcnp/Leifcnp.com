@@ -1,6 +1,6 @@
 # Phase 14 — Varied incoming wave sets
 
-Date: 2026-09-25. Task: WEB-017. Local verification complete; publication pending.
+Date: 2026-09-25. Task: WEB-017. Published and publicly verified.
 
 ## Delivered behavior
 
@@ -80,10 +80,7 @@ Date: 2026-09-25. Task: WEB-017. Local verification complete; publication pendin
 
 ## Publication and boundary
 
-Pending application commit, exact-SHA successful Pages run, matching public
-HTML/JS/CSS/favicon and public desktop/mobile interaction checks. Keep WEB-017
-In progress until these complete; then stop for review. WEB-022 shoreline
-response remains queued and WEB-016 harbours/zoom remains deferred.
+Application commit `cb100d62` is published on `origin/master`; [Pages run 36220109782](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782) succeeded for the exact SHA. Public HTML, JavaScript, CSS and favicon match the tested build byte for byte (`public-assets.json`). The unmodified public bundle passes desktop/mobile sailing, auto/manual trim, scanner travel/arrival, content/focus, simultaneous touch, reduced motion and WebGL fallback (`public/checks.json`) without script/console errors. WEB-017 is Done. Stop for wave review; WEB-022 remains queued and harbours/zoom remains deferred.
 
 Browser evidence uses Chromium with SwiftShader in the Ubuntu VM. Mobile
 layout/touch coverage does not replace testing on a physical phone GPU.

@@ -93,5 +93,9 @@ small sample distance instead of comparing a broad secant to an infinitesimal
 derivative. Existing hull clearances and continuity thresholds remain intact.
 
 Local tests/build, hull/triangle and source-world checks pass. Publication and
-public verification are next; do not mark Done until both are complete.
+public verification are complete; WEB-017 is Done.
 See [Phase 14 verification](../../artifacts/phase14/VERIFICATION.md).
+
+## Release
+
+Application commit `cb100d62` is published on `origin/master`; [Pages run 36220109782](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build, and public desktop/mobile sailing/scanner/content/fallback checks pass. Stop for user review; shoreline work remains queued and harbours remain deferred.

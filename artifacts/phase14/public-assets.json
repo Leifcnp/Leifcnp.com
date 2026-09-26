@@ -1,0 +1,38 @@
+{
+  "url": "http://leifcnp.com/",
+  "commit": "cb100d62f43558458a1316e90da8c225908e9ab8",
+  "pagesRuns": [
+    {
+      "id": 36220109782,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782"
+    }
+  ],
+  "assets": {
+    "index.html": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 621,
+      "sha256": "91b66b9d9f075076fbd8aa27a00ec2833d6ef66f6dab645c8a2d6079f7e1670a"
+    },
+    "favicon.svg": {
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "bytes": 354,
+      "sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa"
+    },
+    "assets/index-B0m381Uc.js": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "bytes": 588890,
+      "sha256": "d70d9986d0b08090bd77c8135b61a0a6b4fbfd9fce155ef2041ba56d62903b35"
+    },
+    "assets/index-yKZlOFjO.css": {
+      "status": 200,
+      "contentType": "text/css; charset=utf-8",
+      "bytes": 13672,
+      "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c"
+    }
+  }
+}

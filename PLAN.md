@@ -2,7 +2,7 @@
 
 ## Current delivery
 
-**Phase 14 is in progress: WEB-017 varied incoming wave sets with a common direction.**
+**Phase 14 is published and verified: WEB-017 varied incoming wave sets with a common direction.**
 The user requested “ok go for next todo” on 2026-09-25 after the verified
 Phase 13 wind-cue release. Preserve the current custom boat, controls and
 wind model while aligning incoming swells with the prevailing wind.
@@ -54,7 +54,7 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-015 | Published Phase 10 | Translucent content drawers | Existing queue and readability review | [plan](plans/WEB-015/plan.md) |
 | WEB-016 | Deferred for boat feel | Manual-arrival zoom and submenu harbours | Existing queue and one-island prototype review | [plan](plans/WEB-016/plan.md) |
 | WEB-018 | Published Phase 9 | Visible wind-driven heel | WEB-012 sail response | [plan](plans/WEB-018/plan.md) |
-| WEB-017 | In progress Phase 14 | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
+| WEB-017 | Published Phase 14 | Varied incoming wave sets with one prevailing direction | Current queue and review gates | [plan](plans/WEB-017/plan.md) |
 | WEB-019 | Published Phase 13 | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
@@ -110,3 +110,5 @@ Phase 13 authorization (2026-09-25): “ok next go ahead”. WEB-019 selected af
 Phase 13 release (2026-09-25): `72a9d476`, exact-SHA Pages and matching public resources verified; public desktop/mobile checks pass. WEB-019 is Done. Stop for wind-cue review.
 
 Phase 14 authorization (2026-09-25): “ok go for next todo”. WEB-017 selected after Phase 13; complete varied, directionally coherent incoming sets and stop for review.
+
+Phase 14 release (2026-09-25): Application commit `cb100d62` is published on `origin/master`; [Pages run 36220109782](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36220109782) succeeded for the exact SHA. Public assets and desktop/mobile interactions pass. WEB-017 is Done; stop for review.
