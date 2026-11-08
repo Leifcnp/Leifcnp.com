@@ -2,23 +2,21 @@
 
 ## Current delivery
 
-**WEB-019 wind-stream removal is published; triangle comparison and CPU explanation delivered.**
-The user requested “ok go for next todo” on 2026-09-25 after the verified
-Phase 13 wind-cue release. Preserve the current custom boat, controls and
-wind model. User review rejected the over-aligned bands: restore the original
-overlapping swells. The first subtle variation still repeats visibly when zoomed out; use independent wave groups and compare both viewing scales.
+**WEB-023: autonomous MR workflow setup, assigned 2026-11-07.**
 
-Luna agents own the deterministic sampler, coupled crest rendering and an
-independent baseline/consumer audit. Root owns integration, plan/status updates,
-actual hull-contact and normal-camera desktop/mobile review, regression checks
-and publication. Complete this wave phase and stop for review. Shoreline work
-remains queued; harbours/zoom remain deferred.
+Set up orchestration, Sol 6.1 workers and independent review, task/batch
+contracts, worktree ownership, CI, merge gates and local tooling. Do not implement
+website backlog work. Existing uncommitted WEB-022 shoreline work in the user's
+checkout is preserved. [AGENTS.md](AGENTS.md) and
+[ORCHESTRATION.md](ORCHESTRATION.md) define the current policy; historical phase
+staffing, direct-push steps and user-review scheduling below are reference only.
+Product constraints and explicitly deferred work remain in force.
 
-Phase 11 is preserved in [its verification record](artifacts/phase11/VERIFICATION.md).
-
-Phase 2 remains recorded in its [verification record](artifacts/phase2/VERIFICATION.md).
-
-The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has a detailed `plan.md` below. Future phases are designed now and implemented only after review of their predecessor.
+The user explicitly assigns each batch; the orchestrator completes it
+autonomously, including MR merge/publication after separate Sol 6.1 review and
+all required checks. Three unsuccessful repair rounds park a task with evidence.
+See [the task plan](plans/WEB-023/plan.md). The canonical queue remains
+[WEBSITE_TODO.md](WEBSITE_TODO.md); the execution ledger is under `work/batches/`.
 
 ## Architecture and decisions
 
@@ -32,7 +30,13 @@ The canonical status record is [WEBSITE_TODO.md](WEBSITE_TODO.md). Each task has
 
 ## Publishing boundary
 
-GitHub Pages consumes the tracked `docs/` directory from `master`. The authorized WEB-017 release sequence is: build with Vite, inspect the generated output and custom-domain metadata, run the production preview, then commit and push the reviewed result. Do not add Hugo setup or deployment steps. Remote publication is not considered complete until the external URL is checked; stop for sailing-feel review before another backlog phase.
+GitHub Pages consumes tracked `docs/` from `master`. Assigned work uses task
+branches and MRs (GitHub pull requests), with strict build/tests/output checks,
+relevant browser evidence and independent review of the current head/base.
+Only the orchestrator merges, one MR at a time; direct pushes are prohibited.
+Merging is authorized to publish assigned work. Verify the resulting merge SHA's
+Pages deployment and public assets/interactions before marking delivery Done.
+Preserve domain metadata and the current deployment path.
 
 ## Work packages and review gates
 
@@ -59,16 +63,24 @@ GitHub Pages consumes the tracked `docs/` directory from `master`. The authorize
 | WEB-019 | Published review correction | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
+| WEB-023 | Workflow setup | Autonomous orchestration, MR review/merge and worktree/check contracts | User interview, 2026-11-07 | [plan](plans/WEB-023/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
 
 ## Team and integration ownership
 
-- Planning/integration lead: maintain canonical tasks and this plan, preserve repository history, integrate, inspect browser output, and enforce the phase boundary.
-- Luna wave-model agent: seeded directional swell components and sampler invariants.
-- Luna audit agent: pinned Phase 13 baseline, wave variation/direction and consumer regression review.
-- Luna crest agent: bounded ribbons coupled to actual compound swells and rendered triangles.
-- Root: world integration, queue/docs, quantitative sailing and browser checks, release verification.
-- Agents share a checkout with explicit file ownership. Dependencies are coordinated through a small scene lifecycle API; avoid parallel edits to the same files.
+- Orchestrator: record the explicit assignment, own shared plans/queue, integration,
+  generated output, final commits, MRs, sequential merges and deployment verification.
+- Sol 6.1 workers: implement only assigned paths/interfaces and return evidence.
+- Separate Sol 6.1 reviewer: compare the full current diff with acceptance criteria;
+  report blocking findings and re-review repairs. It does not author fixes.
+- Use isolated task worktrees or explicitly owned shared batch worktrees. Serialize
+  Git/build mutations and overlapping paths; record dependencies and ownership in
+  the batch ledger. Follow actual host concurrency limits.
+
+## Historical release planning
+
+The remaining dated phase descriptions preserve decisions and evidence. They do
+not select the next task or override the current assignment/MR workflow.
 
 ## Phase 1 completion evidence
 

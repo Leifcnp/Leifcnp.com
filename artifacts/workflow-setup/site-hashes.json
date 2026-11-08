@@ -1,0 +1,12 @@
+{
+  "base": "97902baf0e82c77e88e3417b8b44e051ddff5683",
+  "unchangedAfterFreshBuild": true,
+  "files": {
+    "docs/index.html": "2a0d9728d913e3e64cdc3896a508f84542e3026a57c8234b3731abe3638d4413",
+    "docs/assets/index-BO0NXk6m.js": "d07540bcdcfe41c7238d3c74c6e52c27f377608fd7febf48201f9f0503e2023b",
+    "docs/assets/index-yKZlOFjO.css": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+    "docs/favicon.svg": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa",
+    "docs/CNAME": "45213e89b742e5aada546ffc4acbd2d0a0f8f1af98d08a944a832f4e3cf738f1",
+    "docs/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
