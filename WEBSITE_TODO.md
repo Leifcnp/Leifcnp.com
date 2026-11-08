@@ -36,6 +36,14 @@ Current assignment restores WEB-016 after the WEB-022 shoreline rollout; WEB-001
 
 ## In progress
 
+- [ ] WEB-024 — Reduce wave-sampling CPU cost while preserving identical water appearance and behavior.
+  - Assigned (2026-11-07): User requests an isolated worktree/team and careful integration with concurrent WEB-016; limited overlap may be reconciled deliberately.
+  - Acceptance criteria: Identical deterministic wave/noise/phase, analytic and finite-difference derivatives, contact and lifecycle behavior; repeatable warmed ocean-update improvement with no material tail/scattered-sampling regression; bounded memory, no tuning/API/dependency changes; independent review, full checks and an open mergeable MR.
+  - Progress: Separate worktree based on current master including all-island shoreline response. Spatial-only ocean sampling preserves exact outputs, with ~4% repeated Chromium ocean CPU reduction. 192 native tests/build, six identical frame pairs and combined WEB-016 snapshot (205 tests/build) pass.
+  - Next step: Commit intended output and run clean-tree verification; open MR, obtain exact-head/base Sol review and passing CI/mergeability. User requests leaving the MR open for review.
+  - Plan: [plans/WEB-024/plan.md](plans/WEB-024/plan.md).
+
+
 - [ ] WEB-022 — Make waves visibly interact with islands and shorelines.
   - Requested (2026-09-24): Add wave interaction at the islands so incoming water visibly reaches, breaks against, and wraps around the land instead of passing through it as an unrelated background layer.
   - Acceptance criteria: Use the shared deterministic wave field to create bounded shoreline response such as small breaking crests, swash, foam, or reflected/dissipated motion at island edges. Keep land geometry, wave sampling, hull contact, wake, storm transitions, and scanner routes coherent; never let water cues imply that the boat can enter land or that island collision rules have changed. Preserve pause/reset, hidden-tab, reduced-motion, WebGL fallback, disposal, and mobile rendering budgets.

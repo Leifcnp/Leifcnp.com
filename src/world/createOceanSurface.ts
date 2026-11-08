@@ -11,7 +11,7 @@ import {
   MAX_WAVE_HEIGHT,
   PRIMARY_WAVE,
   sampleWaterHeight,
-  sampleWaterSurface,
+  sampleWaterSpatial,
 } from './waves.ts';
 
 export interface OceanSurfaceController {
@@ -96,6 +96,7 @@ export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
   const crestRibbons = createCrestRibbons(positions);
   scene.add(crestRibbons.mesh);
 
+  const surfaceSample = { height: 0, slopeX: 0, slopeZ: 0, stormIntensity: 0 };
   let disposed = false;
   const update = (timeSeconds: number): void => {
     if (disposed) return;
@@ -104,7 +105,7 @@ export function createOceanSurface(scene: THREE.Scene): OceanSurfaceController {
     const color = geometry.getAttribute('color') as THREE.BufferAttribute;
     for (let index = 0; index < coordinates.length; index += 1) {
       const [x, z] = coordinates[index];
-      const sample = sampleWaterSurface(x, z, time);
+      const sample = sampleWaterSpatial(x, z, time, surfaceSample);
       position.setY(index, sample.height);
       setWaterColor(color, index, sample.height, sample.slopeX, sample.slopeZ, sample.stormIntensity);
     }

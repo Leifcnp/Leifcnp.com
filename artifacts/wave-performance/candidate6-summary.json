@@ -1,0 +1,1002 @@
+{
+  "generatedAt": "2026-11-08T05:30:50.002769+00:00",
+  "candidate": 6,
+  "oracle": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "method": "Paired ratios compare same-round candidate/base timing. Negative percent=faster. 95% percentile bootstrap CI of paired median: 5000 resamples, fixed seed2468. Descriptive VM evidence; scheduling/autocorrelation and module JIT variability limit confidence. No physical-device speed claim.",
+  "parity": {
+    "mode": "parity",
+    "base": "812e02fc2517d02165241289f31ea58a644e4fc0",
+    "hashes": {
+      "base": {
+        "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+        "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+        "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+        "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+        "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+      },
+      "candidate": {
+        "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+        "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+        "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+        "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+        "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+      }
+    },
+    "checks": 1272078,
+    "checksum": "d3fee76216f89ceb134238e89e037a2cc87dfcd6a2a946bad6da99419e4e08e2",
+    "result": "exact Object.is parity"
+  },
+  "runs": [
+    {
+      "runtime": "Node",
+      "raw": "candidate6-benchmark-1.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 9.152092666666704,
+            "p95": 12.367497333333327,
+            "min": 8.38126133333329,
+            "max": 13.982933666666668
+          },
+          "candidate": {
+            "median": 9.48862516666668,
+            "p95": 12.081954500000014,
+            "min": 8.186665833333336,
+            "max": 12.356358
+          },
+          "medianChangePercent": 3.6771098398694857,
+          "p95ChangePercent": -2.3088166153366174,
+          "pairedMedianChangePercent": 2.2626360744588903,
+          "pairedMedianBootstrap95CI": [
+            -1.3613714737268134,
+            4.246319996186232
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 10.056640999999823,
+            "p95": 13.480031833333365,
+            "min": 9.326462166666715,
+            "max": 17.903145333333367
+          },
+          "candidate": {
+            "median": 10.290042999999969,
+            "p95": 11.77340949999992,
+            "min": 9.172422333333392,
+            "max": 12.835988833333431
+          },
+          "medianChangePercent": 2.3208743356767814,
+          "p95ChangePercent": -12.6603731685063,
+          "pairedMedianChangePercent": 0.9968547929226745,
+          "pairedMedianBootstrap95CI": [
+            -1.4708233332783482,
+            2.2827255052287554
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 2.8941854999993666,
+            "p95": 3.4704865000003338,
+            "min": 2.6795894999995653,
+            "max": 4.513588499999969
+          },
+          "candidate": {
+            "median": 2.8875699999998687,
+            "p95": 3.76687850000053,
+            "min": 2.6053545000004306,
+            "max": 3.8798479999995834
+          },
+          "medianChangePercent": -0.22857899051388353,
+          "p95ChangePercent": 8.5403588228961,
+          "pairedMedianChangePercent": -0.23658112033824175,
+          "pairedMedianBootstrap95CI": [
+            -2.9709883848827836,
+            2.149911769309021
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.390626999999768,
+            "p95": 5.227436000000125,
+            "min": 4.11020599999938,
+            "max": 5.232579999999871
+          },
+          "candidate": {
+            "median": 4.368443500000467,
+            "p95": 5.078989499999807,
+            "min": 3.9503304999998363,
+            "max": 5.5716969999994035
+          },
+          "medianChangePercent": -0.5052467449250808,
+          "p95ChangePercent": -2.8397573877578797,
+          "pairedMedianChangePercent": 1.0571590468759329,
+          "pairedMedianBootstrap95CI": [
+            -1.9061118646462205,
+            2.7366365247345703
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 3.0229584999997314,
+            "p95": 5.210730499999954,
+            "min": 2.6547525000005407,
+            "max": 6.546288999999888
+          },
+          "candidate": {
+            "median": 3.033863000000565,
+            "p95": 5.071069999999963,
+            "min": 2.6797804999996515,
+            "max": 5.4739514999992025
+          },
+          "medianChangePercent": 0.3607227820307424,
+          "p95ChangePercent": -2.680247999776464,
+          "pairedMedianChangePercent": -0.05616125856997556,
+          "pairedMedianBootstrap95CI": [
+            -2.621718961509761,
+            3.6277963644286038
+          ],
+          "checksumsEqual": true
+        }
+      }
+    },
+    {
+      "runtime": "Node",
+      "raw": "candidate6-benchmark-2.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 9.431366833333263,
+            "p95": 10.848780999999994,
+            "min": 8.695378666666633,
+            "max": 11.674135000000055
+          },
+          "candidate": {
+            "median": 9.367420666666627,
+            "p95": 10.228398833333321,
+            "min": 8.732809833333363,
+            "max": 10.618181166666696
+          },
+          "medianChangePercent": -0.6780158994625363,
+          "p95ChangePercent": -5.718450456937729,
+          "pairedMedianChangePercent": -2.8148681927416708,
+          "pairedMedianBootstrap95CI": [
+            -4.111232823226069,
+            -0.9809712276585891
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 10.336165333333156,
+            "p95": 11.71863466666673,
+            "min": 9.706365833333317,
+            "max": 12.20310633333338
+          },
+          "candidate": {
+            "median": 10.32348349999999,
+            "p95": 11.024621500000043,
+            "min": 9.744343500000165,
+            "max": 11.279214500000004
+          },
+          "medianChangePercent": -0.12269379333812447,
+          "p95ChangePercent": -5.922303974888687,
+          "pairedMedianChangePercent": -0.2678382971910753,
+          "pairedMedianBootstrap95CI": [
+            -2.0495597481151817,
+            1.2188088167543798
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 2.994300000000294,
+            "p95": 3.92065249999996,
+            "min": 2.7242685000001075,
+            "max": 4.489884999999958
+          },
+          "candidate": {
+            "median": 3.0087045000000217,
+            "p95": 3.6843815000001996,
+            "min": 2.757092000000739,
+            "max": 3.7984749999995984
+          },
+          "medianChangePercent": 0.4810640216319717,
+          "p95ChangePercent": -6.0263183232832525,
+          "pairedMedianChangePercent": 1.7787591532769986,
+          "pairedMedianBootstrap95CI": [
+            -1.467583674859524,
+            3.651728518157049
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.528855999999905,
+            "p95": 6.653073999999833,
+            "min": 4.067416500000036,
+            "max": 8.198143999999957
+          },
+          "candidate": {
+            "median": 4.514992999999777,
+            "p95": 6.301384000000326,
+            "min": 4.134422999999515,
+            "max": 6.665823999999702
+          },
+          "medianChangePercent": -0.3061037931020305,
+          "p95ChangePercent": -5.286127886139791,
+          "pairedMedianChangePercent": -0.9808111958025667,
+          "pairedMedianBootstrap95CI": [
+            -5.32413993246546,
+            3.7408307321326717
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 2.9950900000003458,
+            "p95": 3.87883950000014,
+            "min": 2.6836564999994152,
+            "max": 4.21016150000014
+          },
+          "candidate": {
+            "median": 3.110117000000173,
+            "p95": 3.6982475000004342,
+            "min": 2.6862394999998287,
+            "max": 3.975746500000241
+          },
+          "medianChangePercent": 3.8405189827288577,
+          "p95ChangePercent": -4.655825537501601,
+          "pairedMedianChangePercent": 3.571936158006317,
+          "pairedMedianBootstrap95CI": [
+            -2.590236727041356,
+            6.363479100522773
+          ],
+          "checksumsEqual": true
+        }
+      }
+    },
+    {
+      "runtime": "Chromium",
+      "raw": "candidate6-browser-benchmark-1.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "browser": "151.0.7922.34",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 8.416666666666666,
+            "p95": 8.933333333426466,
+            "min": 7.850000000093132,
+            "max": 9.183333333426466
+          },
+          "candidate": {
+            "median": 8.133333333457509,
+            "p95": 8.516666666604578,
+            "min": 7.5999999999379115,
+            "max": 9.083333333333334
+          },
+          "medianChangePercent": -3.366336632188005,
+          "p95ChangePercent": -4.664179106166532,
+          "pairedMedianChangePercent": -3.6663287192544636,
+          "pairedMedianBootstrap95CI": [
+            -4.170907198526336,
+            -2.5827720326605186
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 9.766666666604578,
+            "p95": 10.350000000093132,
+            "min": 9.349999999937912,
+            "max": 10.733333333395422
+          },
+          "candidate": {
+            "median": 9.549999999968955,
+            "p95": 10,
+            "min": 8.900000000062088,
+            "max": 10.166666666666666
+          },
+          "medianChangePercent": -2.2184300338259466,
+          "p95ChangePercent": -3.381642512946692,
+          "pairedMedianChangePercent": -2.9464447684632633,
+          "pairedMedianBootstrap95CI": [
+            -3.817432043546898,
+            -0.8629573152543535
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 2.6999999997206032,
+            "p95": 3,
+            "min": 2.4499999997206032,
+            "max": 3.849999999627471
+          },
+          "candidate": {
+            "median": 2.6999999997206032,
+            "p95": 4.099999999627471,
+            "min": 2.4500000001862645,
+            "max": 4.400000000372529
+          },
+          "medianChangePercent": 0.0,
+          "p95ChangePercent": 36.66666665424903,
+          "pairedMedianChangePercent": 0.0,
+          "pairedMedianBootstrap95CI": [
+            -1.8693221539698879,
+            3.8475767703485486
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.399999999906868,
+            "p95": 5.2999999998137355,
+            "min": 4,
+            "max": 5.300000000279397
+          },
+          "candidate": {
+            "median": 4.350000000093132,
+            "p95": 5.0499999998137355,
+            "min": 4.0499999998137355,
+            "max": 5.25
+          },
+          "medianChangePercent": -1.1363636321544024,
+          "p95ChangePercent": -4.71698113224125,
+          "pairedMedianChangePercent": -0.49504950768941014,
+          "pairedMedianBootstrap95CI": [
+            -3.471107552612102,
+            2.3122159871448056
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 3.25,
+            "p95": 3.4500000001862645,
+            "min": 3.099999999627471,
+            "max": 4.9500000001862645
+          },
+          "candidate": {
+            "median": 3.25,
+            "p95": 3.4500000001862645,
+            "min": 3.1000000000931323,
+            "max": 3.75
+          },
+          "medianChangePercent": 0.0,
+          "p95ChangePercent": 0.0,
+          "pairedMedianChangePercent": 7.275957614183426e-09,
+          "pairedMedianBootstrap95CI": [
+            -1.5388257589027288,
+            1.5873015664178203
+          ],
+          "checksumsEqual": true
+        }
+      }
+    },
+    {
+      "runtime": "Chromium",
+      "raw": "candidate6-browser-benchmark-2.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "browser": "151.0.7922.34",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 9.233333333240202,
+            "p95": 10.816666666728755,
+            "min": 8.566666666573534,
+            "max": 11.5
+          },
+          "candidate": {
+            "median": 8.916666666666666,
+            "p95": 11.166666666666666,
+            "min": 8.383333333457509,
+            "max": 11.36666666669771
+          },
+          "medianChangePercent": -3.4296028871125928,
+          "p95ChangePercent": 3.2357473029513306,
+          "pairedMedianChangePercent": -4.841864335568403,
+          "pairedMedianBootstrap95CI": [
+            -5.356265775988684,
+            -2.4889537907632207
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 9.833333333333334,
+            "p95": 13.75,
+            "min": 9.283333333364377,
+            "max": 17.333333333333332
+          },
+          "candidate": {
+            "median": 9.566666666728755,
+            "p95": 13.25,
+            "min": 9.083333333333334,
+            "max": 13.316666666728755
+          },
+          "medianChangePercent": -2.7118644061482566,
+          "p95ChangePercent": -3.6363636363636376,
+          "pairedMedianChangePercent": -3.1980181719212855,
+          "pairedMedianBootstrap95CI": [
+            -4.864871492485739,
+            -1.720251336339046
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 2.8000000002793968,
+            "p95": 3.599999999627471,
+            "min": 2.5,
+            "max": 4.899999999906868
+          },
+          "candidate": {
+            "median": 2.7999999998137355,
+            "p95": 3.75,
+            "min": 2.5,
+            "max": 4.0499999998137355
+          },
+          "medianChangePercent": -1.6630763433056472e-08,
+          "p95ChangePercent": 4.166666677445874,
+          "pairedMedianChangePercent": -0.8333333388522823,
+          "pairedMedianBootstrap95CI": [
+            -2.694805201218836,
+            3.703703689650828
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.7000000001862645,
+            "p95": 6.100000000093132,
+            "min": 4.349999999627471,
+            "max": 6.600000000093132
+          },
+          "candidate": {
+            "median": 4.7000000001862645,
+            "p95": 6.300000000279397,
+            "min": 4.149999999906868,
+            "max": 6.449999999720603
+          },
+          "medianChangePercent": 0.0,
+          "p95ChangePercent": 3.2786885275936317,
+          "pairedMedianChangePercent": -1.1176323635033791,
+          "pairedMedianBootstrap95CI": [
+            -2.259959149234725,
+            4.3956043998780725
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 3.5,
+            "p95": 4,
+            "min": 3.0499999998137355,
+            "max": 4.5499999998137355
+          },
+          "candidate": {
+            "median": 3.4499999997206032,
+            "p95": 4,
+            "min": 3.0500000002793968,
+            "max": 4.25
+          },
+          "medianChangePercent": -1.4285714365541935,
+          "p95ChangePercent": 0.0,
+          "pairedMedianChangePercent": -1.428571429901887,
+          "pairedMedianBootstrap95CI": [
+            -2.17484009076766,
+            1.3903433959683298e-08
+          ],
+          "checksumsEqual": true
+        }
+      }
+    },
+    {
+      "runtime": "Chromium",
+      "raw": "candidate6-browser-benchmark-3.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "browser": "151.0.7922.34",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 9.233333333395422,
+            "p95": 11.666666666666666,
+            "min": 8.649999999906868,
+            "max": 13.549999999968955
+          },
+          "candidate": {
+            "median": 8.850000000093132,
+            "p95": 10.349999999937912,
+            "min": 8.033333333364377,
+            "max": 11.816666666573534
+          },
+          "medianChangePercent": -4.1516245483723235,
+          "p95ChangePercent": -11.285714286246462,
+          "pairedMedianChangePercent": -4.105873029674051,
+          "pairedMedianBootstrap95CI": [
+            -6.710606744962128,
+            -1.1999507719040348
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 11.033333333364377,
+            "p95": 14.800000000124177,
+            "min": 10.299999999968955,
+            "max": 15.483333333240202
+          },
+          "candidate": {
+            "median": 10.983333333240202,
+            "p95": 14.149999999906868,
+            "min": 9.933333333271245,
+            "max": 19.73333333339542
+          },
+          "medianChangePercent": -0.45317220656224677,
+          "p95ChangePercent": -4.391891893323352,
+          "pairedMedianChangePercent": -3.7173273323658105,
+          "pairedMedianBootstrap95CI": [
+            -5.033178294871671,
+            0.7833336539952662
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 2.8999999999068677,
+            "p95": 3.6000000000931323,
+            "min": 2.6000000000931323,
+            "max": 4.449999999720603
+          },
+          "candidate": {
+            "median": 2.8999999999068677,
+            "p95": 5.5,
+            "min": 2.5499999998137355,
+            "max": 5.600000000093132
+          },
+          "medianChangePercent": 0.0,
+          "p95ChangePercent": 52.7777777738254,
+          "pairedMedianChangePercent": 0.7575757543411388,
+          "pairedMedianBootstrap95CI": [
+            -2.538829158296191,
+            1.851851844825414
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.600000000093132,
+            "p95": 6.100000000093132,
+            "min": 4.149999999906868,
+            "max": 6.25
+          },
+          "candidate": {
+            "median": 4.5,
+            "p95": 6.399999999906868,
+            "min": 4.149999999906868,
+            "max": 7
+          },
+          "medianChangePercent": -2.173913045458864,
+          "p95ChangePercent": 4.918032783756643,
+          "pairedMedianChangePercent": -2.6881720429030755,
+          "pairedMedianBootstrap95CI": [
+            -6.521739126583615,
+            2.3122159818574906
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 3.6000000000931323,
+            "p95": 5.300000000279397,
+            "min": 3.25,
+            "max": 5.75
+          },
+          "candidate": {
+            "median": 3.6000000000931323,
+            "p95": 5.5499999998137355,
+            "min": 3.25,
+            "max": 6.0499999998137355
+          },
+          "medianChangePercent": 0.0,
+          "p95ChangePercent": 4.716981123040753,
+          "pairedMedianChangePercent": 0.1133572580037212,
+          "pairedMedianBootstrap95CI": [
+            -4.3487394998109945,
+            5.934065939592459
+          ],
+          "checksumsEqual": true
+        }
+      }
+    },
+    {
+      "runtime": "Node sham",
+      "raw": "identical-baseline-benchmark.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 9.252685999999963,
+            "p95": 13.673566333333383,
+            "min": 8.566607166666623,
+            "max": 15.607308666666691
+          },
+          "candidate": {
+            "median": 9.671698333333325,
+            "p95": 15.8326671666667,
+            "min": 8.160353833333374,
+            "max": 16.16966350000007
+          },
+          "medianChangePercent": 4.528548070618221,
+          "p95ChangePercent": 15.790326976144243,
+          "pairedMedianChangePercent": 5.734417647331991,
+          "pairedMedianBootstrap95CI": [
+            1.6155438232010155,
+            9.663435063691262
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 11.042870666666508,
+            "p95": 36.43367750000016,
+            "min": 10.023819000000003,
+            "max": 42.828854499999885
+          },
+          "candidate": {
+            "median": 10.9551301666667,
+            "p95": 19.765019999999822,
+            "min": 9.753538666666827,
+            "max": 23.321104000000258
+          },
+          "medianChangePercent": -0.794544305084155,
+          "p95ChangePercent": -45.750686298412404,
+          "pairedMedianChangePercent": -0.7973055466899526,
+          "pairedMedianBootstrap95CI": [
+            -4.650762335036973,
+            1.5276327164755688
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 3.1101394999996046,
+            "p95": 4.760299999999916,
+            "min": 2.746319500000027,
+            "max": 5.6373120000007475
+          },
+          "candidate": {
+            "median": 3.151218500000141,
+            "p95": 5.840267000000495,
+            "min": 2.730138999999326,
+            "max": 6.0371945000006235
+          },
+          "medianChangePercent": 1.3208089219323371,
+          "p95ChangePercent": 22.686952503006076,
+          "pairedMedianChangePercent": 3.6695054402454685,
+          "pairedMedianBootstrap95CI": [
+            -1.2197596336065875,
+            8.454829633345762
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.519318499999827,
+            "p95": 5.426974500000142,
+            "min": 4.0860499999998865,
+            "max": 5.706863499999599
+          },
+          "candidate": {
+            "median": 4.555434500000047,
+            "p95": 5.738785000000462,
+            "min": 4.096397999999681,
+            "max": 5.791275999999925
+          },
+          "medianChangePercent": 0.7991470395419364,
+          "p95ChangePercent": 5.745567811315699,
+          "pairedMedianChangePercent": 0.7070531719749362,
+          "pairedMedianBootstrap95CI": [
+            -3.916354642336783,
+            2.8006324200659627
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 3.027039500000683,
+            "p95": 6.274553000001106,
+            "min": 2.6400464999996984,
+            "max": 7.7580364999994345
+          },
+          "candidate": {
+            "median": 3.0329064999987168,
+            "p95": 3.7598129999996672,
+            "min": 2.7043555000000197,
+            "max": 4.460527999999613
+          },
+          "medianChangePercent": 0.19381973700813848,
+          "p95ChangePercent": -40.07839283533019,
+          "pairedMedianChangePercent": -0.6994581044145909,
+          "pairedMedianBootstrap95CI": [
+            -5.057339862580928,
+            2.1034773214486435
+          ],
+          "checksumsEqual": true
+        }
+      }
+    },
+    {
+      "runtime": "Chromium sham",
+      "raw": "identical-baseline-browser-benchmark.json",
+      "hashes": {
+        "base": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        },
+        "candidate": {
+          "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+          "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+          "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+          "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+          "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+        }
+      },
+      "environment": {
+        "node": "v24.22.1",
+        "browser": "151.0.7922.34",
+        "platform": "linux",
+        "release": "7.0.0-34-generic",
+        "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+      },
+      "workloads": {
+        "ocean": {
+          "base": {
+            "median": 9.683333333426466,
+            "p95": 11.516666666604578,
+            "min": 9.033333333364377,
+            "max": 12.033333333364377
+          },
+          "candidate": {
+            "median": 9.583333333333334,
+            "p95": 11.816666666728755,
+            "min": 8.783333333364377,
+            "max": 12.016666666759798
+          },
+          "medianChangePercent": -1.0327022384733597,
+          "p95ChangePercent": 2.6049204063021136,
+          "pairedMedianChangePercent": -0.17889144838661442,
+          "pairedMedianBootstrap95CI": [
+            -1.9677996415714882,
+            2.115819307058675
+          ],
+          "checksumsEqual": true
+        },
+        "oceanWithNormals": {
+          "base": {
+            "median": 10.61666666669771,
+            "p95": 11.966666666790843,
+            "min": 9.466666666635623,
+            "max": 12.049999999968955
+          },
+          "candidate": {
+            "median": 10.266666666604578,
+            "p95": 11.86666666669771,
+            "min": 9.316666666573534,
+            "max": 12.433333333271245
+          },
+          "medianChangePercent": -3.29670329757088,
+          "p95ChangePercent": -0.8356545968698725,
+          "pairedMedianChangePercent": -0.9319729874412652,
+          "pairedMedianBootstrap95CI": [
+            -2.9903990973694228,
+            0.2322496550200115
+          ],
+          "checksumsEqual": true
+        },
+        "height": {
+          "base": {
+            "median": 2.75,
+            "p95": 3.5,
+            "min": 2.4499999997206032,
+            "max": 3.5500000002793968
+          },
+          "candidate": {
+            "median": 2.75,
+            "p95": 3,
+            "min": 2.4500000001862645,
+            "max": 3.4500000001862645
+          },
+          "medianChangePercent": 0.0,
+          "p95ChangePercent": -14.28571428571429,
+          "pairedMedianChangePercent": 0.0,
+          "pairedMedianBootstrap95CI": [
+            -2.680311897524917,
+            2.8664731565189228
+          ],
+          "checksumsEqual": true
+        },
+        "scatteredHull": {
+          "base": {
+            "median": 4.4500000001862645,
+            "p95": 6.599999999627471,
+            "min": 4.100000000093132,
+            "max": 8.950000000186265
+          },
+          "candidate": {
+            "median": 4.399999999906868,
+            "p95": 4.9500000001862645,
+            "min": 3.8999999999068677,
+            "max": 5.7999999998137355
+          },
+          "medianChangePercent": -1.1235955118495289,
+          "p95ChangePercent": -24.99999999294452,
+          "pairedMedianChangePercent": -2.366946769973116,
+          "pairedMedianBootstrap95CI": [
+            -4.325461771187178,
+            0.4347826070759564
+          ],
+          "checksumsEqual": true
+        },
+        "coldNoise": {
+          "base": {
+            "median": 3.5,
+            "p95": 4.4500000001862645,
+            "min": 3.1000000000931323,
+            "max": 4.599999999627471
+          },
+          "candidate": {
+            "median": 3.3999999999068677,
+            "p95": 4.2000000001862645,
+            "min": 3.1000000000931323,
+            "max": 4.2000000001862645
+          },
+          "medianChangePercent": -2.857142859803774,
+          "p95ChangePercent": -5.617977527854734,
+          "pairedMedianChangePercent": -2.898550727180671,
+          "pairedMedianBootstrap95CI": [
+            -6.329365075917792,
+            0.0
+          ],
+          "checksumsEqual": true
+        }
+      }
+    }
+  ],
+  "conclusion": "Exact parity passes. Three independent Chromium repetitions show a modest reproducible reduction (~4% paired median) for the complete real ocean update, exceeding identical-baseline browser calibration. Public scattered-contact timings show no material regression in these samples. Node results are mixed and the byte-identical Node calibration has a timing bias. This is VM CPU evidence only: no broad Node speedup, FPS, GPU, physical-device or guaranteed p95 improvement claim."
+}

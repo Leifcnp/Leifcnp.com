@@ -1,0 +1,300 @@
+{
+  "generatedAt": "2026-11-08T05:31:42.978Z",
+  "base": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "headAtMeasurement": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "candidateSourceSha256": {
+    "src/world/waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+    "src/world/waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+    "src/world/createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e",
+    "src/world/waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f"
+  },
+  "provenance": "Unmodified production bundles. Fixture manually steps actual requestAnimationFrame callbacks at100ms plus an exact final fractional interval; skips only intermediate raster draws, then renders each batch final frame normally. CPU simulation/camera/waves remain unchanged. Each matched view resets clock, holds actual Spill control, and uses normal production camera. Phone framing uses real paused instant Chartroom scanner then resume. Source hashes bind candidate working source; baseline proven by served asset bytes against recorded base docs. Canvas-only hashes hide HUD parents+descendants. Resize gets actual render step; drawer220ms animation settles260ms.",
+  "limits": "SwiftShader VM evidence, no physical GPU/browser-performance/Windows/browser-chrome/OS hidden-tab claim. Twelve matched comparison images plus one targeted Logbook diagnostic. Local preview; publication remains root gate.",
+  "phases": {
+    "active": 11.75,
+    "quiet": 8.25
+  },
+  "assets": {
+    "baseline": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "fd4ec66236a74936da28f2894277eb2c5ceb024e2a508a063c5bb6f51906421a"
+      },
+      {
+        "path": "assets/index-CxlYBWZO.js",
+        "bytes": 593087,
+        "sha256": "d1d319dcf71b6cffc144856326f1084097e0d3e388646889cdf7b69e7594a403"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c"
+      }
+    ],
+    "candidate": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "35490bf3271864ddff5731646244fbdd7670d00c95698c186130809b0335ecbd"
+      },
+      {
+        "path": "assets/index-D6EiICVr.js",
+        "bytes": 594428,
+        "sha256": "7e68cc2a47b887a80e5c31ab977c22be3ec770a68068a5759da6f6e3e6dd2c77"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "path": "baseline-desktop-quiet.png",
+      "sha256": "8aecd9273a6cd02b225aef937749217815cb29f4ce99497ada2a388a4bd62c9d",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "baseline-desktop-active.png",
+      "sha256": "836bd96802ba78311657c4bc8ea4c8cfb02388a6137daea166a7da90ef01f484",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "baseline-phone-quiet.png",
+      "sha256": "682fda31ff935d45e16e39edd44d1cf4f60873e444f21e8d64f90379511185de",
+      "name": "baseline",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "baseline-phone-active.png",
+      "sha256": "ecc941d2df2f5a8057df1fe86b512f93229fd768bca76e22e3b42f271ccc38a6",
+      "name": "baseline",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "baseline-wide-quiet.png",
+      "sha256": "90ab7b30de5ad9a3da09e80e0439d638209a47b9daf12ea3b866f60506cd0eec",
+      "name": "baseline",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "baseline-wide-active.png",
+      "sha256": "4faa3c36f12ab424f901a5c9b8b04759a9b8de919bc5891a556a7373c78b938b",
+      "name": "baseline",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "candidate-desktop-quiet.png",
+      "sha256": "8aecd9273a6cd02b225aef937749217815cb29f4ce99497ada2a388a4bd62c9d",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "candidate-desktop-active.png",
+      "sha256": "836bd96802ba78311657c4bc8ea4c8cfb02388a6137daea166a7da90ef01f484",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "candidate-phone-quiet.png",
+      "sha256": "682fda31ff935d45e16e39edd44d1cf4f60873e444f21e8d64f90379511185de",
+      "name": "candidate",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "candidate-phone-active.png",
+      "sha256": "ecc941d2df2f5a8057df1fe86b512f93229fd768bca76e22e3b42f271ccc38a6",
+      "name": "candidate",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "candidate-wide-quiet.png",
+      "sha256": "90ab7b30de5ad9a3da09e80e0439d638209a47b9daf12ea3b866f60506cd0eec",
+      "name": "candidate",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "candidate-wide-active.png",
+      "sha256": "4faa3c36f12ab424f901a5c9b8b04759a9b8de919bc5891a556a7373c78b938b",
+      "name": "candidate",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Reset spawn normal camera"
+    }
+  ],
+  "checks": [
+    {
+      "normalCameraLogbookRiskInspection": {
+        "simulationSeconds": 0.25,
+        "path": "browser-logbook-desktop-risk.png",
+        "sha256": "9f6ad685a0542a9a06212a8dda9e78f1aebf23bd8f09b794d84e7f7bd0f7808a",
+        "note": "Unscaled screenshot clip of real normal-camera rendering; visual judgment recorded at handoff."
+      }
+    },
+    {
+      "matchedProductionFramesByteIdentical": true,
+      "count": 6
+    },
+    {
+      "motion": true,
+      "pauseFrozen": true,
+      "resume": true
+    },
+    {
+      "trustedW": true,
+      "resetSceneRepeats": true
+    },
+    {
+      "actualScannerArrival": "Chartroom",
+      "steppedSeconds": 2,
+      "nearbyExplorePrompt": true
+    },
+    {
+      "actualScannerArrival": "Logbook",
+      "steppedSeconds": 2,
+      "nearbyExplorePrompt": true
+    },
+    {
+      "actualScannerArrival": "Signal Cove",
+      "steppedSeconds": 2,
+      "nearbyExplorePrompt": true
+    },
+    {
+      "phoneResizeAndDrawer": true,
+      "measurements": {
+        "scroll": 390,
+        "width": 390,
+        "height": 844,
+        "drawer": {
+          "x": 16,
+          "y": 554.328125,
+          "width": 358,
+          "height": 273.671875,
+          "top": 554.328125,
+          "right": 374,
+          "bottom": 828,
+          "left": 16
+        },
+        "buttons": [
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "reducedMotionFrozen": true,
+      "allReducedScannerArrivals": true
+    },
+    {
+      "consoleErrors": []
+    },
+    {
+      "fallbackAllCategories": true,
+      "expectedFallbackErrors": [
+        "THREE.WebGLRenderer: Error creating WebGL context."
+      ]
+    }
+  ],
+  "browser": "151.0.7922.34",
+  "verdict": "pass"
+}

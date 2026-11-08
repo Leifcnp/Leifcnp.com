@@ -175,3 +175,66 @@ export function sampleWaterSurface(
   }
   return { height, slopeX, slopeZ, velocityY, stormIntensity: storm.intensity };
 }
+
+/** Spatial projection used by the ocean mesh; temporal derivatives are unused. */
+export interface WaterSpatialSample {
+  height: number;
+  slopeX: number;
+  slopeZ: number;
+  stormIntensity: number;
+}
+
+/**
+ * Keep spatial arithmetic paired exactly with sampleWaterSurface. The dedicated
+ * parity test guards this intentional hot-path duplication. Caller-owned storage
+ * lets the fixed ocean mesh avoid allocating one result per vertex per update.
+ */
+export function sampleWaterSpatial(
+  x: number,
+  z: number,
+  timeSeconds = 0,
+  target?: WaterSpatialSample,
+  seed = WAVE_VARIATION.seed,
+): WaterSpatialSample {
+  const worldX = finiteOr(x, 0), worldZ = finiteOr(z, 0), time = finiteOr(timeSeconds, 0);
+  sampleVariation(worldX, worldZ, time, seed);
+  const phaseDx = phaseNoise.derivativeU / WAVE_VARIATION.phaseLength;
+  const phaseDz = phaseNoise.derivativeV / WAVE_VARIATION.phaseWidth;
+  const packetDx = packetNoise.derivativeU / WAVE_VARIATION.packetLength;
+  const packetDz = packetNoise.derivativeV / WAVE_VARIATION.packetWidth;
+  const detailDx = detailNoise.derivativeU * 0.81 / WAVE_VARIATION.detailLength + detailNoise.derivativeV * 0.59 / WAVE_VARIATION.detailWidth;
+  const detailDz = detailNoise.derivativeU * -0.59 / WAVE_VARIATION.detailLength + detailNoise.derivativeV * 0.81 / WAVE_VARIATION.detailWidth;
+  const macroDx = macroNoise.derivativeU * 0.93 / WAVE_VARIATION.macroLength + macroNoise.derivativeV * -0.37 / WAVE_VARIATION.macroWidth;
+  const macroDz = macroNoise.derivativeU * 0.37 / WAVE_VARIATION.macroLength + macroNoise.derivativeV * 0.93 / WAVE_VARIATION.macroWidth;
+  let height = 0, slopeX = 0, slopeZ = 0;
+  for (let index = 0; index < WAVE_COMPONENTS.length; index += 1) {
+    const component = WAVE_COMPONENTS[index];
+    const phase = (worldX * component.directionX + worldZ * component.directionZ) * component.waveNumber +
+      time * component.angularSpeed + component.phase + component.phaseWarp * phaseNoise.value +
+      PHASE_DETAIL[index] * detailNoise.value + PHASE_MACRO[index] * macroNoise.value;
+    const sine = Math.sin(phase), cosine = Math.cos(phase);
+    const basis = component.kind === 'sine' ? sine : cosine;
+    const derivative = component.kind === 'sine' ? cosine : -sine;
+    const amplitude = component.amplitude + component.amplitudeVariation * packetNoise.value +
+      PACKET_DETAIL[index] * detailNoise.value + PACKET_MACRO[index] * macroNoise.value;
+    const envelopeDx = component.amplitudeVariation * packetDx + PACKET_DETAIL[index] * detailDx + PACKET_MACRO[index] * macroDx;
+    const envelopeDz = component.amplitudeVariation * packetDz + PACKET_DETAIL[index] * detailDz + PACKET_MACRO[index] * macroDz;
+    height += amplitude * basis;
+    slopeX += envelopeDx * basis + amplitude * derivative *
+      (component.waveNumber * component.directionX + component.phaseWarp * phaseDx + PHASE_DETAIL[index] * detailDx + PHASE_MACRO[index] * macroDx);
+    slopeZ += envelopeDz * basis + amplitude * derivative *
+      (component.waveNumber * component.directionZ + component.phaseWarp * phaseDz + PHASE_DETAIL[index] * detailDz + PHASE_MACRO[index] * macroDz);
+  }
+  const storm = sampleStormField(worldX, worldZ);
+  const delta = STORM_TUNING.maxWaveScale - 1;
+  const scale = 1 + storm.intensity * delta;
+  slopeX = slopeX * scale + height * delta * storm.gradientX;
+  slopeZ = slopeZ * scale + height * delta * storm.gradientZ;
+  height *= scale;
+  const result = target ?? { height: 0, slopeX: 0, slopeZ: 0, stormIntensity: 0 };
+  result.height = height;
+  result.slopeX = slopeX;
+  result.slopeZ = slopeZ;
+  result.stormIntensity = storm.intensity;
+  return result;
+}
