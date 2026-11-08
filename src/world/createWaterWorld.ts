@@ -14,6 +14,7 @@ import { createVessel } from './createVessel';
 import { createWake } from './effects/createWake';
 import { createHullSpray } from './effects/createHullSpray';
 import { createWindFlags } from './effects/createWindFlags';
+import { createShorelineFoam } from './effects/createShorelineFoam';
 import { planSafeDockingRoute } from '../navigation/routePlanner';
 import {
   advanceScan as advanceScannerScan,
@@ -164,6 +165,12 @@ export function createWaterWorld(
   const ocean = createOceanSurface(scene);
 
   const landmarks = createLandmarks(scene, options.islands ?? []);
+  // Review one island's shoreline before extending the effect to the archipelago.
+  const shorelineFoam = createShorelineFoam(
+    scene,
+    (options.islands ?? []).filter((island) => island.id === 'island-projects'),
+  );
+  const shorelineWaterPositions = (ocean.mesh.geometry.getAttribute('position') as THREE.BufferAttribute).array;
   const vessel = createVessel(scene);
   const wake = createWake(scene);
   const hullSpray = createHullSpray(scene);
@@ -173,6 +180,8 @@ export function createWaterWorld(
   wake.setReducedMotion(reducedMotion);
   hullSpray.setReducedMotion(reducedMotion);
   windFlags.setReducedMotion(reducedMotion);
+  shorelineFoam.setReducedMotion(reducedMotion);
+  shorelineFoam.update(0, shorelineWaterPositions);
   // Keep a scanner arrival alongside its island while the visitor reads.
   // Helm input releases the mooring; ordinary free sailing still feels swell.
   let horizontallyMoored = false;
@@ -251,6 +260,7 @@ export function createWaterWorld(
     windFlags.update(vesselState, elapsed, 0);
     cameraRig.snapTo(vesselState.x, vesselState.z);
     ocean.update(elapsed);
+    shorelineFoam.update(elapsed, shorelineWaterPositions);
     options.onVesselUpdate?.(toVesselTelemetry(vesselState));
     options.onLandmarkProjection?.(
       projectLandmarks(
@@ -364,6 +374,7 @@ export function createWaterWorld(
 
     options.onLandmarkProjection?.(projectLandmarks(camera, getViewportWidth(container), getViewportHeight(container), landmarks.anchors, options.framingInsets));
     ocean.update(elapsed);
+    shorelineFoam.update(elapsed, shorelineWaterPositions);
     renderer.render(scene, camera);
 
     if (isMotionPaused()) {
@@ -482,6 +493,8 @@ export function createWaterWorld(
       wake.setReducedMotion(reduced);
       hullSpray.setReducedMotion(reduced);
       windFlags.setReducedMotion(reduced);
+      shorelineFoam.setReducedMotion(reduced);
+      shorelineFoam.update(elapsed, shorelineWaterPositions);
       windFlags.update(vesselState, elapsed, 0);
       if (isMotionPaused()) renderer.render(scene, camera);
     },
@@ -531,6 +544,7 @@ export function createWaterWorld(
       wake.reset();
       hullSpray.reset();
       windFlags.reset();
+      shorelineFoam.reset();
       horizontallyMoored = false;
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
@@ -547,6 +561,7 @@ export function createWaterWorld(
       windFlags.update(vesselState, elapsed, 0);
       cameraRig.snapTo(vesselState.x, vesselState.z);
       ocean.update(elapsed);
+      shorelineFoam.update(elapsed, shorelineWaterPositions);
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
       options.onLandmarkProjection?.(projectLandmarks(camera, getViewportWidth(container), getViewportHeight(container), landmarks.anchors, options.framingInsets));
       renderer.render(scene, camera);
@@ -614,6 +629,7 @@ export function createWaterWorld(
       wake.dispose();
       hullSpray.dispose();
       windFlags.dispose();
+      shorelineFoam.dispose();
       cameraRig.dispose();
       ocean.dispose();
       renderer.dispose();

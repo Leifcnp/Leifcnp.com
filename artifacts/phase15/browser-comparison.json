@@ -1,0 +1,247 @@
+{
+  "generatedAt": "2026-11-08T04:23:14.723Z",
+  "headAtMeasurement": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "base": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "sourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "34d6b5f87522dc34a2a77fd29e6416a78c2d594f8861f958a94e3bf37e80b657",
+    "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+    "src/world/createWaterWorld.ts": "db64cc61546358a4a34464a3298e865c8987e6f58ded3482b8122a863702d9e9"
+  },
+  "browser": "151.0.7922.34",
+  "provenance": {
+    "browser": "Bundled playwright-core pinned Chromium headless shell, installed under /tmp only; SwiftShader software renderer.",
+    "fixture": "Production bundles, unmodified HTML/CSS/JS. Pre-load fixture replaces requestAnimationFrame with manually stepped callbacks. First frame t=0, subsequent frames at 100ms; app fixed-step simulation remains unchanged. All matched captures reset boat/time, apply brake by the real Spill control, then step the identical frame sequence. Fixed camera rig and unmodified normal scene framing.",
+    "hiddenTab": "Fixture overrides document.hidden and dispatches visibilitychange to exercise actual application suspension/resume handler; this is not an OS/browser background-tab lifecycle claim.",
+    "limits": "Software-rendered VM evidence; no physical mobile GPU, browser diversity, heap allocation, prolonged GPU lifecycle, or live-publication claim. Console errors are asserted absent except deliberately denied WebGL fallback.",
+    "sourceBinding": "sourceSha256 hashes candidate working source, including baseline-only runs. Baseline provenance is served HTML/JS/CSS byte hashes against the base commit docs.",
+    "intermediateRasterSuppressed": false,
+    "scope": "Matched initial capture stage only. Initial interaction screenshot assertion included HUD hover styling; corrected final interaction suite is recorded separately."
+  },
+  "assets": {
+    "baseline": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "2a0d9728d913e3e64cdc3896a508f84542e3026a57c8234b3731abe3638d4413",
+        "matches": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs/index.html"
+      },
+      {
+        "path": "assets/index-BO0NXk6m.js",
+        "bytes": 589636,
+        "sha256": "d07540bcdcfe41c7238d3c74c6e52c27f377608fd7febf48201f9f0503e2023b",
+        "matches": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs/assets/index-BO0NXk6m.js"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+        "matches": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs/assets/index-yKZlOFjO.css"
+      }
+    ],
+    "candidate": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "b9f9e5dfa646f20bfce2498cfb9fcdc14311ffc0132bc0551354c69c5048c07a",
+        "matches": "docs/index.html"
+      },
+      {
+        "path": "assets/index-Dz-lXf6y.js",
+        "bytes": 592937,
+        "sha256": "ddac91ce72f42b243fc2bde54a19fdd8dd091fc0c081d16ac64979287f672a14",
+        "matches": "docs/assets/index-Dz-lXf6y.js"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+        "matches": "docs/assets/index-yKZlOFjO.css"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "path": "baseline-fresh/desktop-t0.png",
+      "sha256": "2d7fdd26eb6cdfca37323ad598471da073ac56735bd0b031a031b2e84d77d3a9",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 0,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "baseline-fresh/desktop-t4.png",
+      "sha256": "9686d310fb383c7f88e37d40315f8db0935422dca57fc3c3744fe5a295af1d00",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 4,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "baseline-fresh/desktop-t8.png",
+      "sha256": "ff6d286d1267caaed960be75858e2a45a9b2eda22e2c4ec9c7412b67fccad422",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 8,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "baseline-fresh/desktop-t12.png",
+      "sha256": "b65bb13f3a753d423b005b036268473ee57f39246c7cfbba40f6214a5200d5f4",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 12,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "baseline-fresh/phone-t4.png",
+      "sha256": "dda7d51f004d77f846fc80ae41e1bdabd94ae6de74fe19d3cf458a2bf4308cd1",
+      "name": "baseline",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "simulationTimeSeconds": 4,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "baseline-fresh/wide-t4.png",
+      "sha256": "4d0cd2166213d7a6a89d8f54075618c849d964b241ad2d2ee73a018b043e0eac",
+      "name": "baseline",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      },
+      "simulationTimeSeconds": 4,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/desktop-t0.png",
+      "sha256": "65694dae7c265807e03b01b53ade3f8b5a827d617bad0495549d926e77429ef4",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 0,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/desktop-t4.png",
+      "sha256": "c3ca1c1a0c1acd0a93d642fb9e5a4888a8d30dbf2eacfc750eb64b54050abacb",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 4,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/desktop-t8.png",
+      "sha256": "25453ecd15c8a1573b4ed13733d87c1ad26c74f35d12c79c45c5a261db3275e0",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 8,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/desktop-t12.png",
+      "sha256": "41282e13fc48f876d7d9bd8728a004dcea29e942520bbdd28ec6fd857919a7e0",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "simulationTimeSeconds": 12,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/phone-t4.png",
+      "sha256": "76f4ef65ac618f9052ab3100bb69d8cfe35f7ec0adfd8e1d34b54f2da5724ace",
+      "name": "candidate",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "simulationTimeSeconds": 4,
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/wide-t4.png",
+      "sha256": "0c414bc8a75a8c307ad9f1b646bcdf15dad25cb4fdac7e01b09987e20ca3bfea",
+      "name": "candidate",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      },
+      "simulationTimeSeconds": 4,
+      "control": "Spill held; normal production camera"
+    }
+  ],
+  "checks": [
+    {
+      "name": "baseline",
+      "layout": "desktop",
+      "matchedCapture": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "baseline",
+      "layout": "phone",
+      "matchedCapture": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "baseline",
+      "layout": "wide",
+      "matchedCapture": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "candidate",
+      "layout": "desktop",
+      "matchedCapture": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "candidate",
+      "layout": "phone",
+      "matchedCapture": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "candidate",
+      "layout": "wide",
+      "matchedCapture": true,
+      "consoleErrors": []
+    }
+  ],
+  "verdict": "pass"
+}

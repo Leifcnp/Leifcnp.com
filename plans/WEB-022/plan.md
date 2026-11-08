@@ -1,101 +1,62 @@
-# WEB-022 — Wave interaction with islands and shorelines
+# WEB-022 — Shipyard shoreline prototype
 
-## Request and scheduling
+Assigned 2026-11-07: finish the existing shoreline work, limited to Shipyard,
+independently review, then merge and publish through the MR workflow. Observe
+this first team run and make small, evidence-based process improvements. Prefer
+minimal context/instructions; no wider shoreline rollout or harbour work.
 
-The user requested a future task on 2026-09-24: make the waves interact with
-the islands. This is planning only. The 2026-09-25 queue review deferred
-WEB-016 harbours/zoom and prioritized boat feel. Shoreline response remains
-after core controls, boat feedback and WEB-017 wave direction; this queue
-review does not start implementation or publication.
+- Status: In progress; implementation/verification pending.
+- Base: `e92b7a9735a6ac15ccabaebf4520c5b72a00335c`.
+- Branch: `codex/WEB-022-shipyard-prototype`.
+- Worktree: managed `web-022-shipyard/Leifcnp.com`.
+- Existing work: scoped source/tests and Phase15 evidence copied from the original
+  dirty checkout; its 20 changed/untracked files remain untouched.
 
-## Goal and boundaries
+## Scope and acceptance
 
-Make the existing shared wave field read as part of the same world as the
-islands. Where waves meet a shoreline, add restrained signs of contact such
-as crest breakup, swash, foam, or deflection/dissipation. Keep the authored
-land geometry and collision contracts intact. Do not create a second wave
-simulation, allow water to cut through land visibly, or make the boat harder
-to navigate as incidental scope.
+| ID | Required outcome | Evidence |
+| --- | --- | --- |
+| AC1 | Normal-camera Shipyard waves visibly meet a sparse, directional shoreline cue; no constant ring | Matched baseline/candidate frames at known times, desktop/phone/wide |
+| AC2 | Exact decagonal footing stays inside radius 6 collision circle; foam outside actual faces by at least 0.20, corner/dock gaps | Geometry tests and deterministic surface measurements |
+| AC3 | Use existing shared clock/waves and rendered ocean triangles; preserve all wave/boat/navigation/content contracts | Source diff, cached-buffer contact checks, native regressions, actual scanner/helm checks |
+| AC4 | Pause/hidden freeze; reset repeats; reduced motion hides foam; empty scene and repeated disposal safe | Scoped tests plus browser lifecycle/fallback checks |
+| AC5 | Fixed buffers/material/mesh, no textures/growing cache; bounded resource/CPU delta | Reproducible warmed measurement, renderer observation and limits |
+| AC6 | Frozen install, full tests, strict production build, generated/domain freshness, relevant production browser checks pass | Verification record and required hosted CI |
+| AC7 | Separate Sol 6.1 reviewer passes final head/base; protected squash merge, exact merge-SHA CI/Pages and live files/interactions verified | External MR review and release comments |
+| AC8 | Team/process observations produce a small simplification without weakening ownership or merge/review gates | Short batch observations and reviewed process diff |
 
-The first implementation should use one representative island and one
-prevailing wave direction. Extend to the remaining islands only after the
-normal-camera result, shoreline clearance, reduced-motion behavior, and
-resource cost are reviewed.
+Existing design: Shipyard-only footing y 1.42..-2.65, circumradius 0.98 of collision
+radius; default CylinderGeometry decagon orientation. Incoming incidence uses
+PRIMARY_WAVE.direction dot outward normal. Ocean updates before foam. Decorative
+foam is depth-tested and follows current rendered water; no force/model changes.
+Other islands, docking radii, flags/wake/spray and removed wind streams stay put.
 
-## Interaction behavior
+## Ownership and handoff
 
-1. Define a pure shoreline query from the existing island footprint and
-   shared wave sample. It should identify near-shore water, approach direction,
-   local depth/clearance, and a bounded contact intensity without changing
-   land collision radii.
-2. Reuse the same simulation clock and deterministic wave inputs as the water,
-   hull, wake, and storm systems. Shoreline cues must remain phase-consistent
-   while paused, hidden, reset, or running at different frame rates.
-3. Add a small pooled or instanced visual response at selected shoreline
-   segments. Breakup, swash, foam, or reflected/damped crest motion should
-   follow the island outline and fade with distance, wave height, and incidence
-   rather than forming a constant ring.
-4. Keep scanner routes, manual steering, docking zones, and the finite world
-   safe. A shoreline effect may communicate contact but must not expand or
-   silently redefine the land obstacle used by navigation.
-5. Under reduced motion, suppress decorative shoreline animation while keeping
-   a stable, readable shoreline/land fallback. Dispose all materials,
-   geometries, buffers, and pooled instances exactly once.
+- shoreline_finish: shoreline effect, landmark/world integration and relevant tests.
+- shoreline_validation: artifacts/phase15/validation.mjs and validation.json.
+- shoreline_browser_qa: browser harness, checks and fresh comparison images.
+- Root: task/queue/batch/process docs, dependency install, builds, commits/MRs,
+  final integration and deployment verification. Git/build mutations serialize.
+- Final reviewer: separate non-author Sol 6.1 agent; exact full diff and evidence.
 
-## Dependencies and ownership
+Workers receive the task, owned paths and acceptance target, then inspect relevant
+code as needed. Keep handoffs to result, files, checks, limitations and next step.
+Three unsuccessful focused repair rounds park the task with evidence. Final
+approval stays outside its own commit. Post-merge delivery remains a separate
+gate; do not mark Done or start another task early.
 
-- `src/world/waves.ts` remains the source of wave height, slopes, and timing;
-  no independent shoreline wave equation is allowed.
-- Island data and geometry continue to own footprint and land-clearance
-  contracts. A pure shoreline module may consume those contracts but must not
-  mutate them.
-- The world/effects owner should reuse the existing wake/contact lifecycle and
-  shared renderer budgets where practical. Root owns integration, browser QA,
-  and any release decision.
-- Coordinate wave direction and seeded variation with WEB-017, wake/contact
-  cues with WEB-010/WEB-013, and future wind-carried spray with WEB-019.
+## Progress
 
-## Implementation sequence
+Scoped existing work imported into a clean current-master worktree. Locked
+install passed. Source, quantitative validation and browser QA are delegated.
+Historical before/motion.json lacks useful timing provenance; fresh comparison
+evidence will replace it as the acceptance basis. See the batch ledger and
+artifacts/phase15/VERIFICATION.md (when created) for actual results.
 
-1. Capture the current island/wave baseline at rest, sailing, scanner arrival,
-   calm/storm transition, pause, reset, reduced motion, and six supported
-   viewport layouts.
-2. Prototype shoreline sampling around one island using the existing land
-   footprint and prevailing wave direction. Verify finite intensity, correct
-   side-of-shore signs, and no route/collision changes.
-3. Add the smallest convincing contact cue, then measure draw calls, pooled
-   instances, allocations, and frame cost on desktop and narrow mobile.
-4. Stress-test headings, wave heights, storm multipliers, hidden-tab resume,
-   and frame-rate partitioning. Expand to other islands only if the behavior
-   remains coherent and bounded.
-5. Record before/after captures and verification evidence, then stop for user
-   review before combining this with new wave randomness, sound, or stronger
-   shoreline geometry.
+## Subsequent assignment
 
-## Acceptance and tests
-
-- A normal-camera comparison clearly shows waves reaching and responding to
-  at least one island shoreline; the cue is directional and tied to the
-  shared wave phase rather than a static decorative ring.
-- Shoreline response stays inside declared water/land clearance, does not
-  penetrate island meshes, and does not change vessel collision or scanner
-  route outcomes.
-- Pure tests cover finite/extreme wave samples, shoreline normals/clearance,
-  incidence signs, calm/storm scaling, deterministic timing, pause/reset,
-  reduced motion, and 30/60/120 Hz partitioning.
-- Lifecycle tests cover pooled/instanced effects, repeated island creation and
-  disposal, hidden-tab resume, bounded resource counts, and no per-frame
-  unbounded allocations.
-- Browser checks cover desktop/mobile layouts, manual sailing, scanner arrival,
-  drawer visibility, pause/reset, reduced motion, WebGL fallback, and console
-  cleanliness.
-
-## Risks and review gate
-
-Shoreline foam can look like a permanent outline or obscure island labels;
-prefer sparse, directional accents with a quiet idle state. A reflected cue
-can accidentally imply a new current or alter the boat’s physical model, so
-keep it visual until a later request explicitly expands physics.
-
-Deliver one bounded island shoreline prototype with before/after evidence and
-stop for review before applying it globally or changing the wave model.
+The user now explicitly assigns the remaining-island shoreline rollout after
+this Shipyard release, followed by WEB-016 one-island harbour/zoom. Root is using
+sequential task branches/MRs; read-only planning is parallel. No per-step
+paperwork MR: carry verified status forward in the next assigned MR.

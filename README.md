@@ -60,7 +60,9 @@ The production preview normally opens at `http://localhost:4173/`. The default b
 
 ## Autonomous development and MRs
 
-Read [AGENTS.md](AGENTS.md) and [ORCHESTRATION.md](ORCHESTRATION.md) before work.
+Start with [AGENTS.md](AGENTS.md). The orchestrator uses
+[ORCHESTRATION.md](ORCHESTRATION.md); workers inspect their task and relevant code
+as needed, without preloading unrelated history or skills.
 The user assigns a task or batch; the orchestrator delegates Sol 6.1 workers,
 coordinates exclusive ownership, and obtains a separate Sol 6.1 review of the
 exact final head/base and acceptance evidence. Authors repair findings and the
@@ -131,7 +133,7 @@ Read wind directly from the scene: the Shipyard flag trails downwind. The small 
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Historical release/review records below do not authorize new tasks. Workflow setup (WEB-023) is complete through [MR #7](https://github.com/Leifcnp/Leifcnp.com/pull/7), including strict master protection and verified CI/Pages. No new feature batch is assigned. Existing WEB-022 shoreline edits are preserved in the original checkout, and WEB-016 harbours/zoom remains deferred.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Historical release/review records below do not authorize new tasks. Workflow setup (WEB-023) is complete through [MR #7](https://github.com/Leifcnp/Leifcnp.com/pull/7), including strict master protection and verified CI/Pages. WEB-022 is now assigned as the Shipyard-only shoreline prototype, using copies of the preserved original edits. Wider shoreline rollout and WEB-016 harbours/zoom remain deferred.
 
 
 ## Verification and VM graphics
@@ -172,3 +174,9 @@ See [Phase 1 verification](artifacts/phase1/VERIFICATION.md) and its desktop/mob
 The screenshot tests cover mobile layouts, not performance on physical mobile hardware. No DNS or certificate settings were changed during publication.
 
 WEB-019 review correction is published and publicly verified: the white wind streams that resembled wave crests are removed. The five tests solely for the deleted effect were removed; remaining behavior and wave tuning are unchanged. See [wind-stream removal evidence](artifacts/water-clarity/VERIFICATION.md).
+
+WEB-022 adds a matching submerged decagonal foundation and sparse directional
+shoreline foam at Shipyard only. Foam follows the already-updated rendered water,
+uses fixed buffers and is hidden for reduced motion. Collision/docking radii,
+wave/boat physics and other islands are unchanged. See
+[the task contract](plans/WEB-022/plan.md) for current delivery evidence.

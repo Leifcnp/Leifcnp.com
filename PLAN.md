@@ -2,19 +2,16 @@
 
 ## Current delivery
 
-**WEB-023 workflow setup is implemented, independently reviewed and published.**
+**WEB-022: finish and publish the Shipyard shoreline prototype.** Assigned
+2026-11-07, using existing uncommitted work copied into a clean task worktree.
+Scope is one island. Preserve wave/boat/navigation contracts and the original
+checkout. The Sol team owns implementation, measurement and browser evidence;
+root integrates and observes the process. Separate review and protected MR
+publication are required. Prefer short task context and a small retrospective.
 
-[MR #7](https://github.com/Leifcnp/Leifcnp.com/pull/7) merged on 2026-11-07 as
-`fd6ea26551b49c797a9a895962501a26b527aa99`. CI and Pages passed for that exact
-merge SHA; public assets match the unchanged build. Strict master protection
-is active. See [verification](artifacts/workflow-setup/VERIFICATION.md).
-
-No new website feature batch is assigned. Existing uncommitted WEB-022 shoreline
-work remains preserved in the original checkout, and harbours/zoom remain
-deferred. The user explicitly assigns the next task/batch; the orchestrator then
-completes its MR/review/publication loop under [AGENTS.md](AGENTS.md) and
-[ORCHESTRATION.md](ORCHESTRATION.md). Historical phase scheduling below remains
-reference only. The canonical queue is [WEBSITE_TODO.md](WEBSITE_TODO.md).
+See [the contract](plans/WEB-022/plan.md) and
+[batch ledger](work/batches/2026-11-07-WEB-022.md). No wider shoreline rollout,
+new wave tuning or deferred harbour/zoom work is assigned.
 
 ## Architecture and decisions
 
@@ -62,7 +59,7 @@ Preserve domain metadata and the current deployment path.
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
 | WEB-023 | Completed workflow setup | Autonomous orchestration, MR review/merge and worktree/check contracts | User interview, 2026-11-07 | [plan](plans/WEB-023/plan.md) |
-| WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
+| WEB-022 | In progress — Shipyard only | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
 
 ## Team and integration ownership
 

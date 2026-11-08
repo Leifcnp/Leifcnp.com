@@ -194,3 +194,32 @@ test('the initial Shipyard flag anchor sits on actual land and clears the dock',
   assert.ok(Math.hypot(anchor.x - island.position.x, anchor.z - island.position.z) < 6)
   landmarks.dispose()
 })
+
+test('Shipyard foundation closes the sand footprint below the lowest wave without expanding land', () => {
+  const scene = new THREE.Scene()
+  const landmarks = createLandmarks(scene, portfolioIslands)
+  landmarks.group.updateMatrixWorld(true)
+  for (const island of portfolioIslands) {
+    const group = islandGroup(scene, island.id)
+    const foundation = group.getObjectByName('shipyard-submerged-foundation')
+    if (island.id !== 'island-projects') {
+      assert.equal(foundation, undefined, 'Prototype must not change other islands')
+      continue
+    }
+    assert.ok(foundation instanceof THREE.Mesh)
+    const shelf = group.getObjectByName('sand-shelf') as THREE.Mesh
+    const shelfBounds = new THREE.Box3().setFromObject(shelf)
+    const bounds = new THREE.Box3().setFromObject(foundation)
+    assert.ok(Math.abs(bounds.max.y - shelfBounds.min.y) < EPSILON)
+    assert.ok(bounds.min.y < -2.52)
+    assert.ok(Math.abs(bounds.min.x - shelfBounds.min.x) < EPSILON)
+    assert.ok(Math.abs(bounds.max.x - shelfBounds.max.x) < EPSILON)
+    assert.ok(Math.abs(bounds.min.z - shelfBounds.min.z) < EPSILON)
+    assert.ok(Math.abs(bounds.max.z - shelfBounds.max.z) < EPSILON)
+    const vertices = foundation.geometry.getAttribute('position')
+    for (let i = 0; i < vertices.count; i++) {
+      assert.ok(localXZRadius(foundation, vertices, i) < island.landCollisionRadius)
+    }
+  }
+  landmarks.dispose()
+})

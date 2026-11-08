@@ -1,0 +1,106 @@
+{
+  "generatedAt": "2026-11-08T04:39:22.260Z",
+  "headAtMeasurement": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "base": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "provenance": {
+    "browser": "Bundled playwright-core pinned Chromium headless shell, installed under /tmp only; SwiftShader software renderer.",
+    "sourceBinding": "sourceSha256 always hashes the candidate working source, including baseline-only runs. Baseline identity is proven separately by served HTML/JS/CSS byte hashes against the recorded base commit docs.",
+    "fixture": "Production bundles, unmodified HTML/CSS/JS. Pre-load fixture replaces requestAnimationFrame with manually stepped callbacks. First frame t=0, subsequent frames at 100ms; app fixed-step simulation remains unchanged. All matched captures reset boat/time, apply brake by the real Spill control, then step the identical frame sequence. Fixed camera rig and unmodified normal scene framing.",
+    "hiddenTab": "Fixture overrides document.hidden and dispatches visibilitychange to exercise actual application suspension/resume handler; this is not an OS/browser background-tab lifecycle claim.",
+    "intermediateRasterSuppressed": true,
+    "rasterWarmup": "When FAST_SIMULATION=1, only intermediate WebGL draw calls are skipped by the fixture; every application simulation callback runs, and each batch final frame renders normally. Captured final frames use the real full-size production camera and renderer.",
+    "limits": "Software-rendered VM evidence; no physical mobile GPU, browser diversity, heap allocation, prolonged GPU lifecycle, or live-publication claim. Console errors are asserted absent except deliberately denied WebGL fallback."
+  },
+  "sourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "34d6b5f87522dc34a2a77fd29e6416a78c2d594f8861f958a94e3bf37e80b657",
+    "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+    "src/world/createWaterWorld.ts": "db64cc61546358a4a34464a3298e865c8987e6f58ded3482b8122a863702d9e9"
+  },
+  "captures": [
+    {
+      "path": "baseline-fresh/phone-dock-t23.png",
+      "sha256": "30342cbbd9bae7d64d42176a81497b5b0f7479a71696c8b7b77ec6a261332d5f",
+      "name": "baseline",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "simulationTimeSeconds": 23,
+      "captureState": "shipyard-dock",
+      "control": "Spill held; normal production camera"
+    },
+    {
+      "path": "candidate-fresh/phone-dock-t23.png",
+      "sha256": "cd2216841783e4800596ff34a05039a03c4835e7d9481d594cf5a15442d9d81a",
+      "name": "candidate",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "simulationTimeSeconds": 23,
+      "captureState": "shipyard-dock",
+      "control": "Spill held; normal production camera"
+    }
+  ],
+  "checks": [
+    {
+      "name": "baseline",
+      "layout": "phone",
+      "matchedCapture": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "candidate",
+      "layout": "phone",
+      "matchedCapture": true,
+      "consoleErrors": []
+    }
+  ],
+  "assets": {
+    "baseline": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "2a0d9728d913e3e64cdc3896a508f84542e3026a57c8234b3731abe3638d4413",
+        "matches": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs/index.html"
+      },
+      {
+        "path": "assets/index-BO0NXk6m.js",
+        "bytes": 589636,
+        "sha256": "d07540bcdcfe41c7238d3c74c6e52c27f377608fd7febf48201f9f0503e2023b",
+        "matches": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs/assets/index-BO0NXk6m.js"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+        "matches": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs/assets/index-yKZlOFjO.css"
+      }
+    ],
+    "candidate": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "b9f9e5dfa646f20bfce2498cfb9fcdc14311ffc0132bc0551354c69c5048c07a",
+        "matches": "docs/index.html"
+      },
+      {
+        "path": "assets/index-Dz-lXf6y.js",
+        "bytes": 592937,
+        "sha256": "ddac91ce72f42b243fc2bde54a19fdd8dd091fc0c081d16ac64979287f672a14",
+        "matches": "docs/assets/index-Dz-lXf6y.js"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+        "matches": "docs/assets/index-yKZlOFjO.css"
+      }
+    ]
+  },
+  "errors": [],
+  "browser": "151.0.7922.34",
+  "verdict": "pass"
+}
