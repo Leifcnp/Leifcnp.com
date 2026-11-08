@@ -6,7 +6,7 @@ The former Hugo source, theme checkout, configuration, deploy script, résumé, 
 
 ## Local development
 
-Use Node.js 24 and pnpm 11 (verified here with Node 24.19.0 and pnpm 11.19.0).
+Use Node.js 24 and pnpm 11 (verified here with Node 24.22.1 and pnpm 11.25.0).
 
 The repository currently uses the bundled runtime in this environment. If `node` and `pnpm` are not on your `PATH`, use:
 
@@ -40,11 +40,49 @@ pnpm run preview
 
 The production preview normally opens at `http://localhost:4173/`. The default build uses relative asset paths and preserves the existing `leifcnp.com` custom domain. Do not edit `docs/` by hand.
 
+## Autonomous development and MRs
+
+Read [AGENTS.md](AGENTS.md) and [ORCHESTRATION.md](ORCHESTRATION.md) before work.
+The user assigns a task or batch; the orchestrator delegates Sol 6.1 workers,
+coordinates exclusive ownership, and obtains a separate Sol 6.1 review of the
+exact final head/base and acceptance evidence. Authors repair findings and the
+reviewer checks again. After three unsuccessful repair rounds, park the task
+with a blocker and continue independent assigned work. Backlog/Ready entries
+alone do not authorize work. See [work/README.md](work/README.md),
+[the batch template](work/batches/TEMPLATE.md) and
+[the task template](plans/TEMPLATE.md).
+
+Use isolated worktrees by default; a shared batch worktree requires explicit
+path ownership and one integration owner. `node scripts/task-worktree.mjs --help`
+documents the create-only CLI fallback to managed worktrees. Keep each
+worktree's dependencies/build output separate. Use `pnpm run verify` for native
+tests, strict production build and generated-output freshness; the stable CI
+check is **Repository verification**. Browser/visual acceptance checks are
+additional requirements when relevant.
+
+Every change goes through a GitHub pull request (called an MR here) targeting
+`master`. The orchestrator is authorized to merge and publish assigned work once
+the current independent review and all required checks pass. Squash is the
+default; direct pushes to `master` and protection bypasses are not permitted.
+New spending, credentials/access, domain/DNS, destructive actions and major
+design/scope changes still need the user's approval.
+
 ## GitHub Pages publishing
 
-The repository publishes the tracked `docs/` directory from the `master` branch. The release path is to run `pnpm run build`, inspect the generated diff and `docs/CNAME`/`docs/.nojekyll`, smoke-test with `pnpm run preview`, and then commit and push the reviewed output. No Hugo build, theme checkout, configuration, or deploy script is involved. On 2026-09-25 the user authorized WEB-017 incoming wave sets as Phase 14 after the successful Phase 13 wind-cue release through this external-testing workflow. Future phases still require review.
+GitHub Pages consumes tracked `docs/` on `master`; merging an MR can publish the
+site immediately. Run `pnpm run build`, review the generated diff and unchanged
+`docs/CNAME`/`docs/.nojekyll`, preview and perform the relevant browser checks,
+then commit the intended output on the task branch. `pnpm run check:generated`
+must pass after that commit. After independent review and passing CI, merge the
+MR and verify the Pages run for the resulting merge SHA, matching public assets
+and relevant live interactions. No Hugo step or separate deployment migration
+is involved. Do not edit `docs/` by hand or put workflow docs inside it.
 
-The wider-view WEB-017 correction is published and publicly verified at [http://leifcnp.com/](http://leifcnp.com/). See [correction evidence](artifacts/phase14-pattern/VERIFICATION.md). The initial Phase 14 bands and first correction were rejected in user review; the wider-view correction is now available for review. Earlier release evidence remains under `artifacts/`. Use the explicit HTTP link for now: HTTPS has a certificate hostname mismatch, tracked separately in WEB-001.
+The last recorded site release is available at
+[http://leifcnp.com/](http://leifcnp.com/); see
+[wind-stream removal evidence](artifacts/water-clarity/VERIFICATION.md).
+Recheck before claiming current availability. HTTPS/domain investigation stays
+in WEB-001; this workflow does not change DNS or custom-domain settings.
 
 ## Phase boundary and review
 
@@ -75,7 +113,7 @@ Read wind directly from the scene: the Shipyard flag trails downwind. The small 
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. WEB-017’s wider-view correction is complete. Stop for wave review. WEB-022 shoreline interaction remains queued; WEB-016 harbours/zoom remains deferred.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Historical release/review records below do not authorize new tasks. The current assignment is workflow setup (WEB-023); existing WEB-022 shoreline edits are preserved outside this worktree, and WEB-016 harbours/zoom remains deferred.
 
 
 ## Verification and VM graphics

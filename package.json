@@ -8,7 +8,10 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types tests/*.test.ts",
     "build": "pnpm run typecheck && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:workflow": "node --test --experimental-strip-types tests/workflowTools.test.ts",
+    "check:generated": "node scripts/check-generated.mjs",
+    "verify": "pnpm test && pnpm run build && pnpm run check:generated"
   },
   "dependencies": {
     "three": "0.179.1"
@@ -17,5 +20,10 @@
     "@types/three": "0.179.0",
     "typescript": "5.9.2",
     "vite": "7.3.6"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": "24.x",
+    "pnpm": "11.x"
   }
 }

@@ -4,6 +4,12 @@ Persistent website tasks. See [AGENTS.md](AGENTS.md) for access information and 
 
 Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for completed tasks. Each entry includes acceptance criteria; add progress, blockers, and a next step as needed. Done entries retain their completion date and verification evidence.
 
+Current execution policy (2026-11-07): only explicitly assigned tasks/batches
+may start. Readiness and backlog priority are planning information, not
+authorization. Use [plans/TEMPLATE.md](plans/TEMPLATE.md) for task contracts and
+[work/batches/TEMPLATE.md](work/batches/TEMPLATE.md) for ownership and handoffs.
+Historical phase review gates do not replace the current MR workflow.
+
 ## Backlog
 
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
@@ -36,7 +42,13 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-No active implementation; awaiting wind-cue and water review.
+- [ ] WEB-023 — Prepare autonomous orchestration, worktrees and reviewed MR merges.
+  - Assigned (2026-11-07): User approved explicitly assigned autonomous batches, Sol 6.1 workers and a separate reviewer, automatic merge/publication after checks, flexible worktree ownership, three repair rounds and branch protection where supported.
+  - Acceptance criteria: Authoritative agent rules replace conflicting historical scheduling; task/batch/worker/reviewer/MR templates define ownership and evidence; CI checks frozen install, native tests, strict build and generated/domain metadata; safe create-only worktree tooling is exercised; independent review checks the final head/base; changes use an MR with merge/deployment verification where access permits. No website feature changes or loss of existing edits.
+  - Progress: Workflow/tooling implemented in an isolated worktree;175 tests, strict build and unchanged-output/domain checks pass. First independent review findings repaired; final SHA-bound review and remote gates pending. All20 existing changed/untracked files and the legacy worktree are preserved.
+  - Next step: Complete tooling checks and independent review, open/merge the setup MR, verify CI/deployment and configure available branch protection without bypassing existing rules.
+  - Plan: [plans/WEB-023/plan.md](plans/WEB-023/plan.md).
+
 
 ## Blocked
 

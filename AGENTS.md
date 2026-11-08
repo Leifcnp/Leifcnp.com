@@ -1,102 +1,158 @@
-# Repository guide
+# Repository agent guide
 
-## Project
+## Authority and scope
 
-- This repository is being rebuilt as a bespoke sailing portfolio with Vite, TypeScript, and Three.js. The user authorized replacing the Hugo website on 2026-09-24.
-- Phase 5 was reviewed and the user authorized the next wave-interaction release on 2026-09-24. WEB-010 / Phase 6 is published and publicly verified: bounded wave forces, hull response, and contact effects. The user subsequently selected WEB-013 clearer waves/wake ahead of WEB-011; Phase 7 is published, publicly verified and accepted. The user then authorized the next obvious step; WEB-011 / Phase 8 offshore storm is published and publicly verified; the user then authorized WEB-012 / Phase 9 wind sailing is now published and publicly verified, including WEB-014 tighter turns, a larger cambered main without jib, and WEB-018 wind-driven heel. The user then authorized the next queued task; WEB-015 / Phase 10 translucent drawers is published and publicly verified. The user accepted WEB-020 auto-trim/manual boost as Phase 11 on 2026-09-25; it is now published and publicly verified. The user requested the next task on 2026-09-25; WEB-021 stronger heel/rail wash/bow spray is published and publicly verified as Phase 12. Harbours/zoom remain deferred. The user requested “ok next go ahead” on 2026-09-25; WEB-019 wind cues is published and publicly verified as Phase 13. The user then requested “ok go for next todo”; WEB-017 incoming-wave variation/direction is published and publicly verified as Phase 14. Stop for wave review. Complete one phase, verify it, and stop for review before implementing the next phase.
-- Read [PLAN.md](PLAN.md), [WEBSITE_TODO.md](WEBSITE_TODO.md), and the relevant `plans/WEB-NNN/plan.md` before work.
-- Source lives in `src/`, `index.html`, and `public/`. Portfolio content belongs in a separate `src/content/` data file.
-- Vite generates `docs/`, which remains tracked for GitHub Pages. Preserve `public/CNAME` (`leifcnp.com`), the generated `docs/CNAME`, and the custom-domain configuration.
-- The former Hugo source, theme checkout, configuration, deploy script, résumé, and legacy generated pages were removed from the working tree on 2026-09-24 after archival verification. The prior version remains recoverable in Git history at commit `863b788`; do not reintroduce it into the new site by default.
+The user approved this autonomous MR workflow on **2026-11-07**. The root agent
+orchestrates the work, delegates implementation to **gpt-6.1-sol** workers, and
+uses a separate **gpt-6.1-sol** reviewer. Use the available host concurrency;
+do not assume unlimited active agents or silently substitute models.
 
-## Website access
+- Execute only the tasks or batch the user explicitly assigns. Backlog order,
+  a Ready label, historical authorization, or an agent suggestion does not
+  authorize starting another task. Finish the assigned batch without routine
+  confirmation, then stop. This setup task authorizes no website feature work.
+- The orchestrator may create branches/worktrees, commit scoped work, open MRs,
+  repair findings, merge, and publish assigned work after all merge gates pass.
+  On this GitHub repository, **MR means pull request** targeting `master`.
+- Ask before new spending, credentials/access changes, domain/DNS changes,
+  destructive actions, or major design/scope changes. Continue independent
+  authorized work while a decision is pending. Never expose credentials.
+- Branch protection for this MR workflow is explicitly authorized where the
+  account supports it; do not widen access, disable existing protections, or
+  change domain/Pages configuration to make automation work.
+- After three unsuccessful focused repair rounds, park the task with evidence,
+  a blocker and next step, and continue independent assigned tasks. Infrastructure
+  failure is not a passing check and is not a reason to bypass a gate.
 
-- User-confirmed working browser URL on 2026-09-16: [http://leifcnp.com/](http://leifcnp.com/) (HTTP, without `www`).
-- The user reports that GoDaddy is already set up. This is user-provided context, not an independent DNS verification.
-- The former Hugo configuration used `baseURL = "https://www.leifcnp.com/"`; that configuration was removed with the legacy working tree. The current Vite build uses relative asset paths and retains `docs/CNAME` as `leifcnp.com`.
-- Earlier restricted-environment HTTP/HTTPS curl checks failed DNS resolution for both `leifcnp.com` and `www.leifcnp.com`, and web fetches failed. These results do not establish that HTTPS or `www` is broken; the user reports the non-www HTTP address open in their browser.
-- External checks on 2026-09-24 observed HTTP 200 from `http://leifcnp.com/`. The authorized Phase 1 push replaced the old Hugo output; public HTML/assets matched the new build, and Pages reported success for application commit `41813c8`. Apex HTTPS failed hostname certificate verification. Public Actions/Pages evidence identifies `master` and the tracked `docs/` output as the deployment path; unauthenticated settings inspection is unavailable. Do not bypass TLS warnings or change DNS/domain settings merely to reconcile these observations; WEB-001 remains the separate investigation.
-- Follow-up investigation is tracked as `WEB-001` in [WEBSITE_TODO.md](WEBSITE_TODO.md). Do not change domain, DNS, or site configuration merely to reconcile these observations.
+Read [ORCHESTRATION.md](ORCHESTRATION.md), [PLAN.md](PLAN.md),
+[WEBSITE_TODO.md](WEBSITE_TODO.md), the assigned `plans/WEB-NNN/plan.md`, and the
+batch record before editing. The current user instruction takes precedence.
+These rules supersede historical staffing, shared-checkout assumptions,
+direct-push release steps and automatic one-phase user-review stops. Explicit
+product restrictions, deferred tasks and reviewable acceptance criteria remain.
+Earlier instructions and evidence are preserved in
+[the historical guide](work/history/AGENTS-2026-09-25.md).
 
-## Website to-do list
+## Ownership and worktrees
 
-- The canonical website to-do list is [WEBSITE_TODO.md](WEBSITE_TODO.md) at the repository root. Read it before website work.
-- Interpret requests such as "add things to the website todo list" as instructions to update that file. Append requested tasks to Backlog without automatically executing them, unless the user also requests execution.
-- Check all sections for duplicates before adding a task; update an existing matching task when appropriate.
-- Use stable IDs in the form `WEB-001`, allocating the next unused number above the highest existing ID. Never renumber or reuse IDs.
-- Keep tasks in Backlog, In progress, Blocked, or Done. Each task uses a checkbox, a concise description, and acceptance criteria. Use unchecked boxes until complete and checked boxes in Done.
-- Move the same task entry as its status changes. Record progress and a concrete next step for unfinished work; for blocked work, also record the blocker and what is needed to resume.
-- When resuming, read the task's acceptance criteria, progress, blocker, and next step, and confirm current repository state before continuing. Listing a task is not authorization to execute it.
-- Mark a task Done only after appropriate verification; record the completion date and verification evidence. Preserve completed entries and their IDs as history.
+- Preserve existing changes. Inspect status, branch, worktrees and base SHA;
+  never stash, reset, clean, stage or commit unrelated work. Do not modify or
+  remove another agent's or the user's worktree.
+- Prefer an isolated worktree and `codex/WEB-NNN-description` branch per task.
+  Managed Codex worktrees are preferred when available. The CLI helper is
+  `node scripts/task-worktree.mjs --help`; it creates worktrees without copying
+  uncommitted changes. Keep them on the Ubuntu guest filesystem.
+- Shared batch worktrees are allowed only with an explicit owner for every
+  edited path/interface, a single integration owner, and serialized Git/build
+  mutations. Subagents share filesystem access; spawning one does not isolate it.
+- The orchestrator owns shared queue/plans, final integration, generated `docs/`,
+  the final commit, MR creation and merges. Workers report their owned changes
+  and evidence; they do not merge. Serialize overlap and dependency merges.
+- Record assignments, base SHA, paths, dependencies, branches, worktrees,
+  checks, repair rounds, blockers and next steps in a batch ledger. Use
+  [work/README.md](work/README.md) and the templates; never use hidden chat state
+  as the only handoff record.
 
-## Working conventions
+## Review and merge gates
 
-### Verified commands (2026-09-24)
+Use the Sol loop: scope and assign → implement → check → independently compare
+the diff and acceptance evidence → repair → recheck/re-review → merge → verify.
 
-- Runtime: Node 24.19.0 and pnpm 11.19.0. This VM exposes them through the bundled runtime, not the default shell PATH. Use the PATH and `PNPM_CONFIG_STORE_DIR` / `PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN` setup in README.md.
-- Install: `pnpm install --frozen-lockfile`. A fresh temporary checkout-equivalent install passed against the locked packages using the local cache; the command sandbox initially blocked esbuild's subprocess, and the same install succeeded with tool escalation.
-- Development: `pnpm run dev --host 127.0.0.1 --port 5173 --strictPort`.
-- Type check: `pnpm run typecheck`.
-- Tests: `pnpm test` (Node 24 native TypeScript; 160 individual data, geometry, wind/trim/boost, steering, audio/wake, hull-contact, storm, wave, pose, input, camera, navigation, and proximity tests). In this VM, the command sandbox can suppress child-test detail; use an authorized escalated run to confirm all individual cases execute.
-- Production build: `pnpm run build` (includes type checking), generating `docs/`.
-- Built-site preview: `pnpm run preview --host 127.0.0.1 --port 4173 --strictPort`.
-- Local servers require permission to bind loopback through the actual Codex command sandbox; VirtualBox isolation does not grant that permission.
-- Verification record: [artifacts/phase1/VERIFICATION.md](artifacts/phase1/VERIFICATION.md). Chromium software-rendered browser checks passed; the embedded browser's VM graphics driver failed WebGL initialization. Do not mistake that specific failure for a site or domain outage.
-- Public release verification: [artifacts/phase1-deployment/VERIFICATION.md](artifacts/phase1-deployment/VERIFICATION.md). Real-domain browser checks cover desktop/mobile layouts, motion, keyboard, reduced motion, and WebGL fallback.
-- Phase 2 verification: [artifacts/phase2/VERIFICATION.md](artifacts/phase2/VERIFICATION.md), including six viewport sizes, readable projected labels, data/geometry tests, and unchanged custom-domain metadata.
-- Phase 3 verification: [artifacts/phase3/VERIFICATION.md](artifacts/phase3/VERIFICATION.md), including keyboard/multitouch, wave pose, pause/reset, camera following/coverage, and six viewport sizes.
+- A reviewer must not be an author of the reviewed changes. Give it the task,
+  user requirements, exact head and target-base SHAs, full diff and check evidence.
+  Require a written verdict and resolution of all blocking findings. The author
+  repairs; the reviewer checks again. The orchestrator cannot waive a blocker.
+- Every new commit or change to the target base invalidates approval. Record the
+  final SHA-bound verdict outside the reviewed commit (MR discussion or attached
+  artifact); committing a verdict changes the head it claims to approve.
+- Run `pnpm run verify` from a clean task worktree after committing intended
+  generated output. Relevant browser/visual evidence remains a separate gate.
+- Require the **Repository verification** GitHub check and current independent
+  review before merging. The candidate must contain the reviewed base. Require
+  server-side PR protection with strict up-to-date checks, enforcement for admins,
+  and no bypass before autonomous merges. If unavailable, leave merging blocked
+  for a user decision; a preflight fetch cannot atomically guard a changed base.
+  Do not use deferred auto-merge or a merge queue that can outlive the review. Merge one MR at a time using squash by default, verify
+  the expected head and base immediately beforehand, and never bypass gates,
+  force-push `master`, or fall back to a direct commit/push to `master`.
+- Agent independence is not a separate GitHub identity. Do not require a GitHub
+  approval that the author's own account cannot supply; use the documented
+  independent agent review record plus CI, or an actual separate reviewer
+  identity. Do not fabricate an approval or a trusted automated review check.
+- Merging `master` publishes tracked `docs/`. For website changes verify the
+  Pages run for the resulting merge SHA, public assets and relevant live
+  interactions. Do not mark delivery complete from a local build alone.
 
-- Phase 4 public verification: [artifacts/phase4/VERIFICATION.md](artifacts/phase4/VERIFICATION.md), including safe scanner routes, cancellation/pause, drawer focus/scrolling, six layouts, touch, and fallback content. Exact-SHA Pages, byte-identical public assets, and the public interaction suite passed.
+## Task records
 
-- Phase 5 public verification: [artifacts/phase5/VERIFICATION.md](artifacts/phase5/VERIFICATION.md), including custom-geometry provenance, hull/landmark bounds, pooled wake lifecycle, and measured VM rendering counts/timings. Exact-SHA Pages, byte-identical public assets, and public interaction checks passed.
+[WEBSITE_TODO.md](WEBSITE_TODO.md) is the canonical queue. Preserve stable
+`WEB-NNN` IDs, never renumber/reuse them, and allocate above the highest existing
+ID after checking every section for duplicates. Use Backlog, In progress,
+Blocked and Done; unchecked until verified, checked only in Done. Listing or
+preparing a task is not assignment. Use [plans/TEMPLATE.md](plans/TEMPLATE.md)
+for authorization, readiness, scope, evidence, ownership and dependencies.
 
-- WEB-010 / Phase 6 verification: [artifacts/phase6/VERIFICATION.md](artifacts/phase6/VERIFICATION.md), including shared wave timing/forces, real hull pose, contact effects, scanner mooring/manual release, and exact-SHA public deployment checks.
+Only the integration owner moves queue entries. Retain completion dates and
+evidence. Record a concrete next step for unfinished tasks; blocked entries also
+name the blocker and what enables resumption. Mark Done only after all applicable
+review, merge and deployment gates pass. Leave deferred harbours/zoom and the
+existing WEB-022 shoreline work untouched until explicitly assigned.
 
-- WEB-013 / Phase 7 verification: [artifacts/phase7/VERIFICATION.md](artifacts/phase7/VERIFICATION.md), including normal-camera before/after motion, coherent hull contact, bounded curved wake, browser shader/lifecycle checks, 61 native tests, public six-layout interactions and exact-SHA deployment.
+## Project constraints
 
-- WEB-011 / Phase 8 verification: [artifacts/phase8/VERIFICATION.md](artifacts/phase8/VERIFICATION.md), including 76 native tests, offshore recovery, shared storm hull contact, camera/route safety, bounded resources and exact-SHA/public interaction/voyage checks.
+- Bespoke Vite, TypeScript and Three.js sailing portfolio. Build mechanics
+  intentionally; no all-in-one game template. Source is `src/`, `index.html`
+  and `public/`; portfolio content belongs in `src/content/` data files.
+- `docs/` is generated, tracked GitHub Pages output. Never edit it by hand or
+  put workflow documentation there. Preserve `public/CNAME`, `docs/CNAME`
+  (`leifcnp.com`), `.nojekyll`, relative asset paths and `master`/`docs` publishing.
+- The former Hugo site is recoverable at `863b788`; do not reintroduce it.
+- Preserve the original custom boat, steering/trim/boost contracts, collision
+  safety, bounded buffers, shared clock, disposal, pause/reset, hidden-tab,
+  accessible scanner/content, reduced motion and WebGL fallback.
+- Current waves use eight overlapping deterministic carriers, four fixed-seed
+  smooth fields, analytic phase/envelope/storm derivatives and positive zero-sum
+  packet weights. Keep the 1.8/2.52 height bound. Hull/foam contact follows
+  rendered triangles; mesh and both samplers share the fixed hashed diagonal
+  rule in `waterSurfaceCellUsesTopRightDiagonal`. Update ocean before crests.
+- Preserve 20° sail-only / 0.4-radian total heel, 3 rad/s tilt velocity limit,
+  rail/deck guards and the 48-particle spray lifecycle. Wind flags/HUD remain;
+  **over-water white wind streams were removed by user review and stay removed**.
+- Historical known working URL is [http://leifcnp.com/](http://leifcnp.com/).
+  HTTPS/canonical-host observations belong to WEB-001. Do not bypass TLS warnings
+  or change DNS/domain settings to reconcile them. Recheck before claiming
+  current availability; prior sandbox DNS/VM WebGL failures do not prove outage.
 
-### Implementation discipline
+## Environment and commands
 
-- Build mechanics intentionally from the ground up; do not introduce an all-in-one game template.
-- WEB-013 builds on WEB-010 with travelling swell shading/crest ribbons, stronger hull support, powered uphill resistance, and bounded curved wake/bow effects using the shared sampler. The custom boat geometry remains owned. Scanner arrivals are horizontally held until helm input; reduced motion suppresses added forces, dynamic pitch/heel, and contact effects. Preserve navigation/UI contracts; the published WEB-011 storm extends this shared sampler and preserves the calm central view.
-- Do not edit generated files under `docs/` by hand; regenerate them with the package build command.
-- Install dependencies using the checked-in package-manager lockfile; consult README.md for setup and commands.
-- Verify types, production build, and local browser behavior before marking work Done. Verify motion controls, reduced motion, resize, and WebGL fallback where relevant.
-- Keep local development and generated output on the Ubuntu guest filesystem. Never place credentials in source or logs.
-- Keep commits focused and do not push or deploy unrelated changes.
-- WEB-013 was verified and published through the existing `master` / `docs/` GitHub Pages setup with the domain preserved. The user accepted the swells and authorized WEB-011, which is now verified and published through the same workflow. WEB-020 auto-trim/manual boost is published and accepted; WEB-021 is now authorized through the same workflow. WEB-017 is now authorized as Phase 14 through the same publication workflow; stop for review afterward. A routine local build alone is not blanket authorization for unrelated future publication.
+This is an Ubuntu VirtualBox guest, intentionally isolated for development.
+VirtualBox isolation does not override actual command/network sandbox rules.
+Keep repositories/output on the guest. Inspect dependency files and CI before
+choosing runtimes or upgrades. Use the checked-in lockfile; no upgrades are part
+of workflow setup.
 
-- Phase 9 / WEB-012, WEB-014 and WEB-018 verification: [artifacts/phase9/VERIFICATION.md](artifacts/phase9/VERIFICATION.md), including 101 native tests, quantitative steering, 6,528 actual hull-contact frames, keyboard/touch tacks, six local/public layouts and exact-SHA Pages/asset verification. Phase 9 was reviewed and the user authorized WEB-015 next.
+Verified runtime: Node **24.22.1**, pnpm **11.25.0**. In this VM:
 
-- Phase 10 / WEB-015 verification: [artifacts/phase10/VERIFICATION.md](artifacts/phase10/VERIFICATION.md). For drawer work, check the strict production build, six viewport/category interactions, keyboard/touch scrolling, contrast and reduced-transparency/forced-color/WebGL fallbacks, plus actual boat visibility. No physics, model or dependency changes belong to this phase.
+```sh
+export PATH="/home/codex-account/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:/home/codex-account/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:$PATH"
+export PNPM_CONFIG_STORE_DIR="$PWD/.pnpm-store"
+export PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=warn
+pnpm install --frozen-lockfile
+pnpm run typecheck
+pnpm test
+pnpm run build
+pnpm run check:generated
+pnpm run verify
+pnpm run dev --host 127.0.0.1 --port 5173 --strictPort
+pnpm run preview --host 127.0.0.1 --port 4173 --strictPort
+```
 
-- Phase 11 / WEB-020 verification: [artifacts/phase11/VERIFICATION.md](artifacts/phase11/VERIFICATION.md). WASD/arrows use screen-relative target headings; Q/E trim manually, M/Auto trim restores 75% assistance, Space spills, F explores. Manual trim stays latched. Preserve normalized efficiency, no-go/tacks, bounded boost/cooldown, gesture-gated sound and existing pool/renderer budgets.
-
-- Phase 12 / WEB-021 verification: [artifacts/phase12/VERIFICATION.md](artifacts/phase12/VERIFICATION.md). Visible hull/contact/spray sample rendered water triangles through `waterSurfaceGrid.ts`; horizontal forces retain the analytic field. Preserve 20° sail-only / 0.4-radian total heel, actual rail/deck guards, the 48-particle spray lifecycle and original boat geometry. Exact-SHA Pages, byte-identical public assets and public desktop/mobile interactions pass. Stop for review.
-
-- Published Phase 13 / WEB-019: original true-wind breeze streams and a fixed Shipyard flag plus apparent-wind boat pennant. Reuse WEB-021 bow/rail spray; no force/wave/steering/harbour changes. Read its updated plan before editing.
-
-- Phase 13 wind cues use true velocity for the world field/land flag and true wind minus vessel velocity for the masthead pennant. Flags trail downwind while the HUD names wind-from. `createWindStreams.ts` uses a seeded 128-unit world-periodic pattern with 32 strokes and a 44–58 radius fade before ±64 wrapping. Preserve camera-stable world positions, whole-stroke island clearance, reduced-motion static flags/hidden streams, shared clock and disposal.
-
-- Phase 13 evidence: [artifacts/phase13/VERIFICATION.md](artifacts/phase13/VERIFICATION.md). 148 native tests, six production layouts, direction/lifecycle checks, exact-SHA Pages and matching public assets pass. Stop for user review before another backlog phase.
-
-- Published Phase 14 / WEB-017: replace crossing swell directions with bounded deterministic incoming sets aligned with true wind. Keep the shared analytic field, rendered-triangle hull contact, existing force tuning, max height 1.8 (2.52 offshore), fixed buffers and lifecycle. Read its plan; do not begin WEB-022 or deferred harbours.
-
-- Phase 14 crest rendering samples the ocean’s already-updated position buffer with `sampleRenderedWaterHeight`; analytic/faceted time-based sampling remains for forces and hulls. Keep ocean update before crest update. Compound crest search uses fixed scratch storage and fades unsupported/search-edge candidates. Tilt filtering additionally caps pitch/roll velocity at 3 rad/s, preserving angle/contact limits and avoiding abrupt offshore tack transitions.
-
-- Phase 14 evidence: [artifacts/phase14/VERIFICATION.md](artifacts/phase14/VERIFICATION.md). 153 native tests, strict build, six production layouts, exact-SHA Pages/public assets and public desktop/mobile interactions pass. Stop for review before WEB-022 or deferred harbours.
-
-- Current review correction (2026-09-25): User rejected WEB-017 / Phase 14 parallel bands. Reopen WEB-017; restore the earlier four-component water character, with subtle smooth deterministic phase/amplitude variation. The original dominant direction and smaller crossing detail take precedence over the previous five-degree constraint. Do not advance the queue. Check analytic derivatives, rendered contact, both old/rejected visual baselines and CPU cost, then publish through the existing workflow.
-
-- Corrected wave model: four original carrier shapes plus two deterministic C2 value-noise lookups advected in world space. Phase warps and zero-sum packet weights preserve the 1.8 height bound. `sampleWaterSurface` returns full analytic phase/envelope/storm derivatives by default; an explicit positive distance returns exact finite differences. Hulls/foam still follow rendered triangles. No Math.random, new clock, texture or growing cache.
-
-- WEB-017 correction release: [artifacts/phase14-refinement/VERIFICATION.md](artifacts/phase14-refinement/VERIFICATION.md). 162 tests, strict build, six production layouts, exact-SHA Pages and matching public assets plus public desktop/mobile checks pass. Original overlapping water character restored with smooth seeded variation. Stop for user review; do not advance to shorelines/harbours.
-
-- Current second WEB-017 correction (2026-09-25): The first correction still repeated visibly from farther out. Eight overlapping carriers now have stronger independent broad/detail/macro phase bending and zero-sum packet weights. Four fixed-seed smooth fields share one clock; test all independent envelope extrema for positive weights and the unchanged 1.8/2.52 bound. Keep analytical derivatives synchronized. Crest spacing/origins are irregular; the mesh and both triangle samplers use `waterSurfaceCellUsesTopRightDiagonal` for a fixed hashed diagonal pattern. Never change topology in only one path. Evidence is `artifacts/phase14-pattern/VERIFICATION.md`; publish and stop for review, without beginning shoreline/harbour work.
-
-- Wider-view correction release: Application commit `2061e581` is published on `origin/master`; [Pages run 36222447849](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36222447849) succeeded for the exact SHA. Public HTML/JS/CSS/favicon match the tested build and public desktop/mobile interactions pass. Evidence: [artifacts/phase14-pattern/VERIFICATION.md](artifacts/phase14-pattern/VERIFICATION.md). 165 tests, strict build, paired wide/normal/phone views, independent contact and six production layouts pass. Stop for user review.
-
-- Current WEB-019 review correction: remove the white wind streams; the user finds them confusing with wave crests. The unused effect and its five dedicated tests are deleted. Keep flags, HUD, wind physics, wave crests, wake and spray. Do not reintroduce streams from historical Phase 13 instructions. Comparison/verification: `artifacts/water-clarity/`. Publish through the existing workflow and stop for review.
-
-- WEB-019 stream removal release: Application commit `9a156695` is published on `origin/master`; [Pages run 36223010394](https://github.com/Leifcnp/Leifcnp.com/actions/runs/36223010394) succeeded for the exact SHA. Public files match the tested build, and public desktop/mobile interactions pass. 160 remaining tests and strict build pass. See [artifacts/water-clarity/VERIFICATION.md](artifacts/water-clarity/VERIFICATION.md). Stop for review; keep over-water wind streams removed.
+Build includes type checking. `verify` runs tests, build and generated-output
+freshness; inspect/stage the intended build before expecting freshness to pass.
+For parallel previews allocate different ports and record them. Binding loopback
+or running child tests/build processes may need actual sandbox escalation;
+report limitations and do not weaken verification. Chromium software-rendered
+checks previously worked; the embedded VM graphics driver failed WebGL creation.
+Use a working WebGL browser for visual verification. For relevant website
+changes check desktop/mobile, motion controls, reduced motion, resize and fallback.
+Do not add tests that merely mirror low-impact text edits.
