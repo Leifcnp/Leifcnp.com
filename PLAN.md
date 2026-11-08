@@ -2,21 +2,19 @@
 
 ## Current delivery
 
-**WEB-023: autonomous MR workflow setup, assigned 2026-11-07.**
+**WEB-023 workflow setup is implemented, independently reviewed and published.**
 
-Set up orchestration, Sol 6.1 workers and independent review, task/batch
-contracts, worktree ownership, CI, merge gates and local tooling. Do not implement
-website backlog work. Existing uncommitted WEB-022 shoreline work in the user's
-checkout is preserved. [AGENTS.md](AGENTS.md) and
-[ORCHESTRATION.md](ORCHESTRATION.md) define the current policy; historical phase
-staffing, direct-push steps and user-review scheduling below are reference only.
-Product constraints and explicitly deferred work remain in force.
+[MR #7](https://github.com/Leifcnp/Leifcnp.com/pull/7) merged on 2026-11-07 as
+`fd6ea26551b49c797a9a895962501a26b527aa99`. CI and Pages passed for that exact
+merge SHA; public assets match the unchanged build. Strict master protection
+is active. See [verification](artifacts/workflow-setup/VERIFICATION.md).
 
-The user explicitly assigns each batch; the orchestrator completes it
-autonomously, including MR merge/publication after separate Sol 6.1 review and
-all required checks. Three unsuccessful repair rounds park a task with evidence.
-See [the task plan](plans/WEB-023/plan.md). The canonical queue remains
-[WEBSITE_TODO.md](WEBSITE_TODO.md); the execution ledger is under `work/batches/`.
+No new website feature batch is assigned. Existing uncommitted WEB-022 shoreline
+work remains preserved in the original checkout, and harbours/zoom remain
+deferred. The user explicitly assigns the next task/batch; the orchestrator then
+completes its MR/review/publication loop under [AGENTS.md](AGENTS.md) and
+[ORCHESTRATION.md](ORCHESTRATION.md). Historical phase scheduling below remains
+reference only. The canonical queue is [WEBSITE_TODO.md](WEBSITE_TODO.md).
 
 ## Architecture and decisions
 
@@ -63,7 +61,7 @@ Preserve domain metadata and the current deployment path.
 | WEB-019 | Published review correction | Flags, translucent wind streams and wind-carried spray | Existing wind field; coordinate WEB-017 | [plan](plans/WEB-019/plan.md) |
 | WEB-020 | Published Phase 11 | Auto-trim with manual sweet-spot speed, foam and sound reward | Existing wind sailing; coordinate WEB-019/WEB-021 | [plan](plans/WEB-020/plan.md) |
 | WEB-021 | Published Phase 12 | Stronger reach heel, rail dip and bow spray | Published WEB-018; coordinate WEB-019 | [plan](plans/WEB-021/plan.md) |
-| WEB-023 | Workflow setup | Autonomous orchestration, MR review/merge and worktree/check contracts | User interview, 2026-11-07 | [plan](plans/WEB-023/plan.md) |
+| WEB-023 | Completed workflow setup | Autonomous orchestration, MR review/merge and worktree/check contracts | User interview, 2026-11-07 | [plan](plans/WEB-023/plan.md) |
 | WEB-022 | Backlog | Wave interaction with islands and shorelines | Shared wave field and island geometry review | [plan](plans/WEB-022/plan.md) |
 
 ## Team and integration ownership

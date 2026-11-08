@@ -156,3 +156,13 @@ checks previously worked; the embedded VM graphics driver failed WebGL creation.
 Use a working WebGL browser for visual verification. For relevant website
 changes check desktop/mobile, motion controls, reduced motion, resize and fallback.
 Do not add tests that merely mirror low-impact text edits.
+
+### Verified Git access (2026-11-07)
+
+This VM's system SSH config owner check and stale internal Codex snapshot refs
+needed a per-command workaround. See README's Git section. The verified fetch is
+`git -c core.sshCommand='ssh -F /dev/null -o BatchMode=yes' -c fetch.hideRefs=refs/codex/ fetch origin master`.
+It retains normal host verification and does not delete refs or change global
+configuration. Push only task branches with the same per-command SSH setting.
+The GitHub connector can read the repo but MR creation returned 403; authorized
+browser writes worked. Do not change app access/credentials without approval.
