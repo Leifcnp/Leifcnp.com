@@ -1,0 +1,123 @@
+{
+  "provenance": "Unmodified production bundle, actual keyboard events and real rAF callbacks stepped at 100ms. Only intermediate raster draws omitted. No private simulation hooks or teleport. Responsive snapshots hold actual Spill keyboard control; synthetic document visibility event is explicitly limited to emulation.",
+  "checks": [
+    {
+      "manualProject": "Project reached \u00b7 Open available"
+    },
+    {
+      "desktopAllEnabledControls": [
+        {
+          "text": "Pause motion",
+          "width": 118,
+          "height": 44
+        },
+        {
+          "text": "Sail up",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Sail left",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Sail down",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Sail right",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Trim sail in",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Ease sail out",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Return to auto trim",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Spill wind",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Reset boat",
+          "width": 226,
+          "height": 44
+        },
+        {
+          "text": "Sound off",
+          "width": 226,
+          "height": 44
+        },
+        {
+          "text": "Scan Chartroom, Resume",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Scan Shipyard, Projects",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Scan Logbook, Writing",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Scan Signal Cove, Media",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Zoom out",
+          "width": 68.46875,
+          "height": 44
+        },
+        {
+          "text": "Focus Overview harbour",
+          "width": 67.84375,
+          "height": 44
+        },
+        {
+          "text": "Focus Project harbour",
+          "width": 56.25,
+          "height": 44
+        },
+        {
+          "text": "Open Overview content",
+          "width": 97.8125,
+          "height": 44
+        },
+        {
+          "text": "Open nearby Project",
+          "width": 122.890625,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "openHeadingFocusAndCloseRestoresTrigger": true
+    }
+  ],
+  "captures": [],
+  "assets": [],
+  "errors": [],
+  "browser": "151.0.7922.34",
+  "verdict": "failed",
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ '112ba92520270e490d1773acf04e6432daf83f67d21d3c711b146ca63899296f'\n- '82739249e8d186aab15a854a22e74eeaf83b7d0db0a777f4236e32283ddc77da'\n",
+  "assessment": "Desktop enabled-control dimensions and heading/close-focus assertions passed. Extra reduced-scene screenshot assertion is unaccepted: screenshot taken before stepped rAF applies instant reduced-motion camera reframe. Frozen-after-reframe state was not measured; no product defect established, no rerun.",
+  "metadataBinding": "Same source/bundles as browser-checks.json; report kept separate and failed verdict preserved."
+}

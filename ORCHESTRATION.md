@@ -1,8 +1,10 @@
 # Autonomous assigned batches
 
-Only an explicit user assignment starts work. Backlog/Ready, an available worker,
-or a historical authorization does not select another task. Complete the assigned
-batch, including authorized merge/publication, then stop. Ask before new spending,
+Only an explicit user assignment starts work. The current batch now includes
+the remaining todo list and observed UI/control simplifications, per the user
+on 2026-11-07; record each new scope before implementation. Otherwise backlog/Ready
+or an available worker does not select work. Complete the assigned batch, including
+authorized merge/publication, then stop. Ask before new spending,
 credentials/access, DNS/domain, destructive actions or major design/scope changes.
 
 ## Prepare and delegate
@@ -39,7 +41,8 @@ Build intended `docs/`, commit it, then verify a fresh build leaves generated
 output/domain markers clean. Never hand-edit generated output. For visual work,
 use matched baseline/candidate camera, viewport and known time; record source
 hashes/revisions. Old screenshots or a base SHA alone do not prove new behavior.
-Report VM/physical-device and missing-check limits honestly.
+Report VM/physical-device and missing-check limits honestly. Persist useful
+fixtures/reports as they are produced; `/tmp` is disposable across interruptions.
 
 A separate non-author gpt-6.1-sol reviewer compares the full final diff with the
 assignment, acceptance criteria and evidence. Authors repair findings; the

@@ -1,0 +1,70 @@
+{
+  "provenance": "Unmodified production bundle, actual keyboard events and real rAF callbacks stepped at 100ms. Only intermediate raster draws omitted. No private simulation hooks or teleport. Responsive snapshots hold actual Spill keyboard control; synthetic document visibility event is explicitly limited to emulation.",
+  "checks": [
+    {
+      "manualProject": "Project reached · Open available"
+    },
+    {
+      "reducedMotionSceneFrozenAfterSettledReframe": true,
+      "canvasHash": "e8c452c028ab57d6eed51437ee87d171c27dba2439f0f282dd4daf1c1c1cbd5e",
+      "settling": "DOM observers120ms, actual rAF frame, DOM observers120ms, actual rAF frame; then baseline and20 paused rAF steps"
+    }
+  ],
+  "captures": [],
+  "assets": [
+    {
+      "path": "assets/index-DSzfoaBK.js",
+      "sha256": "92d498e120b8e37709810e83469c9f757128e3f5700b0f80c4b6fddf81d1a7b8"
+    },
+    {
+      "path": "assets/index-l6N-AMFZ.css",
+      "sha256": "3776f7fbf25145af3988f50a5a20186deb3a1b424106317e022b07bd59e1132a"
+    }
+  ],
+  "errors": [],
+  "browser": "151.0.7922.34",
+  "sourceSha256": {
+    "index.html": "c49346ea8d8cbfd311d1a9d5843a858d0447894a792ea163d809bcd1389b51b3",
+    "src/audio/createWindRush.ts": "d15af2f50bd953cef0c8f7d98371b8a915b80c402af03a8a8a5e3ece6136f9a0",
+    "src/content/harbours.ts": "4430a79f91374cce32b6e14f30b112204d2cb866b4b3963cc91eb6762c7e036a",
+    "src/content/islands.ts": "dd434ddcf8280caa80c7a0d75c9a7c368cdb29d17aff7e38ba53e0a1d078ffb1",
+    "src/content/portfolio.ts": "b19196bb6d36dbb663fcec9f786dee759fb324c30edce1a012121607ba434838",
+    "src/controls/vesselInput.ts": "93017222fb8adfa395fccd59d14b92d8c7330b5a6258d8fb8e93b5928d11f785",
+    "src/interaction/localHarbour.ts": "2756dbc22bd3561292ef518c27999da9e86109893b10e0e0fb4937c734e7de50",
+    "src/interaction/proximity.ts": "2fc6479a03385446c2dd7ffbedd79a74cc0b4676e8be7f8092eb871a753a9467",
+    "src/main.ts": "59310cc5a9335a39733d687093d9414a2fbc61e53b4e15e98f3e491f06a27f4d",
+    "src/navigation/routePlanner.ts": "53e7dd9ab8b9624ff38603cf2b30580139ab530b753972b11399bc57d68806a2",
+    "src/navigation/scanner.ts": "48fbd173c5c77e8398479845a4e5550319f9ef83687f48bc1676c941d0342041",
+    "src/styles.css": "ac16c8ef176530b7e59ad7b7361b99e6c3196bedc8fc3736e3e08d6c3aaf47c2",
+    "src/ui/hud.ts": "ce336e66215c1ac3a9558a9a69a6fe3391939182bb16cb1a7956372d7f8f04ed",
+    "src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "src/world/createCameraRig.ts": "8a9b58fdfa10e410b921489ad8ee112ba500fcee38a7d745144224dfb1ec323f",
+    "src/world/createHarbourMarkers.ts": "c6f52ac6cb628898d4d9fe8773958132cf5b479ca3ebec2a3b2f528f1656bfe6",
+    "src/world/createLandmarks.ts": "6c0053fb54ffe014a8d67dbb423f4a25aa6c87882a20b2872e2cf66aa0d50a35",
+    "src/world/createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d",
+    "src/world/createVessel.ts": "e24ef7d1f056cc081cf620a2cd77ec70e23ffee6b35ffb7c2c40dbbb1b94bfa5",
+    "src/world/createWaterWorld.ts": "336d4e9fa299677baa569a4ebeb1f897ec092c3d6dd2be6aa9d6c9e37b5387bd",
+    "src/world/effects/createHullSpray.ts": "fd01115aadd69e6d8b732c68038b14ce469a74aa646b577050823dc37402c4d5",
+    "src/world/effects/createShorelineFoam.ts": "6bf8c9c8f0628cd6475ab1eb1a16969a96e246afef08c1982a8ef52e6c7adac7",
+    "src/world/effects/createWake.ts": "0e237c6e94b98dbae61bf60df9709fc2a4a196582f485721d9ca09b8e5cf03a5",
+    "src/world/effects/createWindFlags.ts": "dc1da062865285bdae071fef33015284324ddbb5e3a526b58394157ea4cb6aac",
+    "src/world/stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+    "src/world/vessel/headingSteering.ts": "302bde9bb46a3c1c2d3305a2e36818d0c82a9acf538406dc9c50abfe510c658e",
+    "src/world/vessel/hullContact.ts": "6cfcb9d0015f2ca2c4294c374bca3c02d5ab5260e690b4108954d600a655f6ba",
+    "src/world/vessel/kinematics.ts": "8962573eb209d9775a36807c9e00a68383b4e33acd1142e1043ad96888286ec9",
+    "src/world/vessel/pose.ts": "7c593ac72b6dd382262758f0b5aea8f9530c0e21fd8b7c073fcfa83f65ec257d",
+    "src/world/vessel/sailResponse.ts": "57c145923c48d8b4add4aa724318689439fa7a93b74b1a1e4e292d6165c83d3c",
+    "src/world/vessel/trimAssist.ts": "e82c1a2e295385d9a2855ad49d25fdcfead702f36b2bf1b3f1e2e6e698546677",
+    "src/world/vessel/waveResponse.ts": "b6ebd79da418a681f7994069affbed0dec890432efb8d1bd829471663904090c",
+    "src/world/waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+    "src/world/waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+    "src/world/waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+    "src/world/wind.ts": "a7cb8067991b993b5aaf92fdf61cb0508f3317919f0b4dbe58b8cf1d22e8320f"
+  },
+  "sourceBindingNote": "Current unchanged source confirmed against accepted report",
+  "base": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "headAtMeasurement": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "fixtureSha256": "8213a60cb73abf8d78f12a0ef1cf09c6f587ceffbe37e5223a6e599177e8e63b",
+  "finalizedAt": "2026-11-08T15:35:30.624Z",
+  "verdict": "pass"
+}

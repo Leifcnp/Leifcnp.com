@@ -1,0 +1,294 @@
+{
+  "generatedAt": "2026-11-08T05:30:19.337Z",
+  "headAtMeasurement": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "sourceSha256": {
+    "src/content/islands.ts": "dd434ddcf8280caa80c7a0d75c9a7c368cdb29d17aff7e38ba53e0a1d078ffb1",
+    "src/content/portfolio.ts": "b19196bb6d36dbb663fcec9f786dee759fb324c30edce1a012121607ba434838",
+    "src/content/harbours.ts": "4430a79f91374cce32b6e14f30b112204d2cb866b4b3963cc91eb6762c7e036a",
+    "src/interaction/localHarbour.ts": "2756dbc22bd3561292ef518c27999da9e86109893b10e0e0fb4937c734e7de50",
+    "src/world/createHarbourMarkers.ts": "c6f52ac6cb628898d4d9fe8773958132cf5b479ca3ebec2a3b2f528f1656bfe6",
+    "src/world/createCameraRig.ts": "8a9b58fdfa10e410b921489ad8ee112ba500fcee38a7d745144224dfb1ec323f",
+    "src/world/createWaterWorld.ts": "336d4e9fa299677baa569a4ebeb1f897ec092c3d6dd2be6aa9d6c9e37b5387bd",
+    "src/world/vessel/kinematics.ts": "8962573eb209d9775a36807c9e00a68383b4e33acd1142e1043ad96888286ec9",
+    "src/world/vessel/trimAssist.ts": "e82c1a2e295385d9a2855ad49d25fdcfead702f36b2bf1b3f1e2e6e698546677",
+    "src/controls/vesselInput.ts": "93017222fb8adfa395fccd59d14b92d8c7330b5a6258d8fb8e93b5928d11f785",
+    "src/navigation/routePlanner.ts": "53e7dd9ab8b9624ff38603cf2b30580139ab530b753972b11399bc57d68806a2",
+    "src/world/waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+    "src/world/waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+    "src/world/stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f"
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900H",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "provenance": {
+    "water": "Full current 121x121 shared rendered grid; 97 snapshots at t=0..24, step .25; line interiors sampled at eighths",
+    "timing": "Warmed synchronous wall-clock update cost only; excludes ocean generation, rendering, UI and driver. No FPS/mobile GPU or heap-allocation claim. Hidden/disposed microbenchmarks are near the JIT/timer noise floor; use their upper batch bound and zero water-read count, not nanosecond values as isolated call latency.",
+    "motion": "Functional markers have no reduced-motion setter; unchanged cached water/snapshot stays deterministic. Camera reduced-motion target applies immediately; world active-time freeze is separately covered by production browser checks."
+  },
+  "bounds": {
+    "worldLimit": 220,
+    "vesselClearance": 3.2
+  },
+  "safetyMargin": 0.28,
+  "localTuning": {
+    "enterDwell": 0.35,
+    "exitRadius": 18,
+    "maxEntrySpeed": 4,
+    "manualIntentWindow": 4
+  },
+  "geometry": [
+    {
+      "id": "shipyard-overview",
+      "centre": {
+        "x": 28,
+        "z": -22
+      },
+      "captureRadius": 1.75,
+      "minCaptureMarginBeyondLandAndHull": 1.2155250605964367,
+      "minCaptureMarginBeyondSafety": 0.9355250605964367,
+      "worldBoundaryMargin": 187.05,
+      "capturePerIsland": [
+        {
+          "islandId": "island-resume",
+          "marginBeyondLandAndHull": 42.19794548272353
+        },
+        {
+          "islandId": "island-projects",
+          "marginBeyondLandAndHull": 1.2155250605964367
+        },
+        {
+          "islandId": "island-writing",
+          "marginBeyondLandAndHull": 53.53308055437864
+        },
+        {
+          "islandId": "island-media",
+          "marginBeyondLandAndHull": 30.24004621945797
+        }
+      ],
+      "approach": [
+        {
+          "start": {
+            "x": 30,
+            "z": -22
+          },
+          "end": {
+            "x": 28,
+            "z": -22
+          },
+          "minMarginBeyondLandAndHull": 2.9655250605964367,
+          "minMarginBeyondSafety": 2.6855250605964365,
+          "safe": true,
+          "perIsland": [
+            {
+              "islandId": "island-resume",
+              "marginBeyondLandAndHull": 43.94794548272353
+            },
+            {
+              "islandId": "island-projects",
+              "marginBeyondLandAndHull": 2.9655250605964367
+            },
+            {
+              "islandId": "island-writing",
+              "marginBeyondLandAndHull": 55.28308055437864
+            },
+            {
+              "islandId": "island-media",
+              "marginBeyondLandAndHull": 31.99004621945797
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shipyard-project",
+      "centre": {
+        "x": 18,
+        "z": -12
+      },
+      "captureRadius": 1.75,
+      "minCaptureMarginBeyondLandAndHull": 1.2155250605964367,
+      "minCaptureMarginBeyondSafety": 0.9355250605964367,
+      "worldBoundaryMargin": 197.05,
+      "capturePerIsland": [
+        {
+          "islandId": "island-resume",
+          "marginBeyondLandAndHull": 32.457206622349034
+        },
+        {
+          "islandId": "island-projects",
+          "marginBeyondLandAndHull": 1.2155250605964367
+        },
+        {
+          "islandId": "island-writing",
+          "marginBeyondLandAndHull": 39.3950093132096
+        },
+        {
+          "islandId": "island-media",
+          "marginBeyondLandAndHull": 20.607641192199413
+        }
+      ],
+      "approach": [
+        {
+          "start": {
+            "x": 18,
+            "z": -10
+          },
+          "end": {
+            "x": 18,
+            "z": -12
+          },
+          "minMarginBeyondLandAndHull": 2.9655250605964367,
+          "minMarginBeyondSafety": 2.6855250605964365,
+          "safe": true,
+          "perIsland": [
+            {
+              "islandId": "island-resume",
+              "marginBeyondLandAndHull": 34.207206622349034
+            },
+            {
+              "islandId": "island-projects",
+              "marginBeyondLandAndHull": 2.9655250605964367
+            },
+            {
+              "islandId": "island-writing",
+              "marginBeyondLandAndHull": 39.711688245431425
+            },
+            {
+              "islandId": "island-media",
+              "marginBeyondLandAndHull": 20.39411708155671
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "connection": {
+    "start": {
+      "x": 28,
+      "z": -22
+    },
+    "end": {
+      "x": 18,
+      "z": -12
+    },
+    "minMarginBeyondLandAndHull": 0.6994949366116652,
+    "minMarginBeyondSafety": 0.41949493661166515,
+    "safe": true,
+    "perIsland": [
+      {
+        "islandId": "island-resume",
+        "marginBeyondLandAndHull": 34.207206622349034
+      },
+      {
+        "islandId": "island-projects",
+        "marginBeyondLandAndHull": 0.6994949366116652
+      },
+      {
+        "islandId": "island-writing",
+        "marginBeyondLandAndHull": 41.1450093132096
+      },
+      {
+        "islandId": "island-media",
+        "marginBeyondLandAndHull": 22.357641192199413
+      }
+    ]
+  },
+  "mutualCaptureGap": 10.642135623730951,
+  "manualVoyage": {
+    "control": "Hold screen-right/D; add Spill/brake inside existing parent docking radius",
+    "fixedHz": 120,
+    "entryActiveSeconds": 16.5,
+    "firstInsideAt": 16.15833333333333,
+    "brakingStartedAt": 16.158333333333335,
+    "minCollisionMargin": 0.6846128715243021,
+    "speedAtEntry": 0.16780374745163268,
+    "vesselAtEntry": {
+      "x": 17.66652596332348,
+      "z": -14.256886389173498,
+      "velocityX": -0.11764040783627834,
+      "velocityZ": -0.11966132250199069,
+      "heading": 2.347678472173323,
+      "yawRate": 4.544158852384132e-28
+    },
+    "localAtEntry": {
+      "islandId": "island-projects",
+      "selectedHarbourId": "shipyard-overview",
+      "nearbyHarbourId": null,
+      "dwellSeconds": 0.35000000000000026,
+      "manualIntentAge": 0,
+      "suppressed": false
+    }
+  },
+  "resources": {
+    "sceneGroups": 1,
+    "lineObjects": 1,
+    "lineSegments": true,
+    "vertices": 128,
+    "segments": 64,
+    "materials": 1,
+    "positionBytes": 1536,
+    "colorBytes": 1536,
+    "depthTest": true,
+    "depthWrite": false,
+    "expectedVisibleDrawCalls": 1,
+    "expectedHiddenDrawCalls": 0,
+    "drawCallBasis": "One LineSegments/material in the scene graph; actual renderer draw delta is a browser gate."
+  },
+  "surface": {
+    "finite": true,
+    "maxRadiusError": 8.379036369188242e-07,
+    "minVertexLift": 0.11999967186199001,
+    "maxVertexLift": 0.12000028017295605,
+    "minLineLift": 0.11290343457331531,
+    "maxLineLift": 0.12870183598408502
+  },
+  "lifecycle": {
+    "sameSnapshotStable": true,
+    "resetHidesAndRetainsBuffers": true,
+    "fixedBuffers": true,
+    "pauseHiddenFreeze": true,
+    "scannerStillBroad": true,
+    "zoomOutRetainsSelection": true,
+    "suppressionPreventsImmediateReentry": true,
+    "reducedZeroTimeStable": true,
+    "reducedAlreadyAtTarget": true,
+    "visibleWaterReads": 520,
+    "hiddenWaterReads": 0,
+    "disposedWaterReads": 0,
+    "geometryDisposeEvents": 1,
+    "materialDisposeEvents": 1,
+    "afterDisposeStable": true,
+    "sceneEmpty": true
+  },
+  "cpu": {
+    "visible": {
+      "batches": 12,
+      "updatesPerBatch": 1000,
+      "minMs": 0.01582416799999987,
+      "medianMs": 0.018187611000000173,
+      "maxMs": 0.02316671899999983
+    },
+    "hidden": {
+      "batches": 12,
+      "updatesPerBatch": 1000,
+      "minMs": 3.6030000001119333e-06,
+      "medianMs": 3.962000000001354e-06,
+      "maxMs": 6.876099999999496e-05
+    },
+    "disposed": {
+      "batches": 12,
+      "updatesPerBatch": 1000,
+      "minMs": 2.916000000141139e-06,
+      "medianMs": 3.1630000000859582e-06,
+      "maxMs": 1.0328000000072279e-05
+    }
+  },
+  "limits": {
+    "visibleWorstBatchMeanMs": 0.5,
+    "hiddenWorstBatchMeanMs": 0.05,
+    "disposedWorstBatchMeanMs": 0.05
+  }
+}

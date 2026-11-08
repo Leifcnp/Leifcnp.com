@@ -1,0 +1,735 @@
+{
+  "started_utc": "2026-11-08T15:27:11.330927+00:00",
+  "finished_utc": "2026-11-08T15:27:19.338749+00:00",
+  "comparison_base": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "checks": [
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 63762\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nleifcnp.com.\t\t600\tIN\tA\t185.199.108.153\n\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 17435\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 31056\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 62288\n;; flags: qr aa rd; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "www.leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14224\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "www.leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40904\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "www.leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 60333\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns07.domaincontrol.com",
+        "www.leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52620\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 6580\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nleifcnp.com.\t\t600\tIN\tA\t185.199.108.153\n\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40513\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16302\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40426\n;; flags: qr aa rd; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "www.leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40166\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "www.leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46317\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "www.leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11168\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@ns08.domaincontrol.com",
+        "www.leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 24172\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11251\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nleifcnp.com.\t\t600\tIN\tA\t185.199.108.153\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 28137\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 34877\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26864\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "www.leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 61145\n;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\nleifcnp.github.io.\t3600\tIN\tA\t185.199.108.153\nleifcnp.github.io.\t3600\tIN\tA\t185.199.111.153\nleifcnp.github.io.\t3600\tIN\tA\t185.199.109.153\nleifcnp.github.io.\t3600\tIN\tA\t185.199.110.153\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "www.leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26793\n;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8001::153\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8002::153\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8003::153\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8000::153\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "www.leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54064\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@1.1.1.1",
+        "www.leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 43900\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n;; AUTHORITY SECTION:\ngithub.io.\t\t3600\tIN\tSOA\tdns1.p05.nsone.net. hostmaster.nsone.net. 1647625169 43200 7200 1209600 3600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26120\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nleifcnp.com.\t\t600\tIN\tA\t185.199.108.153\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45464\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 31694\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; AUTHORITY SECTION:\nleifcnp.com.\t\t600\tIN\tSOA\tns07.domaincontrol.com. dns.jomax.net. 2023051000 28800 7200 604800 600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 56861\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nleifcnp.com.\t\t3600\tIN\tNS\tns08.domaincontrol.com.\nleifcnp.com.\t\t3600\tIN\tNS\tns07.domaincontrol.com.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "www.leifcnp.com",
+        "A",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 20227\n;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\nleifcnp.github.io.\t3600\tIN\tA\t185.199.108.153\nleifcnp.github.io.\t3600\tIN\tA\t185.199.109.153\nleifcnp.github.io.\t3600\tIN\tA\t185.199.111.153\nleifcnp.github.io.\t3600\tIN\tA\t185.199.110.153\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "www.leifcnp.com",
+        "AAAA",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 23748\n;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8002::153\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8001::153\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8000::153\nleifcnp.github.io.\t3600\tIN\tAAAA\t2606:50c0:8003::153\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "www.leifcnp.com",
+        "CNAME",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 56169\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "dig",
+        "@8.8.8.8",
+        "www.leifcnp.com",
+        "NS",
+        "+time=5",
+        "+tries=1",
+        "+noall",
+        "+answer",
+        "+authority",
+        "+comments"
+      ],
+      "exit": 0,
+      "stdout": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54864\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nwww.leifcnp.com.\t1800\tIN\tCNAME\tleifcnp.github.io.\n\n;; AUTHORITY SECTION:\ngithub.io.\t\t1800\tIN\tSOA\tdns1.p05.nsone.net. hostmaster.nsone.net. 1647625169 43200 7200 1209600 3600\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "curl",
+        "--noproxy",
+        "*",
+        "--silent",
+        "--show-error",
+        "--location",
+        "--max-redirs",
+        "5",
+        "--max-time",
+        "30",
+        "--dump-header",
+        "-",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "\nFINAL %{url_effective} STATUS %{http_code} TLS_VERIFY %{ssl_verify_result}\n",
+        "http://leifcnp.com/"
+      ],
+      "exit": 0,
+      "stdout": "HTTP/1.1 301 Moved Permanently\r\nConnection: keep-alive\r\nContent-Length: 162\r\nServer: GitHub.com\r\nContent-Type: text/html\r\nLocation: https://leifcnp.com/\r\nX-GitHub-Request-Id: E864:1DDC75:31742E6:35A3D58:6AF094D2\r\nx-github-edge-region: iad\r\nAccept-Ranges: bytes\r\nAge: 0\r\nDate: Sun, 08 Nov 2026 15:27:14 GMT\r\nVia: 1.1 varnish\r\nX-Served-By: cache-yvr-cyvr160058-YVR\r\nX-Cache: MISS\r\nX-Cache-Hits: 0\r\nX-Timer: S1794151634.127170,VS0,VE289\r\nVary: Accept-Encoding\r\nX-Fastly-Request-ID: b061a75d0e69b405d71a56b152d1ab674c231dd1\r\n\r\nHTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: text/html; charset=utf-8\r\nlast-modified: Sun, 08 Nov 2026 05:16:46 GMT\r\naccess-control-allow-origin: *\r\netag: \"6af005be-26d\"\r\nexpires: Sun, 08 Nov 2026 05:35:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: E15E:A6F27:234D63B:265B670:6AF007E1\r\nx-github-edge-region: iad\r\naccept-ranges: bytes\r\ndate: Sun, 08 Nov 2026 15:27:14 GMT\r\nvia: 1.1 varnish\r\nage: 23\r\nx-served-by: cache-yvr-cyvr160060-YVR\r\nx-cache: HIT\r\nx-cache-hits: 1\r\nx-timer: S1794151635.580605,VS0,VE2\r\nvary: Accept-Encoding\r\nx-fastly-request-id: b909db8c0c110ac3b8439cab910743a06df741e6\r\ncontent-length: 621\r\n\r\n\nFINAL https://leifcnp.com/ STATUS 200 TLS_VERIFY 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "curl",
+        "--noproxy",
+        "*",
+        "--silent",
+        "--show-error",
+        "--location",
+        "--max-redirs",
+        "5",
+        "--max-time",
+        "30",
+        "--dump-header",
+        "-",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "\nFINAL %{url_effective} STATUS %{http_code} TLS_VERIFY %{ssl_verify_result}\n",
+        "http://www.leifcnp.com/"
+      ],
+      "exit": 0,
+      "stdout": "HTTP/1.1 301 Moved Permanently\r\nConnection: keep-alive\r\nContent-Length: 162\r\nServer: GitHub.com\r\nContent-Type: text/html\r\nLocation: https://leifcnp.com/\r\nX-GitHub-Request-Id: FEF8:305707:34A887F:38D6D61:6AF094D1\r\nx-github-edge-region: iad\r\nAccept-Ranges: bytes\r\nAge: 0\r\nDate: Sun, 08 Nov 2026 15:27:14 GMT\r\nVia: 1.1 varnish\r\nX-Served-By: cache-yvr-cyvr160024-YVR\r\nX-Cache: MISS\r\nX-Cache-Hits: 0\r\nX-Timer: S1794151635.712746,VS0,VE83\r\nVary: Accept-Encoding\r\nX-Fastly-Request-ID: 67a96c2e6903e56d24f57e898eaca405be533109\r\n\r\nHTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: text/html; charset=utf-8\r\nlast-modified: Sun, 08 Nov 2026 05:16:46 GMT\r\naccess-control-allow-origin: *\r\netag: \"6af005be-26d\"\r\nexpires: Sun, 08 Nov 2026 05:35:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: E15E:A6F27:234D63B:265B670:6AF007E1\r\nx-github-edge-region: iad\r\naccept-ranges: bytes\r\ndate: Sun, 08 Nov 2026 15:27:15 GMT\r\nvia: 1.1 varnish\r\nage: 23\r\nx-served-by: cache-yvr-cyvr160069-YVR\r\nx-cache: HIT\r\nx-cache-hits: 1\r\nx-timer: S1794151635.001370,VS0,VE1\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 9d90d49f104c23162ed19bdb22873de9d2f970ea\r\ncontent-length: 621\r\n\r\n\nFINAL https://leifcnp.com/ STATUS 200 TLS_VERIFY 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "curl",
+        "--noproxy",
+        "*",
+        "--silent",
+        "--show-error",
+        "--location",
+        "--max-redirs",
+        "5",
+        "--max-time",
+        "30",
+        "--dump-header",
+        "-",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "\nFINAL %{url_effective} STATUS %{http_code} TLS_VERIFY %{ssl_verify_result}\n",
+        "https://leifcnp.com/"
+      ],
+      "exit": 0,
+      "stdout": "HTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: text/html; charset=utf-8\r\nlast-modified: Sun, 08 Nov 2026 05:16:46 GMT\r\naccess-control-allow-origin: *\r\netag: \"6af005be-26d\"\r\nexpires: Sun, 08 Nov 2026 05:35:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: E15E:A6F27:234D63B:265B670:6AF007E1\r\nx-github-edge-region: iad\r\naccept-ranges: bytes\r\ndate: Sun, 08 Nov 2026 15:27:15 GMT\r\nvia: 1.1 varnish\r\nage: 23\r\nx-served-by: cache-yvr-cyvr160050-YVR\r\nx-cache: HIT\r\nx-cache-hits: 1\r\nx-timer: S1794151635.229157,VS0,VE2\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 5cb6b28195667dc49b5e921991f97e59fcacee7d\r\ncontent-length: 621\r\n\r\n\nFINAL https://leifcnp.com/ STATUS 200 TLS_VERIFY 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "curl",
+        "--noproxy",
+        "*",
+        "--silent",
+        "--show-error",
+        "--location",
+        "--max-redirs",
+        "5",
+        "--max-time",
+        "30",
+        "--dump-header",
+        "-",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "\nFINAL %{url_effective} STATUS %{http_code} TLS_VERIFY %{ssl_verify_result}\n",
+        "https://www.leifcnp.com/"
+      ],
+      "exit": 0,
+      "stdout": "HTTP/2 301 \r\nserver: GitHub.com\r\ncontent-type: text/html\r\nlocation: https://leifcnp.com/\r\nx-github-request-id: 12EA:2BE2C1:320B46A:363B1C1:6AF094D3\r\nx-github-edge-region: iad\r\naccept-ranges: bytes\r\nage: 0\r\ndate: Sun, 08 Nov 2026 15:27:15 GMT\r\nvia: 1.1 varnish\r\nx-served-by: cache-yvr-cyvr160056-YVR\r\nx-cache: MISS\r\nx-cache-hits: 0\r\nx-timer: S1794151635.391899,VS0,VE82\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 037b90a5cda9aa7c0beae8bd042f537b1013e8e0\r\ncontent-length: 162\r\n\r\nHTTP/2 200 \r\nserver: GitHub.com\r\ncontent-type: text/html; charset=utf-8\r\nlast-modified: Sun, 08 Nov 2026 05:16:46 GMT\r\naccess-control-allow-origin: *\r\netag: \"6af005be-26d\"\r\nexpires: Sun, 08 Nov 2026 05:35:53 GMT\r\ncache-control: max-age=600\r\nx-proxy-cache: MISS\r\nx-github-request-id: E15E:A6F27:234D63B:265B670:6AF007E1\r\nx-github-edge-region: iad\r\naccept-ranges: bytes\r\ndate: Sun, 08 Nov 2026 15:27:15 GMT\r\nvia: 1.1 varnish\r\nage: 24\r\nx-served-by: cache-yvr-cyvr160063-YVR\r\nx-cache: HIT\r\nx-cache-hits: 1\r\nx-timer: S1794151636.796509,VS0,VE1\r\nvary: Accept-Encoding\r\nx-fastly-request-id: 7649c3c019ba902c4967f8c3cdb25675c1d703d9\r\ncontent-length: 621\r\n\r\n\nFINAL https://leifcnp.com/ STATUS 200 TLS_VERIFY 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "openssl",
+        "s_client",
+        "-connect",
+        "leifcnp.com:443",
+        "-servername",
+        "leifcnp.com",
+        "-verify_hostname",
+        "leifcnp.com",
+        "-verify_return_error",
+        "-showcerts"
+      ],
+      "exit": 0,
+      "stdout": "CONNECTED(00000003)\n---\nCertificate chain\n 0 s:CN=leifcnp.com\n   i:C=US, O=Let's Encrypt, CN=YR1\n   a:PKEY: RSA, 2048 (bit); sigalg: sha256WithRSAEncryption\n   v:NotBefore: Nov  8 04:11:39 2026 GMT; NotAfter: Feb  6 04:11:38 2027 GMT\n-----BEGIN CERTIFICATE-----\nMIIFADCCA+igAwIBAgISBTfYxsNxFHaMlSdiig6PhzqRMA0GCSqGSIb3DQEBCwUA\nMDMxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQwwCgYDVQQD\nEwNZUjEwHhcNMjYxMTA4MDQxMTM5WhcNMjcwMjA2MDQxMTM4WjAWMRQwEgYDVQQD\nEwtsZWlmY25wLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJiY\nWOvsy7Z3gehwDociMe/SY2NnAZyQThAWlJz1GbYFMFa2gkFi1DELecDU4cE2Ex9c\ncBYh0BxTE4w8DIxdFUf4x5QpQY/C47Iptht3jahz6thjkTfSJlBhoQS9+nYiBqWg\nPdwHS4+3BiS2F5Iuya7cFiwsw2yUIy2fndRA2pgmPWeHN7ZMpKPuUjHjhyztOO5w\npbWYfcOHlvsuRWyibCT/Y0K25HzUX2uWcyR6DKWJaIbxcQN5Uw6IHG5apfCADGYN\npKIgtbkJHAA1jzyJp4qMTlf9HigZOmPQVgPp9TINN0A/mpBxM9fXtH5BSLQFqo73\nZTaHh2bK/22DQ+9IrI0CAwEAAaOCAikwggIlMA4GA1UdDwEB/wQEAwIFoDATBgNV\nHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRYybKqaOal\nSMzYK+hCsr9/vkVmaDAfBgNVHSMEGDAWgBQfLzW+RhSCzUCxrnksVXj699Ro+zAz\nBggrBgEFBQcBAQQnMCUwIwYIKwYBBQUHMAKGF2h0dHA6Ly95cjEuaS5sZW5jci5v\ncmcvMCcGA1UdEQQgMB6CC2xlaWZjbnAuY29tgg93d3cubGVpZmNucC5jb20wEwYD\nVR0gBAwwCjAIBgZngQwBAgEwLgYDVR0fBCcwJTAjoCGgH4YdaHR0cDovL3lyMS5j\nLmxlbmNyLm9yZy8xOC5jcmwwggELBgorBgEEAdZ5AgQCBIH8BIH5APcAdQBEwr0M\n6RQOZKXJSgGTClqhuzWXDgDuERaJaCocRNe1ZgAAAaG5kGDtAAAEAwBGMEQCIGr+\n1mQiAS6y5YQB9Xf3d+nx9lLT4kcaK31fvfyLQiFYAiBZT0qKN6vTEh0SgAJol1pF\ns/2wa8B1v6swpYNqCoEJmQB+ABqLnWuN15HRzQVJ7bYDVdYGtk+tMNtx/niPD8fI\n+8SxAAABobmQYYAACAAABQAU5BTiBAMARzBFAiEAha+xZY/9XxWvS3GJYDfXT5Pf\nImFXRmPnblKjwsnZ8OcCIFljUzirIF0hKD+Pts+aQXRFc/sQRN7yes7zK3R0YOpF\nMA0GCSqGSIb3DQEBCwUAA4IBAQCUydIsUsf2cpDAAXfj7LhFrecGQaKZtEbpoThj\nd4Pua6c8GLvQUBhputX5YREVXIuEts2lk2T9S2ooYtvrbo/Q7zYK8VQzcko2WNY+\nIsBEpB79DIi8a+Q7I31gNF9nDQPm7FjYQlK5xrXTnq9qbNKBVa1h7MohUaGSadxf\nA+Bnt38tAJcPPfi1cOQ2rEhZ+aRM7xXQLgf0WXcSq3vSgp0Rqo4kwHNUjXjbGV2f\nv9ktkUn9+6YJjC09J9reVhIAvnSVtQJIvCgJ5vri/AJG0LlPIBScTmOfpd9LjgHk\nvu9YmbcqqTKYT35g4WMF7JmZlrmKvWNKD5fTYYKdAd9W2KqY\n-----END CERTIFICATE-----\n 1 s:C=US, O=Let's Encrypt, CN=YR1\n   i:C=US, O=ISRG, CN=Root YR\n   a:PKEY: RSA, 2048 (bit); sigalg: sha256WithRSAEncryption\n   v:NotBefore: Sep  3 00:00:00 2025 GMT; NotAfter: Sep  2 23:59:59 2028 GMT\n-----BEGIN CERTIFICATE-----\nMIIE2zCCAsOgAwIBAgIRAKICU/FfJpHAXcHOE7m8yk4wDQYJKoZIhvcNAQELBQAw\nLjELMAkGA1UEBhMCVVMxDTALBgNVBAoTBElTUkcxEDAOBgNVBAMTB1Jvb3QgWVIw\nHhcNMjUwOTAzMDAwMDAwWhcNMjgwOTAyMjM1OTU5WjAzMQswCQYDVQQGEwJVUzEW\nMBQGA1UEChMNTGV0J3MgRW5jcnlwdDEMMAoGA1UEAxMDWVIxMIIBIjANBgkqhkiG\n9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVi8X2xCYgMXvJxNPKp/oF13UMgmPABB07VC\nLNDtoXmt9luEZNJSBV10VyT1Pz6LD8Zq1d2gc43WNl1AdRrj4sEnazbOiz0nPpmG\nBp2hui49oZtDIY6wdKeZAi5BbNU20CH6RSBBMLSQ9cXrH8dxdv4PAJ45ssGML68U\nSE3BsjC2a6cAN9L5CgXVIQi5tfNiTPoFZZ3S0OlXqLmmtdV95udWAb5b6e/F49Di\nCsH0Y00Ag72BVIb1hzynmKe+X0mERBTtsb3BwmpV9ipeBjMLoR/D9cHxHQCWoi5l\nTmXwY015J5rGelz1nZjJuxc2kioaX29XJBnhMkP531rSdG5uMwIDAQABo4HuMIHr\nMA4GA1UdDwEB/wQEAwIBhjATBgNVHSUEDDAKBggrBgEFBQcDATASBgNVHRMBAf8E\nCDAGAQH/AgEAMB0GA1UdDgQWBBQfLzW+RhSCzUCxrnksVXj699Ro+zAfBgNVHSME\nGDAWgBTe51tg0CJtQCh9Pw0B/qS1UrRRlDAyBggrBgEFBQcBAQQmMCQwIgYIKwYB\nBQUHMAKGFmh0dHA6Ly95ci5pLmxlbmNyLm9yZy8wEwYDVR0gBAwwCjAIBgZngQwB\nAgEwJwYDVR0fBCAwHjAcoBqgGIYWaHR0cDovL3lyLmMubGVuY3Iub3JnLzANBgkq\nhkiG9w0BAQsFAAOCAgEA0+zvMq3kHig1ddTmmm+RibTr9/RpX7k4buanMMRqbV/y\nIvP82zAHN3mvaw+cASuVsdpd0ikjhr4hnhJQLQOzOp2ccKrsdGOAgo0vddeISFAq\nEWEV4lmUM3vFF796up+bSgmJ1u6RupDCMxDgF8M3eLvGuj6L0lu3zkQ0KuQLnKxL\ntB0oQqn1Idg5CuuGpMvQzk29Pa3D/qHurc0EIM9SxukQuJqq63lxsYyRQFU8yMBO\nhq1w5LbfaWNRrz1uklOfI/pYkAb2E2MTZrAMQkBIE2S8Jt1F8gRc96o/xOsrgvSk\na84AisX6xq1lz1Z7jGvrnXc4TMcjxZTjiTaihcYI1JIXZiLtEMSCa5l3cu8YWd6z\ndLRQlqRdclVjuQfNHawRJ6GWlkK0QJosivTKwdBw3KxEtzGo8yMHERbsy57gP1UX\nHOMcmZYQC0gtyR3SxfenIM/MxC3Ia2Ypab/kQ/CTnlIn2KQ5JUC6NYrGCbhFN9bp\n5lKJStEwCUnLpntcrXk5XVDCNv/5RyWpRThkGOV7GetKkQ0qAY8hCzWK6oqnAhDZ\ncjlYVdWfqOw3DIOX6EDNBgAqHarRVxyF9QZdOaXSyPJ0ueD2BYJEBgaCGQ8rAaU/\nQc123V5LTXDZW4CcsPBDyhy4v+c8hClAyw/IkJlfBqxB9D+/wvIMHgECZ4ptP6o=\n-----END CERTIFICATE-----\n 2 s:C=US, O=ISRG, CN=Root YR\n   i:C=US, O=Internet Security Research Group, CN=ISRG Root X1\n   a:PKEY: RSA, 4096 (bit); sigalg: sha256WithRSAEncryption\n   v:NotBefore: May 13 00:00:00 2026 GMT; NotAfter: Sep  2 23:59:59 2032 GMT\n-----BEGIN CERTIFICATE-----\n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\n-----END CERTIFICATE-----\n---\nServer certificate\nsubject=CN=leifcnp.com\nissuer=C=US, O=Let's Encrypt, CN=YR1\n---\nNo client certificate CA names sent\nPeer signing digest: SHA256\nPeer signature type: rsa_pss_rsae_sha256\nNegotiated TLS1.3 group: X25519MLKEM768\n---\nSSL handshake has read 5701 bytes and written 1617 bytes\nVerification: OK\nVerified peername: leifcnp.com\n---\nNew, TLSv1.3, Cipher is TLS_AES_128_GCM_SHA256\nProtocol: TLSv1.3\nServer public key is 2048 bit\nThis TLS version forbids renegotiation.\nCompression: NONE\nExpansion: NONE\nNo ALPN negotiated\nEarly data was not sent\nVerify return code: 0 (ok)\n---\n---\nPost-Handshake New Session Ticket arrived:\nSSL-Session:\n    Protocol  : TLSv1.3\n    Cipher    : TLS_AES_128_GCM_SHA256\n    Session-ID: 62605D2D55C4E4FF96FDFB3EE7337F9F4DDECC3C1BF0D44C729501CB0CA2812E\n    Session-ID-ctx: \n    Resumption PSK: F0727C371AA0A5C195A5A0B21485D53D887978948E4CED1AEE17DE8487D3CE5D\n    PSK identity: None\n    PSK identity hint: None\n    SRP username: None\n    TLS session ticket lifetime hint: 86400 (seconds)\n    TLS session ticket:\n    0000 - c2 6a 7e 92 39 8e 0b 18-0f d0 23 c0 2b f6 7f 5d   .j~.9.....#.+..]\n    0010 - 22 4e 55 ef 28 32 15 58-c0 10 2f 4b d6 75 7e 39   \"NU.(2.X../K.u~9\n    0020 - 70 fd c3 12 e4 0c 88 c9-be d5 f2 29 88 a8 4c 4f   p..........)..LO\n    0030 - 21 8a 20 6e cf 35 18 b4-98 87 f6 f0 70 fc 07 a8   !. n.5......p...\n    0040 - 04 ba 51 62 82 77 67 0f-4a 46 46 d8 0f 1a e7 72   ..Qb.wg.JFF....r\n    0050 - 34 ae 8f 26 e5 97 75 7e-df f4 dc 1f 25 e7 c0 b5   4..&..u~....%...\n    0060 - 55 ba 09 65 2d 03 22 49-e5 68 3d 10 4e e7 a0 4a   U..e-.\"I.h=.N..J\n    0070 - 21 f2 9f 37 2e b0 f8 33-e2 4c 68 a9 30 85 8e 24   !..7...3.Lh.0..$\n    0080 - f0 ac 58 5f a2 75 95 80-9c 9b 46 e6 6a 01 b8 83   ..X_.u....F.j...\n    0090 - e2 21 94 50 81 85 41 7b-56 fe 17 e4 09 f9 5c 8c   .!.P..A{V.....\\.\n\n    Start Time: 1794151636\n    Timeout   : 7200 (sec)\n    Verify return code: 0 (ok)\n    Extended master secret: no\n    Max Early Data: 0\n---\nread R BLOCK\n",
+      "stderr": "Connecting to 185.199.108.153\ndepth=3 C=US, O=Internet Security Research Group, CN=ISRG Root X1\nverify return:1\ndepth=2 C=US, O=ISRG, CN=Root YR\nverify return:1\ndepth=1 C=US, O=Let's Encrypt, CN=YR1\nverify return:1\ndepth=0 CN=leifcnp.com\nverify return:1\nDONE\n"
+    },
+    {
+      "certificate_for": "leifcnp.com",
+      "exit": 0,
+      "stdout": "subject=CN=leifcnp.com\nissuer=C=US, O=Let's Encrypt, CN=YR1\nnotBefore=Nov  8 04:11:39 2026 GMT\nnotAfter=Feb  6 04:11:38 2027 GMT\nX509v3 Subject Alternative Name: \n    DNS:leifcnp.com, DNS:www.leifcnp.com\nsha256 Fingerprint=D1:7D:AA:F8:61:45:DF:A2:56:A4:2A:2D:DD:EB:14:DE:05:A2:26:0F:B0:C2:91:2A:86:1A:7A:EA:25:9E:8C:6A\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "openssl",
+        "s_client",
+        "-connect",
+        "www.leifcnp.com:443",
+        "-servername",
+        "www.leifcnp.com",
+        "-verify_hostname",
+        "www.leifcnp.com",
+        "-verify_return_error",
+        "-showcerts"
+      ],
+      "exit": 0,
+      "stdout": "CONNECTED(00000003)\n---\nCertificate chain\n 0 s:CN=leifcnp.com\n   i:C=US, O=Let's Encrypt, CN=YR1\n   a:PKEY: RSA, 2048 (bit); sigalg: sha256WithRSAEncryption\n   v:NotBefore: Nov  8 04:11:39 2026 GMT; NotAfter: Feb  6 04:11:38 2027 GMT\n-----BEGIN CERTIFICATE-----\nMIIFADCCA+igAwIBAgISBTfYxsNxFHaMlSdiig6PhzqRMA0GCSqGSIb3DQEBCwUA\nMDMxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQwwCgYDVQQD\nEwNZUjEwHhcNMjYxMTA4MDQxMTM5WhcNMjcwMjA2MDQxMTM4WjAWMRQwEgYDVQQD\nEwtsZWlmY25wLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJiY\nWOvsy7Z3gehwDociMe/SY2NnAZyQThAWlJz1GbYFMFa2gkFi1DELecDU4cE2Ex9c\ncBYh0BxTE4w8DIxdFUf4x5QpQY/C47Iptht3jahz6thjkTfSJlBhoQS9+nYiBqWg\nPdwHS4+3BiS2F5Iuya7cFiwsw2yUIy2fndRA2pgmPWeHN7ZMpKPuUjHjhyztOO5w\npbWYfcOHlvsuRWyibCT/Y0K25HzUX2uWcyR6DKWJaIbxcQN5Uw6IHG5apfCADGYN\npKIgtbkJHAA1jzyJp4qMTlf9HigZOmPQVgPp9TINN0A/mpBxM9fXtH5BSLQFqo73\nZTaHh2bK/22DQ+9IrI0CAwEAAaOCAikwggIlMA4GA1UdDwEB/wQEAwIFoDATBgNV\nHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRYybKqaOal\nSMzYK+hCsr9/vkVmaDAfBgNVHSMEGDAWgBQfLzW+RhSCzUCxrnksVXj699Ro+zAz\nBggrBgEFBQcBAQQnMCUwIwYIKwYBBQUHMAKGF2h0dHA6Ly95cjEuaS5sZW5jci5v\ncmcvMCcGA1UdEQQgMB6CC2xlaWZjbnAuY29tgg93d3cubGVpZmNucC5jb20wEwYD\nVR0gBAwwCjAIBgZngQwBAgEwLgYDVR0fBCcwJTAjoCGgH4YdaHR0cDovL3lyMS5j\nLmxlbmNyLm9yZy8xOC5jcmwwggELBgorBgEEAdZ5AgQCBIH8BIH5APcAdQBEwr0M\n6RQOZKXJSgGTClqhuzWXDgDuERaJaCocRNe1ZgAAAaG5kGDtAAAEAwBGMEQCIGr+\n1mQiAS6y5YQB9Xf3d+nx9lLT4kcaK31fvfyLQiFYAiBZT0qKN6vTEh0SgAJol1pF\ns/2wa8B1v6swpYNqCoEJmQB+ABqLnWuN15HRzQVJ7bYDVdYGtk+tMNtx/niPD8fI\n+8SxAAABobmQYYAACAAABQAU5BTiBAMARzBFAiEAha+xZY/9XxWvS3GJYDfXT5Pf\nImFXRmPnblKjwsnZ8OcCIFljUzirIF0hKD+Pts+aQXRFc/sQRN7yes7zK3R0YOpF\nMA0GCSqGSIb3DQEBCwUAA4IBAQCUydIsUsf2cpDAAXfj7LhFrecGQaKZtEbpoThj\nd4Pua6c8GLvQUBhputX5YREVXIuEts2lk2T9S2ooYtvrbo/Q7zYK8VQzcko2WNY+\nIsBEpB79DIi8a+Q7I31gNF9nDQPm7FjYQlK5xrXTnq9qbNKBVa1h7MohUaGSadxf\nA+Bnt38tAJcPPfi1cOQ2rEhZ+aRM7xXQLgf0WXcSq3vSgp0Rqo4kwHNUjXjbGV2f\nv9ktkUn9+6YJjC09J9reVhIAvnSVtQJIvCgJ5vri/AJG0LlPIBScTmOfpd9LjgHk\nvu9YmbcqqTKYT35g4WMF7JmZlrmKvWNKD5fTYYKdAd9W2KqY\n-----END CERTIFICATE-----\n 1 s:C=US, O=Let's Encrypt, CN=YR1\n   i:C=US, O=ISRG, CN=Root YR\n   a:PKEY: RSA, 2048 (bit); sigalg: sha256WithRSAEncryption\n   v:NotBefore: Sep  3 00:00:00 2025 GMT; NotAfter: Sep  2 23:59:59 2028 GMT\n-----BEGIN CERTIFICATE-----\nMIIE2zCCAsOgAwIBAgIRAKICU/FfJpHAXcHOE7m8yk4wDQYJKoZIhvcNAQELBQAw\nLjELMAkGA1UEBhMCVVMxDTALBgNVBAoTBElTUkcxEDAOBgNVBAMTB1Jvb3QgWVIw\nHhcNMjUwOTAzMDAwMDAwWhcNMjgwOTAyMjM1OTU5WjAzMQswCQYDVQQGEwJVUzEW\nMBQGA1UEChMNTGV0J3MgRW5jcnlwdDEMMAoGA1UEAxMDWVIxMIIBIjANBgkqhkiG\n9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVi8X2xCYgMXvJxNPKp/oF13UMgmPABB07VC\nLNDtoXmt9luEZNJSBV10VyT1Pz6LD8Zq1d2gc43WNl1AdRrj4sEnazbOiz0nPpmG\nBp2hui49oZtDIY6wdKeZAi5BbNU20CH6RSBBMLSQ9cXrH8dxdv4PAJ45ssGML68U\nSE3BsjC2a6cAN9L5CgXVIQi5tfNiTPoFZZ3S0OlXqLmmtdV95udWAb5b6e/F49Di\nCsH0Y00Ag72BVIb1hzynmKe+X0mERBTtsb3BwmpV9ipeBjMLoR/D9cHxHQCWoi5l\nTmXwY015J5rGelz1nZjJuxc2kioaX29XJBnhMkP531rSdG5uMwIDAQABo4HuMIHr\nMA4GA1UdDwEB/wQEAwIBhjATBgNVHSUEDDAKBggrBgEFBQcDATASBgNVHRMBAf8E\nCDAGAQH/AgEAMB0GA1UdDgQWBBQfLzW+RhSCzUCxrnksVXj699Ro+zAfBgNVHSME\nGDAWgBTe51tg0CJtQCh9Pw0B/qS1UrRRlDAyBggrBgEFBQcBAQQmMCQwIgYIKwYB\nBQUHMAKGFmh0dHA6Ly95ci5pLmxlbmNyLm9yZy8wEwYDVR0gBAwwCjAIBgZngQwB\nAgEwJwYDVR0fBCAwHjAcoBqgGIYWaHR0cDovL3lyLmMubGVuY3Iub3JnLzANBgkq\nhkiG9w0BAQsFAAOCAgEA0+zvMq3kHig1ddTmmm+RibTr9/RpX7k4buanMMRqbV/y\nIvP82zAHN3mvaw+cASuVsdpd0ikjhr4hnhJQLQOzOp2ccKrsdGOAgo0vddeISFAq\nEWEV4lmUM3vFF796up+bSgmJ1u6RupDCMxDgF8M3eLvGuj6L0lu3zkQ0KuQLnKxL\ntB0oQqn1Idg5CuuGpMvQzk29Pa3D/qHurc0EIM9SxukQuJqq63lxsYyRQFU8yMBO\nhq1w5LbfaWNRrz1uklOfI/pYkAb2E2MTZrAMQkBIE2S8Jt1F8gRc96o/xOsrgvSk\na84AisX6xq1lz1Z7jGvrnXc4TMcjxZTjiTaihcYI1JIXZiLtEMSCa5l3cu8YWd6z\ndLRQlqRdclVjuQfNHawRJ6GWlkK0QJosivTKwdBw3KxEtzGo8yMHERbsy57gP1UX\nHOMcmZYQC0gtyR3SxfenIM/MxC3Ia2Ypab/kQ/CTnlIn2KQ5JUC6NYrGCbhFN9bp\n5lKJStEwCUnLpntcrXk5XVDCNv/5RyWpRThkGOV7GetKkQ0qAY8hCzWK6oqnAhDZ\ncjlYVdWfqOw3DIOX6EDNBgAqHarRVxyF9QZdOaXSyPJ0ueD2BYJEBgaCGQ8rAaU/\nQc123V5LTXDZW4CcsPBDyhy4v+c8hClAyw/IkJlfBqxB9D+/wvIMHgECZ4ptP6o=\n-----END CERTIFICATE-----\n 2 s:C=US, O=ISRG, CN=Root YR\n   i:C=US, O=Internet Security Research Group, CN=ISRG Root X1\n   a:PKEY: RSA, 4096 (bit); sigalg: sha256WithRSAEncryption\n   v:NotBefore: May 13 00:00:00 2026 GMT; NotAfter: Sep  2 23:59:59 2032 GMT\n-----BEGIN CERTIFICATE-----\n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\n-----END CERTIFICATE-----\n---\nServer certificate\nsubject=CN=leifcnp.com\nissuer=C=US, O=Let's Encrypt, CN=YR1\n---\nNo client certificate CA names sent\nPeer signing digest: SHA256\nPeer signature type: rsa_pss_rsae_sha256\nNegotiated TLS1.3 group: X25519MLKEM768\n---\nSSL handshake has read 5701 bytes and written 1621 bytes\nVerification: OK\nVerified peername: www.leifcnp.com\n---\nNew, TLSv1.3, Cipher is TLS_AES_128_GCM_SHA256\nProtocol: TLSv1.3\nServer public key is 2048 bit\nThis TLS version forbids renegotiation.\nCompression: NONE\nExpansion: NONE\nNo ALPN negotiated\nEarly data was not sent\nVerify return code: 0 (ok)\n---\n---\nPost-Handshake New Session Ticket arrived:\nSSL-Session:\n    Protocol  : TLSv1.3\n    Cipher    : TLS_AES_128_GCM_SHA256\n    Session-ID: 36E7B7410EAB66E1C52BACCE11A5D4614013B6FD299086DBDEDF81345D4D62DC\n    Session-ID-ctx: \n    Resumption PSK: 270365912A6F890E609427E412256534180CAB0E44FD0A4F61492CA581B9129B\n    PSK identity: None\n    PSK identity hint: None\n    SRP username: None\n    TLS session ticket lifetime hint: 86400 (seconds)\n    TLS session ticket:\n    0000 - c2 6a 7e 92 39 8e 0b 18-0f d0 23 c0 2b f6 7f 5d   .j~.9.....#.+..]\n    0010 - c4 3a 3a ef 20 7c 1d db-15 3c 0d 94 df 29 b6 1a   .::. |...<...)..\n    0020 - 9a a3 f6 2f 4e ba ef 9e-3d fa 69 f3 1d 43 6f 9d   .../N...=.i..Co.\n    0030 - e3 1c f2 64 1b 22 24 15-b9 f7 a1 65 b5 1f 96 e6   ...d.\"$....e....\n    0040 - 89 5d 30 81 51 5e e3 30-f5 f4 a6 a1 d3 d0 49 80   .]0.Q^.0......I.\n    0050 - 70 c0 fe ad 0e 9d 1e 17-c6 88 7e 86 ad dd 99 0f   p.........~.....\n    0060 - 7e 79 f3 77 47 27 57 48-97 9a 7b c9 88 75 ae d4   ~y.wG'WH..{..u..\n    0070 - 9c 59 ad 1c df a2 1e 85-90 0c f7 79 ee a6 cd e5   .Y.........y....\n    0080 - 55 ce 47 15 87 bd d5 02-f4 d0 e8 f1 6c 95 bc 6f   U.G.........l..o\n    0090 - 22 c3 79 6c 95 b6 ff ab-1c 80 5a 0d c4 eb 66 d9   \".yl......Z...f.\n\n    Start Time: 1794151636\n    Timeout   : 7200 (sec)\n    Verify return code: 0 (ok)\n    Extended master secret: no\n    Max Early Data: 0\n---\nread R BLOCK\n",
+      "stderr": "Connecting to 185.199.110.153\ndepth=3 C=US, O=Internet Security Research Group, CN=ISRG Root X1\nverify return:1\ndepth=2 C=US, O=ISRG, CN=Root YR\nverify return:1\ndepth=1 C=US, O=Let's Encrypt, CN=YR1\nverify return:1\ndepth=0 CN=leifcnp.com\nverify return:1\nDONE\n"
+    },
+    {
+      "certificate_for": "www.leifcnp.com",
+      "exit": 0,
+      "stdout": "subject=CN=leifcnp.com\nissuer=C=US, O=Let's Encrypt, CN=YR1\nnotBefore=Nov  8 04:11:39 2026 GMT\nnotAfter=Feb  6 04:11:38 2027 GMT\nX509v3 Subject Alternative Name: \n    DNS:leifcnp.com, DNS:www.leifcnp.com\nsha256 Fingerprint=D1:7D:AA:F8:61:45:DF:A2:56:A4:2A:2D:DD:EB:14:DE:05:A2:26:0F:B0:C2:91:2A:86:1A:7A:EA:25:9E:8C:6A\n",
+      "stderr": ""
+    }
+  ],
+  "assets": [
+    {
+      "url": "https://leifcnp.com/index.html",
+      "exit": 0,
+      "stderr": "",
+      "expected_bytes": 621,
+      "public_bytes": 621,
+      "expected_sha256": "fd4ec66236a74936da28f2894277eb2c5ceb024e2a508a063c5bb6f51906421a",
+      "public_sha256": "fd4ec66236a74936da28f2894277eb2c5ceb024e2a508a063c5bb6f51906421a",
+      "matches_base": true
+    },
+    {
+      "url": "https://leifcnp.com/assets/index-CxlYBWZO.js",
+      "exit": 0,
+      "stderr": "",
+      "expected_bytes": 593087,
+      "public_bytes": 593087,
+      "expected_sha256": "d1d319dcf71b6cffc144856326f1084097e0d3e388646889cdf7b69e7594a403",
+      "public_sha256": "d1d319dcf71b6cffc144856326f1084097e0d3e388646889cdf7b69e7594a403",
+      "matches_base": true
+    },
+    {
+      "url": "https://leifcnp.com/assets/index-yKZlOFjO.css",
+      "exit": 0,
+      "stderr": "",
+      "expected_bytes": 13672,
+      "public_bytes": 13672,
+      "expected_sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+      "public_sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+      "matches_base": true
+    },
+    {
+      "url": "https://leifcnp.com/favicon.svg",
+      "exit": 0,
+      "stderr": "",
+      "expected_bytes": 354,
+      "public_bytes": 354,
+      "expected_sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa",
+      "public_sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa",
+      "matches_base": true
+    }
+  ]
+}

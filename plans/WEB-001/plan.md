@@ -14,7 +14,10 @@ Record the authoritative hosting state before changing publishing configuration.
 
 In scope: observe DNS records, GitHub Pages custom-domain and HTTPS settings, and all four URL variants (`http`/`https` × apex/`www`); identify the intended canonical URL and document evidence, uncertainty, redirects, and proposed alignment. The current build/deploy mechanism is Vite output in `docs/` from `master`.
 
-Out of scope: changing DNS, domain registration, GitHub Pages settings, `baseURL`, `docs/CNAME`, or redirects while performing the investigation. This plan preserves the exact “investigation only” requirement in the repository TODO.
+The original investigation excludes DNS/domain registration, publishing or access
+changes. The user subsequently approved only GitHub Pages Enforce HTTPS after
+reviewing the concrete evidence; that follow-up is recorded below. No further
+DNS, domain, CNAME or hosting change is authorized by this task.
 
 ## Steps
 
@@ -50,8 +53,28 @@ This is an operational investigation, so it has no application API. Store a conc
 
 ## Review gate
 
-The owner reviews the evidence and explicitly requests any configuration change as a separate task. Until then this remains unexecuted investigation work.
+Configuration changes require a concrete owner decision. The user explicitly
+approved Enforce HTTPS after the investigation; root applied only that setting.
+The full recorded evidence still requires independent MR review.
 
 ## Implementation status
 
-Planned and intentionally unexecuted; the repository TODO says not to change domain or site configuration as part of this investigation.
+Investigation and specifically approved HTTPS follow-up are verified. See the
+current evidence below; historical September observations are superseded.
+
+## Current investigation and approved follow-up — 2026-11-07
+
+Read-only public/authoritative DNS, strict curl/OpenSSL TLS and authenticated
+GitHub Pages settings were inspected. Apex and www certificates now validate;
+custom domain remains leifcnp.com, publishing master/docs. The user explicitly
+approved ONLY Enforce HTTPS. Root enabled it, observed persistence after reload;
+a separate Sol worker verified all four URLs finish at https://leifcnp.com/,
+strict TLS and byte-identical current deployment assets, with unchanged DNS.
+Initial HTTP edge responses expired before the redirect became visible; no
+re-toggle, credential or DNS change occurred. The original /tmp raw bundle was lost on interruption. Newly recovered current
+public evidence is in artifacts/web001/; historical account observations are
+explicitly attributed, and lost raw files are not represented as retained.
+Status: implementation/verification and durable public report complete; final
+independent review/MR integration pending in the shared WEB-016 batch.
+GoDaddy account UI was not needed: both authoritative domaincontrol.com servers
+provided live zone evidence. The obsolete Hugo baseURL is not a current input.

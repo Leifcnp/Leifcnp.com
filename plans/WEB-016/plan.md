@@ -6,7 +6,12 @@ The user restored this task on 2026-11-07: implement and publish a **Shipyard-on
 prototype after the WEB-022 remaining-island rollout. Other islands' harbours are
 unassigned. The historical goal is manual arrival revealing local dockable content.
 
-Written interaction decision (preparation only; implementation waits for rollout):
+Status: In progress. Shoreline rollout is verified through MR #10 / `812e02f`.
+Current base: `812e02fc2517d02165241289f31ea58a644e4fc0`; branch
+`codex/WEB-016-shipyard-harbours`. Ownership/interfaces:
+[batch ledger](../../work/batches/2026-11-07-WEB-016.md).
+
+Written interaction decision:
 
 - Two typed destinations reuse existing copy: Overview (Shipyard description) and
   Project (`project-01`). Store stable IDs/parent/local XZ/capture radius/content

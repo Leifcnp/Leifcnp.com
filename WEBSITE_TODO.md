@@ -4,9 +4,11 @@ Persistent website tasks. See [AGENTS.md](AGENTS.md) for access information and 
 
 Use `- [ ] WEB-NNN — Description` for unfinished tasks and `- [x]` for completed tasks. Each entry includes acceptance criteria; add progress, blockers, and a next step as needed. Done entries retain their completion date and verification evidence.
 
-Current execution policy (2026-11-07): only explicitly assigned tasks/batches
-may start. Readiness and backlog priority are planning information, not
-authorization. Use [plans/TEMPLATE.md](plans/TEMPLATE.md) for task contracts and
+Current batch (2026-11-07): the user authorizes continuing the remaining todo
+list after WEB-016 and adding/completing focused UI/control simplifications with
+recorded scope and evidence. The spending/access/DNS/destructive/major-design
+approval boundaries remain. Other readiness/backlog labels alone do not authorize
+future work. Use [plans/TEMPLATE.md](plans/TEMPLATE.md) for task contracts and
 [work/batches/TEMPLATE.md](work/batches/TEMPLATE.md) for ownership and handoffs.
 Historical phase review gates do not replace the current MR workflow.
 
@@ -15,16 +17,26 @@ Historical phase review gates do not replace the current MR workflow.
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
 wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; WEB-017’s wider-view correction is published and awaits user review.
-Current assignment restores WEB-016 after the WEB-022 shoreline rollout; WEB-001 remains unassigned.
+Current batch restores WEB-016 after the completed shoreline rollout, includes
+WEB-001 and its specifically approved HTTPS redirect, then WEB-024 cleanup.
 
 
 
-- [ ] WEB-016 — Zoom into manually reached islands and reveal dockable submenu harbours.
-  - Requested (2026-09-24): Brainstorming note: when a visitor manually navigates to an island, zoom in and show each section submenu as a smaller dockable harbour.
-  - Acceptance criteria: Manual island arrival transitions smoothly to a useful local view, with data-driven smaller harbours for content subsections. Each harbour has legible identity, a safe reachable docking area, and the appropriate submenu content. Define entering/leaving, zoom-out/reset, and switching islands without camera thrashing; preserve scanner/direct-content access, collision safety, mobile framing, and instant reduced-motion alternatives.
-  - Progress: User restored this task on 2026-11-07: a Shipyard-only prototype after the remaining-island shoreline rollout.
-  - Next step: After WEB-022 publication, record the manual/scanner interaction and clearance contract; implement, independently review and publish one island. Wider harbour rollout remains unassigned.
+- [ ] WEB-024 — Simplify persistent helm controls with an accessible secondary-controls disclosure.
+  - Assigned (2026-11-07): User authorizes observed UI/control simplifications. Ten always-visible actions crowd mobile sailing views.
+  - Acceptance: Steering/Spill stay direct; trim/auto/reset/sound remain accessible through More controls and unchanged keyboard shortcuts. Reduce default mobile panel height; preserve 44px targets, focus, hold release, motion/scanner/local-view/fallback behavior. Independent review and MR/publication gates apply.
+  - Next step: After WEB-016 release, implement the small disclosure and compare compact layouts; no input/physics rewrite.
+  - Plan: [plans/WEB-024/plan.md](plans/WEB-024/plan.md).
+
+## In progress
+
+- [ ] WEB-016 — Shipyard local harbour/zoom prototype.
+  - Assigned (2026-11-07): User restored the one-island prototype after the completed shoreline rollout. Wider harbour rollout remains unassigned.
+  - Acceptance: Manual arrival reveals a stable local view and two safe data-driven content harbours; explicit Open, Zoom out/reset, scanner compatibility, mobile framing and reduced motion remain accessible. See the written interaction contract.
+  - Progress: Isolated worktree from published `812e02f`; separate Sol core, camera and UI owners implementing agreed interfaces. Original changes preserved.
+  - Next step: Integrate, run meaningful state/clearance/camera/browser checks, obtain independent exact-head/base review, protected MR merge and publication verification.
   - Plan: [plans/WEB-016/plan.md](plans/WEB-016/plan.md).
+
 
 - [ ] WEB-001 — Investigate HTTPS, www, and custom-domain configuration with GoDaddy and GitHub Pages.
   - Context: On 2026-09-16, the user confirmed `http://leifcnp.com/` works in their browser and said GoDaddy is already set up. The repository sets `baseURL` to `https://www.leifcnp.com/`, while `docs/CNAME` contains `leifcnp.com`. Earlier restricted-environment curl checks failed DNS resolution for both hostnames and web fetches failed; this does not prove HTTPS or www is broken.
@@ -33,23 +45,21 @@ Current assignment restores WEB-016 after the WEB-022 shoreline rollout; WEB-001
   - Rebuild note (2026-09-24): Hugo configuration is now available only in Git history (commit `863b788`). The new app preserves `leifcnp.com` in `public/CNAME` and uses relative asset URLs.
   - Deployment observation (2026-09-24): An unrestricted request to `http://leifcnp.com/` returned HTTP 200 from GitHub Pages. A verified TLS request to `https://leifcnp.com/` failed because the certificate did not match the hostname. Public Actions/deployment history confirms the `master` branch and `github-pages` environment. Pages settings require authenticated access; GoDaddy settings and the full hostname/redirect investigation remain outstanding. No DNS or certificate settings changed.
   - Plan: [plans/WEB-001/plan.md](plans/WEB-001/plan.md).
-
-## In progress
-
-- [ ] WEB-022 — Make waves visibly interact with islands and shorelines.
-  - Requested (2026-09-24): Add wave interaction at the islands so incoming water visibly reaches, breaks against, and wraps around the land instead of passing through it as an unrelated background layer.
-  - Acceptance criteria: Use the shared deterministic wave field to create bounded shoreline response such as small breaking crests, swash, foam, or reflected/dissipated motion at island edges. Keep land geometry, wave sampling, hull contact, wake, storm transitions, and scanner routes coherent; never let water cues imply that the boat can enter land or that island collision rules have changed. Preserve pause/reset, hidden-tab, reduced-motion, WebGL fallback, disposal, and mobile rendering budgets.
-  - Plan: [plans/WEB-022/plan.md](plans/WEB-022/plan.md).
-  - Assigned (2026-11-07): User explicitly requests finishing the existing Shipyard-only prototype, independent review, MR merge/publication and a minimal process retrospective.
-  - Progress: Shipyard published through MR #9 as 9076739; reviewed tree, exact-SHA CI/Pages, four matching public assets and desktop/phone smoke pass. Original 20 files unchanged. User now assigns the remaining three islands.
-  - Next step: Complete the remaining-island shoreline rollout with quantitative/browser checks, independent review and protected MR publication, then start assigned WEB-016.
-
+  - Current update (2026-11-07): Investigation and specifically approved Enforce HTTPS change verified. Both hostnames have valid TLS; all four plain URL variants finish at HTTPS apex; deployed files match and DNS is unchanged. Detailed durable report/independent MR review will be carried into the next scope.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-022 — Make waves visibly interact with islands and shorelines.
+  - Completed: 2026-11-07. User assigned Shipyard then the remaining three islands. [MR #9](https://github.com/Leifcnp/Leifcnp.com/pull/9) published the prototype; [MR #10](https://github.com/Leifcnp/Leifcnp.com/pull/10) completed rollout as `812e02fc2517d02165241289f31ea58a644e4fc0`.
+  - Result: Matching submerged foundations and sparse directional response on all four islands, one fixed 400-vertex/320-triangle foam mesh, shared rendered-water sampling and Shipyard-only dock gap. Sailing, collisions, routes, content and input preserved.
+  - Verification: 189 native tests/build/freshness, per-island geometry/lifecycle/CPU measurements, eight matched views, two worst-phase Logbook diagnostics and focused browser checks pass. Independent Sol final-head/base review passes on MR #10. Merge tree matches; exact-SHA [CI](https://github.com/Leifcnp/Leifcnp.com/actions/runs/42450114827) and [Pages](https://github.com/Leifcnp/Leifcnp.com/actions/runs/42450114293) succeed. Four public assets and desktop/phone motion/helm/three scanner arrivals match/pass. All original 20 files unchanged.
+  - Limits: VM rendering and sampled interior contact deviations are disclosed in [evidence](artifacts/phase15-rollout/VERIFICATION.md); no physical GPU performance claim.
+  - Plan: [plans/WEB-022/plan.md](plans/WEB-022/plan.md).
+
 
 - [x] WEB-023 — Prepare autonomous orchestration, worktrees and reviewed MR merges.
   - Assigned (2026-11-07): User approved explicitly assigned autonomous batches, Sol 6.1 workers and a separate reviewer, automatic merge/publication after checks, flexible worktree ownership, three repair rounds and branch protection where supported.
