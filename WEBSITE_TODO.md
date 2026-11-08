@@ -42,19 +42,20 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-- [ ] WEB-023 — Prepare autonomous orchestration, worktrees and reviewed MR merges.
-  - Assigned (2026-11-07): User approved explicitly assigned autonomous batches, Sol 6.1 workers and a separate reviewer, automatic merge/publication after checks, flexible worktree ownership, three repair rounds and branch protection where supported.
-  - Acceptance criteria: Authoritative agent rules replace conflicting historical scheduling; task/batch/worker/reviewer/MR templates define ownership and evidence; CI checks frozen install, native tests, strict build and generated/domain metadata; safe create-only worktree tooling is exercised; independent review checks the final head/base; changes use an MR with merge/deployment verification where access permits. No website feature changes or loss of existing edits.
-  - Progress: Workflow/tooling implemented in an isolated worktree;175 tests, strict build and unchanged-output/domain checks pass. First independent review findings repaired; final SHA-bound review and remote gates pending. All20 existing changed/untracked files and the legacy worktree are preserved.
-  - Next step: Complete tooling checks and independent review, open/merge the setup MR, verify CI/deployment and configure available branch protection without bypassing existing rules.
-  - Plan: [plans/WEB-023/plan.md](plans/WEB-023/plan.md).
-
+No assigned tasks currently in progress.
 
 ## Blocked
 
 No blocked tasks.
 
 ## Done
+
+- [x] WEB-023 — Prepare autonomous orchestration, worktrees and reviewed MR merges.
+  - Assigned (2026-11-07): User approved explicitly assigned autonomous batches, Sol 6.1 workers and a separate reviewer, automatic merge/publication after checks, flexible worktree ownership, three repair rounds and branch protection where supported.
+  - Acceptance criteria: Authoritative agent rules replace conflicting historical scheduling; task/batch/worker/reviewer/MR templates define ownership and evidence; CI checks frozen install, native tests, strict build and generated/domain metadata; safe create-only worktree tooling is exercised; independent review checks the final head/base; changes use an MR with merge/deployment verification where access permits. No website feature changes or loss of existing edits.
+  - Completed: 2026-11-07. Five Sol 6.1 agents audited, implemented and independently reviewed the setup. [MR #7](https://github.com/Leifcnp/Leifcnp.com/pull/7) squash-merged as `fd6ea26551b49c797a9a895962501a26b527aa99`; strict master protection is active, including GitHub Actions verification, up-to-date branches, admin enforcement, no bypass/force push/deletion and linear history.
+  - Verification: 175 native tests, strict build and generated/domain checks pass locally and in hosted CI. [Independent exact-SHA review](https://github.com/Leifcnp/Leifcnp.com/pull/7#issuecomment-6716934491) passes. [Merge-SHA CI](https://github.com/Leifcnp/Leifcnp.com/actions/runs/42444724579) and [Pages](https://github.com/Leifcnp/Leifcnp.com/actions/runs/42444724516) succeed; four public files match the unchanged build. All 20 original changed/untracked files remain byte-identical. See [evidence](artifacts/workflow-setup/VERIFICATION.md). No feature batch is assigned; wait for the user’s next explicit assignment.
+  - Plan: [plans/WEB-023/plan.md](plans/WEB-023/plan.md).
 
 - [x] WEB-019 — Make wind direction visible through flags, wind effects and spray.
   - Requested (2026-09-24): Add wind effects, flags and spray so the sailing wind is clearer; explicitly a to-do-list addition only.

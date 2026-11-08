@@ -63,3 +63,19 @@ Commit the checked candidate, re-review the exact head/base, open its MR, observ
 CI, activate/confirm required protection and merge/verify. If setting access
 remains unavailable, leave the reviewed MR unmerged with precise user action;
 do not change website backlog scope or bypass the new merge gate.
+
+## Completed implementation release / closeout
+
+MR #7 merged as `fd6ea26551b49c797a9a895962501a26b527aa99` after exact-head/base
+independent review, passing PR CI and applied strict admin-enforced protection.
+CI 42444724579 and Pages 42444724516 passed for that merge SHA; four public
+files match the build. Review artifact is MR #7 comment 6716934491. Repair round 1
+passed; no unresolved findings. The connector's MR write was rejected 403; the
+signed-in browser completed writes without expanding app access. Fetch succeeded
+with the documented per-command internal-ref exclusion; no refs were deleted.
+
+Root creates an evidence-only closeout MR from this verified merge SHA. Owned
+paths: AGENTS, README, PLAN, WEBSITE_TODO, WEB-023 plan, this ledger and workflow
+artifacts. Separate Sol 6.1 review and required CI apply again. Implementation
+WEB-023 is Done; no website task is assigned. Further closeout review/merge/CI
+outcomes belong on its MR so the final SHA remains stable.

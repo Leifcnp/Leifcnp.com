@@ -26,6 +26,24 @@ pnpm run dev
 
 Open the URL Vite prints, usually `http://localhost:5173/`.
 
+## Git commands in this VM
+
+Normal Git commands remain preferred. This VM's system SSH config currently
+fails an owner-permission check; a per-command configuration uses the existing
+SSH identity and normal host-key verification without changing system settings.
+Fetch also encountered stale Codex internal snapshot refs. The verified fetch
+excludes only `refs/codex/` from fetch traversal; it does not delete those refs:
+
+```sh
+git -c core.sshCommand='ssh -F /dev/null -o BatchMode=yes' -c fetch.hideRefs=refs/codex/ fetch origin master
+git -c core.sshCommand='ssh -F /dev/null -o BatchMode=yes' push -u origin YOUR_TASK_BRANCH
+```
+
+Never disable host-key/TLS checking or delete snapshot refs to work around this.
+The connected GitHub app currently reads this repo but returned 403 for MR
+creation. Use the authorized signed-in browser for MR writes/settings when the
+connector lacks permission; do not widen credential/access scope on your own.
+
 ## Checks and production build
 
 ```sh
@@ -113,7 +131,7 @@ Read wind directly from the scene: the Shipyard flag trails downwind. The small 
 
 Sail away from the islands to reach the storm. Water darkens gradually between radii 142 and 172; the same wave shape grows by up to 40%. The inward current opposes outward sailing. Ease/spill the sail and steer inward, or select a scanner category to return to the islands. The storm adds no automatic steering or teleportation. Pause freezes it; reduced-motion sailing retains its boundary current. The opening view and island routes stay calm in the six verified layouts.
 
-See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Historical release/review records below do not authorize new tasks. The current assignment is workflow setup (WEB-023); existing WEB-022 shoreline edits are preserved outside this worktree, and WEB-016 harbours/zoom remains deferred.
+See [PLAN.md](PLAN.md), the canonical [to-do list](WEBSITE_TODO.md), and the per-task `plans/WEB-NNN/plan.md` files. Historical release/review records below do not authorize new tasks. Workflow setup (WEB-023) is complete through [MR #7](https://github.com/Leifcnp/Leifcnp.com/pull/7), including strict master protection and verified CI/Pages. No new feature batch is assigned. Existing WEB-022 shoreline edits are preserved in the original checkout, and WEB-016 harbours/zoom remains deferred.
 
 
 ## Verification and VM graphics

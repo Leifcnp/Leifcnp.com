@@ -1,0 +1,42 @@
+{
+  "implementationMr": "https://github.com/Leifcnp/Leifcnp.com/pull/7",
+  "reviewArtifact": "https://github.com/Leifcnp/Leifcnp.com/pull/7#issuecomment-6716934491",
+  "reviewedHead": "8bc2fd245fe211352d8909127ddc9305417211f5",
+  "reviewedBase": "97902baf0e82c77e88e3417b8b44e051ddff5683",
+  "mergeSha": "fd6ea26551b49c797a9a895962501a26b527aa99",
+  "reviewedAndMergedTree": "6b9c39cf948aebaa71989b8dbff022dcd592c5fc",
+  "runs": [
+    {
+      "id": 42444724516,
+      "name": "pages build and deployment",
+      "head_sha": "fd6ea26551b49c797a9a895962501a26b527aa99",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Leifcnp/Leifcnp.com/actions/runs/42444724516"
+    },
+    {
+      "id": 42444724579,
+      "name": "Repository verification",
+      "head_sha": "fd6ea26551b49c797a9a895962501a26b527aa99",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Leifcnp/Leifcnp.com/actions/runs/42444724579"
+    }
+  ],
+  "publicBranchProtection": {
+    "enabled": true,
+    "required_status_checks": {
+      "enforcement_level": "everyone",
+      "contexts": [
+        "Repository verification"
+      ],
+      "checks": [
+        {
+          "context": "Repository verification",
+          "app_id": 15368
+        }
+      ]
+    }
+  },
+  "strictAndPrAdminNoBypass": "Observed checked in browser form, followed by rule-created confirmation; source configuration is work/branch-protection.json"
+}

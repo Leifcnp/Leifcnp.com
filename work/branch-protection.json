@@ -1,8 +1,11 @@
 {
   "required_status_checks": {
     "strict": true,
-    "contexts": [
-      "Repository verification"
+    "checks": [
+      {
+        "context": "Repository verification",
+        "app_id": 15368
+      }
     ]
   },
   "enforce_admins": true,
