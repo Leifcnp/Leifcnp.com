@@ -165,11 +165,7 @@ export function createWaterWorld(
   const ocean = createOceanSurface(scene);
 
   const landmarks = createLandmarks(scene, options.islands ?? []);
-  // Review one island's shoreline before extending the effect to the archipelago.
-  const shorelineFoam = createShorelineFoam(
-    scene,
-    (options.islands ?? []).filter((island) => island.id === 'island-projects'),
-  );
+  const shorelineFoam = createShorelineFoam(scene, options.islands ?? []);
   const shorelineWaterPositions = (ocean.mesh.geometry.getAttribute('position') as THREE.BufferAttribute).array;
   const vessel = createVessel(scene);
   const wake = createWake(scene);

@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-11-08T05:10:21.807Z",
+  "base": "907673941072e59335e9f16e5de97b393c575d53",
+  "headAtMeasurement": "907673941072e59335e9f16e5de97b393c575d53",
+  "candidateSourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "6bf8c9c8f0628cd6475ab1eb1a16969a96e246afef08c1982a8ef52e6c7adac7",
+    "src/world/createLandmarks.ts": "6c0053fb54ffe014a8d67dbb423f4a25aa6c87882a20b2872e2cf66aa0d50a35",
+    "src/world/createWaterWorld.ts": "2b551764b324377a9f0e971349994525ff9a5634fb1b1e8faf902e84ca4d0099"
+  },
+  "provenance": "Unmodified production bundles. Fixture manually steps actual requestAnimationFrame callbacks at100ms plus an exact final fractional interval; skips only intermediate raster draws, then renders each batch final frame normally. CPU simulation/camera/waves remain unchanged. Each matched view resets clock, holds actual Spill control, and uses normal production camera. Phone framing uses real paused instant Chartroom scanner then resume. Source hashes bind candidate working source; baseline proven by served asset bytes against recorded base docs. Canvas-only hashes hide HUD parents+descendants. Resize gets actual render step; drawer220ms animation settles260ms.",
+  "limits": "SwiftShader VM evidence, no physical GPU/browser-performance/Windows/browser-chrome/OS hidden-tab claim. Eight matched comparison images plus two targeted Logbook diagnostics. Local preview; publication remains root gate.",
+  "phases": {
+    "active": 11.75,
+    "quiet": 8.25
+  },
+  "assets": {
+    "candidate": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "fd4ec66236a74936da28f2894277eb2c5ceb024e2a508a063c5bb6f51906421a"
+      },
+      {
+        "path": "assets/index-CxlYBWZO.js",
+        "bytes": 593087,
+        "sha256": "d1d319dcf71b6cffc144856326f1084097e0d3e388646889cdf7b69e7594a403"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "path": "browser-logbook-phone-risk.png",
+      "sha256": "5334ac908beb5a625eac1377a2ab65f91147cb4e9c075aae3606abb5d6172fdb",
+      "simulationSeconds": 0.25,
+      "framing": "Real reset,pause,Logbook instant scan,close,resume,Spill; normal production follow camera",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "checks": [
+    {
+      "consoleErrors": []
+    }
+  ],
+  "browser": "151.0.7922.34",
+  "verdict": "pass",
+  "normalScaleVisualInspection": "Inspected at normal unscaled desktop crop and normal390x844 phone scanner/follow-camera framing: contact remains at the water edge, with no obvious floating patch, visible land overlap or distracting hole. This does not make the sampled triangle interiors exact: quantitative validation reports1.35% visible interior samples below water, min lift-.1021 at Logbook t=.25. Finite samples and these two views cannot exclude every phase/view artifact.",
+  "reproductionFixtureSha256": "2fb5933eb41724df34e81df49a7186e0c04d5b9cf58f0ab3d610ec47b6872a52"
+}

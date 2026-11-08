@@ -15,15 +15,15 @@ Historical phase review gates do not replace the current MR workflow.
 Priority update (2026-09-25): The user deferred WEB-016 harbours/zoom to focus
 on boat feel. Recommended order: WEB-020 controls/auto-trim, WEB-021 heel/contact, WEB-019
 wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now completed Phase 11; WEB-021 is completed Phase 12; WEB-019 is completed Phase 13; WEB-017’s wider-view correction is published and awaits user review.
-Other entries remain Backlog and harbours remain deferred.
+Current assignment restores WEB-016 after the WEB-022 shoreline rollout; WEB-001 remains unassigned.
 
 
 
 - [ ] WEB-016 — Zoom into manually reached islands and reveal dockable submenu harbours.
   - Requested (2026-09-24): Brainstorming note: when a visitor manually navigates to an island, zoom in and show each section submenu as a smaller dockable harbour.
   - Acceptance criteria: Manual island arrival transitions smoothly to a useful local view, with data-driven smaller harbours for content subsections. Each harbour has legible identity, a safe reachable docking area, and the appropriate submenu content. Define entering/leaving, zoom-out/reset, and switching islands without camera thrashing; preserve scanner/direct-content access, collision safety, mobile framing, and instant reduced-motion alternatives.
-  - Progress: Deferred by the user on 2026-09-25 while boat feel is refined; no longer next after WEB-015. This extends island data, camera/proximity, shoreline geometry, and content navigation; start with one island after a separate phase selection.
-  - Next step: Revisit only after the boat-feel work is reviewed and the user restores harbour/zoom work; then design one island/subsection prototype, resolve camera/trigger and safe harbour-route contracts, and review it before applying the pattern to all islands.
+  - Progress: User restored this task on 2026-11-07: a Shipyard-only prototype after the remaining-island shoreline rollout.
+  - Next step: After WEB-022 publication, record the manual/scanner interaction and clearance contract; implement, independently review and publish one island. Wider harbour rollout remains unassigned.
   - Plan: [plans/WEB-016/plan.md](plans/WEB-016/plan.md).
 
 - [ ] WEB-001 — Investigate HTTPS, www, and custom-domain configuration with GoDaddy and GitHub Pages.
@@ -41,8 +41,8 @@ Other entries remain Backlog and harbours remain deferred.
   - Acceptance criteria: Use the shared deterministic wave field to create bounded shoreline response such as small breaking crests, swash, foam, or reflected/dissipated motion at island edges. Keep land geometry, wave sampling, hull contact, wake, storm transitions, and scanner routes coherent; never let water cues imply that the boat can enter land or that island collision rules have changed. Preserve pause/reset, hidden-tab, reduced-motion, WebGL fallback, disposal, and mobile rendering budgets.
   - Plan: [plans/WEB-022/plan.md](plans/WEB-022/plan.md).
   - Assigned (2026-11-07): User explicitly requests finishing the existing Shipyard-only prototype, independent review, MR merge/publication and a minimal process retrospective.
-  - Progress: Existing source/tests copied into an isolated current-master worktree; original edits preserved. Source, quantitative validation and browser QA delegated to Sol 6.1 agents.
-  - Next step: Complete scoped checks and normal-camera comparisons, obtain exact-head/base independent review, merge through protected master, then verify Pages/public behavior. Do not expand to other islands.
+  - Progress: Shipyard published through MR #9 as 9076739; reviewed tree, exact-SHA CI/Pages, four matching public assets and desktop/phone smoke pass. Original 20 files unchanged. User now assigns the remaining three islands.
+  - Next step: Complete the remaining-island shoreline rollout with quantitative/browser checks, independent review and protected MR publication, then start assigned WEB-016.
 
 
 ## Blocked

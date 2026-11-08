@@ -7,15 +7,18 @@ import {
   getShorelineFoamAnchor,
   getShorelineFoamIntensity,
   SHORELINE_FOAM_TRIANGLE_COUNT,
+  SHORELINE_FOAM_VERTICES_PER_ISLAND,
+  SHORELINE_FOAM_TRIANGLES_PER_ISLAND,
   SHORELINE_FOAM_VERTEX_COUNT,
   SHORELINE_FOOTPRINT_FACTOR,
   SHORELINE_INNER_CLEARANCE,
 } from '../src/world/effects/createShorelineFoam.ts'
+import { portfolioIslands } from '../src/content/islands.ts'
 import { MAX_WAVE_HEIGHT, PRIMARY_WAVE, sampleWaterHeight } from '../src/world/waves.ts'
 import { STORM_TUNING } from '../src/world/stormField.ts'
 import { createWaterSurfaceAxis, sampleRenderedWaterHeight } from '../src/world/waterSurfaceGrid.ts'
 
-const island = { position: { x: 16, z: -24 }, landCollisionRadius: 6 }
+const island = { id: 'island-projects', position: { x: 16, z: -24 }, landCollisionRadius: 6 }
 
 function cachedPositions(value = 0.9): Float32Array {
   const positions = new Float32Array(createWaterSurfaceAxis().length ** 2 * 3)
@@ -46,7 +49,7 @@ test('anchors use actual decagon face midpoints and remain water-side', () => {
   decagon.dispose()
 })
 
-test('dynamic mesh has fixed 100-vertex/80-triangle strips with no full ring', () => {
+test('dynamic mesh has fixed 400-vertex/320-triangle capacity with no full ring', () => {
   const scene = new THREE.Scene()
   const foam = createShorelineFoam(scene, [island])
   assert.equal(foam.mesh.geometry.getAttribute('position').count, SHORELINE_FOAM_VERTEX_COUNT)
@@ -69,7 +72,7 @@ test('strips use cached water height and preserve face clearance and corner gaps
   const radius = island.landCollisionRadius * SHORELINE_FOOTPRINT_FACTOR
   const apothem = radius * Math.cos(Math.PI / 10)
   let visible = 0
-  for (let index = 0; index < SHORELINE_FOAM_VERTEX_COUNT; index += 1) {
+  for (let index = 0; index < SHORELINE_FOAM_VERTICES_PER_ISLAND; index += 1) {
     const x = positions[index * 3]
     const y = positions[index * 3 + 1]
     const z = positions[index * 3 + 2]
@@ -179,7 +182,7 @@ test('dock face and leeward shore stay silent through crest cycles', () => {
 })
 
 test('cached and analytic facet samples agree at every foam vertex', () => {
-  const foam = createShorelineFoam(new THREE.Scene(), [island])
+  const foam = createShorelineFoam(new THREE.Scene(), portfolioIslands)
   const axis = createWaterSurfaceAxis()
   const cached = cachedPositions(0)
   const time = 4.25
@@ -205,7 +208,7 @@ test('cached and analytic facet samples agree at every foam vertex', () => {
 test('shared elapsed time gives identical 30/60/120 Hz, frozen and resumed output', () => {
   const snapshots = []
   for (const hz of [30, 60, 120]) {
-    const foam = createShorelineFoam(new THREE.Scene(), [island])
+    const foam = createShorelineFoam(new THREE.Scene(), portfolioIslands)
     for (let frame = 0; frame <= hz * 2; frame += 1) foam.update(frame / hz)
     const positions = foam.mesh.geometry.getAttribute('position')
     const frozen = Array.from(positions.array)
@@ -223,7 +226,7 @@ test('shared elapsed time gives identical 30/60/120 Hz, frozen and resumed outpu
 })
 
 test('invalid time and rendered caches keep fixed buffers finite and bounded', () => {
-  const foam = createShorelineFoam(new THREE.Scene(), [island])
+  const foam = createShorelineFoam(new THREE.Scene(), portfolioIslands)
   const positionAttribute = foam.mesh.geometry.getAttribute('position')
   const alphaAttribute = foam.mesh.geometry.getAttribute('aAlpha')
   for (const time of [NaN, Infinity, -Infinity, 0, 10000]) {
@@ -243,7 +246,7 @@ test('invalid time and rendered caches keep fixed buffers finite and bounded', (
 
 test('empty and reduced-motion shorelines hide without sampling; disposal is idempotent', () => {
   const scene = new THREE.Scene()
-  for (const islands of [[], [island]]) {
+  for (const islands of [[], [island], portfolioIslands]) {
     const foam = createShorelineFoam(scene, islands)
     const geometry = foam.mesh.geometry
     const material = foam.mesh.material
@@ -272,4 +275,86 @@ test('empty and reduced-motion shorelines hide without sampling; disposal is ide
     assert.equal(materialDisposals, 1)
   }
   assert.equal(scene.children.length, 0)
+})
+
+
+test('all four shoreline slots follow exact faces with only Shipyard dock masked', () => {
+  const scene = new THREE.Scene()
+  const foam = createShorelineFoam(scene, portfolioIslands)
+  assert.equal(scene.children.length, 1)
+  assert.equal(foam.mesh.geometry.getAttribute('position').count, 400)
+  assert.equal(foam.mesh.geometry.index?.count, 320 * 3)
+  assert.ok(foam.mesh.geometry.index?.array instanceof Uint16Array)
+  const cached = cachedPositions(0.9)
+  for (const time of [0, 4, 12, 23]) {
+    foam.update(time, cached)
+    const positions = foam.mesh.geometry.getAttribute('position')
+    const alphas = alphaValues(foam.mesh)
+    for (const [islandIndex, island] of portfolioIslands.entries()) {
+      const radius = island.landCollisionRadius * SHORELINE_FOOTPRINT_FACTOR
+      const apothem = radius * Math.cos(Math.PI / 10)
+      const decagon = new THREE.CylinderGeometry(radius, radius, 1, 10)
+      const corners = decagon.getAttribute('position')
+      let visibleFaces = 0
+      for (let face = 0; face < 10; face += 1) {
+        const midX = (corners.getX(face) + corners.getX(face + 1)) * 0.5
+        const midZ = (corners.getZ(face) + corners.getZ(face + 1)) * 0.5
+        const normalLength = Math.hypot(midX, midZ)
+        const nx = midX / normalLength, nz = midZ / normalLength
+        const base = islandIndex * SHORELINE_FOAM_VERTICES_PER_ISLAND + face * 10
+        const faceAlpha = alphas.slice(base, base + 10)
+        if (faceAlpha.some(value => value > 0)) visibleFaces += 1
+        const incoming = PRIMARY_WAVE.directionX * nx + PRIMARY_WAVE.directionZ * nz
+        if (incoming <= 0 || (island.id === 'island-projects' && face === 1)) {
+          assert.ok(faceAlpha.every(value => value === 0))
+        } else {
+          assert.ok(faceAlpha.some(value => value > 0), `${island.id} windward face ${face} active`)
+        }
+        for (let sample = 0; sample < 10; sample += 1) {
+          const vertex = base + sample
+          const x = positions.getX(vertex) - island.position.x
+          const z = positions.getZ(vertex) - island.position.z
+          const clearance = x * nx + z * nz - apothem
+          const along = Math.abs(x * nz - z * nx)
+          assert.ok(clearance >= SHORELINE_INNER_CLEARANCE - 1e-5)
+          assert.ok(along <= radius * Math.sin(Math.PI / 10) - 0.18 + 1e-5)
+          assert.ok(Math.abs(positions.getY(vertex) - 0.94) < 1e-5)
+        }
+      }
+      assert.ok(visibleFaces > 0 && visibleFaces <= 5, 'sparse windward accents, never a full ring')
+      decagon.dispose()
+    }
+  }
+  // The index buffer never connects different island slots.
+  const index = foam.mesh.geometry.index!
+  for (let triangle = 0; triangle < index.count / 3; triangle += 1) {
+    const slot = Math.floor(triangle / SHORELINE_FOAM_TRIANGLES_PER_ISLAND)
+    for (let corner = 0; corner < 3; corner += 1) {
+      assert.equal(Math.floor(index.getX(triangle * 3 + corner) / SHORELINE_FOAM_VERTICES_PER_ISLAND), slot)
+    }
+  }
+  foam.dispose()
+})
+
+test('aggregate slots match independent islands and keep inactive capacity quiet', () => {
+  const aggregate = createShorelineFoam(new THREE.Scene(), portfolioIslands)
+  const cached = cachedPositions()
+  aggregate.update(4.25, cached)
+  const positions = aggregate.mesh.geometry.getAttribute('position')
+  const alphas = alphaValues(aggregate.mesh)
+  for (const [slot, island] of portfolioIslands.entries()) {
+    const single = createShorelineFoam(new THREE.Scene(), [island])
+    single.update(4.25, cached)
+    assert.deepEqual(
+      Array.from(single.mesh.geometry.getAttribute('position').array).slice(0, SHORELINE_FOAM_VERTICES_PER_ISLAND * 3),
+      Array.from(positions.array).slice(slot * SHORELINE_FOAM_VERTICES_PER_ISLAND * 3, (slot + 1) * SHORELINE_FOAM_VERTICES_PER_ISLAND * 3),
+    )
+    assert.deepEqual(
+      Array.from(alphaValues(single.mesh)).slice(0, SHORELINE_FOAM_VERTICES_PER_ISLAND),
+      Array.from(alphas).slice(slot * SHORELINE_FOAM_VERTICES_PER_ISLAND, (slot + 1) * SHORELINE_FOAM_VERTICES_PER_ISLAND),
+    )
+    assert.ok(alphaValues(single.mesh).slice(SHORELINE_FOAM_VERTICES_PER_ISLAND).every(value => value === 0))
+    single.dispose()
+  }
+  aggregate.dispose()
 })

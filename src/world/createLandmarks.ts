@@ -155,20 +155,18 @@ function createIsland(
   sand.position.y = LAND_BASE_Y + 0.24;
   group.add(sand);
 
-  if (island.id === 'island-projects') {
-    // First shoreline prototype: close the raised sand shelf down through
-    // the lowest water level. The matching decagon stays inside the existing
-    // circular obstacle; the beach, dock and navigation radii do not move.
-    const bottom = -2.65;
-    const foundationGeometry = registerGeometry(
-      new THREE.CylinderGeometry(radius * 0.98, radius * 0.98, LAND_BASE_Y - bottom, 10, 1, false),
-      resources,
-    );
-    const foundation = new THREE.Mesh(foundationGeometry, rockMaterial);
-    foundation.name = 'shipyard-submerged-foundation';
-    foundation.position.y = (LAND_BASE_Y + bottom) * 0.5;
-    group.add(foundation);
-  }
+  // Close the raised shelf through the lowest water level. The matching
+  // decagon stays inside the existing circular obstacle; beach, dock and
+  // navigation radii do not move.
+  const bottom = -2.65;
+  const foundationGeometry = registerGeometry(
+    new THREE.CylinderGeometry(radius * 0.98, radius * 0.98, LAND_BASE_Y - bottom, 10, 1, false),
+    resources,
+  );
+  const foundation = new THREE.Mesh(foundationGeometry, rockMaterial);
+  foundation.name = island.id === 'island-projects' ? 'shipyard-submerged-foundation' : 'island-submerged-foundation';
+  foundation.position.y = (LAND_BASE_Y + bottom) * 0.5;
+  group.add(foundation);
 
   const landBase = LAND_BASE_Y + 0.48;
   addLandform(group, island, index, landBase, radius, landMaterial, resources);

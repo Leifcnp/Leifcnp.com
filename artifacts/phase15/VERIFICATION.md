@@ -83,3 +83,10 @@ blocking findings; final committed-head/base approval remains external to its
 own commit. Full verify/generation freshness, hosted CI, strict protection,
 protected squash MR merge and resulting-SHA CI/Pages/public asset/interaction
 verification remain required. No wider shoreline rollout is assigned.
+
+## Published Shipyard release
+
+MR #9 squash merge `907673941072e59335e9f16e5de97b393c575d53` has the exact reviewed
+candidate tree. Exact-SHA CI run 42448864347 and Pages 42448864190 pass; four public
+assets match and desktop/phone motion/helm checks pass. The user subsequently
+assigned remaining islands and WEB-016; see the current task/rollout ledger.
