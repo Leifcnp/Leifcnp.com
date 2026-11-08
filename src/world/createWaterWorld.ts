@@ -1,4 +1,8 @@
 import * as THREE from 'three';
+import { portfolioHarbours, getHarbourWorldPosition, validateHarbourDefinitions } from '../content/harbours';
+import { portfolioContent } from '../content/portfolio';
+import { createLocalHarbourState, stepLocalHarbour, noteManualHarbourIntent, clearLocalHarbourForScan, selectLocalHarbour, zoomOutLocalHarbour, type HarbourSnapshot } from '../interaction/localHarbour';
+import { createHarbourMarkers } from './createHarbourMarkers';
 import { VESSEL_SPAWN } from '../content/islands';
 import { STORM_TUNING } from './stormField';
 import { calculateApparentWind, sampleWind } from './wind';
@@ -51,6 +55,9 @@ export interface WaterWorldOptions {
   /** Called when scanner navigation changes state. */
   onScanUpdate?: (snapshot: ScanTelemetry) => void;
   onSailingUpdate?: (snapshot: SailingTelemetry) => void;
+  onHarbourUpdate?: (snapshot: HarbourSnapshot) => void;
+  onHarbourProjection?: (positions: readonly LandmarkProjection[]) => void;
+  onVesselProjection?: (position: { readonly x: number; readonly y: number }) => void;
 }
 
 export interface FramingInsets {
@@ -116,6 +123,9 @@ export interface WaterWorldController {
   getSailingState(): SailingTelemetry;
   startScan(islandId: string, options?: ScanStartOptions): void;
   cancelScan(): void;
+  selectHarbour(id: string): void;
+  zoomOut(): void;
+  setFramingInsets(insets: Partial<FramingInsets>): void;
   dispose(): void;
 }
 
@@ -144,6 +154,9 @@ export function createWaterWorld(
   scene.fog = new THREE.Fog(0x082f3d, 540, 800);
   const cameraRig = createCameraRig();
   const camera = cameraRig.camera;
+  let framingInsets = { ...options.framingInsets };
+  cameraRig.setFramingInsets(framingInsets);
+  cameraRig.setReducedMotion(Boolean(initialReducedMotion));
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -164,7 +177,11 @@ export function createWaterWorld(
 
   const ocean = createOceanSurface(scene);
 
-  const landmarks = createLandmarks(scene, options.islands ?? []);
+  const islands = options.islands ?? [];
+  const harbours = portfolioHarbours.filter(harbour => islands.some(island => island.id === harbour.islandId));
+  validateHarbourDefinitions(harbours, islands, portfolioContent, VESSEL_TUNING.collisionRadius, STORM_TUNING.worldLimit);
+  const harbourMarkers = createHarbourMarkers(scene, harbours, islands);
+  const landmarks = createLandmarks(scene, islands);
   const shorelineFoam = createShorelineFoam(scene, options.islands ?? []);
   const shorelineWaterPositions = (ocean.mesh.geometry.getAttribute('position') as THREE.BufferAttribute).array;
   const vessel = createVessel(scene);
@@ -185,6 +202,9 @@ export function createWaterWorld(
   let vesselState: VesselState = vesselSpawn;
   let vesselInput: VesselInput = { throttle: 0, rudder: 0, brake: false };
   let trimAssist = createTrimAssistState();
+  let harbourState = createLocalHarbourState();
+  let publishedHarbour: HarbourSnapshot | null = null;
+  const vesselProjection = new THREE.Vector3();
   const vesselEnvironment = {
     sailingEnabled: true,
     worldLimit: STORM_TUNING.worldLimit,
@@ -248,6 +268,25 @@ export function createWaterWorld(
     options.onScanUpdate?.(scanTelemetry);
   };
 
+  const publishHarbour = (): void => {
+    const { islandId, selectedHarbourId, nearbyHarbourId } = harbourState;
+    if (publishedHarbour?.islandId === islandId && publishedHarbour.selectedHarbourId === selectedHarbourId && publishedHarbour.nearbyHarbourId === nearbyHarbourId) return;
+    publishedHarbour = { islandId, selectedHarbourId, nearbyHarbourId };
+    const selected = harbours.find(harbour => harbour.id === selectedHarbourId && harbour.islandId === islandId);
+    cameraRig.setLocalTarget(selected ? getHarbourWorldPosition(selected, islands) : null);
+    options.onHarbourUpdate?.(publishedHarbour);
+  };
+
+  const publishProjections = (): void => {
+    const width = getViewportWidth(container), height = getViewportHeight(container);
+    vesselProjection.copy(vessel.group.position).project(camera);
+    options.onVesselProjection?.({ x: (vesselProjection.x * 0.5 + 0.5) * width, y: (0.5 - vesselProjection.y * 0.5) * height });
+    options.onLandmarkProjection?.(projectLandmarks(camera, width, height, landmarks.anchors, framingInsets));
+    options.onHarbourProjection?.(harbourState.islandId ? projectLandmarks(camera, width, height, harbourMarkers.anchors, framingInsets) : []);
+  };
+
+  const hasManualInput = (): boolean => vesselInput.targetHeading !== undefined || Math.abs(vesselInput.sheet ?? 0) > 1e-6 || Math.abs(vesselInput.rudder) > 1e-6 || vesselInput.brake;
+
   const refreshStaticFrame = (): void => {
     wake.reset();
     hullSpray.reset();
@@ -258,15 +297,8 @@ export function createWaterWorld(
     ocean.update(elapsed);
     shorelineFoam.update(elapsed, shorelineWaterPositions);
     options.onVesselUpdate?.(toVesselTelemetry(vesselState));
-    options.onLandmarkProjection?.(
-      projectLandmarks(
-        camera,
-        getViewportWidth(container),
-        getViewportHeight(container),
-        landmarks.anchors,
-        options.framingInsets,
-      ),
-    );
+    harbourMarkers.update(harbourState, shorelineWaterPositions);
+    publishProjections();
     renderer.render(scene, camera);
   };
 
@@ -351,9 +383,14 @@ export function createWaterWorld(
         // Water and forces share active simulation time. Discarded frames and
         // hidden/paused time never advance either side of the coupling.
         elapsed += FIXED_STEP;
+        harbourState = stepLocalHarbour(harbourState, {
+          position: vesselState, speed: Math.hypot(vesselState.velocityX, vesselState.velocityZ),
+          deltaSeconds: FIXED_STEP, manualIntent: hasManualInput(), scannerActive: scannerIsActive(scannerState),
+        }, islands, harbours);
         fixedAccumulator = Math.max(0, fixedAccumulator - FIXED_STEP);
         steps += 1;
       }
+      publishHarbour();
       cameraRig.update(vesselState.x, vesselState.z, delta);
       updateSailing();
       vessel.update(vesselState, elapsed, delta);
@@ -368,9 +405,10 @@ export function createWaterWorld(
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
     }
 
-    options.onLandmarkProjection?.(projectLandmarks(camera, getViewportWidth(container), getViewportHeight(container), landmarks.anchors, options.framingInsets));
     ocean.update(elapsed);
     shorelineFoam.update(elapsed, shorelineWaterPositions);
+    harbourMarkers.update(harbourState, shorelineWaterPositions);
+    publishProjections();
     renderer.render(scene, camera);
 
     if (isMotionPaused()) {
@@ -399,7 +437,7 @@ export function createWaterWorld(
     cameraRig.resize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
     renderer.setSize(width, height, false);
-    options.onLandmarkProjection?.(projectLandmarks(camera, width, height, landmarks.anchors, options.framingInsets));
+    publishProjections();
     if (isMotionPaused()) renderer.render(scene, camera);
   };
 
@@ -463,6 +501,7 @@ export function createWaterWorld(
   const resizeObserver =
     typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
 
+  publishHarbour();
   resize();
   updateSailing(true);
   vessel.resetPose(vesselState, elapsed);
@@ -485,6 +524,7 @@ export function createWaterWorld(
     setReducedMotion: (reduced): void => {
       if (disposed) return;
       reducedMotion = reduced;
+      cameraRig.setReducedMotion(reduced);
       vessel.setReducedMotion(reduced);
       wake.setReducedMotion(reduced);
       hullSpray.setReducedMotion(reduced);
@@ -492,6 +532,7 @@ export function createWaterWorld(
       shorelineFoam.setReducedMotion(reduced);
       shorelineFoam.update(elapsed, shorelineWaterPositions);
       windFlags.update(vesselState, elapsed, 0);
+      publishProjections();
       if (isMotionPaused()) renderer.render(scene, camera);
     },
     setInput: (input): void => {
@@ -505,6 +546,7 @@ export function createWaterWorld(
         targetHeading: Number.isFinite(input.targetHeading) ? input.targetHeading : undefined,
       };
       if (nextInput.targetHeading !== undefined || Math.abs(nextInput.sheet) > 1e-6 || Math.abs(nextInput.rudder) > 1e-6 || nextInput.brake) {
+        if (!isMotionPaused()) harbourState = noteManualHarbourIntent(harbourState);
         horizontallyMoored = false;
         cancelScanInternal('Scanner navigation cancelled by helm input.');
         if (scannerState.status === 'arrived') {
@@ -523,6 +565,7 @@ export function createWaterWorld(
     },
     setAutoTrim: (): void => {
       if (disposed || isMotionPaused()) return;
+      harbourState = noteManualHarbourIntent(harbourState);
       vesselInput = { throttle: 0, rudder: 0, brake: false };
       horizontallyMoored = false;
       cancelScanInternal('Scanner navigation cancelled by helm input.');
@@ -541,6 +584,8 @@ export function createWaterWorld(
       hullSpray.reset();
       windFlags.reset();
       shorelineFoam.reset();
+      harbourState = createLocalHarbourState();
+      publishHarbour();
       horizontallyMoored = false;
       vesselState = createVesselState(VESSEL_SPAWN.x, VESSEL_SPAWN.z);
       scannerState = createScannerState({ x: vesselState.x, z: vesselState.z, heading: vesselState.heading });
@@ -559,13 +604,19 @@ export function createWaterWorld(
       ocean.update(elapsed);
       shorelineFoam.update(elapsed, shorelineWaterPositions);
       options.onVesselUpdate?.(toVesselTelemetry(vesselState));
-      options.onLandmarkProjection?.(projectLandmarks(camera, getViewportWidth(container), getViewportHeight(container), landmarks.anchors, options.framingInsets));
+      harbourMarkers.update(harbourState, shorelineWaterPositions);
+      publishProjections();
       renderer.render(scene, camera);
     },
     getVesselState: (): Readonly<VesselState> => ({ ...vesselState }),
     getSailingState,
     startScan: (islandId, startOptions = {}): void => {
       if (disposed) return;
+
+      harbourState = clearLocalHarbourForScan(harbourState);
+      publishHarbour();
+      harbourMarkers.update(harbourState, shorelineWaterPositions);
+      publishProjections();
 
       // A replacement takes over immediately. Do not publish an intermediate
       // cancelled state that would make the drawer announce stale progress.
@@ -612,6 +663,36 @@ export function createWaterWorld(
       if (disposed) return;
       cancelScanInternal('Scanner navigation cancelled.');
     },
+    selectHarbour: (id): void => {
+      if (disposed) return;
+      harbourState = selectLocalHarbour(harbourState, id, harbours);
+      publishHarbour();
+      harbourMarkers.update(harbourState, shorelineWaterPositions);
+      publishProjections();
+      if (isMotionPaused()) renderer.render(scene, camera);
+    },
+    zoomOut: (): void => {
+      if (disposed) return;
+      harbourState = zoomOutLocalHarbour(harbourState);
+      publishHarbour();
+      harbourMarkers.update(harbourState, shorelineWaterPositions);
+      publishProjections();
+      if (isMotionPaused()) renderer.render(scene, camera);
+    },
+    setFramingInsets: (insets): void => {
+      if (disposed) return;
+      let changed = false;
+      for (const edge of ['top', 'right', 'bottom', 'left'] as const) {
+        const value = insets[edge];
+        if (value === undefined || !Number.isFinite(value)) continue;
+        const next = Math.max(0, value);
+        if (framingInsets[edge] !== next) { framingInsets[edge] = next; changed = true; }
+      }
+      if (!changed) return;
+      cameraRig.setFramingInsets(framingInsets);
+      publishProjections();
+      if (isMotionPaused()) renderer.render(scene, camera);
+    },
     dispose: (): void => {
       if (disposed) return;
       disposed = true;
@@ -620,6 +701,7 @@ export function createWaterWorld(
       window.removeEventListener('resize', resize);
       visibilityObserver?.disconnect();
       document.removeEventListener('visibilitychange', onVisibilityChange);
+      harbourMarkers.dispose();
       landmarks.dispose();
       vessel.dispose();
       wake.dispose();

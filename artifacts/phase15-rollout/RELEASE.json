@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-11-08T05:17:19.643Z",
+  "mergeSha": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "reviewedCandidate": "811d867",
+  "expectedTree": "3b073c31b5424f0b68ec01999115b6a37ccb3475",
+  "url": "http://leifcnp.com/",
+  "assets": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 621,
+      "sha256": "fd4ec66236a74936da28f2894277eb2c5ceb024e2a508a063c5bb6f51906421a",
+      "matchesReviewedDocs": true
+    },
+    {
+      "path": "favicon.svg",
+      "status": 200,
+      "bytes": 354,
+      "sha256": "876740c07ce5704d962fb4c539f67b66319c24f4518e53e178f4affb3122deaa",
+      "matchesReviewedDocs": true
+    },
+    {
+      "path": "assets/index-CxlYBWZO.js",
+      "status": 200,
+      "bytes": 593087,
+      "sha256": "d1d319dcf71b6cffc144856326f1084097e0d3e388646889cdf7b69e7594a403",
+      "matchesReviewedDocs": true
+    },
+    {
+      "path": "assets/index-yKZlOFjO.css",
+      "status": 200,
+      "bytes": 13672,
+      "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+      "matchesReviewedDocs": true
+    }
+  ],
+  "checks": [
+    {
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "sceneMotion": true,
+      "trustedWHelm": true,
+      "scannerDrawers": true,
+      "actualScannerArrivals": [
+        "Chartroom",
+        "Logbook",
+        "Signal Cove"
+      ],
+      "documentRequests": 1,
+      "errors": []
+    },
+    {
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sceneMotion": true,
+      "trustedWHelm": true,
+      "scannerDrawers": true,
+      "actualScannerArrivals": [
+        "Chartroom",
+        "Logbook",
+        "Signal Cove"
+      ],
+      "documentRequests": 1,
+      "errors": []
+    }
+  ],
+  "provenance": "Public production bundle unchanged; real keyboard/controls. Deterministic rAF fixture retains all application CPU callbacks and skips intermediate raster only; each final frame renders normally. Software SwiftShader in Ubuntu VM, no hardware/performance/Windows claim.",
+  "browser": "151.0.7922.34",
+  "verdict": "pass"
+}

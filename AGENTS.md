@@ -7,16 +7,23 @@ orchestrates the work, delegates implementation to **gpt-6.1-sol** workers, and
 uses a separate **gpt-6.1-sol** reviewer. Use the available host concurrency;
 do not assume unlimited active agents or silently substitute models.
 
-- Execute only the tasks or batch the user explicitly assigns. Backlog order,
-  a Ready label, historical authorization, or an agent suggestion does not
-  authorize starting another task. Finish the assigned batch without routine
-  confirmation, then stop. Do not expand an assigned prototype into a rollout.
+- Execute the tasks or batch the user assigns. On **2026-11-07**, the user
+  expanded this batch: finish WEB-016, continue through the remaining canonical
+  todo list, and add/complete focused UI/control simplifications supported by
+  observed friction. Record new task IDs, scope and evidence before editing.
+  This is the current batch's authority; queue order alone is not a general
+  authorization for future unrelated work. Approval boundaries below remain.
 - The orchestrator may create branches/worktrees, commit scoped work, open MRs,
   repair findings, merge, and publish assigned work after all merge gates pass.
   On this GitHub repository, **MR means pull request** targeting `master`.
 - Ask before new spending, credentials/access changes, domain/DNS changes,
   destructive actions, or major design/scope changes. Continue independent
   authorized work while a decision is pending. Never expose credentials.
+- For the current overnight run, the user requests **no questions**. Park any
+  action requiring new approval with concrete evidence/proposal in Blocked;
+  continue independent authorized tasks. Do not treat silence as approval.
+  The user will return with decisions. The HTTPS redirect was explicitly
+  approved and enabled before this instruction; no further domain action is implied.
 - Branch protection for this MR workflow is explicitly authorized where the
   account supports it; do not widen access, disable existing protections, or
   change domain/Pages configuration to make automation work.

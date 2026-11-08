@@ -151,6 +151,8 @@ const hud = createPortfolioHud({
       instant: isPaused || reducedMotionQuery.matches,
     })
   },
+  onHarbourSelect: (id) => waterWorld?.selectHarbour(id),
+  onZoomOut: () => waterWorld?.zoomOut(),
   onExploreRequest: () => {
     // Nearby exploration opens content without taking control away from the
     // helm. Persistent scanner buttons own automatic travel.
@@ -161,7 +163,50 @@ const hud = createPortfolioHud({
 const labels = new Map<string, HTMLDivElement>()
 const labelSizes = new Map<string, { width: number; height: number }>()
 const viewport = { width: window.innerWidth, height: window.innerHeight }
+let vesselProjection = { x: viewport.width / 2, y: viewport.height / 2 }
 let sailingHudBounds = sailingHud.getBoundingClientRect()
+let interfaceBounds: DOMRect[] = []
+let framingInsets = { top: 145, right: 20, bottom: 155, left: 20 }
+let layoutRequest = 0
+function scheduleInterfaceLayout(): void {
+  if (layoutRequest) return
+  layoutRequest = requestAnimationFrame(() => {
+    layoutRequest = 0
+    measureInterfaceLayout()
+  })
+}
+const measureInterfaceLayout = (): void => {
+  const selectors = ['.site-header', '.scanner-hud', '.sailing-hud', '.helm-panel', '.content-drawer', '.harbour-nav']
+  const measured = selectors.flatMap((selector) => {
+    const element = shell.querySelector<HTMLElement>(selector)
+    if (!element || element.hidden || getComputedStyle(element).display === 'none') return []
+    const rect = element.getBoundingClientRect()
+    return rect.width && rect.height ? [{ selector, rect }] : []
+  })
+  interfaceBounds = measured.map(({ rect }) => rect)
+  const next = { top: 16, right: 16, bottom: 16, left: 16 }
+  for (const { selector, rect } of measured) {
+    if (selector === '.content-drawer') {
+      if (viewport.width <= 900 && !(viewport.height <= 460 && viewport.width > viewport.height)) {
+        next.bottom = Math.max(next.bottom, viewport.height - rect.top + 12)
+      } else next.right = Math.max(next.right, viewport.width - rect.left + 12)
+    } else if (selector === '.helm-panel') {
+      next.bottom = Math.max(next.bottom, viewport.height - rect.top + 12)
+    } else next.top = Math.max(next.top, rect.bottom + 12)
+  }
+  framingInsets = next
+  sailingHudBounds = sailingHud.getBoundingClientRect()
+  waterWorld?.setFramingInsets(next)
+}
+const interfaceResizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(scheduleInterfaceLayout) : null
+for (const element of shell.querySelectorAll<HTMLElement>('.site-header, .scanner-hud, .sailing-hud, .helm-panel, .content-drawer, .harbour-nav')) {
+  interfaceResizeObserver?.observe(element)
+}
+const interfaceMutationObserver = new MutationObserver(scheduleInterfaceLayout)
+interfaceMutationObserver.observe(shell, { attributes: true, attributeFilter: ['class'] })
+for (const element of shell.querySelectorAll<HTMLElement>('.sailing-hud, .helm-panel, .content-drawer, .harbour-nav')) {
+  interfaceMutationObserver.observe(element, { attributes: true, attributeFilter: ['class', 'hidden'] })
+}
 const sailingHudObserver = typeof ResizeObserver !== 'undefined'
   ? new ResizeObserver(() => { sailingHudBounds = sailingHud.getBoundingClientRect() })
   : null
@@ -346,37 +391,25 @@ function canPlaceLabel(
   const margin = Math.min(48, Math.max(16, viewport.width * 0.04))
   if (left < sailingHudBounds.right + 6 && right > sailingHudBounds.left - 6
     && top < sailingHudBounds.bottom + 6 && bottom > sailingHudBounds.top - 6) return false
-  const headerBottom = viewport.height <= 460 ? 110 : viewport.width <= 900 ? 200 : 160
-  const helmBottom = viewport.height <= 460 ? 105 : 155
-  const helmLeft = viewport.width <= 540
-    ? margin
-    : Math.max(margin, viewport.width - margin - Math.min(480, viewport.width - margin * 2))
+  if (left < margin || right > viewport.width - margin || top < 16 || bottom > viewport.height - 16) return false
+  if (interfaceBounds.some((rect) => left < rect.right + 6 && right > rect.left - 6 && top < rect.bottom + 6 && bottom > rect.top - 6)) return false
 
-  if (left < margin || right > viewport.width - margin || top < headerBottom || bottom > viewport.height - helmBottom) {
-    return false
-  }
-
-  // The camera keeps the tracked vessel near the viewport centre. Leave a
-  // small clear patch so a label cannot sit over the boat as it sails by.
+  // Use the projected vessel position: local framing can move it off centre.
   const boatHalfSize = 32
-  const boatLeft = viewport.width * 0.5 - boatHalfSize
-  const boatTop = viewport.height * 0.5 - boatHalfSize
-  const boatRight = viewport.width * 0.5 + boatHalfSize
-  const boatBottom = viewport.height * 0.5 + boatHalfSize
+  const boatLeft = vesselProjection.x - boatHalfSize
+  const boatTop = vesselProjection.y - boatHalfSize
+  const boatRight = vesselProjection.x + boatHalfSize
+  const boatBottom = vesselProjection.y + boatHalfSize
   const overlapsBoat = left < boatRight && right > boatLeft && top < boatBottom && bottom > boatTop
   if (overlapsBoat) return false
 
-  // Keep the explicit helm rectangle in the arithmetic even where the
-  // bottom inset already covers it; this preserves the no-overlap contract
-  // if the panel is shortened for a future viewport variant.
-  const helmTop = viewport.height - helmBottom
-  return !(left < viewport.width - margin && right > helmLeft && top < viewport.height && bottom > helmTop)
+  return true
 }
 
 const onViewportResize = () => {
   viewport.width = window.innerWidth
   viewport.height = window.innerHeight
-  sailingHudBounds = sailingHud.getBoundingClientRect()
+  scheduleInterfaceLayout()
 }
 
 window.addEventListener('resize', onViewportResize)
@@ -387,7 +420,10 @@ try {
     islands: portfolioIslands,
     // Reserve room for the interface without DOM layout reads every frame.
     // Responsive label bounds below refine this conservative projection.
-    framingInsets: { top: 145, right: 20, bottom: 155, left: 20 },
+    framingInsets,
+    onHarbourUpdate: (snapshot) => hud.setHarbourUpdate(snapshot),
+    onHarbourProjection: (projections) => hud.setHarbourProjection(projections.filter((projection) => canPlaceLabel(projection, { width: 90, height: 30 }))),
+    onVesselProjection: (projection) => { vesselProjection = projection },
     onLandmarkProjection: updateLandmarkLabels,
     onVesselUpdate: (snapshot) => {
       const proximity = getProximityState(
@@ -401,6 +437,7 @@ try {
     onSailingUpdate: updateSailingHud,
     onScanUpdate: (update) => hud.setScanUpdate(update),
   })
+  measureInterfaceLayout()
   waterWorld.setPaused(isPaused)
   vesselInput.setEnabled(!isPaused, Boolean(waterWorld))
 } catch (error) {
@@ -464,6 +501,9 @@ const onPageHide = (event: PageTransitionEvent) => {
     soundToggle?.removeEventListener('click', onSoundToggle)
     labelResizeObserver?.disconnect()
     sailingHudObserver?.disconnect()
+    interfaceResizeObserver?.disconnect()
+    interfaceMutationObserver.disconnect()
+    cancelAnimationFrame(layoutRequest)
     window.removeEventListener('resize', onViewportResize)
   }
 }
@@ -491,6 +531,9 @@ if (import.meta.hot) {
     window.removeEventListener('resize', onViewportResize)
     labelResizeObserver?.disconnect()
     sailingHudObserver?.disconnect()
+    interfaceResizeObserver?.disconnect()
+    interfaceMutationObserver.disconnect()
+    cancelAnimationFrame(layoutRequest)
   })
 }
 

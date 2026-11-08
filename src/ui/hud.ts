@@ -1,3 +1,6 @@
+import { portfolioHarbours } from '../content/harbours'
+import type { HarbourSnapshot } from '../interaction/localHarbour'
+import type { LandmarkProjection } from '../world/createWaterWorld'
 import type { IslandDefinition } from '../content/islands'
 import type { PortfolioCategory, PortfolioContent } from '../content/portfolio'
 
@@ -14,12 +17,17 @@ export interface PortfolioHudOptions {
   readonly islands: readonly IslandDefinition[]
   readonly content: PortfolioContent
   readonly onScanRequest: (islandId: string) => void
+  readonly onHarbourSelect: (id: string) => void
+  readonly onZoomOut: () => void
   readonly onExploreRequest: (islandId: string) => void
 }
 
 export interface PortfolioHudController {
   readonly nav: HTMLElement
   readonly drawer: HTMLElement
+  setHarbourUpdate(snapshot: HarbourSnapshot): void
+  setHarbourProjection(projections: readonly LandmarkProjection[]): void
+  openHarbour(id: string, trigger?: HTMLElement | null): void
   setProximity(island: IslandDefinition | null): void
   setScanUpdate(update: ScanUpdate): void
   openIsland(islandId: string, trigger?: HTMLElement | null): void
@@ -142,8 +150,65 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
   drawer.setAttribute('aria-labelledby', drawerHeading.id)
   drawer.append(drawerHeader, drawerBody)
 
-  root.append(nav, prompt, drawer)
+  const localNav = document.createElement('section')
+  localNav.className = 'harbour-nav'
+  localNav.hidden = true
+  localNav.setAttribute('aria-label', 'Shipyard local harbours')
+  const localTitle = document.createElement('span')
+  localTitle.className = 'harbour-nav__title'
+  localTitle.textContent = 'Shipyard'
+  const localDestinations = document.createElement('div')
+  localDestinations.className = 'harbour-nav__destinations'
+  const harbourButtons = new Map<string, HTMLButtonElement>()
+  const harbourLabels = new Map<string, HTMLDivElement>()
+  const harbourLayer = document.createElement('div')
+  harbourLayer.className = 'harbour-labels'
+  harbourLayer.setAttribute('aria-hidden', 'true')
+  for (const harbour of portfolioHarbours) {
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.textContent = harbour.label
+    button.dataset.harbourId = harbour.id
+    button.setAttribute('aria-pressed', 'false')
+    button.setAttribute('aria-label', `Focus ${harbour.label} harbour`)
+    button.addEventListener('click', () => options.onHarbourSelect(harbour.id))
+    localDestinations.append(button)
+    harbourButtons.set(harbour.id, button)
+    const label = document.createElement('div')
+    label.className = 'harbour-label'
+    label.dataset.harbourLandmark = harbour.id
+    label.textContent = harbour.label
+    label.hidden = true
+    harbourLayer.append(label)
+    harbourLabels.set(harbour.id, label)
+  }
+  const localOpen = document.createElement('button')
+  localOpen.type = 'button'
+  localOpen.textContent = 'Open'
+  localOpen.dataset.harbourOpen = 'true'
+  localOpen.addEventListener('click', () => {
+    const id = harbourState.selectedHarbourId
+    if (id) openHarbour(id, localOpen)
+  })
+  const nearbyOpen = document.createElement('button')
+  nearbyOpen.type = 'button'
+  nearbyOpen.hidden = true
+  nearbyOpen.dataset.nearbyHarbourOpen = 'true'
+  nearbyOpen.addEventListener('click', () => {
+    if (harbourState.nearbyHarbourId) openHarbour(harbourState.nearbyHarbourId, nearbyOpen)
+  })
+  const zoomOut = document.createElement('button')
+  zoomOut.type = 'button'
+  zoomOut.textContent = 'Zoom out'
+  zoomOut.addEventListener('click', () => options.onZoomOut())
+  const localStatus = document.createElement('span')
+  localStatus.className = 'harbour-nav__status'
+  localStatus.setAttribute('role', 'status')
+  localStatus.setAttribute('aria-live', 'polite')
+  localNav.append(localTitle, zoomOut, localDestinations, localOpen, nearbyOpen, localStatus)
+  root.append(nav, prompt, drawer, localNav, harbourLayer)
 
+  let harbourState: HarbourSnapshot = { islandId: null, selectedHarbourId: null, nearbyHarbourId: null }
   let nearbyIsland: IslandDefinition | null = null
   let returnFocus: HTMLElement | null = null
   let lastStatus = status.textContent ?? ''
@@ -199,7 +264,7 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
     focusRequest += 1
     drawer.hidden = true
     root.classList.remove('is-reading')
-    prompt.hidden = !nearbyIsland
+    prompt.hidden = !nearbyIsland || Boolean(harbourState.islandId)
     for (const button of nav.querySelectorAll<HTMLButtonElement>('[data-scanner-island]')) {
       button.setAttribute('aria-expanded', 'false')
       button.dataset.selected = 'false'
@@ -216,13 +281,71 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
   function setProximity(island: IslandDefinition | null): void {
     if (nearbyIsland?.id === island?.id) return
     nearbyIsland = island
-    prompt.hidden = !island || !drawer.hidden
+    prompt.hidden = !island || !drawer.hidden || Boolean(harbourState.islandId)
     proximityStatus.textContent = island
       ? `Docking range: ${island.name}. Explore prompt available.`
       : 'Outside all docking zones.'
     if (!island) return
     promptText.textContent = `${island.name} · ${CATEGORY_LABELS[island.category]}`
     promptButton.setAttribute('aria-label', `Explore ${island.name}`)
+  }
+
+  function setHarbourUpdate(snapshot: HarbourSnapshot): void {
+    if (disposed) return
+    if (snapshot.islandId === harbourState.islandId && snapshot.selectedHarbourId === harbourState.selectedHarbourId && snapshot.nearbyHarbourId === harbourState.nearbyHarbourId) return
+    const previous = harbourState
+    harbourState = snapshot
+    const active = Boolean(snapshot.islandId)
+    localNav.hidden = !active
+    root.classList.toggle('is-local-harbour', active)
+    prompt.hidden = !nearbyIsland || !drawer.hidden || active
+    for (const [id, button] of harbourButtons) {
+      button.setAttribute('aria-pressed', String(id === snapshot.selectedHarbourId))
+    }
+    const openId = snapshot.selectedHarbourId
+    const harbour = portfolioHarbours.find((candidate) => candidate.id === openId)
+    localOpen.disabled = !harbour
+    localOpen.textContent = harbour ? `Open ${harbour.label}` : 'Open'
+    localOpen.setAttribute('aria-label', harbour ? `Open ${harbour.label} content` : 'Open harbour content')
+    const nearbyHarbour = portfolioHarbours.find((candidate) => candidate.id === snapshot.nearbyHarbourId)
+    nearbyOpen.hidden = !nearbyHarbour || nearbyHarbour.id === openId
+    nearbyOpen.textContent = nearbyHarbour ? `Open nearby ${nearbyHarbour.label}` : ''
+    if (previous.nearbyHarbourId !== snapshot.nearbyHarbourId || previous.islandId !== snapshot.islandId) {
+      const nearby = portfolioHarbours.find((candidate) => candidate.id === snapshot.nearbyHarbourId)
+      localStatus.textContent = nearby ? `${nearby.label} reached · Open available` : 'Choose a harbour to focus'
+    }
+    if (!active) {
+      for (const label of harbourLabels.values()) label.hidden = true
+      if (localNav.contains(document.activeElement)) findNavButton('island-projects')?.focus({ preventScroll: true })
+    }
+  }
+
+  function setHarbourProjection(projections: readonly LandmarkProjection[]): void {
+    for (const [id, label] of harbourLabels) {
+      const projection = projections.find((candidate) => candidate.id === id)
+      label.hidden = !harbourState.islandId || !projection?.visible
+      if (projection) label.style.transform = `translate3d(${projection.x}px, ${projection.y}px, 0) translate(-50%, 10px)`
+    }
+  }
+
+  function openHarbour(id: string, trigger: HTMLElement | null = null): void {
+    const harbour = portfolioHarbours.find((candidate) => candidate.id === id)
+    if (!harbour || !harbourState.islandId) return
+    const island = islandById.get(harbourState.islandId)
+    if (!island) return
+    openIsland(island.id, trigger ?? harbourButtons.get(id))
+    drawerHeading.textContent = `${island.name} · ${harbour.label}`
+    const target = harbour.contentTarget
+    if (target.kind === 'overview') {
+      const description = document.createElement('p')
+      description.className = 'content-drawer__description'
+      description.textContent = island.description
+      drawerBody.replaceChildren(description)
+    } else {
+      drawerBody.replaceChildren(renderIslandContent({ ...island, description: '', contentIds: [target.contentId] }, content))
+      drawerBody.querySelector('.content-drawer__description')?.remove()
+    }
+    options.onExploreRequest(island.id)
   }
 
   function setScanUpdate(update: ScanUpdate): void {
@@ -259,7 +382,9 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
     if (disposed) return
     disposed = true
     focusRequest += 1
-    root.classList.remove('is-reading')
+    root.classList.remove('is-reading', 'is-local-harbour')
+    localNav.remove()
+    harbourLayer.remove()
     window.removeEventListener('keydown', onKeyDown)
     for (const button of nav.querySelectorAll<HTMLButtonElement>('[data-scanner-island]')) {
       button.removeEventListener('click', onNavClick)
@@ -276,6 +401,9 @@ export function createPortfolioHud(options: PortfolioHudOptions): PortfolioHudCo
   return {
     nav,
     drawer,
+    setHarbourUpdate,
+    setHarbourProjection,
+    openHarbour,
     setProximity,
     setScanUpdate,
     openIsland,

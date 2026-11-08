@@ -1,0 +1,759 @@
+{
+  "provenance": "Unmodified production bundle, actual keyboard events and real rAF callbacks stepped at 100ms. Only intermediate raster draws omitted. No private simulation hooks or teleport. Responsive snapshots hold actual Spill keyboard control; synthetic document visibility event is explicitly limited to emulation.",
+  "checks": [
+    {
+      "manualProject": "Project reached \u00b7 Open available"
+    },
+    {
+      "manualOverview": "Overview reached \u00b7 Open available"
+    },
+    {
+      "nearbyOpenAndFocus": true
+    },
+    {
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "controls": [
+        {
+          "text": "Pause motion",
+          "width": 112,
+          "height": 44
+        },
+        {
+          "text": "Sail up",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Sail left",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Sail down",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Sail right",
+          "width": 51.34375,
+          "height": 44
+        },
+        {
+          "text": "Trim sail in",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Ease sail out",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Return to auto trim",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Spill wind",
+          "width": 51.328125,
+          "height": 44
+        },
+        {
+          "text": "Reset boat",
+          "width": 108.671875,
+          "height": 44
+        },
+        {
+          "text": "Sound off",
+          "width": 108.65625,
+          "height": 44
+        },
+        {
+          "text": "Scan Chartroom, Resume",
+          "width": 85,
+          "height": 44
+        },
+        {
+          "text": "Scan Shipyard, Projects",
+          "width": 85,
+          "height": 44
+        },
+        {
+          "text": "Scan Logbook, Writing",
+          "width": 85,
+          "height": 44
+        },
+        {
+          "text": "Scan Signal Cove, Media",
+          "width": 85,
+          "height": 44
+        },
+        {
+          "text": "Zoom out",
+          "width": 56.25,
+          "height": 44
+        },
+        {
+          "text": "Focus Overview harbour",
+          "width": 55.6875,
+          "height": 44
+        },
+        {
+          "text": "Focus Project harbour",
+          "width": 45.125,
+          "height": 44
+        },
+        {
+          "text": "Open Project content",
+          "width": 72.375,
+          "height": 44
+        },
+        {
+          "text": "Open nearby Overview",
+          "width": 116.28125,
+          "height": 44
+        }
+      ],
+      "markers": [
+        {
+          "id": "shipyard-project",
+          "rect": {
+            "x": 103.95130920410156,
+            "y": 517.7177734375,
+            "width": 50,
+            "height": 27,
+            "top": 517.7177734375,
+            "right": 153.95130920410156,
+            "bottom": 544.7177734375,
+            "left": 103.95130920410156
+          }
+        }
+      ],
+      "scrollWidth": 390
+    },
+    {
+      "layout": "small",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "controls": [
+        {
+          "text": "Pause motion",
+          "width": 112,
+          "height": 44
+        },
+        {
+          "text": "Sail up",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Sail left",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Sail down",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Sail right",
+          "width": 44.34375,
+          "height": 44
+        },
+        {
+          "text": "Trim sail in",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Ease sail out",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Return to auto trim",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Spill wind",
+          "width": 44.328125,
+          "height": 44
+        },
+        {
+          "text": "Reset boat",
+          "width": 90.671875,
+          "height": 44
+        },
+        {
+          "text": "Sound off",
+          "width": 90.65625,
+          "height": 44
+        },
+        {
+          "text": "Scan Chartroom, Resume",
+          "width": 67.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Shipyard, Projects",
+          "width": 67.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Logbook, Writing",
+          "width": 67.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Signal Cove, Media",
+          "width": 67.5,
+          "height": 44
+        },
+        {
+          "text": "Zoom out",
+          "width": 56.25,
+          "height": 44
+        },
+        {
+          "text": "Focus Overview harbour",
+          "width": 55.6875,
+          "height": 44
+        },
+        {
+          "text": "Focus Project harbour",
+          "width": 45.125,
+          "height": 44
+        },
+        {
+          "text": "Open Project content",
+          "width": 72.375,
+          "height": 44
+        },
+        {
+          "text": "Open nearby Overview",
+          "width": 116.28125,
+          "height": 44
+        }
+      ],
+      "markers": [
+        {
+          "id": "shipyard-project",
+          "rect": {
+            "x": 80.87748718261719,
+            "y": 381.32879638671875,
+            "width": 50,
+            "height": 27,
+            "top": 381.32879638671875,
+            "right": 130.8774871826172,
+            "bottom": 408.32879638671875,
+            "left": 80.87748718261719
+          }
+        }
+      ],
+      "scrollWidth": 320
+    },
+    {
+      "layout": "landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "controls": [
+        {
+          "text": "Pause motion",
+          "width": 112,
+          "height": 44
+        },
+        {
+          "text": "Sail up",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Sail left",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Sail down",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Sail right",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Trim sail in",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Ease sail out",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Return to auto trim",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Spill wind",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Reset boat",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Sound off",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Scan Chartroom, Resume",
+          "width": 115.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Shipyard, Projects",
+          "width": 115.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Logbook, Writing",
+          "width": 115.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Signal Cove, Media",
+          "width": 115.5,
+          "height": 44
+        },
+        {
+          "text": "Zoom out",
+          "width": 64.46875,
+          "height": 44
+        },
+        {
+          "text": "Focus Overview harbour",
+          "width": 63.84375,
+          "height": 44
+        },
+        {
+          "text": "Focus Project harbour",
+          "width": 52.25,
+          "height": 44
+        },
+        {
+          "text": "Open Project content",
+          "width": 82.203125,
+          "height": 44
+        },
+        {
+          "text": "Open nearby Overview",
+          "width": 130.5,
+          "height": 44
+        }
+      ],
+      "markers": [],
+      "scrollWidth": 844
+    },
+    {
+      "layout": "tablet",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "controls": [
+        {
+          "text": "Pause motion",
+          "width": 112,
+          "height": 44
+        },
+        {
+          "text": "Sail up",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Sail left",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Sail down",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Sail right",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Trim sail in",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Ease sail out",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Return to auto trim",
+          "width": 71.65625,
+          "height": 44
+        },
+        {
+          "text": "Spill wind",
+          "width": 71.671875,
+          "height": 44
+        },
+        {
+          "text": "Reset boat",
+          "width": 149.328125,
+          "height": 44
+        },
+        {
+          "text": "Sound off",
+          "width": 149.328125,
+          "height": 44
+        },
+        {
+          "text": "Scan Chartroom, Resume",
+          "width": 179.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Shipyard, Projects",
+          "width": 179.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Logbook, Writing",
+          "width": 179.5,
+          "height": 44
+        },
+        {
+          "text": "Scan Signal Cove, Media",
+          "width": 179.5,
+          "height": 44
+        },
+        {
+          "text": "Zoom out",
+          "width": 64.46875,
+          "height": 44
+        },
+        {
+          "text": "Focus Overview harbour",
+          "width": 63.84375,
+          "height": 44
+        },
+        {
+          "text": "Focus Project harbour",
+          "width": 52.25,
+          "height": 44
+        },
+        {
+          "text": "Open Project content",
+          "width": 82.203125,
+          "height": 44
+        },
+        {
+          "text": "Open nearby Overview",
+          "width": 130.5,
+          "height": 44
+        }
+      ],
+      "markers": [
+        {
+          "id": "shipyard-project",
+          "rect": {
+            "x": 243.52914428710938,
+            "y": 597.3373413085938,
+            "width": 50,
+            "height": 27,
+            "top": 597.3373413085938,
+            "right": 293.5291442871094,
+            "bottom": 624.3373413085938,
+            "left": 243.52914428710938
+          }
+        }
+      ],
+      "scrollWidth": 768
+    },
+    {
+      "layout": "wide",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "controls": [
+        {
+          "text": "Pause motion",
+          "width": 118,
+          "height": 44
+        },
+        {
+          "text": "Sail up",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Sail left",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Sail down",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Sail right",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Trim sail in",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Ease sail out",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Return to auto trim",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Spill wind",
+          "width": 110,
+          "height": 44
+        },
+        {
+          "text": "Reset boat",
+          "width": 226,
+          "height": 44
+        },
+        {
+          "text": "Sound off",
+          "width": 226,
+          "height": 44
+        },
+        {
+          "text": "Scan Chartroom, Resume",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Scan Shipyard, Projects",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Scan Logbook, Writing",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Scan Signal Cove, Media",
+          "width": 96,
+          "height": 48
+        },
+        {
+          "text": "Zoom out",
+          "width": 68.46875,
+          "height": 44
+        },
+        {
+          "text": "Focus Overview harbour",
+          "width": 67.84375,
+          "height": 44
+        },
+        {
+          "text": "Focus Project harbour",
+          "width": 56.25,
+          "height": 44
+        },
+        {
+          "text": "Open Project content",
+          "width": 86.203125,
+          "height": 44
+        },
+        {
+          "text": "Open nearby Overview",
+          "width": 134.5,
+          "height": 44
+        }
+      ],
+      "markers": [
+        {
+          "id": "shipyard-project",
+          "rect": {
+            "x": 813.2091674804688,
+            "y": 590.7933349609375,
+            "width": 50,
+            "height": 27,
+            "top": 590.7933349609375,
+            "right": 863.2091674804688,
+            "bottom": 617.7933349609375,
+            "left": 813.2091674804688
+          }
+        }
+      ],
+      "scrollWidth": 1920
+    },
+    {
+      "pauseFrozenResume": true
+    },
+    {
+      "syntheticVisibilityFreeze": true,
+      "limit": "Visibility event emulation; no OS-level background tab claim"
+    },
+    {
+      "zoomOutSuppressed": true
+    },
+    {
+      "scannerBroad": true
+    },
+    {
+      "reducedScanner": true
+    },
+    {
+      "manualProject": "Project reached \u00b7 Open available"
+    },
+    {
+      "manualDepartureBroad": true,
+      "seconds": 1.6
+    },
+    {
+      "fallback": true
+    }
+  ],
+  "captures": [
+    {
+      "name": "desktop-project-arrival",
+      "sha256": "f1e998eedeae0a1c6a6a1a413c7bfc3e7042a34f8f613ab9058af49953ce9b1d",
+      "path": "artifacts/phase16/desktop-project-arrival.png",
+      "fileModifiedAtUtc": "2026-11-08T15:32:34.478234+00:00"
+    },
+    {
+      "name": "desktop-overview-arrival",
+      "sha256": "97ba6a45d99893be43cbfc179f28f7cf2d7a4e9fb8679ec5779a56be9beca7ba",
+      "path": "artifacts/phase16/desktop-overview-arrival.png",
+      "fileModifiedAtUtc": "2026-11-08T15:32:45.961864+00:00"
+    },
+    {
+      "name": "desktop-selected-project",
+      "sha256": "13c90df8c4c5027784838b740b3dde4276cf933d8c30afec4177e9a45e137369",
+      "path": "artifacts/phase16/desktop-selected-project.png",
+      "fileModifiedAtUtc": "2026-11-08T15:32:47.027499+00:00"
+    },
+    {
+      "name": "phone-local",
+      "sha256": "c5755e4b1554807180fc23ccb93684a9eb8025fe207fde1883d36e4acc0cb417",
+      "path": "artifacts/phase16/phone-local.png",
+      "fileModifiedAtUtc": "2026-11-08T15:32:47.684654+00:00"
+    },
+    {
+      "name": "small-local",
+      "sha256": "17aa5ca2c957d7a76cb2f44773a5690c27ca7080c502de932a968982bbd1a7b8",
+      "path": "artifacts/phase16/small-local.png",
+      "fileModifiedAtUtc": "2026-11-08T15:32:48.130126+00:00"
+    },
+    {
+      "name": "landscape-local",
+      "sha256": "bc218b32ede09a05c50afc383b23418235f66d2352108f94b905e963ff1f9f1d",
+      "path": "artifacts/phase16/landscape-local.png",
+      "fileModifiedAtUtc": "2026-11-08T15:32:48.601645+00:00"
+    },
+    {
+      "name": "fallback",
+      "sha256": "6be412a82a921a34fc4180bc52b741aaff41f0fee36b45033f6fee260e2b0df9",
+      "path": "artifacts/phase16/fallback.png",
+      "fileModifiedAtUtc": "2026-11-08T15:33:19.421361+00:00"
+    }
+  ],
+  "assets": [
+    {
+      "path": "assets/index-DSzfoaBK.js",
+      "sha256": "92d498e120b8e37709810e83469c9f757128e3f5700b0f80c4b6fddf81d1a7b8"
+    },
+    {
+      "path": "assets/index-l6N-AMFZ.css",
+      "sha256": "3776f7fbf25145af3988f50a5a20186deb3a1b424106317e022b07bd59e1132a"
+    }
+  ],
+  "errors": [],
+  "verdict": "pass",
+  "metadataFinalizedAt": "2026-11-08T15:34:19.237369+00:00",
+  "measurementWindowUtc": {
+    "firstCapture": "2026-11-08T15:32:34.478234+00:00",
+    "lastCapture": "2026-11-08T15:33:19.421361+00:00"
+  },
+  "base": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "headAtMeasurement": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "sourceBindingNote": "Hashes finalized after successful run; parent held all product source and served bundle frozen throughout.",
+  "sourceSha256": {
+    "index.html": "c49346ea8d8cbfd311d1a9d5843a858d0447894a792ea163d809bcd1389b51b3",
+    "src/audio/createWindRush.ts": "d15af2f50bd953cef0c8f7d98371b8a915b80c402af03a8a8a5e3ece6136f9a0",
+    "src/content/harbours.ts": "4430a79f91374cce32b6e14f30b112204d2cb866b4b3963cc91eb6762c7e036a",
+    "src/content/islands.ts": "dd434ddcf8280caa80c7a0d75c9a7c368cdb29d17aff7e38ba53e0a1d078ffb1",
+    "src/content/portfolio.ts": "b19196bb6d36dbb663fcec9f786dee759fb324c30edce1a012121607ba434838",
+    "src/controls/vesselInput.ts": "93017222fb8adfa395fccd59d14b92d8c7330b5a6258d8fb8e93b5928d11f785",
+    "src/interaction/localHarbour.ts": "2756dbc22bd3561292ef518c27999da9e86109893b10e0e0fb4937c734e7de50",
+    "src/interaction/proximity.ts": "2fc6479a03385446c2dd7ffbedd79a74cc0b4676e8be7f8092eb871a753a9467",
+    "src/main.ts": "59310cc5a9335a39733d687093d9414a2fbc61e53b4e15e98f3e491f06a27f4d",
+    "src/navigation/routePlanner.ts": "53e7dd9ab8b9624ff38603cf2b30580139ab530b753972b11399bc57d68806a2",
+    "src/navigation/scanner.ts": "48fbd173c5c77e8398479845a4e5550319f9ef83687f48bc1676c941d0342041",
+    "src/styles.css": "ac16c8ef176530b7e59ad7b7361b99e6c3196bedc8fc3736e3e08d6c3aaf47c2",
+    "src/ui/hud.ts": "ce336e66215c1ac3a9558a9a69a6fe3391939182bb16cb1a7956372d7f8f04ed",
+    "src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "src/world/createCameraRig.ts": "8a9b58fdfa10e410b921489ad8ee112ba500fcee38a7d745144224dfb1ec323f",
+    "src/world/createHarbourMarkers.ts": "c6f52ac6cb628898d4d9fe8773958132cf5b479ca3ebec2a3b2f528f1656bfe6",
+    "src/world/createLandmarks.ts": "6c0053fb54ffe014a8d67dbb423f4a25aa6c87882a20b2872e2cf66aa0d50a35",
+    "src/world/createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d",
+    "src/world/createVessel.ts": "e24ef7d1f056cc081cf620a2cd77ec70e23ffee6b35ffb7c2c40dbbb1b94bfa5",
+    "src/world/createWaterWorld.ts": "336d4e9fa299677baa569a4ebeb1f897ec092c3d6dd2be6aa9d6c9e37b5387bd",
+    "src/world/effects/createHullSpray.ts": "fd01115aadd69e6d8b732c68038b14ce469a74aa646b577050823dc37402c4d5",
+    "src/world/effects/createShorelineFoam.ts": "6bf8c9c8f0628cd6475ab1eb1a16969a96e246afef08c1982a8ef52e6c7adac7",
+    "src/world/effects/createWake.ts": "0e237c6e94b98dbae61bf60df9709fc2a4a196582f485721d9ca09b8e5cf03a5",
+    "src/world/effects/createWindFlags.ts": "dc1da062865285bdae071fef33015284324ddbb5e3a526b58394157ea4cb6aac",
+    "src/world/stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+    "src/world/vessel/headingSteering.ts": "302bde9bb46a3c1c2d3305a2e36818d0c82a9acf538406dc9c50abfe510c658e",
+    "src/world/vessel/hullContact.ts": "6cfcb9d0015f2ca2c4294c374bca3c02d5ab5260e690b4108954d600a655f6ba",
+    "src/world/vessel/kinematics.ts": "8962573eb209d9775a36807c9e00a68383b4e33acd1142e1043ad96888286ec9",
+    "src/world/vessel/pose.ts": "7c593ac72b6dd382262758f0b5aea8f9530c0e21fd8b7c073fcfa83f65ec257d",
+    "src/world/vessel/sailResponse.ts": "57c145923c48d8b4add4aa724318689439fa7a93b74b1a1e4e292d6165c83d3c",
+    "src/world/vessel/trimAssist.ts": "e82c1a2e295385d9a2855ad49d25fdcfead702f36b2bf1b3f1e2e6e698546677",
+    "src/world/vessel/waveResponse.ts": "b6ebd79da418a681f7994069affbed0dec890432efb8d1bd829471663904090c",
+    "src/world/waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+    "src/world/waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+    "src/world/waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+    "src/world/wind.ts": "a7cb8067991b993b5aaf92fdf61cb0508f3317919f0b4dbe58b8cf1d22e8320f"
+  },
+  "fixtureSha256": "cc95672660bb2d90d716f9a15ec3370e436aa423bb738b76519e7c2db5bb703a",
+  "browser": "Chromium headless shell 151.0.7922.34, Playwright pinned build1234",
+  "browserInstall": "node_modules/.cache/test-browsers/chromium_headless_shell-1234",
+  "reproduce": "PLAYWRIGHT_BROWSERS_PATH=$PWD/node_modules/.cache/test-browsers /home/codex-account/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node artifacts/phase16/browser-check.mjs (production pnpm preview already on127.0.0.1:4176)",
+  "limits": "Ubuntu VirtualBox + Chromium headless SwiftShader. No physical GPU/performance, OS/browser chrome or genuine background-tab claim. Fixture steps actual rAF callbacks at100ms plus one30ms fraction; skips only intermediate WebGL draw calls and normally renders final batch frame. Hidden-tab check dispatches a synthetic visibilitychange with document.hidden override. Normal production camera/simulation/keyboard handlers; no private state hook/teleport/autopilot.",
+  "fixtureMetadataNote": "Metadata collection added to fixture after unchanged-source accepted run; execution code otherwise unchanged."
+}

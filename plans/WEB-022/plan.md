@@ -14,7 +14,8 @@ See artifacts/phase15/VERIFICATION.md and the MR's external exact-SHA review.
 
 Base: `907673941072e59335e9f16e5de97b393c575d53`.
 Branch: `codex/WEB-022-island-rollout`; managed worktree `web-022-rollout`.
-Status: In progress. Preserve all original checkout changes.
+Status: Done, 2026-11-07. MR #10 merged as `812e02f`; exact reviewed tree,
+CI/Pages and matching public assets/interactions verified. Original changes preserved.
 
 - Add matching submerged decagonal foundations and sparse directional shoreline
   response to the remaining three islands. Preserve Shipyard's dock gap.

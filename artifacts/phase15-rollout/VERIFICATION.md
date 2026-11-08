@@ -71,3 +71,11 @@ hosted CI and protected squash merge, then matching merge tree, exact-SHA CI/Pag
 public asset equality and focused live interactions. Carry verified completion
 into assigned WEB-016 MR; no extra per-stage paperwork MR. All 20 original changed
 files remain preserved; recheck their recorded hashes at release.
+
+## Published rollout
+
+MR #10 protected squash merge `812e02fc2517d02165241289f31ea58a644e4fc0` has the
+exact reviewed tree `3b073c31b5424f0b68ec01999115b6a37ccb3475`. Exact-SHA CI run
+42450114827 and Pages run 42450114293 succeed. Four public files match `docs/`;
+desktop/phone motion, helm, drawers and actual arrivals at all three new islands
+pass without errors. See RELEASE.json. WEB-022 is Done; WEB-016 is assigned next.
