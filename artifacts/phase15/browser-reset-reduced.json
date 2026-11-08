@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-11-08T04:29:23.531Z",
+  "headAtMeasurement": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "base": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "provenance": {
+    "browser": "Bundled playwright-core pinned Chromium headless shell, installed under /tmp only; SwiftShader software renderer.",
+    "fixture": "Production bundles, unmodified HTML/CSS/JS. Pre-load fixture replaces requestAnimationFrame with manually stepped callbacks. First frame t=0, subsequent frames at 100ms; app fixed-step simulation remains unchanged. All matched captures reset boat/time, apply brake by the real Spill control, then step the identical frame sequence. Fixed camera rig and unmodified normal scene framing.",
+    "hiddenTab": "Fixture overrides document.hidden and dispatches visibilitychange to exercise actual application suspension/resume handler; this is not an OS/browser background-tab lifecycle claim.",
+    "limits": "Software-rendered VM evidence; no physical mobile GPU, browser diversity, heap allocation, prolonged GPU lifecycle, or live-publication claim. Console errors are asserted absent except deliberately denied WebGL fallback."
+  },
+  "sourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "34d6b5f87522dc34a2a77fd29e6416a78c2d594f8861f958a94e3bf37e80b657",
+    "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+    "src/world/createWaterWorld.ts": "db64cc61546358a4a34464a3298e865c8987e6f58ded3482b8122a863702d9e9"
+  },
+  "captures": [],
+  "checks": [
+    {
+      "name": "baseline",
+      "resetByteIdentical": true,
+      "reducedMotionByteIdentical": true,
+      "callbacks": {
+        "frames": 61,
+        "callbacks": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "candidate",
+      "resetByteIdentical": true,
+      "reducedMotionByteIdentical": true,
+      "callbacks": {
+        "frames": 61,
+        "callbacks": 0
+      },
+      "errors": []
+    }
+  ],
+  "assets": {},
+  "errors": [],
+  "browser": "151.0.7922.34",
+  "verdict": "pass"
+}

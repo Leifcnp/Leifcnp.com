@@ -18,12 +18,6 @@ wind cues, WEB-017 wave sets, then WEB-022 shoreline response. WEB-020 is now co
 Other entries remain Backlog and harbours remain deferred.
 
 
-- [ ] WEB-022 — Make waves visibly interact with islands and shorelines.
-  - Requested (2026-09-24): Add wave interaction at the islands so incoming water visibly reaches, breaks against, and wraps around the land instead of passing through it as an unrelated background layer.
-  - Acceptance criteria: Use the shared deterministic wave field to create bounded shoreline response such as small breaking crests, swash, foam, or reflected/dissipated motion at island edges. Keep land geometry, wave sampling, hull contact, wake, storm transitions, and scanner routes coherent; never let water cues imply that the boat can enter land or that island collision rules have changed. Preserve pause/reset, hidden-tab, reduced-motion, WebGL fallback, disposal, and mobile rendering budgets.
-  - Progress: Backlog only. This is a future visual/physical interaction task, secondary to direct boat control/feedback. Harbours are deferred; listing shoreline work does not authorize implementation.
-  - Next step: When selected, prototype one island and one prevailing wave direction at normal desktop/mobile camera scale, measure shoreline clearance and effect cost, then review before applying the behavior to every island.
-  - Plan: [plans/WEB-022/plan.md](plans/WEB-022/plan.md).
 
 - [ ] WEB-016 — Zoom into manually reached islands and reveal dockable submenu harbours.
   - Requested (2026-09-24): Brainstorming note: when a visitor manually navigates to an island, zoom in and show each section submenu as a smaller dockable harbour.
@@ -42,7 +36,14 @@ Other entries remain Backlog and harbours remain deferred.
 
 ## In progress
 
-No assigned tasks currently in progress.
+- [ ] WEB-022 — Make waves visibly interact with islands and shorelines.
+  - Requested (2026-09-24): Add wave interaction at the islands so incoming water visibly reaches, breaks against, and wraps around the land instead of passing through it as an unrelated background layer.
+  - Acceptance criteria: Use the shared deterministic wave field to create bounded shoreline response such as small breaking crests, swash, foam, or reflected/dissipated motion at island edges. Keep land geometry, wave sampling, hull contact, wake, storm transitions, and scanner routes coherent; never let water cues imply that the boat can enter land or that island collision rules have changed. Preserve pause/reset, hidden-tab, reduced-motion, WebGL fallback, disposal, and mobile rendering budgets.
+  - Plan: [plans/WEB-022/plan.md](plans/WEB-022/plan.md).
+  - Assigned (2026-11-07): User explicitly requests finishing the existing Shipyard-only prototype, independent review, MR merge/publication and a minimal process retrospective.
+  - Progress: Existing source/tests copied into an isolated current-master worktree; original edits preserved. Source, quantitative validation and browser QA delegated to Sol 6.1 agents.
+  - Next step: Complete scoped checks and normal-camera comparisons, obtain exact-head/base independent review, merge through protected master, then verify Pages/public behavior. Do not expand to other islands.
+
 
 ## Blocked
 

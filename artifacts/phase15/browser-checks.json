@@ -1,0 +1,111 @@
+{
+  "verdict": "pass",
+  "browser": "151.0.7922.34",
+  "renderer": {
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+  },
+  "base": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "headAtMeasurement": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "candidateWorkingSourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "34d6b5f87522dc34a2a77fd29e6416a78c2d594f8861f958a94e3bf37e80b657",
+    "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+    "src/world/createWaterWorld.ts": "db64cc61546358a4a34464a3298e865c8987e6f58ded3482b8122a863702d9e9"
+  },
+  "sourceBinding": "Candidate was uncommitted at capture; working-source hashes and the served candidate docs asset hashes bind the measured code. In every child report sourceSha256 means candidate working source, even a baseline-only run. Baseline is independently proven by served asset hashes against e92b7a9735a6ac15ccabaebf4520c5b72a00335c:docs.",
+  "fixture": "Unmodified production bundles and app CPU fixed-step callbacks. A pre-load fixture manually steps requestAnimationFrame. Initial rest comparisons use full raster throughout. Active-phase and final interaction runs skip only intermediate WebGL draw calls, and render every batch final frame normally. No GPU simulation feedback exists in this scene. Actual screenshots preserve production camera and viewport.",
+  "fixtureCorrections": "Hash screenshots hide HUD parents and descendants to exclude hover/fade pixels. After functional viewport resize the fixture steps an actual render frame and waits260ms for the220ms drawer animation. Initial false screenshot assertions and GPU queue timeouts were fixture/infrastructure findings; no product changes resulted. Final corrected runs pass.",
+  "checks": "Normal desktop active/quiet comparisons; matched phone and wide active frames; additional phone docking view through actual pause/scanner/resume UI. Motion, pause/resume, keyboard steering with changed wind telemetry, reset canvas and label projection, all scanner categories, real Shipyard arrival/manual handoff, six viewport drawers/44px targets/overflow, live and initial reduced motion, synthetic visibility handler suspension/resume, readable WebGL fallback/all categories, console cleanliness.",
+  "limitations": [
+    "SwiftShader in Ubuntu VM; no physical mobile GPU or cross-browser claim.",
+    "Visibility handler exercised with synthetic document.hidden/visibilitychange; no OS background-tab lifecycle claim.",
+    "No browser performance or allocation claim from optimized captures; CPU/resource evidence is separate validation.json.",
+    "Phone spawn framing naturally clips Shipyard at the right edge, unchanged from baseline. The paired phone-dock capture uses the real production follow camera to show the entire shoreline.",
+    "Local production preview only; root owns protected MR, publication and live-publication verification."
+  ],
+  "runs": [
+    {
+      "path": "browser-comparison.json",
+      "verdict": "pass",
+      "captures": 12,
+      "checks": 6
+    },
+    {
+      "path": "browser-active-captures.json",
+      "verdict": "pass",
+      "captures": 6,
+      "checks": 2
+    },
+    {
+      "path": "browser-active-layouts.json",
+      "verdict": "pass",
+      "captures": 4,
+      "checks": 4
+    },
+    {
+      "path": "browser-active-phone-dock.json",
+      "verdict": "pass",
+      "captures": 2,
+      "checks": 2
+    },
+    {
+      "path": "browser-interactions.json",
+      "verdict": "pass",
+      "captures": 11,
+      "checks": 15
+    },
+    {
+      "path": "browser-reset-reduced.json",
+      "verdict": "pass",
+      "captures": 0,
+      "checks": 2
+    }
+  ],
+  "imagesSha256": {
+    "baseline-fresh/desktop-t0.png": "2d7fdd26eb6cdfca37323ad598471da073ac56735bd0b031a031b2e84d77d3a9",
+    "baseline-fresh/desktop-t4.png": "9686d310fb383c7f88e37d40315f8db0935422dca57fc3c3744fe5a295af1d00",
+    "baseline-fresh/desktop-t8.png": "ff6d286d1267caaed960be75858e2a45a9b2eda22e2c4ec9c7412b67fccad422",
+    "baseline-fresh/desktop-t12.png": "b65bb13f3a753d423b005b036268473ee57f39246c7cfbba40f6214a5200d5f4",
+    "baseline-fresh/phone-t4.png": "dda7d51f004d77f846fc80ae41e1bdabd94ae6de74fe19d3cf458a2bf4308cd1",
+    "baseline-fresh/wide-t4.png": "4d0cd2166213d7a6a89d8f54075618c849d964b241ad2d2ee73a018b043e0eac",
+    "candidate-fresh/desktop-t0.png": "65694dae7c265807e03b01b53ade3f8b5a827d617bad0495549d926e77429ef4",
+    "candidate-fresh/desktop-t4.png": "c3ca1c1a0c1acd0a93d642fb9e5a4888a8d30dbf2eacfc750eb64b54050abacb",
+    "candidate-fresh/desktop-t8.png": "25453ecd15c8a1573b4ed13733d87c1ad26c74f35d12c79c45c5a261db3275e0",
+    "candidate-fresh/desktop-t12.png": "41282e13fc48f876d7d9bd8728a004dcea29e942520bbdd28ec6fd857919a7e0",
+    "candidate-fresh/phone-t4.png": "76f4ef65ac618f9052ab3100bb69d8cfe35f7ec0adfd8e1d34b54f2da5724ace",
+    "candidate-fresh/wide-t4.png": "0c414bc8a75a8c307ad9f1b646bcdf15dad25cb4fdac7e01b09987e20ca3bfea",
+    "baseline-fresh/desktop-t5.6.png": "2291723919cdcd8c2c71ca8d61cd1d31efa93b375e5fbd1376e372831fe0b42b",
+    "baseline-fresh/desktop-t23.png": "a9b6323d0b77114202c52e2f124ebb274ab4d6806c487bd5561d68fd8d24a0a5",
+    "baseline-fresh/shipyard-context-t23.png": "eaea1374a86e3f27c01dd80fe23b5309814b4f272fb3e87e43fc291abf49418c",
+    "candidate-fresh/desktop-t5.6.png": "f516969eb8434277db8eda903dbaeea5022e915d986003b4306c7fe5d87aac5e",
+    "candidate-fresh/desktop-t23.png": "a3a05bc1e20ebee13a71d1afe8753eff0e190f6c796669219a6df0769c4d57bf",
+    "candidate-fresh/shipyard-context-t23.png": "476ec01760cf66dd7835f8654eeae5f423eb68563e434f4c2026854972dd6723",
+    "baseline-fresh/phone-t23.png": "4ef8834c0cf05d538402e9d13e6e2aeca972fd610ce8c45a5bba915a9dfb5243",
+    "baseline-fresh/wide-t23.png": "a360052cb1df236136e283cc2e9e066cc5b769266e246a57118288460901e3cc",
+    "candidate-fresh/phone-t23.png": "dba9487fd09cb0d14dc5399e5f369520f060812936f16b8486783e47032a888c",
+    "candidate-fresh/wide-t23.png": "5427d9531d9ddbde667ce2f2ca7c49cd799aa4d302603bad9af5a9ff5f82f0e2",
+    "baseline-fresh/phone-dock-t23.png": "30342cbbd9bae7d64d42176a81497b5b0f7479a71696c8b7b77ec6a261332d5f",
+    "candidate-fresh/phone-dock-t23.png": "cd2216841783e4800596ff34a05039a03c4835e7d9481d594cf5a15442d9d81a",
+    "candidate-fresh/reset-before.png": "64e45b38e44118c754a7a064cfca58a029d26e5d3138933e5e5541a20d322c6a",
+    "candidate-fresh/reset-after.png": "64e45b38e44118c754a7a064cfca58a029d26e5d3138933e5e5541a20d322c6a",
+    "candidate-fresh/scanner-arrival.png": "3b2b92ecdf0cc1749b00cd7a0ac9e89efe4900ce67e6c81ab3d761ecfa2a20a0",
+    "candidate-fresh/desktop-drawer.png": "57191451bfef5e6d7bfb008f4005efe291344886c9550ed5dab9db36e4f633a1",
+    "candidate-fresh/phone-drawer.png": "6d1fede0b9bd8d1e77e94244b6cc7f6b34dc44d363417392736abdf2d5e1d913",
+    "candidate-fresh/wide-drawer.png": "0c282ec780a2247e15efdc6573f985a04999aa5ae984fd0c03e899c0e1235d2b",
+    "candidate-fresh/small-drawer.png": "be0fcbd021d4fe0f302d33e30add3de11099baaf3530fbadee47bb84fe7049a0",
+    "candidate-fresh/tall-drawer.png": "4e89a68117341da13b6a00cd8a08d9897bb0cb5a4bf4f22a46d8f861accc176a",
+    "candidate-fresh/landscape-drawer.png": "6ab9cfe45dd352f4d5fccfd92cc83530c79985df85bfa8802ea0830c2e889907",
+    "candidate-fresh/reduced-motion.png": "6d599da4dc75e43960df1632f2035d70372928b694b407ea71bdcf51a203ec96",
+    "candidate-fresh/webgl-fallback.png": "df4b46a47c09d7f9b5b5b6b45705c77ee1792887de83706923dd418ba7f52c54"
+  },
+  "provision": "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers /home/codex-account/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /home/codex-account/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright-core/cli.js install chromium-headless-shell",
+  "reproduction": [
+    "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers node artifacts/phase15/browser-check.mjs",
+    "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers FAST_SIMULATION=1 BROWSER_STAGE=all CAPTURES_ONLY=1 CAPTURE_LAYOUTS=desktop CAPTURE_TIMES=5.6,23 REPORT_NAME=browser-active-captures.json node artifacts/phase15/browser-check.mjs",
+    "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers FAST_SIMULATION=1 BROWSER_STAGE=all CAPTURES_ONLY=1 CAPTURE_LAYOUTS=phone,wide CAPTURE_TIMES=23 REPORT_NAME=browser-active-layouts.json node artifacts/phase15/browser-check.mjs",
+    "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers FAST_SIMULATION=1 BROWSER_STAGE=all CAPTURES_ONLY=1 CAPTURE_LAYOUTS=phone CAPTURE_TIMES=23 CAPTURE_STATE=shipyard-dock REPORT_NAME=browser-active-phone-dock.json node artifacts/phase15/browser-check.mjs",
+    "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers FAST_SIMULATION=1 BROWSER_STAGE=candidate SKIP_CAPTURES=1 REPORT_NAME=browser-interactions.json node artifacts/phase15/browser-check.mjs"
+  ],
+  "runtimeNote": "Use repository AGENTS.md Node24.22.1 PATH. Baseline URL4173 must serve the recorded base docs; candidate4174 must serve candidate docs. Fixture verifies assets before measuring. No dependency/system changes; pinned temporary browser from official Playwright CDN only.",
+  "reproductionFixtureSha256": "35dc65dc99e0ba3497b88b5380f261ac2bcc3f1d367f2603c588138a3d2885d8"
+}

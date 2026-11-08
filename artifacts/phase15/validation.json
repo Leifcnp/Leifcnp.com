@@ -1,0 +1,145 @@
+{
+  "generatedAt": "2026-11-08T04:20:10.848Z",
+  "headAtMeasurement": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "sourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "34d6b5f87522dc34a2a77fd29e6416a78c2d594f8861f958a94e3bf37e80b657",
+    "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+    "src/world/createWaterWorld.ts": "db64cc61546358a4a34464a3298e865c8987e6f58ded3482b8122a863702d9e9",
+    "src/world/waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+    "src/world/waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a"
+  },
+  "provenance": {
+    "fixture": "Shipyard (16,-24), radius 6; actual shared water grid, t=0..24 in .25s steps",
+    "baselineMotionJson": "Copied historical before/motion.json is unverified: null baseline commit and no capture script; not used for measurements here",
+    "limitation": "Finite sampled time/space coverage; CPU cost is synchronous wall-clock time per update, excludes rendering and ocean updates. No browser or allocation claim."
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+  },
+  "resources": {
+    "vertices": 100,
+    "triangles": 80,
+    "positionBytes": 1200,
+    "alphaBytes": 400,
+    "indexBytes": 480,
+    "meshCount": 1,
+    "materialCount": 1,
+    "depthTest": true,
+    "forceSinglePass": true
+  },
+  "geometry": {
+    "finite": true,
+    "minNormalClearance": 0.1999988763120184,
+    "minCornerGap": 0.1799988607096239,
+    "minVertexLift": 0.03999957505327245,
+    "maxVertexLift": 0.040000384353334084
+  },
+  "contact": {
+    "snapshots": 97,
+    "activeFrames": 71,
+    "quietFrames": 26,
+    "peakAlpha": 0.6000000238418579,
+    "maxActiveFaces": 4,
+    "facePeakAlphas": [
+      0.5507876873016357,
+      0,
+      0.6000000238418579,
+      0.4214136600494385,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.07281240820884705
+    ],
+    "leewardPeakAlpha": 0,
+    "dockPeakAlpha": 0,
+    "interiorSamples": 58218,
+    "submergedSamples": 14,
+    "minInteriorLift": -0.009692157544371582,
+    "maxInteriorLift": 0.07906690526445459,
+    "worstInterior": {
+      "time": 12.25,
+      "triangle": 31,
+      "x": 19.995384454727173,
+      "y": 0.5885683670639992,
+      "z": -28.673351526260376,
+      "alpha": 0.03689979389309885
+    }
+  },
+  "lifecycle": {
+    "sameTimeStable": true,
+    "partitions": [
+      {
+        "hz": 30,
+        "matchesFinalSnapshot": true,
+        "water": "same final cached buffer; timing partition isolates effect state"
+      },
+      {
+        "hz": 60,
+        "matchesFinalSnapshot": true,
+        "water": "same final cached buffer; timing partition isolates effect state"
+      },
+      {
+        "hz": 120,
+        "matchesFinalSnapshot": true,
+        "water": "same final cached buffer; timing partition isolates effect state"
+      }
+    ],
+    "resetRepeats": true,
+    "reducedHiddenAndFrozen": true,
+    "bufferIdentityStable": true,
+    "geometryDisposeEvents": 1,
+    "materialDisposeEvents": 1,
+    "afterDisposeUnchanged": true,
+    "sceneEmpty": true,
+    "emptyFiniteAndHidden": true
+  },
+  "cpu": {
+    "cached": {
+      "batches": 12,
+      "updatesPerBatch": 500,
+      "minMs": 0.013863913999999795,
+      "medianMs": 0.014927545999999892,
+      "maxMs": 0.023662151999999877,
+      "batchMeanMs": [
+        0.013863913999999795,
+        0.01388052000000016,
+        0.014187753999999813,
+        0.014301815999999917,
+        0.01442478600000004,
+        0.014426503999999795,
+        0.015428587999999991,
+        0.015530851999999868,
+        0.015557571999999936,
+        0.01639643799999999,
+        0.02030432799999994,
+        0.023662151999999877
+      ]
+    },
+    "analyticFallback": {
+      "batches": 12,
+      "updatesPerBatch": 500,
+      "minMs": 0.0954209719999999,
+      "medianMs": 0.10198540899999989,
+      "maxMs": 0.15719377000000032,
+      "batchMeanMs": [
+        0.0954209719999999,
+        0.09671143200000006,
+        0.09687059600000021,
+        0.09992785599999979,
+        0.10126551199999995,
+        0.10178903600000012,
+        0.10218178199999965,
+        0.10874245799999994,
+        0.12530453399999988,
+        0.13187995199999977,
+        0.14000879799999985,
+        0.15719377000000032
+      ]
+    }
+  }
+}

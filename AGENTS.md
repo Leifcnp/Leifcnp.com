@@ -10,7 +10,7 @@ do not assume unlimited active agents or silently substitute models.
 - Execute only the tasks or batch the user explicitly assigns. Backlog order,
   a Ready label, historical authorization, or an agent suggestion does not
   authorize starting another task. Finish the assigned batch without routine
-  confirmation, then stop. This setup task authorizes no website feature work.
+  confirmation, then stop. Do not expand an assigned prototype into a rollout.
 - The orchestrator may create branches/worktrees, commit scoped work, open MRs,
   repair findings, merge, and publish assigned work after all merge gates pass.
   On this GitHub repository, **MR means pull request** targeting `master`.
@@ -24,12 +24,14 @@ do not assume unlimited active agents or silently substitute models.
   a blocker and next step, and continue independent assigned tasks. Infrastructure
   failure is not a passing check and is not a reason to bypass a gate.
 
-Read [ORCHESTRATION.md](ORCHESTRATION.md), [PLAN.md](PLAN.md),
-[WEBSITE_TODO.md](WEBSITE_TODO.md), the assigned `plans/WEB-NNN/plan.md`, and the
-batch record before editing. The current user instruction takes precedence.
-These rules supersede historical staffing, shared-checkout assumptions,
-direct-push release steps and automatic one-phase user-review stops. Explicit
-product restrictions, deferred tasks and reviewable acceptance criteria remain.
+Start with this guide and the assigned task contract. The orchestrator also reads
+[ORCHESTRATION.md](ORCHESTRATION.md) and the canonical
+[WEBSITE_TODO.md](WEBSITE_TODO.md). Workers/reviewers inspect relevant code,
+checks and evidence as needed; do not require them to preload the full delivery
+plan, historical guides, every template, or unrelated skills. Keep briefs to the
+outcome, owned paths, constraints and handoff. The current user instruction takes
+precedence. Current rules supersede historical staffing, direct-push releases
+and automatic one-phase user-review stops; product/deferred-scope limits remain.
 Earlier instructions and evidence are preserved in
 [the historical guide](work/history/AGENTS-2026-09-25.md).
 
@@ -96,7 +98,8 @@ Only the integration owner moves queue entries. Retain completion dates and
 evidence. Record a concrete next step for unfinished tasks; blocked entries also
 name the blocker and what enables resumption. Mark Done only after all applicable
 review, merge and deployment gates pass. Leave deferred harbours/zoom and the
-existing WEB-022 shoreline work untouched until explicitly assigned.
+unassigned shoreline work untouched. WEB-022 is limited to the Shipyard prototype
+unless the user explicitly assigns a wider rollout.
 
 ## Project constraints
 

@@ -1,0 +1,22 @@
+{
+  "PLAN.md": "1b54fc84d181cae884b63b0bc85dd5e3a5eba2bae2a0f9c0e00288951313e7d6",
+  "WEBSITE_TODO.md": "0843447002891b062a1ba5a5eccaebdefcd6519c7f4af64f2c6ecddc397831b6",
+  "plans/WEB-022/plan.md": "0752b1d7cb2c7c6e01853c96ac800cbc5a54d9821b1d773236be7ca28a7727f4",
+  "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+  "src/world/createWaterWorld.ts": "05a8fd7bd059c80d8944183c41fa52d7f8c8943a0a7c509d06e6dfa72f092a6d",
+  "tests/landmarks.test.ts": "b6b5577b1642843ccd5a07d0c06b926cc2ea02e2e15d20ce0aa63b26fd7c958f",
+  "artifacts/phase15/before/motion.json": "7696d7d39d2b6a22437f2823768dba40768e490b61855ff033a2f4610c2bb35f",
+  "artifacts/phase15/before/phone-0.png": "0d82f195a3ed50197da1c53992f0a747111abf1d8436c86aa8938e41e1595ecc",
+  "artifacts/phase15/before/phone-2.png": "73428f7a94f00592a71d13afd66dc573744002f30bd596e889744aae997041b3",
+  "artifacts/phase15/before/shipyard-0.png": "a26dd1a5d4e4ecf596ed4a77a2ed4b90d4950f6930502a54b3ca1adf82f5004e",
+  "artifacts/phase15/before/shipyard-1.png": "eb692dc82c5f02d22064787ca75c678a220344b4e16096f9d548a382face0370",
+  "artifacts/phase15/before/shipyard-2.png": "3aa2cc1eaf6028c321a05987cd58cd30e5f1bbb771a68e0b66aa3b788ace00df",
+  "artifacts/phase15/before/shipyard-4.png": "5378030ab1de44256015771dfa46733e77600047a34f23141db053ffd89e6dee",
+  "artifacts/phase15/before/shipyard-6.png": "a54c6d855fcd1a60cc85d2203ef5a07c176268704aff27a52bc043c66195b5d9",
+  "artifacts/phase15/before/start-0.png": "4c9f4c81f8d22ce0a4cc565fd72a147b3545605f1402750bf90de2f8b29fb1bd",
+  "artifacts/phase15/before/start-2.png": "23c331ac64b76566331b8288ab313158c8b366ec060ae508e0e8220636ead466",
+  "artifacts/phase15/before/wide-2.png": "fc5f36d98b372b540416d740ec93ee3e81c2c73cf01c90b0c011712370b93713",
+  "artifacts/phase15/design-audit.md": "049a5f7dd962753d313a56d059d82824389118172506e2d6efd37e1e5c3b0b39",
+  "src/world/effects/createShorelineFoam.ts": "041ca4162e9208956893627414f37dc13c2f2ed16cf294669090aa9620531f81",
+  "tests/shorelineFoam.test.ts": "8d2f1c8714c1f93f7782c030f3c631bff98f913fc36d02d47bbbe8c8e2e1e2b0"
+}

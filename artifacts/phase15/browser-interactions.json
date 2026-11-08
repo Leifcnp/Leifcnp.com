@@ -1,0 +1,395 @@
+{
+  "generatedAt": "2026-11-08T04:35:39.418Z",
+  "headAtMeasurement": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "base": "e92b7a9735a6ac15ccabaebf4520c5b72a00335c",
+  "provenance": {
+    "browser": "Bundled playwright-core pinned Chromium headless shell, installed under /tmp only; SwiftShader software renderer.",
+    "sourceBinding": "sourceSha256 always hashes the candidate working source, including baseline-only runs. Baseline identity is proven separately by served HTML/JS/CSS byte hashes against the recorded base commit docs.",
+    "fixture": "Production bundles, unmodified HTML/CSS/JS. Pre-load fixture replaces requestAnimationFrame with manually stepped callbacks. First frame t=0, subsequent frames at 100ms; app fixed-step simulation remains unchanged. All matched captures reset boat/time, apply brake by the real Spill control, then step the identical frame sequence. Fixed camera rig and unmodified normal scene framing.",
+    "hiddenTab": "Fixture overrides document.hidden and dispatches visibilitychange to exercise actual application suspension/resume handler; this is not an OS/browser background-tab lifecycle claim.",
+    "intermediateRasterSuppressed": true,
+    "rasterWarmup": "When FAST_SIMULATION=1, only intermediate WebGL draw calls are skipped by the fixture; every application simulation callback runs, and each batch final frame renders normally. Captured final frames use the real full-size production camera and renderer.",
+    "limits": "Software-rendered VM evidence; no physical mobile GPU, browser diversity, heap allocation, prolonged GPU lifecycle, or live-publication claim. Console errors are asserted absent except deliberately denied WebGL fallback."
+  },
+  "sourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "34d6b5f87522dc34a2a77fd29e6416a78c2d594f8861f958a94e3bf37e80b657",
+    "src/world/createLandmarks.ts": "3bf1bdac0dd8e9f9f3d71853412b12bdbb175e96887763e3f07db7b3a2ae35b7",
+    "src/world/createWaterWorld.ts": "db64cc61546358a4a34464a3298e865c8987e6f58ded3482b8122a863702d9e9"
+  },
+  "captures": [
+    {
+      "path": "candidate-fresh/reset-before.png",
+      "sha256": "64e45b38e44118c754a7a064cfca58a029d26e5d3138933e5e5541a20d322c6a"
+    },
+    {
+      "path": "candidate-fresh/reset-after.png",
+      "sha256": "64e45b38e44118c754a7a064cfca58a029d26e5d3138933e5e5541a20d322c6a"
+    },
+    {
+      "path": "candidate-fresh/scanner-arrival.png",
+      "sha256": "3b2b92ecdf0cc1749b00cd7a0ac9e89efe4900ce67e6c81ab3d761ecfa2a20a0",
+      "arrival": "Arrived at Shipyard"
+    },
+    {
+      "path": "candidate-fresh/desktop-drawer.png",
+      "sha256": "57191451bfef5e6d7bfb008f4005efe291344886c9550ed5dab9db36e4f633a1",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    {
+      "path": "candidate-fresh/phone-drawer.png",
+      "sha256": "6d1fede0b9bd8d1e77e94244b6cc7f6b34dc44d363417392736abdf2d5e1d913",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "candidate-fresh/wide-drawer.png",
+      "sha256": "0c282ec780a2247e15efdc6573f985a04999aa5ae984fd0c03e899c0e1235d2b",
+      "layout": "wide",
+      "viewport": {
+        "width": 2560,
+        "height": 1080
+      }
+    },
+    {
+      "path": "candidate-fresh/small-drawer.png",
+      "sha256": "be0fcbd021d4fe0f302d33e30add3de11099baaf3530fbadee47bb84fe7049a0",
+      "layout": "small",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      }
+    },
+    {
+      "path": "candidate-fresh/tall-drawer.png",
+      "sha256": "4e89a68117341da13b6a00cd8a08d9897bb0cb5a4bf4f22a46d8f861accc176a",
+      "layout": "tall",
+      "viewport": {
+        "width": 360,
+        "height": 915
+      }
+    },
+    {
+      "path": "candidate-fresh/landscape-drawer.png",
+      "sha256": "6ab9cfe45dd352f4d5fccfd92cc83530c79985df85bfa8802ea0830c2e889907",
+      "layout": "landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      }
+    },
+    {
+      "path": "candidate-fresh/reduced-motion.png",
+      "sha256": "6d599da4dc75e43960df1632f2035d70372928b694b407ea71bdcf51a203ec96"
+    },
+    {
+      "path": "candidate-fresh/webgl-fallback.png",
+      "sha256": "df4b46a47c09d7f9b5b5b6b45705c77ee1792887de83706923dd418ba7f52c54"
+    }
+  ],
+  "checks": [
+    {
+      "motionChanges": true
+    },
+    {
+      "pauseStable": true,
+      "resumeChanges": true
+    },
+    {
+      "manualSteeringChanges": true,
+      "resetRestoresLandmarkProjection": true,
+      "resetCanvasByteIdentical": true
+    },
+    {
+      "allScannerDrawers": true,
+      "shipyardArrival": "Arrived at Shipyard",
+      "manualHandoff": "Under way · choose a category to scan"
+    },
+    {
+      "visibilityHandlerFrozen": true,
+      "visibilityHandlerResumes": true,
+      "syntheticVisibility": true
+    },
+    {
+      "layout": "desktop",
+      "drawerFits": true,
+      "noHorizontalOverflow": true,
+      "scannerTargetsAtLeast44px": true,
+      "measurements": {
+        "width": 1440,
+        "scroll": 1440,
+        "drawer": {
+          "x": 996,
+          "y": 128,
+          "width": 420,
+          "height": 748,
+          "top": 128,
+          "right": 1416,
+          "bottom": 876,
+          "left": 996
+        },
+        "scanner": [
+          {
+            "width": 96,
+            "height": 48
+          },
+          {
+            "width": 96,
+            "height": 48
+          },
+          {
+            "width": 96,
+            "height": 48
+          },
+          {
+            "width": 96,
+            "height": 48
+          }
+        ]
+      }
+    },
+    {
+      "layout": "phone",
+      "drawerFits": true,
+      "noHorizontalOverflow": true,
+      "scannerTargetsAtLeast44px": true,
+      "measurements": {
+        "width": 390,
+        "scroll": 390,
+        "drawer": {
+          "x": 16,
+          "y": 502.328125,
+          "width": 358,
+          "height": 325.671875,
+          "top": 502.328125,
+          "right": 374,
+          "bottom": 828,
+          "left": 16
+        },
+        "scanner": [
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "layout": "wide",
+      "drawerFits": true,
+      "noHorizontalOverflow": true,
+      "scannerTargetsAtLeast44px": true,
+      "measurements": {
+        "width": 2560,
+        "scroll": 2560,
+        "drawer": {
+          "x": 2116,
+          "y": 128,
+          "width": 420,
+          "height": 928,
+          "top": 128,
+          "right": 2536,
+          "bottom": 1056,
+          "left": 2116
+        },
+        "scanner": [
+          {
+            "width": 96,
+            "height": 48
+          },
+          {
+            "width": 96,
+            "height": 48
+          },
+          {
+            "width": 96,
+            "height": 48
+          },
+          {
+            "width": 96,
+            "height": 48
+          }
+        ]
+      }
+    },
+    {
+      "layout": "small",
+      "drawerFits": true,
+      "noHorizontalOverflow": true,
+      "scannerTargetsAtLeast44px": true,
+      "measurements": {
+        "width": 320,
+        "scroll": 320,
+        "drawer": {
+          "x": 16,
+          "y": 302.09375,
+          "width": 288,
+          "height": 249.90625,
+          "top": 302.09375,
+          "right": 304,
+          "bottom": 552,
+          "left": 16
+        },
+        "scanner": [
+          {
+            "width": 67.5,
+            "height": 44
+          },
+          {
+            "width": 67.5,
+            "height": 44
+          },
+          {
+            "width": 67.5,
+            "height": 44
+          },
+          {
+            "width": 67.5,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "layout": "tall",
+      "drawerFits": true,
+      "noHorizontalOverflow": true,
+      "scannerTargetsAtLeast44px": true,
+      "measurements": {
+        "width": 360,
+        "scroll": 360,
+        "drawer": {
+          "x": 16,
+          "y": 573.328125,
+          "width": 328,
+          "height": 325.671875,
+          "top": 573.328125,
+          "right": 344,
+          "bottom": 899,
+          "left": 16
+        },
+        "scanner": [
+          {
+            "width": 77.5,
+            "height": 44
+          },
+          {
+            "width": 77.5,
+            "height": 44
+          },
+          {
+            "width": 77.5,
+            "height": 44
+          },
+          {
+            "width": 77.5,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "layout": "landscape",
+      "drawerFits": true,
+      "noHorizontalOverflow": true,
+      "scannerTargetsAtLeast44px": true,
+      "measurements": {
+        "width": 844,
+        "scroll": 844,
+        "drawer": {
+          "x": 454,
+          "y": 88,
+          "width": 374,
+          "height": 286,
+          "top": 88,
+          "right": 828,
+          "bottom": 374,
+          "left": 454
+        },
+        "scanner": [
+          {
+            "width": 115.5,
+            "height": 44
+          },
+          {
+            "width": 115.5,
+            "height": 44
+          },
+          {
+            "width": 115.5,
+            "height": 44
+          },
+          {
+            "width": 115.5,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "reducedMotionPauses": true,
+      "reducedMotionScannerInstantArrival": true,
+      "reducedDrawerUsable": true
+    },
+    {
+      "consoleErrors": []
+    },
+    {
+      "initialReducedMotionStatic": true
+    },
+    {
+      "webglFallbackReadable": true,
+      "fallbackAllScannerCategories": true,
+      "expectedFallbackConsole": [
+        "THREE.WebGLRenderer: Error creating WebGL context."
+      ]
+    }
+  ],
+  "assets": {
+    "candidate": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "b9f9e5dfa646f20bfce2498cfb9fcdc14311ffc0132bc0551354c69c5048c07a",
+        "matches": "docs/index.html"
+      },
+      {
+        "path": "assets/index-Dz-lXf6y.js",
+        "bytes": 592937,
+        "sha256": "ddac91ce72f42b243fc2bde54a19fdd8dd091fc0c081d16ac64979287f672a14",
+        "matches": "docs/assets/index-Dz-lXf6y.js"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c",
+        "matches": "docs/assets/index-yKZlOFjO.css"
+      }
+    ]
+  },
+  "errors": [],
+  "browser": "151.0.7922.34",
+  "renderer": {
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+  },
+  "verdict": "pass"
+}
