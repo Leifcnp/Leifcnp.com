@@ -54,8 +54,10 @@ ring. No new product hooks or input fixes were introduced for the harness.
 
 All 10 functional groups pass: motion/pause/resume, actual W/repeatable reset,
 3 animated scanner arrivals/explore prompts, phone resize/drawer/44px controls,
-initial reduced-motion freeze/all scanner destinations and all fallback categories.
+live reduced-motion freeze/all scanner destinations and all fallback categories.
 No unexpected console errors; deliberately denied WebGL emits its expected error.
+Initial reduced-motion behavior is unchanged and relies on source inspection and
+the preceding Shipyard prototype evidence; this rollout fixture switches it live.
 
 Fixture manually steps application rAF callbacks, skips intermediate raster only,
 and renders final frames normally; exact final fractional steps retain selected
