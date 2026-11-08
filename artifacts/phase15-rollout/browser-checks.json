@@ -1,0 +1,260 @@
+{
+  "generatedAt": "2026-11-08T05:08:40.893Z",
+  "base": "907673941072e59335e9f16e5de97b393c575d53",
+  "headAtMeasurement": "907673941072e59335e9f16e5de97b393c575d53",
+  "candidateSourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "6bf8c9c8f0628cd6475ab1eb1a16969a96e246afef08c1982a8ef52e6c7adac7",
+    "src/world/createLandmarks.ts": "6c0053fb54ffe014a8d67dbb423f4a25aa6c87882a20b2872e2cf66aa0d50a35",
+    "src/world/createWaterWorld.ts": "2b551764b324377a9f0e971349994525ff9a5634fb1b1e8faf902e84ca4d0099"
+  },
+  "provenance": "Unmodified production bundles. Fixture manually steps actual requestAnimationFrame callbacks at100ms plus an exact final fractional interval; skips only intermediate raster draws, then renders each batch final frame normally. CPU simulation/camera/waves remain unchanged. Each matched view resets clock, holds actual Spill control, and uses normal production camera. Phone framing uses real paused instant Chartroom scanner then resume. Source hashes bind candidate working source; baseline proven by served asset bytes against recorded base docs. Canvas-only hashes hide HUD parents+descendants. Resize gets actual render step; drawer220ms animation settles260ms.",
+  "limits": "SwiftShader VM evidence, no physical GPU/browser-performance/Windows/browser-chrome/OS hidden-tab claim. Eight matched comparison images plus two targeted Logbook diagnostics. Local preview; publication remains root gate.",
+  "phases": {
+    "active": 11.75,
+    "quiet": 8.25
+  },
+  "assets": {
+    "baseline": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "b9f9e5dfa646f20bfce2498cfb9fcdc14311ffc0132bc0551354c69c5048c07a"
+      },
+      {
+        "path": "assets/index-Dz-lXf6y.js",
+        "bytes": 592937,
+        "sha256": "ddac91ce72f42b243fc2bde54a19fdd8dd091fc0c081d16ac64979287f672a14"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c"
+      }
+    ],
+    "candidate": [
+      {
+        "path": "index.html",
+        "bytes": 621,
+        "sha256": "fd4ec66236a74936da28f2894277eb2c5ceb024e2a508a063c5bb6f51906421a"
+      },
+      {
+        "path": "assets/index-CxlYBWZO.js",
+        "bytes": 593087,
+        "sha256": "d1d319dcf71b6cffc144856326f1084097e0d3e388646889cdf7b69e7594a403"
+      },
+      {
+        "path": "assets/index-yKZlOFjO.css",
+        "bytes": 13672,
+        "sha256": "bece936072bc0109538633c58d8943c2292c28e1f44e912382ca1509d4469b3c"
+      }
+    ]
+  },
+  "captures": [
+    {
+      "path": "baseline-desktop-quiet.png",
+      "sha256": "33d93d59747e5676c5cb4883eb93683dfc79f2e1eab78734845de573f7fa8b84",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "baseline-desktop-active.png",
+      "sha256": "1ed2849a8042d85bfba8cc55c2e7c5a84dee0ecdfcdbe07f258d332671592446",
+      "name": "baseline",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "baseline-phone-quiet.png",
+      "sha256": "2770fd02d4c069600a3f5ccc87912deab3eaeee2395ced70e022dcc047f09185",
+      "name": "baseline",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "baseline-phone-active.png",
+      "sha256": "297cc908899f12177c0ad84afb07b6a3242e2aa081d11291ddea88527f563673",
+      "name": "baseline",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "candidate-desktop-quiet.png",
+      "sha256": "8aecd9273a6cd02b225aef937749217815cb29f4ce99497ada2a388a4bd62c9d",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "candidate-desktop-active.png",
+      "sha256": "836bd96802ba78311657c4bc8ea4c8cfb02388a6137daea166a7da90ef01f484",
+      "name": "candidate",
+      "layout": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Reset spawn normal camera"
+    },
+    {
+      "path": "candidate-phone-quiet.png",
+      "sha256": "682fda31ff935d45e16e39edd44d1cf4f60873e444f21e8d64f90379511185de",
+      "name": "candidate",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "quiet",
+      "simulationSeconds": 8.25,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    },
+    {
+      "path": "candidate-phone-active.png",
+      "sha256": "ecc941d2df2f5a8057df1fe86b512f93229fd768bca76e22e3b42f271ccc38a6",
+      "name": "candidate",
+      "layout": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "phase": "active",
+      "simulationSeconds": 11.75,
+      "framing": "Real Chartroom instant scanner/follow camera"
+    }
+  ],
+  "checks": [
+    {
+      "normalCameraLogbookRiskInspection": {
+        "simulationSeconds": 0.25,
+        "path": "browser-logbook-desktop-risk.png",
+        "sha256": "9f6ad685a0542a9a06212a8dda9e78f1aebf23bd8f09b794d84e7f7bd0f7808a",
+        "note": "Unscaled normal-camera crop; see normalScaleVisualInspection and quantitative validation limitations."
+      }
+    },
+    {
+      "motion": true,
+      "pauseFrozen": true,
+      "resume": true
+    },
+    {
+      "trustedW": true,
+      "resetSceneRepeats": true
+    },
+    {
+      "actualScannerArrival": "Chartroom",
+      "steppedSeconds": 2,
+      "nearbyExplorePrompt": true
+    },
+    {
+      "actualScannerArrival": "Logbook",
+      "steppedSeconds": 2,
+      "nearbyExplorePrompt": true
+    },
+    {
+      "actualScannerArrival": "Signal Cove",
+      "steppedSeconds": 2,
+      "nearbyExplorePrompt": true
+    },
+    {
+      "phoneResizeAndDrawer": true,
+      "measurements": {
+        "scroll": 390,
+        "width": 390,
+        "height": 844,
+        "drawer": {
+          "x": 16,
+          "y": 554.328125,
+          "width": 358,
+          "height": 273.671875,
+          "top": 554.328125,
+          "right": 374,
+          "bottom": 828,
+          "left": 16
+        },
+        "buttons": [
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          },
+          {
+            "width": 85,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "reducedMotionFrozen": true,
+      "allReducedScannerArrivals": true
+    },
+    {
+      "consoleErrors": []
+    },
+    {
+      "fallbackAllCategories": true,
+      "expectedFallbackErrors": [
+        "THREE.WebGLRenderer: Error creating WebGL context."
+      ]
+    }
+  ],
+  "browser": "151.0.7922.34",
+  "verdict": "pass",
+  "normalScaleVisualInspection": "Inspected at normal unscaled desktop crop and normal390x844 phone scanner/follow-camera framing: contact remains at the water edge, with no obvious floating patch, visible land overlap or distracting hole. This does not make the sampled triangle interiors exact: quantitative validation reports1.35% visible interior samples below water, min lift-.1021 at Logbook t=.25. Finite samples and these two views cannot exclude every phase/view artifact.",
+  "diagnosticCaptures": [
+    {
+      "path": "browser-logbook-desktop-risk.png",
+      "sha256": "9f6ad685a0542a9a06212a8dda9e78f1aebf23bd8f09b794d84e7f7bd0f7808a",
+      "simulationSeconds": 0.25,
+      "framing": "Unscaled280x230 screenshot clip of1440x900 normal spawn camera"
+    },
+    {
+      "path": "browser-logbook-phone-risk.png",
+      "sha256": "5334ac908beb5a625eac1377a2ab65f91147cb4e9c075aae3606abb5d6172fdb",
+      "simulationSeconds": 0.25,
+      "framing": "Normal390x844 phone viewport after real paused Logbook scan and resume"
+    }
+  ],
+  "reproduction": "PLAYWRIGHT_BROWSERS_PATH=/tmp/web022-browsers ACTIVE_TIME=11.75 QUIET_TIME=8.25 node artifacts/phase15-rollout/browser-check.mjs; then same environment node artifacts/phase15-rollout/browser-logbook-risk.mjs. Use repository Node24.22.1 PATH, baseline4174 and candidate4175. No installation needed when temporary pinned browser remains available.",
+  "reproductionFixtureSha256": "bce627b0ce3b81c1f6688410d5f9b6fcbd85a5c5419ed421e9ff3fbbfa522bde"
+}

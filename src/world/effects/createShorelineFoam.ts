@@ -4,6 +4,7 @@ import { STORM_TUNING } from '../stormField.ts'
 import { sampleFacetedWaterHeight, sampleRenderedWaterHeight } from '../waterSurfaceGrid.ts'
 
 export interface ShorelineIslandProjection {
+  readonly id: string
   readonly position: { readonly x: number; readonly z: number }
   readonly landCollisionRadius: number
 }
@@ -17,8 +18,11 @@ export interface ShorelineFoamController {
 }
 
 export const SHORELINE_FOAM_CAPACITY = 10
-export const SHORELINE_FOAM_VERTEX_COUNT = 100
-export const SHORELINE_FOAM_TRIANGLE_COUNT = 80
+export const SHORELINE_FOAM_ISLAND_CAPACITY = 4
+export const SHORELINE_FOAM_VERTICES_PER_ISLAND = 100
+export const SHORELINE_FOAM_TRIANGLES_PER_ISLAND = 80
+export const SHORELINE_FOAM_VERTEX_COUNT = SHORELINE_FOAM_ISLAND_CAPACITY * SHORELINE_FOAM_VERTICES_PER_ISLAND
+export const SHORELINE_FOAM_TRIANGLE_COUNT = SHORELINE_FOAM_ISLAND_CAPACITY * SHORELINE_FOAM_TRIANGLES_PER_ISLAND
 export const SHORELINE_FOOTPRINT_FACTOR = 0.98
 export const SHORELINE_INNER_CLEARANCE = 0.2
 
@@ -89,23 +93,25 @@ export function getShorelineFoamAnchor(
 function createIndices(): Uint16Array {
   const indices = new Uint16Array(SHORELINE_FOAM_TRIANGLE_COUNT * 3)
   let cursor = 0
-  for (let face = 0; face < SHORELINE_FOAM_CAPACITY; face += 1) {
-    const base = face * VERTICES_PER_FACE
-    for (let segment = 0; segment < SEGMENTS_PER_FACE - 1; segment += 1) {
-      const left = base + segment * 2
-      const right = left + 2
-      indices[cursor++] = left
-      indices[cursor++] = right
-      indices[cursor++] = left + 1
-      indices[cursor++] = right
-      indices[cursor++] = right + 1
-      indices[cursor++] = left + 1
+  for (let island = 0; island < SHORELINE_FOAM_ISLAND_CAPACITY; island += 1) {
+    for (let face = 0; face < SHORELINE_FOAM_CAPACITY; face += 1) {
+      const base = island * SHORELINE_FOAM_VERTICES_PER_ISLAND + face * VERTICES_PER_FACE
+      for (let segment = 0; segment < SEGMENTS_PER_FACE - 1; segment += 1) {
+        const left = base + segment * 2
+        const right = left + 2
+        indices[cursor++] = left
+        indices[cursor++] = right
+        indices[cursor++] = left + 1
+        indices[cursor++] = right
+        indices[cursor++] = right + 1
+        indices[cursor++] = left + 1
+      }
     }
   }
   return indices
 }
 
-/** One bounded, directional shoreline cue for the first supplied island. */
+/** One fixed pooled mesh for up to four island shorelines, in input order. */
 export function createShorelineFoam(
   scene: THREE.Scene,
   islands: readonly ShorelineIslandProjection[],
@@ -131,49 +137,46 @@ export function createShorelineFoam(
   mesh.frustumCulled = false
   scene.add(mesh)
 
-  const island = islands[0]
-  mesh.visible = Boolean(island)
-  const anchors = island
-    ? Array.from({ length: SHORELINE_FOAM_CAPACITY }, (_, index) => getShorelineFoamAnchor(island, index))
-    : []
-  const halfSpan = island
-    ? Math.max(0.04, islandRadius(island) * Math.sin(Math.PI / SHORELINE_FOAM_CAPACITY) - 0.18)
-    : 0
+  const profiles = islands.slice(0, SHORELINE_FOAM_ISLAND_CAPACITY).map(island => ({
+    anchors: Array.from({ length: SHORELINE_FOAM_CAPACITY }, (_, face) => getShorelineFoamAnchor(island, face)),
+    halfSpan: Math.max(0.04, islandRadius(island) * Math.sin(Math.PI / SHORELINE_FOAM_CAPACITY) - 0.18),
+    hasDock: island.id === 'island-projects',
+  }))
+  mesh.visible = profiles.length > 0
   let reducedMotion = false
   let disposed = false
   let lastTime = 0
 
   const writeAll = (timeSeconds: number, renderedPositions?: ArrayLike<number>): void => {
-    if (!island || reducedMotion) return
-    for (let face = 0; face < SHORELINE_FOAM_CAPACITY; face += 1) {
-      const anchor = anchors[face] ?? null
-      const phaseSample = anchor ? sampleWaterSurface(anchor.x, anchor.z, timeSeconds) : null
-      const renderedHeight = anchor
-        ? renderedPositions
+    if (profiles.length === 0 || reducedMotion) return
+    for (let island = 0; island < profiles.length; island += 1) {
+      const profile = profiles[island]
+      for (let face = 0; face < SHORELINE_FOAM_CAPACITY; face += 1) {
+        const anchor = profile.anchors[face]
+        const phaseSample = sampleWaterSurface(anchor.x, anchor.z, timeSeconds)
+        const renderedHeight = renderedPositions
           ? sampleRenderedWaterHeight(anchor.x, anchor.z, renderedPositions)
           : sampleFacetedWaterHeight(anchor.x, anchor.z, timeSeconds)
-        : 0
-      const dockWedge = anchor && anchor.normalX * Math.SQRT1_2 + anchor.normalZ * Math.SQRT1_2 > 0.95 ? 0 : 1
-      const activity = anchor && phaseSample
-        ? getShorelineFoamIntensity(anchor.normalX, anchor.normalZ, renderedHeight, phaseSample.velocityY, phaseSample.stormIntensity) * dockWedge
-        : 0
-      const width = PATCH_MIN_WIDTH + (PATCH_MAX_WIDTH - PATCH_MIN_WIDTH) * activity
-      for (let segment = 0; segment < SEGMENTS_PER_FACE; segment += 1) {
-        const along = (segment / (SEGMENTS_PER_FACE - 1) * 2 - 1) * halfSpan
-        const taper = Math.sin(Math.PI * segment / (SEGMENTS_PER_FACE - 1))
-        for (let row = 0; row < 2; row += 1) {
-          const vertex = face * VERTICES_PER_FACE + segment * 2 + row
-          // Keep the inner edge on the water side of the actual polygon;
-          // widening only moves the outer edge farther into the water.
-          const cross = row * width
-          const x = anchor ? anchor.x + anchor.tangentX * along + anchor.normalX * cross : 0
-          const z = anchor ? anchor.z + anchor.tangentZ * along + anchor.normalZ * cross : 0
-          positions[vertex * 3] = x
-          positions[vertex * 3 + 1] = anchor
-            ? clamp(finiteOr(renderedPositions ? sampleRenderedWaterHeight(x, z, renderedPositions) : sampleFacetedWaterHeight(x, z, timeSeconds), 0), -WATER_HEIGHT_BOUND, WATER_HEIGHT_BOUND) + SURFACE_LIFT
-            : 0
-          positions[vertex * 3 + 2] = z
-          alphas[vertex] = Math.min(0.6, activity * taper * (0.76 + row * 0.08))
+        const dockWedge = profile.hasDock && anchor.normalX * Math.SQRT1_2 + anchor.normalZ * Math.SQRT1_2 > 0.95 ? 0 : 1
+        const activity = getShorelineFoamIntensity(anchor.normalX, anchor.normalZ, renderedHeight, phaseSample.velocityY, phaseSample.stormIntensity) * dockWedge
+        const width = PATCH_MIN_WIDTH + (PATCH_MAX_WIDTH - PATCH_MIN_WIDTH) * activity
+        for (let segment = 0; segment < SEGMENTS_PER_FACE; segment += 1) {
+          const along = (segment / (SEGMENTS_PER_FACE - 1) * 2 - 1) * profile.halfSpan
+          const taper = Math.sin(Math.PI * segment / (SEGMENTS_PER_FACE - 1))
+          for (let row = 0; row < 2; row += 1) {
+            const vertex = island * SHORELINE_FOAM_VERTICES_PER_ISLAND + face * VERTICES_PER_FACE + segment * 2 + row
+            // Keep the inner edge on the water side of the actual polygon;
+            // widening only moves the outer edge farther into the water.
+            const cross = row * width
+            const x = anchor.x + anchor.tangentX * along + anchor.normalX * cross
+            const z = anchor.z + anchor.tangentZ * along + anchor.normalZ * cross
+            positions[vertex * 3] = x
+            positions[vertex * 3 + 1] = clamp(finiteOr(renderedPositions
+              ? sampleRenderedWaterHeight(x, z, renderedPositions)
+              : sampleFacetedWaterHeight(x, z, timeSeconds), 0), -WATER_HEIGHT_BOUND, WATER_HEIGHT_BOUND) + SURFACE_LIFT
+            positions[vertex * 3 + 2] = z
+            alphas[vertex] = Math.min(0.6, activity * taper * (0.76 + row * 0.08))
+          }
         }
       }
     }
@@ -199,7 +202,7 @@ export function createShorelineFoam(
     setReducedMotion: (value): void => {
       if (disposed) return
       reducedMotion = value
-      mesh.visible = Boolean(island) && !reducedMotion
+      mesh.visible = profiles.length > 0 && !reducedMotion
       if (reducedMotion) {
         alphas.fill(0)
         ;(geometry.getAttribute('aAlpha') as THREE.BufferAttribute).needsUpdate = true

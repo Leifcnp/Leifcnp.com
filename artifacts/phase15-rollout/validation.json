@@ -1,0 +1,715 @@
+{
+  "generatedAt": "2026-11-08T05:07:10.139Z",
+  "headAtMeasurement": "907673941072e59335e9f16e5de97b393c575d53",
+  "sourceSha256": {
+    "src/world/effects/createShorelineFoam.ts": "6bf8c9c8f0628cd6475ab1eb1a16969a96e246afef08c1982a8ef52e6c7adac7",
+    "src/world/createLandmarks.ts": "6c0053fb54ffe014a8d67dbb423f4a25aa6c87882a20b2872e2cf66aa0d50a35",
+    "src/world/createWaterWorld.ts": "2b551764b324377a9f0e971349994525ff9a5634fb1b1e8faf902e84ca4d0099",
+    "src/world/waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+    "src/world/waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+    "src/content/islands.ts": "dd434ddcf8280caa80c7a0d75c9a7c368cdb29d17aff7e38ba53e0a1d078ffb1"
+  },
+  "provenance": {
+    "fixture": "All four authored islands in data order; actual shared water grid, t=0..24 in .25s steps",
+    "basis": "Adapted Shipyard numeric fixture; no copied screenshots or historical timing evidence",
+    "limitation": "Finite sampled time/space coverage; CPU cost is synchronous wall-clock time per update, excludes rendering and ocean updates. No browser or allocation claim."
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900H"
+  },
+  "resources": {
+    "vertices": 400,
+    "triangles": 320,
+    "positionBytes": 4800,
+    "alphaBytes": 1600,
+    "indexBytes": 1920,
+    "meshCount": 1,
+    "materialCount": 1,
+    "depthTest": true,
+    "forceSinglePass": true
+  },
+  "snapshots": 97,
+  "perIsland": [
+    {
+      "id": "island-resume",
+      "centre": {
+        "x": -26,
+        "z": -18
+      },
+      "collisionRadius": 7,
+      "geometry": {
+        "finite": true,
+        "minNormalClearance": 0.19999887750294754,
+        "minCornerGap": 0.1799988033493798,
+        "minVertexLift": 0.03999961172479516,
+        "maxVertexLift": 0.04000042735719944
+      },
+      "contact": {
+        "activeFrames": 82,
+        "quietFrames": 15,
+        "peakAlpha": 0.6000000238418579,
+        "maxActiveFaces": 5,
+        "facePeakAlphas": [
+          0.5507876873016357,
+          0.6000000238418579,
+          0.6000000238418579,
+          0.4329747259616852,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.07281240820884705
+        ],
+        "leewardPeakAlpha": 0,
+        "dockSectorPeakAlpha": 0.6000000238418579,
+        "interiorSamples": 79451,
+        "submergedSamples": 165,
+        "minInteriorLift": -0.019183414448690428,
+        "maxInteriorLift": 0.10976271472429389,
+        "worstInterior": {
+          "time": 23.75,
+          "triangle": 15,
+          "x": -18.76028037071228,
+          "y": 1.1242146790027618,
+          "z": -14.688243627548218,
+          "alpha": 0.21700597554445272
+        },
+        "submergedFraction": 0.0020767517086002696
+      },
+      "phases": {
+        "active": [
+          {
+            "time": 3.75,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0,
+              0.6000000238418579,
+              0.0001566036808071658
+            ]
+          },
+          {
+            "time": 4,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0,
+              0.6000000238418579,
+              0.23294472694396973
+            ]
+          },
+          {
+            "time": 4.25,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0,
+              0.6000000238418579,
+              0.4329544007778168
+            ]
+          },
+          {
+            "time": 18.5,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.336981862783432,
+              0.6000000238418579,
+              0
+            ]
+          }
+        ],
+        "quiet": [
+          {
+            "time": 8,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "time": 8.25,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "island-projects",
+      "centre": {
+        "x": 16,
+        "z": -24
+      },
+      "collisionRadius": 6,
+      "geometry": {
+        "finite": true,
+        "minNormalClearance": 0.1999988763120184,
+        "minCornerGap": 0.1799988607096239,
+        "minVertexLift": 0.03999957505327245,
+        "maxVertexLift": 0.040000384353334084
+      },
+      "contact": {
+        "activeFrames": 71,
+        "quietFrames": 26,
+        "peakAlpha": 0.6000000238418579,
+        "maxActiveFaces": 4,
+        "facePeakAlphas": [
+          0.5507876873016357,
+          0,
+          0.6000000238418579,
+          0.4214136600494385,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.07281240820884705
+        ],
+        "leewardPeakAlpha": 0,
+        "dockSectorPeakAlpha": 0,
+        "interiorSamples": 58218,
+        "submergedSamples": 14,
+        "minInteriorLift": -0.009692157544371582,
+        "maxInteriorLift": 0.07906690526445459,
+        "worstInterior": {
+          "time": 12.25,
+          "triangle": 31,
+          "x": 19.995384454727173,
+          "y": 0.5885683670639992,
+          "z": -28.673351526260376,
+          "alpha": 0.03689979389309885
+        },
+        "submergedFraction": 0.0002404754543268405
+      },
+      "phases": {
+        "active": [
+          {
+            "time": 5.25,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.3304726183414459,
+              0.6000000238418579,
+              0.007219109684228897
+            ]
+          },
+          {
+            "time": 5.5,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.3304726183414459,
+              0.6000000238418579,
+              0.13572318851947784
+            ]
+          },
+          {
+            "time": 15.75,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.008975190110504627,
+              0.6000000238418579,
+              0.08607220649719238
+            ]
+          },
+          {
+            "time": 16,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.11938076466321945,
+              0.6000000238418579,
+              0.29587680101394653
+            ]
+          }
+        ],
+        "quiet": [
+          {
+            "time": 0.75,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "time": 1,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "island-writing",
+      "centre": {
+        "x": -18,
+        "z": 26
+      },
+      "collisionRadius": 8,
+      "geometry": {
+        "finite": true,
+        "minNormalClearance": 0.1999983386910369,
+        "minCornerGap": 0.17999831004439937,
+        "minVertexLift": 0.039999634841265674,
+        "maxVertexLift": 0.04000037087874375
+      },
+      "contact": {
+        "activeFrames": 75,
+        "quietFrames": 22,
+        "peakAlpha": 0.6000000238418579,
+        "maxActiveFaces": 5,
+        "facePeakAlphas": [
+          0.4639829397201538,
+          0.6000000238418579,
+          0.6000000238418579,
+          0.4329747259616852,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.07281240820884705
+        ],
+        "leewardPeakAlpha": 0,
+        "dockSectorPeakAlpha": 0.6000000238418579,
+        "interiorSamples": 76886,
+        "submergedSamples": 1037,
+        "minInteriorLift": -0.10210018511964591,
+        "maxInteriorLift": 0.11363815319972304,
+        "worstInterior": {
+          "time": 0.25,
+          "triangle": 28,
+          "x": -12.001765251159668,
+          "y": 0.8128389194607735,
+          "z": 20.775740146636963,
+          "alpha": 0.3354913666844368
+        },
+        "submergedFraction": 0.013487500975470176
+      },
+      "phases": {
+        "active": [
+          {
+            "time": 2.75,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.09836681932210922,
+              0.6000000238418579,
+              0
+            ]
+          },
+          {
+            "time": 3,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.3079007565975189,
+              0.6000000238418579,
+              0.009542378596961498
+            ]
+          },
+          {
+            "time": 3.25,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.4576237201690674,
+              0.6000000238418579,
+              0.1821042150259018
+            ]
+          },
+          {
+            "time": 11.5,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.4183178246021271,
+              0.6000000238418579,
+              0.10955440998077393
+            ]
+          }
+        ],
+        "quiet": [
+          {
+            "time": 6.75,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "time": 7,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "island-media",
+      "centre": {
+        "x": 24,
+        "z": 20
+      },
+      "collisionRadius": 7,
+      "geometry": {
+        "finite": true,
+        "minNormalClearance": 0.19999887750294754,
+        "minCornerGap": 0.17999867302226757,
+        "minVertexLift": 0.03999964745161577,
+        "maxVertexLift": 0.04000032946105847
+      },
+      "contact": {
+        "activeFrames": 66,
+        "quietFrames": 31,
+        "peakAlpha": 0.6000000238418579,
+        "maxActiveFaces": 5,
+        "facePeakAlphas": [
+          0.5507876873016357,
+          0.6000000238418579,
+          0.6000000238418579,
+          0.4173548221588135,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.0717850774526596
+        ],
+        "leewardPeakAlpha": 0,
+        "dockSectorPeakAlpha": 0.6000000238418579,
+        "interiorSamples": 70921,
+        "submergedSamples": 130,
+        "minInteriorLift": -0.024708047107623088,
+        "maxInteriorLift": 0.07226051768340916,
+        "worstInterior": {
+          "time": 23.75,
+          "triangle": 16,
+          "x": 30.85005760192871,
+          "y": 0.34693556278944016,
+          "z": 21.212410926818848,
+          "alpha": 0.10239623486995697
+        },
+        "submergedFraction": 0.0018330254790541588
+      },
+      "phases": {
+        "active": [
+          {
+            "time": 16.75,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.4706750810146332,
+              0.6000000238418579,
+              0.17250289022922516
+            ]
+          },
+          {
+            "time": 17,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.5507876873016357,
+              0.6000000238418579,
+              0.2588689625263214
+            ]
+          },
+          {
+            "time": 17.25,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.5258868336677551,
+              0.6000000238418579,
+              0.3531385064125061
+            ]
+          },
+          {
+            "time": 17.5,
+            "peakAlpha": 0.6000000238418579,
+            "visiblePeak": 0.6000000238418579,
+            "visibleFaceAlphas": [
+              0.37698203325271606,
+              0.6000000238418579,
+              0.409573495388031
+            ]
+          }
+        ],
+        "quiet": [
+          {
+            "time": 0,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "time": 0.25,
+            "peakAlpha": 0,
+            "visiblePeak": 0,
+            "visibleFaceAlphas": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "sharedPhases": {
+    "active": [
+      {
+        "time": 11.75,
+        "islandPeakAlphas": {
+          "island-resume": 0.46195945143699646,
+          "island-projects": 0.502120316028595,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.6000000238418579
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0.45848461985588074,
+          "island-projects": 0.502120316028595,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.5413975119590759
+        },
+        "minVisiblePeak": 0.45848461985588074,
+        "sumVisiblePeak": 2.1020024716854095,
+        "maxPeak": 0.6000000238418579
+      },
+      {
+        "time": 23.5,
+        "islandPeakAlphas": {
+          "island-resume": 0.6000000238418579,
+          "island-projects": 0.5952375531196594,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.4195306897163391
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0.49494266510009766,
+          "island-projects": 0.5952375531196594,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.4195306897163391
+        },
+        "minVisiblePeak": 0.4195306897163391,
+        "sumVisiblePeak": 2.109710931777954,
+        "maxPeak": 0.6000000238418579
+      },
+      {
+        "time": 12,
+        "islandPeakAlphas": {
+          "island-resume": 0.40341275930404663,
+          "island-projects": 0.5408205986022949,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.6000000238418579
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0.39458462595939636,
+          "island-projects": 0.5408205986022949,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.5178197622299194
+        },
+        "minVisiblePeak": 0.39458462595939636,
+        "sumVisiblePeak": 2.0532250106334686,
+        "maxPeak": 0.6000000238418579
+      },
+      {
+        "time": 23.75,
+        "islandPeakAlphas": {
+          "island-resume": 0.6000000238418579,
+          "island-projects": 0.47745758295059204,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.370272159576416
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0.6000000238418579,
+          "island-projects": 0.47745758295059204,
+          "island-writing": 0.6000000238418579,
+          "island-media": 0.370272159576416
+        },
+        "minVisiblePeak": 0.370272159576416,
+        "sumVisiblePeak": 2.047729790210724,
+        "maxPeak": 0.6000000238418579
+      }
+    ],
+    "quiet": [
+      {
+        "time": 8.25,
+        "islandPeakAlphas": {
+          "island-resume": 0,
+          "island-projects": 0.021995892748236656,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0,
+          "island-projects": 0.021995892748236656,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "minVisiblePeak": 0,
+        "sumVisiblePeak": 0.021995892748236656,
+        "maxPeak": 0.021995892748236656
+      },
+      {
+        "time": 8,
+        "islandPeakAlphas": {
+          "island-resume": 0,
+          "island-projects": 0.02483169548213482,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0,
+          "island-projects": 0.02483169548213482,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "minVisiblePeak": 0,
+        "sumVisiblePeak": 0.02483169548213482,
+        "maxPeak": 0.02483169548213482
+      },
+      {
+        "time": 8.5,
+        "islandPeakAlphas": {
+          "island-resume": 0,
+          "island-projects": 0.028272071853280067,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0,
+          "island-projects": 0.028272071853280067,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "minVisiblePeak": 0,
+        "sumVisiblePeak": 0.028272071853280067,
+        "maxPeak": 0.028272071853280067
+      },
+      {
+        "time": 15,
+        "islandPeakAlphas": {
+          "island-resume": 0.01216796413064003,
+          "island-projects": 0,
+          "island-writing": 0.034668002277612686,
+          "island-media": 0
+        },
+        "visibleFacePeakAlphas": {
+          "island-resume": 0.01216796413064003,
+          "island-projects": 0,
+          "island-writing": 0,
+          "island-media": 0
+        },
+        "minVisiblePeak": 0,
+        "sumVisiblePeak": 0.01216796413064003,
+        "maxPeak": 0.034668002277612686
+      }
+    ]
+  },
+  "lifecycle": {
+    "sameTimeStable": true,
+    "partitions": [
+      {
+        "hz": 30,
+        "matchesFinalSnapshot": true,
+        "water": "same final cached buffer; timing partition isolates effect state"
+      },
+      {
+        "hz": 60,
+        "matchesFinalSnapshot": true,
+        "water": "same final cached buffer; timing partition isolates effect state"
+      },
+      {
+        "hz": 120,
+        "matchesFinalSnapshot": true,
+        "water": "same final cached buffer; timing partition isolates effect state"
+      }
+    ],
+    "resetRepeats": true,
+    "reducedHiddenAndFrozen": true,
+    "bufferIdentityStable": true,
+    "geometryDisposeEvents": 1,
+    "materialDisposeEvents": 1,
+    "afterDisposeUnchanged": true,
+    "sceneEmpty": true,
+    "emptyFiniteAndHidden": true
+  },
+  "cpu": {
+    "cached": {
+      "batches": 12,
+      "updatesPerBatch": 500,
+      "minMs": 0.057789620000000014,
+      "medianMs": 0.06111296600000014,
+      "maxMs": 0.07742451399999982,
+      "batchMeanMs": [
+        0.057789620000000014,
+        0.05820460200000002,
+        0.058395461999999954,
+        0.05845661999999993,
+        0.059946842000000285,
+        0.060017222000000404,
+        0.06220870999999988,
+        0.06270675000000006,
+        0.06374350200000026,
+        0.0646597999999999,
+        0.06498336599999993,
+        0.07742451399999982
+      ]
+    },
+    "analyticFallback": {
+      "batches": 12,
+      "updatesPerBatch": 500,
+      "minMs": 0.3910060359999998,
+      "medianMs": 0.4010541120000001,
+      "maxMs": 0.4135562259999997,
+      "batchMeanMs": [
+        0.3910060359999998,
+        0.3923519099999994,
+        0.39636698000000026,
+        0.39641733000000023,
+        0.39813522999999984,
+        0.3981881020000001,
+        0.403920122,
+        0.40529633200000037,
+        0.4096106179999997,
+        0.41040226399999935,
+        0.41351010000000044,
+        0.4135562259999997
+      ]
+    }
+  }
+}

@@ -20,7 +20,7 @@ Observed improvements:
 
 Changes: orchestration/role instructions and task/batch templates are shorter;
 one linked verification record replaces duplicated results. The five core
-workflow/role/template files shrink from 411 to 180 lines. work/README is a short
+workflow/role/template files shrink from 411 to 187 lines. work/README is a short
 launch guide. No new skill, daemon, dependency, permission or enforcement layer.
 
 Preserved gates: explicit assigned scope; exclusive ownership; separate final
@@ -31,3 +31,10 @@ rebuild/check rerun does not require another review; changed revisions/bytes do.
 Separate reviewer inspected the simplification and found no gate loss. Final
 approval remains external to its own commit and includes the complete feature,
 process and evidence diff. Browser/merge/public gates are recorded separately.
+
+The subsequent rollout uses the known working GitHub write path and records
+release proof on each MR, with status carried into the next assigned MR. A W
+report was clarified/reproduced before shipping a speculative fix: Incognito and
+public probes isolated a keyboard extension, which the user removed successfully.
+Keep changed-behavior browser checks focused; retain deeper checks for measured
+risks such as the rollout's larger Logbook contact deviation.

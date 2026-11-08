@@ -195,17 +195,13 @@ test('the initial Shipyard flag anchor sits on actual land and clears the dock',
   landmarks.dispose()
 })
 
-test('Shipyard foundation closes the sand footprint below the lowest wave without expanding land', () => {
+test('every island foundation closes the sand footprint below the lowest wave without expanding land', () => {
   const scene = new THREE.Scene()
   const landmarks = createLandmarks(scene, portfolioIslands)
   landmarks.group.updateMatrixWorld(true)
   for (const island of portfolioIslands) {
     const group = islandGroup(scene, island.id)
-    const foundation = group.getObjectByName('shipyard-submerged-foundation')
-    if (island.id !== 'island-projects') {
-      assert.equal(foundation, undefined, 'Prototype must not change other islands')
-      continue
-    }
+    const foundation = group.getObjectByName(island.id === 'island-projects' ? 'shipyard-submerged-foundation' : 'island-submerged-foundation')
     assert.ok(foundation instanceof THREE.Mesh)
     const shelf = group.getObjectByName('sand-shelf') as THREE.Mesh
     const shelfBounds = new THREE.Box3().setFromObject(shelf)
