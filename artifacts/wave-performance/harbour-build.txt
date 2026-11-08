@@ -1,0 +1,18 @@
+[WARN] Your node_modules are out of sync with your lockfile. The workspace structure has changed since last install
+$ pnpm run typecheck && vite build
+[WARN] Your node_modules are out of sync with your lockfile. The workspace structure has changed since last install
+$ tsc --noEmit
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 38 modules transformed.
+rendering chunks...
+computing gzip size...
+docs/index.html                   0.62 kB │ gzip:   0.37 kB
+docs/assets/index-l6N-AMFZ.css   16.02 kB │ gzip:   4.00 kB
+docs/assets/index-C0MN6Dp4.js   607.24 kB │ gzip: 164.62 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.89s

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { MAX_WAVE_HEIGHT, PACKET_DETAIL, PACKET_MACRO, WAVE_COMPONENTS, WAVE_VARIATION, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
+import { MAX_WAVE_HEIGHT, PACKET_DETAIL, PACKET_MACRO, WAVE_COMPONENTS, WAVE_VARIATION, samplePrimaryWavePhase, sampleWaterSpatial, sampleWaterHeight, sampleWaterSurface } from '../src/world/waves.ts'
 
 test('surface velocityY agrees with temporal derivatives at multiple samples', () => {
   const delta = 1e-5
@@ -160,5 +160,66 @@ test('wave height remains bounded and deterministic at long times', () => {
     const second = sampleWaterHeight(187.25, -93.5, time)
     assert.equal(first, second)
     assert.ok(Math.abs(first) <= MAX_WAVE_HEIGHT * 1.4 + 1e-9)
+  }
+})
+
+
+test('interleaved spatial, height, phase and full surface calls remain independent', () => {
+  const probes = [
+    [-43.5, 12.75, 1.2, WAVE_VARIATION.seed],
+    [154, 36, 29.3, WAVE_VARIATION.seed + 1],
+    [172, 0, 91, NaN],
+    [NaN, Infinity, -Infinity, Infinity],
+  ]
+  const expected = probes.map(([x, z, time, seed]) => ({
+    surface: sampleWaterSurface(x, z, time, 0, seed),
+    finiteDifference: sampleWaterSurface(x, z, time, 0.35, seed),
+    height: sampleWaterHeight(x, z, time, seed),
+    phase: samplePrimaryWavePhase(x, z, time, seed),
+  }))
+  for (let pass = 0; pass < 3; pass++) {
+    for (const index of [3, 1, 0, 2]) {
+      const [x, z, time, seed] = probes[index]
+      const saved = expected[index]
+      sampleWaterSpatial(z, x, time + 1, undefined, seed + 64)
+      assert.equal(samplePrimaryWavePhase(x, z, time, seed), saved.phase)
+      assert.equal(sampleWaterHeight(x, z, time, seed), saved.surface.height)
+      assert.deepEqual(sampleWaterSurface(x, z, time, 0, seed), saved.surface)
+      assert.deepEqual(sampleWaterSurface(x, z, time, 0.35, seed), saved.finiteDifference)
+      assert.equal(sampleWaterHeight(x, z, time, seed), saved.height)
+    }
+  }
+})
+
+
+test('spatial ocean samples exactly project full analytic samples with independent or reusable storage', () => {
+  const values = [0, -0, -43.5, 142, 172, 1e16, -1e16, Number.MAX_VALUE, NaN, Infinity, -Infinity]
+  const seeds = [WAVE_VARIATION.seed, WAVE_VARIATION.seed + 1, -1.5, 2 ** 32, Number.MAX_VALUE, NaN, Infinity]
+  const target = { height: 0, slopeX: 0, slopeZ: 0, stormIntensity: 0 }
+  for (let index = 0; index < values.length; index++) {
+    for (const seed of seeds) {
+      const x = values[index], z = values[values.length - index - 1], time = values[(index * 3) % values.length]
+      const { height, slopeX, slopeZ, stormIntensity } = sampleWaterSurface(x, z, time, 0, seed)
+      const expected = { height, slopeX, slopeZ, stormIntensity }
+      const independent = sampleWaterSpatial(x, z, time, undefined, seed)
+      assert.deepEqual(independent, expected)
+      assert.equal(sampleWaterSpatial(x, z, time, target, seed), target)
+      assert.deepEqual(target, expected)
+      sampleWaterSpatial(z, x, time + 10, target, seed + 64)
+      assert.deepEqual(independent, expected)
+    }
+  }
+})
+
+test('spatial and full analytic paths agree exactly through storm transitions', () => {
+  const epsilon = 1e-9
+  const points = [[142 - epsilon, 0], [142, 0], [142 + epsilon, 0], [157, 0], [172 - epsilon, 0], [172, 0], [172 + epsilon, 0], [154, 36]]
+  for (const [x, z] of points) {
+    for (const time of [0, 7.1, 91, 1e6]) {
+      for (const seed of [WAVE_VARIATION.seed, WAVE_VARIATION.seed + 1, -1.5, NaN]) {
+        const { height, slopeX, slopeZ, stormIntensity } = sampleWaterSurface(x, z, time, 0, seed)
+        assert.deepEqual(sampleWaterSpatial(x, z, time, undefined, seed), { height, slopeX, slopeZ, stormIntensity })
+      }
+    }
   }
 })

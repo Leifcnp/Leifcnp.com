@@ -1,0 +1,23 @@
+{
+  "mode": "parity",
+  "base": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "hashes": {
+    "base": {
+      "waves.ts": "3806b3286dabace3b229398c3589dbc45e3e7379a71a0d5daa8dc8135a05ec2a",
+      "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+      "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+      "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+      "createOceanSurface.ts": "82543968d0c5af1d31093e87b2224e18ea22d0e3e1f5683a634d1ea009b1a37d"
+    },
+    "candidate": {
+      "waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+      "waveNoise.ts": "8bbdbfa09ea721e3a7cf21508193a0ab0135b851d0bda4ee7c51c22812328760",
+      "stormField.ts": "7bb7cb54a4471b84aedefbafd743e272e1e788521a3dcd6298c7c3e40403a48f",
+      "waterSurfaceGrid.ts": "764dfc01ca09415629707f0a9c3da3fc3e1306aebdd961cea57db1c4a21b229f",
+      "createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+    }
+  },
+  "checks": 1272078,
+  "checksum": "d3fee76216f89ceb134238e89e037a2cc87dfcd6a2a946bad6da99419e4e08e2",
+  "result": "exact Object.is parity"
+}

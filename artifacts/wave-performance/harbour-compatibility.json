@@ -1,0 +1,22 @@
+{
+  "waveBase": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "targetBase": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "harbourHead": "812e02fc2517d02165241289f31ea58a644e4fc0",
+  "note": "Read-only stable-hash snapshot of current WEB-016 work in progress, overlaid in a temporary checkout-equivalent on candidate wave source. Neither original worktree modified. Not harbour acceptance/release proof.",
+  "harbourFilesSha256": {
+    "src/main.ts": "59310cc5a9335a39733d687093d9414a2fbc61e53b4e15e98f3e491f06a27f4d",
+    "src/styles.css": "ac16c8ef176530b7e59ad7b7361b99e6c3196bedc8fc3736e3e08d6c3aaf47c2",
+    "src/ui/hud.ts": "ce336e66215c1ac3a9558a9a69a6fe3391939182bb16cb1a7956372d7f8f04ed",
+    "src/world/createCameraRig.ts": "8a9b58fdfa10e410b921489ad8ee112ba500fcee38a7d745144224dfb1ec323f",
+    "src/world/createWaterWorld.ts": "336d4e9fa299677baa569a4ebeb1f897ec092c3d6dd2be6aa9d6c9e37b5387bd",
+    "src/content/harbours.ts": "4430a79f91374cce32b6e14f30b112204d2cb866b4b3963cc91eb6762c7e036a",
+    "src/interaction/localHarbour.ts": "2756dbc22bd3561292ef518c27999da9e86109893b10e0e0fb4937c734e7de50",
+    "src/world/createHarbourMarkers.ts": "c6f52ac6cb628898d4d9fe8773958132cf5b479ca3ebec2a3b2f528f1656bfe6",
+    "tests/cameraRig.test.ts": "7e9faa1a526585f67b69c9acdecf0b73de84febd982433344268c56a9845decc",
+    "tests/harbours.test.ts": "4d436d61ad22ced99bf716686ef99a4f94e32375846e97edf5f53b20505ce069"
+  },
+  "waveSourceSha256": {
+    "src/world/waves.ts": "f8376b4a7f0900c726ca36cacecc38505b3cbad73a401fe52b9c26766fef6bf9",
+    "src/world/createOceanSurface.ts": "3766e3f2c029f703b2d03effa82389a5c747a8b80965ead7bd59b3f011748c4e"
+  }
+}
